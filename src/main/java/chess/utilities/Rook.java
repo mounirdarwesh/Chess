@@ -12,12 +12,12 @@ import chess.Move;
  * @author TBD
  *
  */
-public class Bishop extends Piece{
+public class Rook extends Piece {
 	
 	// The name of the piece 
-	protected String name = "B";
+	protected String name = "R";
 
-	public Bishop(int postion, Constants type) {
+	public Rook(int postion, Constants type) {
 		super(postion, type);
 		// TODO Auto-generated constructor stub
 	}

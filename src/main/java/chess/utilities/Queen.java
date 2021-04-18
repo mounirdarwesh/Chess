@@ -1,12 +1,33 @@
-/**
- * 
- */
 package chess.utilities;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import chess.Constants;
+import chess.Move;
+
 /**
- * @author TBD
+ * @author Ahmad Mohammad
  *
  */
-public class Queen {
+public class Queen extends Piece {
+	
+	// The name of the piece 
+	protected String name = "Q";
+	
+	public Queen(int postion, Constants type) {
+		super(postion, type);
+	}
+
+	@Override
+	public List<Move> calculateLegalMoves(Board board) {
+		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return this.type.isWhite() ? this.name : this.name.toLowerCase();
+	}
 
 }

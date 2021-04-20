@@ -3,6 +3,7 @@ package chess.cli;
 import chess.Constants;
 import chess.Game;
 import chess.player.HumanPlayer;
+import chess.player.Player;
 
 /**
  * Starting point of the command line interface

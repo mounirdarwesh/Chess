@@ -12,7 +12,7 @@ public class Board {
 	// The game that is associated with the board
 	private Game game;
 	
-	// The squares on the board
+	// The pieces on the board
 	private ArrayList<Piece> board;
 	
 	// The start FEN of the board
@@ -57,8 +57,16 @@ public class Board {
 	 * Getter for all the pieces on the board
 	 * @return the pieces on the board
 	 */
-	public ArrayList<Piece> getAllPieces(){
+	public ArrayList<Piece> getPiecesOnBoard(){
 		return this.board;
+	}
+	
+	/*
+	 * Updating the board after a move is performed
+	 */
+	public void updateBoard() {
+		String fen = FenUtilities.loadFENFromBoard(this);
+		this.board = FenUtilities.loadBoardFromFEN(fen);
 	}
 
 	@Override
@@ -79,5 +87,8 @@ public class Board {
 		board_ += "  a b c d e f g h";
 		return board_;
 	}
+
+
+
 	
 }

@@ -74,7 +74,12 @@ public abstract class Player {
 	private ArrayList<Move> loadPlayerAvailbleMoves() {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		for (Piece piece : this.playersPieces) {
-			moves.addAll(piece.calculateLegalMoves(this.game.getBoard()));
+			if(piece == null) {
+				continue;
+			}else {
+				moves.addAll(piece.calculateLegalMoves(this.game.getBoard()));
+			}
+			
 		}
 		return moves;
 	}

@@ -1,8 +1,12 @@
-package chess;
+package chess.model;
 import java.util.*;
-import chess.player.HumanPlayer;
-import chess.player.Player;
-import chess.utilities.Board;
+
+import chess.model.Move;
+import chess.model.mapBoard;
+import chess.model.player.Player;
+import chess.model.Board;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Ahmad Mohammad
@@ -30,7 +34,11 @@ public class Game {
 	
 	// The status of the game
 	private static boolean FINISHED = false;
-	
+
+	// Pattern to verify the syntax of the User Input
+	private final static Pattern validMove = Pattern.compile("([a-hA-H][1-8])([-])([a-hA-H][1-8])", Pattern.CASE_INSENSITIVE);
+	private final mapBoard mapper;
+
 	/*
 	 * The constructor of the game class
 	 * @param  player_one  the first player
@@ -42,6 +50,7 @@ public class Game {
 		this.playerTwo = playerTwo;
 		playerOne.addGame(this);
 		playerTwo.addGame(this);
+		mapper = new mapBoard();
 	}
 
 	// THE BRAIN OF THE GAME
@@ -114,12 +123,15 @@ public class Game {
 	public boolean verifyMove(String input) {
 		
 		// Check if move is syntactically not correct
-
+		Matcher matcher = validMove.matcher(input);
+		if (matcher.matches()){
+			System.out.println("Valid Syntax");
+		}else System.out.println("not Valid Move");
 		
 		String from = "";
 		String to = "";
-		move_from = getMoveFromPostion(from);
-		move_to = getMoveToPosition(to);
+		move_from = getMoveFromPosition(input);
+		move_to = getMoveToPosition(input);
 		
 		// Check if move is not allowed
 		if(!this.currentPlayer.isMoveAllowed(new Move(this.board, this.board.getPiece(move_from), move_to))) {
@@ -132,14 +144,19 @@ public class Game {
 		return true;
 	}
 
-	private int getMoveFromPostion(String from) {
-		// TODO 
-		return 0;
+	private int getMoveFromPosition(String from) {
+		Matcher matcher = validMove.matcher(from);
+		matcher.matches();
+		String fromIn = matcher.group(1);
+		return mapper.map(fromIn);
+
 	}
 
 	private int getMoveToPosition(String to) {
-		// TODO 
-		return 0;
+		Matcher matcher = validMove.matcher(to);
+		matcher.matches();
+		String toIn = matcher.group(3);
+		return mapper.map(toIn);
 	}
 
 	/**

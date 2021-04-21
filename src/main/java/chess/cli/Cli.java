@@ -1,9 +1,8 @@
 package chess.cli;
 
 import chess.Constants;
-import chess.Game;
-import chess.player.HumanPlayer;
-import chess.player.Player;
+import chess.model.Game;
+import chess.model.player.HumanPlayer;
 
 /**
  * Starting point of the command line interface

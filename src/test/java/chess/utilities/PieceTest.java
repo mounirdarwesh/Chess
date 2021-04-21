@@ -1,9 +1,9 @@
-package chess.utilities;
+package chess.model.pieces;
 import org.junit.jupiter.api.Test;
 
 import chess.Constants;
-import chess.utilities.Piece;
-import chess.utilities.Rook;
+import chess.model.pieces.Piece;
+import chess.model.pieces.Rook;
 
 import static org.junit.jupiter.api.Assertions.*;
 

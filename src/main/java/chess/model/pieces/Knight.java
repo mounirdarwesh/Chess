@@ -1,12 +1,13 @@
 /**
  * 
  */
-package chess.utilities;
+package chess.model.pieces;
 
 import java.util.List;
 
 import chess.Constants;
-import chess.Move;
+import chess.model.Board;
+import chess.model.Move;
 
 /**
  * @author TBD

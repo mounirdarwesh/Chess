@@ -1,30 +1,24 @@
-/**
- * 
- */
-package chess.utilities;
-
-import java.util.List;
-
+package chess.model.pieces;
+import java.util.*;
 import chess.Constants;
-import chess.Move;
+import chess.model.Board;
+import chess.model.Move;
 
 /**
- * @author TBD
+ * @author Ahmad Mohammad
  *
  */
-public class Bishop extends Piece{
+public class Queen extends Piece {
 	
 	// The name of the piece 
-	protected String name = "B";
-
-	public Bishop(int postion, Constants type) {
+	protected String name = "Q";
+	
+	public Queen(int postion, Constants type) {
 		super(postion, type);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public List<Move> calculateLegalMoves(Board board) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

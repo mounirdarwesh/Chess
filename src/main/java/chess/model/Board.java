@@ -1,7 +1,8 @@
-package chess.utilities;
+package chess.model;
 import java.util.*;
-import chess.Game;
+
 import chess.PGN.FenUtilities;
+import chess.model.pieces.Piece;
 
 /**
  * @author Ahmad Mohammad

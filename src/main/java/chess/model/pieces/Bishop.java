@@ -1,23 +1,24 @@
 /**
  * 
  */
-package chess.utilities;
+package chess.model.pieces;
 
 import java.util.List;
 
 import chess.Constants;
-import chess.Move;
+import chess.model.Board;
+import chess.model.Move;
 
 /**
  * @author TBD
  *
  */
-public class King extends Piece{
+public class Bishop extends Piece{
 	
 	// The name of the piece 
-	protected String name = "K";
+	protected String name = "B";
 
-	public King(int postion, Constants type) {
+	public Bishop(int postion, Constants type) {
 		super(postion, type);
 		// TODO Auto-generated constructor stub
 	}

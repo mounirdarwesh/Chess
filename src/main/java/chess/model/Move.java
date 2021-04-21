@@ -1,7 +1,6 @@
-package chess;
+package chess.model;
 
-import chess.utilities.Board;
-import chess.utilities.Piece;
+import chess.model.pieces.Piece;
 
 /**
  * @author TBD

@@ -2,14 +2,14 @@ package chess.PGN;
 
 import java.util.*;
 import chess.Constants;
-import chess.utilities.Bishop;
-import chess.utilities.Board;
-import chess.utilities.King;
-import chess.utilities.Knight;
-import chess.utilities.Pawn;
-import chess.utilities.Piece;
-import chess.utilities.Queen;
-import chess.utilities.Rook;
+import chess.model.pieces.Bishop;
+import chess.model.Board;
+import chess.model.pieces.King;
+import chess.model.pieces.Knight;
+import chess.model.pieces.Pawn;
+import chess.model.pieces.Piece;
+import chess.model.pieces.Queen;
+import chess.model.pieces.Rook;
 
 /**
  * @author Ahmad Mohammad

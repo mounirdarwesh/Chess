@@ -1,10 +1,10 @@
-package chess.player;
+package chess.model.player;
 import java.util.ArrayList;
 
 import chess.Constants;
-import chess.Game;
-import chess.Move;
-import chess.utilities.Piece;
+import chess.model.Game;
+import chess.model.Move;
+import chess.model.pieces.Piece;
 
 /**
  * @author TBD
@@ -64,14 +64,14 @@ public abstract class Player {
 	 * Checking if the move is allowed
 	 */
 	public boolean isMoveAllowed(Move move) {
-		allAvailableMoves = loadPlayerAvailbleMoves();
+		allAvailableMoves = loadPlayerAvailableMoves();
 		return allAvailableMoves.contains(move);
 	}
 
 	/*
 	 * Loading all of the player's legal moves
 	 */
-	private ArrayList<Move> loadPlayerAvailbleMoves() {
+	private ArrayList<Move> loadPlayerAvailableMoves() {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		for (Piece piece : this.playersPieces) {
 			if(piece == null) {

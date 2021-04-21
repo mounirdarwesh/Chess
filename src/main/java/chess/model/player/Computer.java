@@ -1,6 +1,6 @@
-package chess.player;
+package chess.model.player;
 import chess.Constants;
-import chess.Move;
+import chess.model.Move;
 
 /**
  * @author Ahmad Mohammad

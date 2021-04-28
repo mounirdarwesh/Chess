@@ -1,6 +1,7 @@
-package chess.model;
+package chess.controller;
 
-import chess.model.pieces.Piece;
+import chess.model.Board;
+import chess.model.Piece;
 
 /**
  * @author TBD
@@ -8,17 +9,24 @@ import chess.model.pieces.Piece;
  */
 public class Move {
 	
-	// The board on which the move is performed
+	/**
+	 *  The board on which the move is performed
+	 */
 	private Board board;
 	
-	// The position where the move starts
+	/**
+	 *  The position where the move starts
+	 */
 	private Piece piece;
 	
-	// The position where the move ends 
+	/**
+	 *  The position where the move ends 
+	 */
 	private int destination;
 	
-	
-	/*
+
+
+	/**
 	 * The constructor for the move class
 	 * @param board  The board on which the move is performed
 	 * @param piece  The moved piece
@@ -30,17 +38,19 @@ public class Move {
 		this.destination = destination;
 	}
 	
-	/*
+	/**
 	 * 
 	 */
 	public void excute() {
-		
-		// Removing the piece from it's position
-		this.board.getPiecesOnBoard().remove(this.piece.getPosition());
-		
-		// Adding the piece to the destination
-		this.board.getPiecesOnBoard().add(destination, this.piece);
-
+		board.movePiece(piece.getPosition(), destination);
+	}
+	
+	
+	/**
+	 * @return the destination
+	 */
+	public int getDestination() {
+		return destination;
 	}
 
 }

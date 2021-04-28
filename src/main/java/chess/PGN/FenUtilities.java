@@ -1,15 +1,15 @@
 package chess.PGN;
 
 import java.util.*;
-import chess.Constants;
-import chess.model.pieces.Bishop;
+import chess.Attributes;
+import chess.model.Bishop;
 import chess.model.Board;
-import chess.model.pieces.King;
-import chess.model.pieces.Knight;
-import chess.model.pieces.Pawn;
-import chess.model.pieces.Piece;
-import chess.model.pieces.Queen;
-import chess.model.pieces.Rook;
+import chess.model.King;
+import chess.model.Knight;
+import chess.model.Pawn;
+import chess.model.Piece;
+import chess.model.Queen;
+import chess.model.Rook;
 
 /**
  * @author Ahmad Mohammad
@@ -30,8 +30,8 @@ public class FenUtilities {
 	 * @param fen  the FEN string 
 	 * @return board  the board 
 	 */
-	public static ArrayList<Piece> loadBoardFromFEN(String fen){
-		ArrayList<Piece> board = new ArrayList<Piece>(Collections.nCopies(64, null));
+	public static ArrayList<Piece> loadBoardFromFEN(String fen, Board board){
+		ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>(Collections.nCopies(64, null));
 		int file = 0;
 		int rank = 7;
 		
@@ -46,40 +46,40 @@ public class FenUtilities {
 					int position = rank * 8 + file;
 					switch(c) {
 						case 'r':
-							board.set(position, new Rook(position, Constants.BLACK));
+							piecesOnBoard.set(position, new Rook(position, Attributes.BLACK, board));
 							break;
 						case 'n':
-							board.set(position, new Knight(position, Constants.BLACK));
+							piecesOnBoard.set(position, new Knight(position, Attributes.BLACK, board));
 							break;
 						case 'b':
-							board.set(position, new Bishop(position, Constants.BLACK));
+							piecesOnBoard.set(position, new Bishop(position, Attributes.BLACK, board));
 							break;
 						case 'q':
-							board.set(position, new Queen(position, Constants.BLACK));
+							piecesOnBoard.set(position, new Queen(position, Attributes.BLACK, board));
 							break;
 						case 'k':
-							board.set(position, new King(position, Constants.BLACK));
+							piecesOnBoard.set(position, new King(position, Attributes.BLACK, board));
 							break;
 						case 'p':
-							board.set(position, new Pawn(position, Constants.BLACK));
+							piecesOnBoard.set(position, new Pawn(position, Attributes.BLACK, board));
 							break;
 						case 'R':
-							board.set(position, new Rook(position, Constants.WHITE));
+							piecesOnBoard.set(position, new Rook(position, Attributes.WHITE, board));
 							break;
 						case 'N':
-							board.set(position, new Knight(position, Constants.WHITE));
+							piecesOnBoard.set(position, new Knight(position, Attributes.WHITE, board));
 							break;
 						case 'B':
-							board.set(position, new Bishop(position, Constants.WHITE));
+							piecesOnBoard.set(position, new Bishop(position, Attributes.WHITE, board));
 							break;
 						case 'Q':
-							board.set(position, new Queen(position, Constants.WHITE));
+							piecesOnBoard.set(position, new Queen(position, Attributes.WHITE, board));
 							break;
 						case 'K':
-							board.set(position, new King(position, Constants.WHITE));
+							piecesOnBoard.set(position, new King(position, Attributes.WHITE, board));
 							break;
 						case 'P':
-							board.set(position, new Pawn(position, Constants.WHITE));
+							piecesOnBoard.set(position, new Pawn(position, Attributes.WHITE, board));
 							break;
 						default:
 							System.out.println("Error in the FEN string");
@@ -88,7 +88,7 @@ public class FenUtilities {
 				}
 			}
 		}
-		return board;
+		return piecesOnBoard;
 	}
 	
 	

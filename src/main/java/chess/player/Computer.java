@@ -1,6 +1,6 @@
-package chess.model.player;
-import chess.Constants;
-import chess.model.Move;
+package chess.player;
+import chess.Attributes;
+import chess.controller.Move;
 
 /**
  * @author Ahmad Mohammad
@@ -13,7 +13,7 @@ public class Computer extends Player{
 	 * The constructor of the computer class
 	 * @param color  the color that the computer is left with
 	 */
-	public Computer(Constants color) {
+	public Computer(Attributes color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}

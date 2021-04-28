@@ -1,9 +1,10 @@
 package chess;
 
 import chess.cli.Cli;
+import chess.controller.CliController;
 import chess.gui.Gui;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * The common starting point of the GUI and the CLI. Depending on the given command line arguments either the GUI or the
@@ -15,11 +16,15 @@ public class Main {
      * @param args The command line arguments passed to the application.
      */
     public static void main(String[] args) {
-        boolean cli = Arrays.asList(args).contains("--no-gui");
-        if (cli) {
-            Cli.main(args);
-        } else {
-            Gui.main(args);
+        
+        if(Arrays.asList(args).contains("--no-gui")) {
+        	// Create the view
+        	Cli cli = new Cli();
+        	// Create the controller and pass the view object to it
+        	new CliController(cli);
+        }
+        else {
+        	Gui.main(args);
         }
     }
 }

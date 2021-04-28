@@ -1,7 +1,7 @@
-package chess.model.player;
+package chess.player;
 
-import chess.Constants;
-import chess.model.Move;
+import chess.Attributes;
+import chess.controller.Move;
 
 /**
  * @author Ahmad Mohammad
@@ -10,22 +10,17 @@ import chess.model.Move;
 public class HumanPlayer extends Player{
 	
 	
-	/*
+	/**
 	 * The constructor of the class HumanPlayer
 	 * @param color  the color that the player chooses to play with
 	 */
-	
-	public HumanPlayer(Constants color) {
+	public HumanPlayer(Attributes color) {
 		super(color);
-		// TODO
 	}
 
 	@Override
 	public void makeMove(Move move) {
 		move.excute();
-		// TODO
-		
 	}
-
 
 }

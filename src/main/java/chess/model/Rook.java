@@ -1,0 +1,35 @@
+/**
+ * 
+ */
+package chess.model;
+
+import java.util.*;
+import chess.Attributes;
+import chess.controller.Move;
+
+/**
+ * @author TBD
+ *
+ */
+public class Rook extends Piece {
+	
+	// The name of the piece 
+	protected String name = "R";
+
+	public Rook(int postion, Attributes type, Board board) {
+		super(postion, type, board);
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	@Override
+	public String toString() {
+		return this.type.isWhite() ? this.name : this.name.toLowerCase();
+	}
+
+
+	@Override
+	public void calculateLegalMoves() {
+	}
+
+}

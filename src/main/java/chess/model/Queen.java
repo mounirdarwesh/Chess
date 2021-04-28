@@ -1,8 +1,7 @@
-package chess.model.pieces;
+package chess.model;
 import java.util.*;
-import chess.Constants;
-import chess.model.Board;
-import chess.model.Move;
+import chess.Attributes;
+import chess.controller.Move;
 
 /**
  * @author Ahmad Mohammad
@@ -13,18 +12,17 @@ public class Queen extends Piece {
 	// The name of the piece 
 	protected String name = "Q";
 	
-	public Queen(int postion, Constants type) {
-		super(postion, type);
+	public Queen(int postion, Attributes type, Board board) {
+		super(postion, type, board);
 	}
 
 	@Override
-	public List<Move> calculateLegalMoves(Board board) {
-		return null;
-	}
-	
-	@Override
 	public String toString() {
 		return this.type.isWhite() ? this.name : this.name.toLowerCase();
+	}
+
+	@Override
+	public void calculateLegalMoves() {
 	}
 
 }

@@ -1,28 +1,66 @@
 package chess.cli;
 
-import chess.Constants;
-import chess.model.Game;
-import chess.model.player.HumanPlayer;
+import java.util.Scanner;
+
+import chess.controller.CliController;
+import chess.view.View;
 
 /**
- * Starting point of the command line interface
+ * The command line interface
  */
-public class Cli {
-		
+public class Cli extends View{
+	
+	/**
+	 * 
+	 */
+	Scanner scanner = new Scanner(System.in);
+	
+	/**
+	 * The CLIController
+	 */
+	protected CliController controller;
+	
+
 	
     /**
-     * The entry point of the CLI application.
-     *
-     * @param args The command line arguments passed to the application
+     * The constructor of the view of the CLI application.
      */
-    public static void main(String[] args) {
-    	
-    	// Create the game
-    	Game game = new Game(new HumanPlayer(Constants.WHITE), new HumanPlayer(Constants.BLACK));
-    	
-    	// Run the game
-    	game.run();
-    	
-    	
+    public Cli() {
+    	super();
     }
+
+
+	/**
+	 * @return the input
+	 */
+	public void readInputFromPlayer() {
+		
+		String input = scanner.nextLine();
+		while(true) {
+			if(!controller.isValidInput(input)) {
+				System.out.println("!Invalid move");
+				input = scanner.nextLine();
+				continue;
+			}
+			
+			if(!controller.isValidMove(input)){
+				System.out.println("!Move not allowed");
+				input = scanner.nextLine();
+				continue;
+			}
+			
+			else System.out.println("!" + input);
+			break;
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param controller
+	 */
+	public void assignController(CliController controller) {
+		this.controller = controller;
+	}
+	
 }

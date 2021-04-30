@@ -1,12 +1,7 @@
 package chess.model;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import chess.Attributes;
 import chess.controller.Controller;
-import chess.player.HumanPlayer;
 import chess.player.Player;
 import chess.view.View;
 
@@ -47,19 +42,23 @@ public class Game {
     private Board board;
     
     /**
-     * 
+     * The status of the game
      */
     private static boolean FINISHED = false;
-
+    
+    /**
+     * Promoted character
+     */
+    protected static char charToPromote;
 
 
     
 	/**
      * The constructor of the game class. it creates a new game instance with the given Controller
      * @param controller The controller to manage this instance (MVC-patter)
-	 * @param humanPlayer2 
-	 * @param humanPlayer 
-	 * @param board 
+	 * @param playerOne The first player of the game 
+	 * @param playerTwo The opponent
+	 * @param board The board of the game
      */
     public Game(Controller controller, Board board, Player playerOne, Player playerTwo) {
     	this.controller = controller;
@@ -71,7 +70,6 @@ public class Game {
     
 	/**
 	 * Getter for the Controller
-	 * 
 	 * @return controller The controller of this game
 	 */
 	public Controller getController() {
@@ -150,6 +148,13 @@ public class Game {
 	 */
 	public Board getBoard() {
 		return board;
+	}
+
+	/**
+	 * @param charToPromote the charToPromote to set
+	 */
+	public void setCharToPromote(char charToPromote) {
+		Game.charToPromote = charToPromote;
 	}
     
 }

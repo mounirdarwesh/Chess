@@ -1,5 +1,5 @@
 package chess.player;
-import chess.Attributes;
+import chess.Attributes.Color;
 import chess.controller.Move;
 import chess.model.Game;
 
@@ -12,7 +12,7 @@ public abstract class Player {
 	/**
 	 *  The color of the pieces 
 	 */
-	protected Attributes color;
+	protected Color color;
 	
 	/**
 	 *  The game
@@ -24,7 +24,7 @@ public abstract class Player {
 	 * The constructor of the class Player
 	 * @param color  the color that the player chooses to play with
 	 */
-	public Player(Attributes color) {
+	public Player(Color color) {
 		this.color = color;
 	}
 
@@ -39,16 +39,8 @@ public abstract class Player {
 	 * Getter of the players color to play
 	 * @return the color
 	 */
-	public Attributes getColor() {
+	public Color getColor() {
 		return color;
-	}
-	
-	/**
-	 * Setter for the color of the computer
-	 * @param color the color to set
-	 */
-	public void setColor(Attributes color) {
-		this.color = color;
 	}
 	
 }

@@ -3,9 +3,7 @@
  */
 package chess.model;
 
-import java.util.*;
-import chess.Attributes;
-import chess.controller.Move;
+import chess.Attributes.Color;
 
 /**
  * @author TBD
@@ -13,18 +11,25 @@ import chess.controller.Move;
  */
 public class Bishop extends Piece{
 	
-	// The name of the piece 
+	/**
+	 *  The name of the piece 
+	 */
 	protected String name = "B";
 
-	public Bishop(int postion, Attributes type, Board board) {
-		super(postion, type, board);
-		// TODO Auto-generated constructor stub
+	/**
+	 * 
+	 * @param postion
+	 * @param color
+	 * @param board
+	 */
+	public Bishop(int postion, Color color, Board board) {
+		super(postion, color, board);
 	}
 
 	
 	@Override
 	public String toString() {
-		return this.type.isWhite() ? this.name : this.name.toLowerCase();
+		return this.color.isWhite() ? this.name : this.name.toLowerCase();
 	}
 
 

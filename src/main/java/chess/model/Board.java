@@ -1,9 +1,6 @@
 package chess.model;
 import java.util.*;
-
-import chess.Attributes;
 import chess.PGN.FenUtilities;
-import chess.view.View;
 
 /**
  * @author Ahmad Mohammad
@@ -57,23 +54,6 @@ public class Board {
 		this.piecesOnBoard.set(piece.getPosition(), piece);
 	}
 	
-	/**
-	 * 
-	 * @param from
-	 * @param to
-	 */
-	public void movePiece(int from, int to) {
-		Piece from_piece = piecesOnBoard.set(from, null);
-		from_piece.setPosition(to);
-		from_piece.setFirstMove(false);
-		Piece to_piece = piecesOnBoard.set(to, from_piece);
-		if(to_piece != null) {
-			if(to_piece.getType().isWhite()) {
-				whiteBeaten.add(to_piece);
-			} else  blackBeaten.add(to_piece);
-		}
-	}
-	
 	
 	/**
 	 * Getter for all the pieces on the board
@@ -81,6 +61,20 @@ public class Board {
 	 */
 	public ArrayList<Piece> getPiecesOnBoard(){
 		return this.piecesOnBoard;
+	}
+	
+	/**
+	 * @return the whiteBeaten
+	 */
+	public ArrayList<Piece> getWhiteBeaten() {
+		return whiteBeaten;
+	}
+
+	/**
+	 * @return the blackBeaten
+	 */
+	public ArrayList<Piece> getBlackBeaten() {
+		return blackBeaten;
 	}
 	
 	
@@ -102,13 +96,4 @@ public class Board {
 		board_ += "  a b c d e f g h";
 		return board_;
 	}
-
-
-	/**
-	 * Updating the board
-	 */
-	public void update() {
-		System.out.println(this);
-	}
-
 }

@@ -5,8 +5,8 @@ import chess.controller.Controller;
 import chess.model.Game;
 
 /**
- * @author TBD
- *
+ * The View Class, where the user interacts
+ * @author Gr.45
  */
 public abstract class View {
 	
@@ -43,15 +43,13 @@ public abstract class View {
 		game.addObserver(this);
 	}
 	
-
-	
 	/**
 	 * 
 	 * @param game The game to observe
 	 */
 	public void modelChanged(Game game) {
 		this.game = game;
-		game.getBoard().update();
+		System.out.println(game.getBoard());
 	}
 
 	public abstract void assignController(CliController cliController);

@@ -1,3 +1,19 @@
-.idea
+# Intellij specific
+.idea/
 *.iml
+
+# Eclipse specific
+.classpath
+.project
+.settings/
+.bin/
+
+
+# Maven specific
 target/
+
+workspace/
+/bin/
+
+checker.jar
+log.txt

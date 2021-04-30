@@ -1,13 +1,12 @@
 package chess.controller;
-
 import chess.model.Game;
 import chess.view.View;
 
 /**
- * @author TBD
- *
+ * An abstract class of the controller
+ * @author Gr.45
  */
-public class Controller {
+public abstract class Controller {
 	
 	/**
 	 * The game as model that is connected to this controller
@@ -21,19 +20,12 @@ public class Controller {
 	
 	/**
 	 * The constructor expects a view to construct itself.
-	 * 
 	 * @param view The view that is connected to this controller
 	 */
 	public Controller(View view) {
 		this.view = view;
 	}
 
-	public void processtInputFromPlayer() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
+	public abstract void processtInputFromPlayer();
 
 }

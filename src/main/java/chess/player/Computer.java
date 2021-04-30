@@ -1,5 +1,5 @@
 package chess.player;
-import chess.Attributes;
+import chess.Attributes.Color;
 import chess.controller.Move;
 
 /**
@@ -13,7 +13,7 @@ public class Computer extends Player{
 	 * The constructor of the computer class
 	 * @param color  the color that the computer is left with
 	 */
-	public Computer(Attributes color) {
+	public Computer(Color color) {
 		super(color);
 		// TODO Auto-generated constructor stub
 	}

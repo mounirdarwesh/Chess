@@ -1,7 +1,6 @@
 package chess.model;
 import java.util.ArrayList;
-import java.util.List;
-import chess.Attributes;
+import chess.Attributes.Color;
 import chess.controller.Move;
 
 /**
@@ -10,11 +9,15 @@ import chess.controller.Move;
  */
 public abstract class Piece {
 	
-	// The position of the piece on the board
+	/**
+	 *  The position of the piece on the board
+	 */
 	protected int position;
 
-	// The type of the piece
-	protected Attributes type;
+	/**
+	 *  The color of the piece
+	 */
+	protected Color color;
 	
 	/**
 	 * The Board of the game 
@@ -27,18 +30,26 @@ public abstract class Piece {
 	protected ArrayList<Move> allLegalMoves;
 	
 	/**
-	 * 
+	 * boolean to check if the piece has moved before
 	 */
 	protected boolean isFirstMove = true;
+	
+
+	/**
+	 * To check if En Passant is valid
+	 */
+	protected boolean enPassant = false;
+
 
 	/**
 	 * The constructor of the Piece Class
 	 * @param  position  The position of the piece 
 	 * @param  type  The type of the piece
+	 * @param board  The board 
 	 */
-	Piece(int postion, Attributes type, Board board){
+	Piece(int postion, Color color, Board board){
 		this.position = postion;
-		this.type = type;
+		this.color = color;
 		this.board = board;
 		
 	}
@@ -69,8 +80,16 @@ public abstract class Piece {
 	 * Getter for the type of the piece
 	 * @return the type
 	 */
-	public Attributes getType() {
-		return type;
+	public Color getColor() {
+		return color;
+	}
+	
+	/**
+	 * Getter for the first move boolean
+	 * @return the isFirstMove
+	 */
+	public boolean isFirstMove() {
+		return isFirstMove;
 	}
 	
 	/**
@@ -92,5 +111,20 @@ public abstract class Piece {
 	 */
 	public void setAllLegalMoves(ArrayList<Move> allLegalMoves) {
 		this.allLegalMoves = allLegalMoves;
+	}
+	
+	/**
+	 * @param enPassant the enPassant to set
+	 */
+	public void setEnPassant(boolean enPassant) {
+		this.enPassant = this instanceof Pawn ? enPassant : null;
+	}
+	
+	/*
+	 * A method to return true if the new or
+	 * the current position is on the board
+	 */
+	public boolean isPositionInBounds(int position) {
+		return position >= 0 && position < 64;
 	}
 }

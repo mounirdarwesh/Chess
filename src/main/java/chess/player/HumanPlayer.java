@@ -1,6 +1,6 @@
 package chess.player;
 
-import chess.Attributes;
+import chess.Attributes.Color;
 import chess.controller.Move;
 
 /**
@@ -14,13 +14,13 @@ public class HumanPlayer extends Player{
 	 * The constructor of the class HumanPlayer
 	 * @param color  the color that the player chooses to play with
 	 */
-	public HumanPlayer(Attributes color) {
+	public HumanPlayer(Color color) {
 		super(color);
 	}
 
 	@Override
 	public void makeMove(Move move) {
-		move.excute();
+		move.execute();
 	}
 
 }

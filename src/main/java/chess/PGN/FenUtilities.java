@@ -1,7 +1,7 @@
 package chess.PGN;
 
 import java.util.*;
-import chess.Attributes;
+import chess.Attributes.Color;
 import chess.model.Bishop;
 import chess.model.Board;
 import chess.model.King;
@@ -46,40 +46,40 @@ public class FenUtilities {
 					int position = rank * 8 + file;
 					switch(c) {
 						case 'r':
-							piecesOnBoard.set(position, new Rook(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new Rook(position, Color.BLACK, board));
 							break;
 						case 'n':
-							piecesOnBoard.set(position, new Knight(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new Knight(position, Color.BLACK, board));
 							break;
 						case 'b':
-							piecesOnBoard.set(position, new Bishop(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new Bishop(position, Color.BLACK, board));
 							break;
 						case 'q':
-							piecesOnBoard.set(position, new Queen(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new Queen(position, Color.BLACK, board));
 							break;
 						case 'k':
-							piecesOnBoard.set(position, new King(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new King(position, Color.BLACK, board));
 							break;
 						case 'p':
-							piecesOnBoard.set(position, new Pawn(position, Attributes.BLACK, board));
+							piecesOnBoard.set(position, new Pawn(position, Color.BLACK, board));
 							break;
 						case 'R':
-							piecesOnBoard.set(position, new Rook(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new Rook(position, Color.WHITE, board));
 							break;
 						case 'N':
-							piecesOnBoard.set(position, new Knight(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new Knight(position, Color.WHITE, board));
 							break;
 						case 'B':
-							piecesOnBoard.set(position, new Bishop(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new Bishop(position, Color.WHITE, board));
 							break;
 						case 'Q':
-							piecesOnBoard.set(position, new Queen(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new Queen(position, Color.WHITE, board));
 							break;
 						case 'K':
-							piecesOnBoard.set(position, new King(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new King(position, Color.WHITE, board));
 							break;
 						case 'P':
-							piecesOnBoard.set(position, new Pawn(position, Attributes.WHITE, board));
+							piecesOnBoard.set(position, new Pawn(position, Color.WHITE, board));
 							break;
 						default:
 							System.out.println("Error in the FEN string");

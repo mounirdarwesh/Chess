@@ -2,25 +2,29 @@ package chess.model;
 
 import chess.Attributes;
 import chess.controller.Move;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-class RookTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class RookTest {
 
     Board board = new Board();
-    Piece rook = new Rook(56, Attributes.Color.BLACK, board);
+    Piece rook = new Rook(16, Attributes.Color.BLACK, board);
 
     @Test
-    void testToString() {
+    public void testToString() {
+        assertEquals("r", rook.toString());
     }
 
     @Test
-    void calculateLegalMoves() {
+    public void testCalculateLegalMoves() {
         rook.calculateLegalMoves();
         ArrayList<Move> allLegal = rook.getAllLegalMoves();
         for (Move move : allLegal) {
-            System.out.println(move.getDestination());
+            System.out.println(move.getDestination()+" "+move.toString());
         }
     }
 }

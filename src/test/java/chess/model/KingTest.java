@@ -8,17 +8,17 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class KingTest {
+public class KingTest {
     Board board = new Board();
     Piece king = new King(44, Attributes.Color.WHITE, board);
 
     @Test
-    void testToString() {
+    public void testToString() {
         assertEquals("K", king.toString());
     }
 
     @Test
-    void calculateLegalMoves() {
+    public void testCalculateLegalMoves() {
         king.calculateLegalMoves();
         ArrayList<Move> allLegal = king.getAllLegalMoves();
         for (Move move : allLegal) {

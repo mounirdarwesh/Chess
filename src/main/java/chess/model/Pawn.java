@@ -22,11 +22,11 @@ public class Pawn extends Piece {
 	/**
 	 * The constructor of the Pawn Class
 	 * @param  position  The position of the Pawn 
-	 * @param  type  The type of the Pawn
+	 * @param  color  The type of the Pawn
 	 * @param board  The board 
 	 */
-	public Pawn(int postion, Color color, Board board) {
-		super(postion, color, board);
+	public Pawn(int position, Color color, Board board) {
+		super(position, color, board);
 	}
 
 
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 	public void calculateLegalMoves() {
 		allLegalMoves = new ArrayList<Move>();
 		
-		// Iterating throw the possible offsets
+		// Iterating through the possible offsets
 		for (int i : MOVE_OFFSET) {
 			
 			// The destination to which the pawn is moving to
@@ -230,23 +230,6 @@ public class Pawn extends Piece {
 				&& opponentPawn.getColor() != this.color
 				&& opponentPawn.enPassant);
 	}
-	
-	/**
-	 * Check if the pawn is on the right edge of the board
-	 * @return true if it is, false otherwise
-	 */
-	private boolean onRightEdge() {
-		return (position + 1) % 8 == 0;
-	}
-
-	/**
-	 * Check if the pawn is on the left edge of the board
-	 * @return true if it is, false otherwise
-	 */
-	private boolean onLeftEdge() {
-		return position % 8 == 0;
-	}
-
 
 	@Override
 	public String toString() {

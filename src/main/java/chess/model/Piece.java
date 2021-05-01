@@ -126,7 +126,7 @@ public abstract class Piece {
 	 * the current position is on the board
 	 */
 	public boolean isPositionInBounds(int position) {
-		return position >= 0 && position < 64;
+		return position >= 0 && position <= 63;
 	}
 
 	/**
@@ -151,8 +151,23 @@ public abstract class Piece {
 	}
 
 	/**
+	 * Check if the pawn is on the right edge of the board
+	 * @return true if it is, false otherwise
+	 */
+	public boolean onRightEdge() {
+		return (position) % 8 == 7;
+	}
+
+	/**
+	 * Check if the piece is on the left edge of the board
+	 * @return true if it is, false otherwise
+	 */
+	public boolean onLeftEdge() {
+		return position % 8 == 0;
+	}
+
+	/**
 	 * check if the Piece is in the first Column.
-	 *
 	 * @param position to check
 	 * @return true, is in the first Column, otherwise not.
 	 */
@@ -214,13 +229,4 @@ public abstract class Piece {
 		return isSeventh;
 	}
 
-	/**
-	 * check if the Destination of the Piece is out of the Board
-	 *
-	 * @param position Destination
-	 * @return true, is in the Seventh Column, otherwise not.
-	 */
-	public static boolean isOutOfTheBoard(int position) {
-		return position >= 64 || position <= -1;
-	}
 }

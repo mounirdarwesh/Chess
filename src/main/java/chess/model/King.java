@@ -43,7 +43,7 @@ public class King extends Piece {
 			int destination = this.position + i;
 			if ((isInFirstColumn(this.position) && (i == -9 || i == -1 || i == 7)) ||
 					(isInLastColumn(this.position) && (i == -7 || i == 1 || i == 9))
-					||isOutOfTheBoard(destination)) {
+					|| !isPositionInBounds(destination)) {
 				continue;
 			}
 			if (!isFriendAtTheDestination(destination))

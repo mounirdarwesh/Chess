@@ -45,7 +45,7 @@ public class Knight extends Piece {
 					(isInLastColumn(this.position) && (i == -15 || i == -6 || i == 10 || i == 17)) ||
 					(isInSecondColumn(this.position) && (i == -10 || i == 6)) ||
 					(isInSeventhColumn(this.position) && (i == -6 || i == 10))
-					||isOutOfTheBoard(destination)) {
+					||!isPositionInBounds(destination)) {
 				continue;
 			}
 			if (!isFriendAtTheDestination(destination))

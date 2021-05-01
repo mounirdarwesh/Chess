@@ -43,13 +43,13 @@ public class Bishop extends Piece {
 		allLegalMoves = new ArrayList<>();
 		for (int i : MOVE_OFFSET) {
 			int destination = this.position;
-			while (!isOutOfTheBoard(destination)) {
+			while (isPositionInBounds(destination)) {
 				if ((isInFirstColumn(destination) && (i == -9 || i == 7)) ||
 						(isInLastColumn(destination) && (i == 9 || i == -7))) {
 					break;
 				}
 				destination += i;
-				if (!isOutOfTheBoard(destination)) {
+				if (isPositionInBounds(destination)) {
 					if (!isFriendAtTheDestination(destination)) {
 						allLegalMoves.add(new Move.CaptureMove(board, this, destination));
 						break;

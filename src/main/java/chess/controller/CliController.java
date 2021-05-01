@@ -98,8 +98,6 @@ public class CliController extends Controller {
 		
 		// If the player adds an extra character for pawn promotion
 		checkForPromotedChar(input);
-
-		System.out.println(Game.charToPromote);
 		
 		// Calculate from where the move is performed
 		int move_from = getMoveFromPosition(input);

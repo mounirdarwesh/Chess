@@ -33,7 +33,7 @@ public class CliController extends Controller {
 	
 	/**
 	 * The constructor expects a view to construct itself.
-	 * @param cli The view that is connected to this controller
+	 * @param view The view that is connected to this controller
 	 */
 	public CliController(View view) {
 		super(view);
@@ -98,6 +98,8 @@ public class CliController extends Controller {
 		
 		// If the player adds an extra character for pawn promotion
 		checkForPromotedChar(input);
+
+		System.out.println(Game.charToPromote);
 		
 		// Calculate from where the move is performed
 		int move_from = getMoveFromPosition(input);
@@ -122,7 +124,7 @@ public class CliController extends Controller {
 		// If everything is OK, then calculate all legal moves form the selected
 		// piece based on it's current position
 		piece.calculateLegalMoves();
-		System.out.println(piece.getAllLegalMoves());
+
 		// Loop through all the available moves
 		for (Move move : piece.getAllLegalMoves()) {
 			
@@ -149,6 +151,7 @@ public class CliController extends Controller {
 		try {
 			game.setCharToPromote(input.charAt(5));
 		} catch (IndexOutOfBoundsException e) {
+			game.setCharToPromote('P');
 	        return;
 	    }
 	}

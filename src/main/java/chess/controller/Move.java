@@ -295,7 +295,7 @@ public abstract class Move {
 					board.getWhiteBeaten().add(board.getPiecesOnBoard().get(destination));
 				} else board.getBlackBeaten().add(board.getPiecesOnBoard().get(destination));
 			}
-			
+
 			// Remove the piece from the board
 			board.getPiecesOnBoard().set(piece.getPosition(), null);
 			
@@ -304,7 +304,13 @@ public abstract class Move {
 			
 			// Switch through the possible promotion
 			switch (Character.toLowerCase(promoted)) {
-				
+
+				// The player didn't choose to promote the pawn so it's a normal move
+				case 'p':
+					// Set it's new destination
+					piece.setPosition(destination);
+					// And update it in the list of pieces on the board
+					board.setPiece(piece);
 				// The player chooses to promote to a new Queen
 				case 'q':
 					// Create a new  Queen

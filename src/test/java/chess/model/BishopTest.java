@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BishopTest {
 
     Board board = new Board();
-    Piece bishop = new Bishop(27, Attributes.Color.WHITE, board);
+    Piece bishop = new Bishop(5, Attributes.Color.WHITE, board);
     @Test
     void testToString() {
         assertEquals("N", bishop.toString());

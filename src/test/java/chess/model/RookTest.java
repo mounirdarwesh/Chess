@@ -9,7 +9,7 @@ import java.util.ArrayList;
 class RookTest {
 
     Board board = new Board();
-    Piece rook = new Rook(51, Attributes.Color.WHITE, board);
+    Piece rook = new Rook(56, Attributes.Color.BLACK, board);
 
     @Test
     void testToString() {

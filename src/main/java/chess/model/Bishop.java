@@ -56,6 +56,8 @@ public class Bishop extends Piece {
 					}
 					else if (isDestinationEmpty(destination))
 						allLegalMoves.add(new Move.NormalMove(board, this, destination));
+					else if (isFriendAtTheDestination(destination))
+						break;
 				}
 			}
 		}

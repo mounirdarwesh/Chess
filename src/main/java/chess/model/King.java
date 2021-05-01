@@ -13,7 +13,12 @@ public class King extends Piece {
     /**
      * all possible King move offset
      */
-    private static final int[] MOVE_OFFSET = {-9, -8, -7, -1, 1, 7, 8, 9};
+    private static final int[] MOVE_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
+
+    /**
+     * all possible King castling offsets
+     */
+    private static final int[] CASTLING_OFFSETS = {-2, 2};
 
     // The name of the piece
     protected String name = "K";
@@ -38,7 +43,10 @@ public class King extends Piece {
     @Override
     public void calculateLegalMoves() {
         allLegalMoves = new ArrayList<>();
-        for (int i : MOVE_OFFSET) {
+
+        //Handling normal and capture moves
+
+        for (int i : MOVE_OFFSETS) {
             int destination = this.position + i;
             if ((isInFirstColumn(this.position) && (i == -9 || i == -1 || i == 7)) ||
                     (isInLastColumn(this.position) && (i == -7 || i == 1 || i == 9))
@@ -50,23 +58,36 @@ public class King extends Piece {
             else if (isDestinationEmpty(destination))
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
         }
-        int destinationKingSideCastlingKing = this.position + 2;
-        int destinationKingSideCastlingRook = destinationKingSideCastlingKing - 1;
-        int destinationQueenSideCastlingKing = this.position - 2;
-        int destinationQueenSideCastlingRook = destinationQueenSideCastlingKing + 1;
-        if (this.isFirstMove && board.getPiecesOnBoard().get(destinationKingSideCastlingKing + 1).isFirstMove) {
-            if (board.getPiecesOnBoard().get(5) == null && board.getPiecesOnBoard().get(6) == null ||
-                    board.getPiecesOnBoard().get(61) == null && board.getPiecesOnBoard().get(62) == null) {
-                allLegalMoves.add(new Move.CastlingMove(board, this, destinationKingSideCastlingKing,
-                        board.getPiecesOnBoard().get(destinationKingSideCastlingKing + 1), destinationKingSideCastlingRook));
+
+        // Handling Castling moves
+        for (int j: CASTLING_OFFSETS) {
+            int castlingDestination = this.position + j;
+            // King side
+            if(j == 2) {
+                Piece rock = board.getPiece(this.position + 3);
+                if(rock == null) continue;
+                else if(this.isFirstMove
+                        && rock.isFirstMove
+                        && rock.getColor() == this.color
+                        && board.getPiece(this.position + 1) == null
+                        && board.getPiece(this.position + 2) == null){
+                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination-1));
+                    continue;
+                } else continue;
             }
-        }
-        if (this.isFirstMove && board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2).isFirstMove) {
-            if (board.getPiecesOnBoard().get(1) == null && board.getPiecesOnBoard().get(2) == null
-                    && board.getPiecesOnBoard().get(3) == null || board.getPiecesOnBoard().get(57) == null && board.getPiecesOnBoard().get(58) == null
-                    && board.getPiecesOnBoard().get(59) == null) {
-                allLegalMoves.add(new Move.CastlingMove(board, this, destinationQueenSideCastlingKing,
-                        board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2), destinationQueenSideCastlingRook));
+            // Queen side
+            if (j == -2){
+                Piece rock = board.getPiece(this.position - 4);
+
+                if(this.isFirstMove
+                        && rock.isFirstMove
+                        && rock.getColor() == this.color
+                        && board.getPiece(this.position - 1) == null
+                        && board.getPiece(this.position - 2) == null
+                        && board.getPiece(this.position - 3) == null){
+                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination+1));
+                    continue;
+                } else continue;
             }
         }
     }

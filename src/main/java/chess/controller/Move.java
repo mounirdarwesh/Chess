@@ -107,8 +107,8 @@ public abstract class Move {
 		 * @param pieceRook The Rook that performs the move
 		 * @param destinationRook The desired location of the new position for the Rook
 		 */
-		public CastlingMove(Board board, Piece pieceKing, int destinationKing, Piece pieceRook, int destinationRook) {
-			super(board, pieceKing, destinationKing);
+		public CastlingMove(Board board, Piece piece, int destination, Piece pieceRook, int destinationRook) {
+			super(board, piece, destination);
 			this.pieceRook = pieceRook;
 			this.destinationRook = destinationRook;
 

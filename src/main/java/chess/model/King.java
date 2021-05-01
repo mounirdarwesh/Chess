@@ -60,7 +60,8 @@ public class King extends Piece {
                 allLegalMoves.add(new Move.CastlingMove(board, this, destinationKingSideCastlingKing,
                         board.getPiecesOnBoard().get(destinationKingSideCastlingKing + 1), destinationKingSideCastlingRook));
             }
-        } else if (this.isFirstMove && board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2).isFirstMove) {
+        }
+        if (this.isFirstMove && board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2).isFirstMove) {
             if (board.getPiecesOnBoard().get(1) == null && board.getPiecesOnBoard().get(2) == null
                     && board.getPiecesOnBoard().get(3) == null || board.getPiecesOnBoard().get(57) == null && board.getPiecesOnBoard().get(58) == null
                     && board.getPiecesOnBoard().get(59) == null) {

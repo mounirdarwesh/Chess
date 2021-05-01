@@ -8,18 +8,18 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class KnightTest {
+public class KnightTest {
     Board board = new Board();
     Piece knight = new Knight(44, Attributes.Color.WHITE, board);
 
 
     @Test
-    void testToString() {
+    public void testToString() {
         assertEquals("N", knight.toString());
     }
 
     @Test
-    void calculateLegalMoves() {
+    public void testCalculateLegalMoves() {
         knight.calculateLegalMoves();
         ArrayList<Move> allLegal = knight.getAllLegalMoves();
         for (Move move : allLegal) {

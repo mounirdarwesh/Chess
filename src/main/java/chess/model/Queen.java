@@ -14,12 +14,12 @@ public class Queen extends Piece {
 	
 	/**
 	 * 
-	 * @param postion
+	 * @param position
 	 * @param color
 	 * @param board
 	 */
-	public Queen(int postion, Color color, Board board) {
-		super(postion, color, board);
+	public Queen(int position, Color color, Board board) {
+		super(position, color, board);
 	}
 
 	@Override

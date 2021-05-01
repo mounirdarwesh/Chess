@@ -95,14 +95,23 @@ public abstract class Move {
 
 	public static class CastlingMove extends Move {
 
+		int destinationRook;
+
+		Piece pieceRook ;
+
 		/**
 		 * A constructor for the Castling Move class
 		 * @param board The board on which the move is executed
-		 * @param piece The piece that performs the move
-		 * @param destination The desired location of the new position
+		 * @param pieceKing The King that performs the move
+		 * @param destinationKing The desired location of the new position for the King
+		 * @param pieceRook The Rook that performs the move
+		 * @param destinationRook The desired location of the new position for the Rook
 		 */
 		public CastlingMove(Board board, Piece pieceKing, int destinationKing, Piece pieceRook, int destinationRook) {
-			super(board, piece, destination);
+			super(board, pieceKing, destinationKing);
+			this.pieceRook = pieceRook;
+			this.destinationRook = destinationRook;
+
 		}
 
 		@Override
@@ -113,17 +122,20 @@ public abstract class Move {
 			piece.setPosition(destination);
 			// And update it in the list of pieces on the board
 			board.setPiece(piece);
-
-			//Delete the Rook on the old position
-			board.getPiecesOnBoard().set(piece.getPosition(), null);
-			// Set Rook's new destination
-			piece.setPosition(destination);
-			// And update it in the list of pieces on the board
-			board.setPiece(piece);
-
-			// Set the first move to false, because this is it's first move
 			if(piece.isFirstMove()) {
 				piece.setFirstMove(false);
+			}
+
+			//Delete the Rook on the old position
+			board.getPiecesOnBoard().set(pieceRook.getPosition(), null);
+			// Set Rook's new destination
+			pieceRook.setPosition(destinationRook);
+			// And update it in the list of pieces on the board
+			board.setPiece(pieceRook);
+
+			// Set the first move to false, because this is it's first move
+			if(pieceRook.isFirstMove()) {
+				pieceRook.setFirstMove(false);
 			}
 		}
 
@@ -222,7 +234,7 @@ public abstract class Move {
 		 * @param board The board on which the move is executed
 		 * @param piece The piece that performs the move
 		 * @param destination The desired location of the new position
-		 * @param pawnCapturedPosition The position of the pawn captured
+		 * @param pawnCapturedEnPassant The position of the pawn captured
 		 */
 		public EnPassantMove(Board board, Piece piece, int destination, int pawnCapturedEnPassant) {
 			super(board, piece, destination);

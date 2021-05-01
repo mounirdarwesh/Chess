@@ -50,6 +50,23 @@ public class King extends Piece {
             else if (isDestinationEmpty(destination))
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
         }
+        int destinationKingSideCastlingKing = this.position + 2;
+        int destinationKingSideCastlingRook = destinationKingSideCastlingKing - 1;
+        int destinationQueenSideCastlingKing = this.position - 2;
+        int destinationQueenSideCastlingRook = destinationQueenSideCastlingKing + 1;
+        if (this.isFirstMove && board.getPiecesOnBoard().get(destinationKingSideCastlingKing + 1).isFirstMove) {
+            if (board.getPiecesOnBoard().get(5) == null && board.getPiecesOnBoard().get(6) == null ||
+                    board.getPiecesOnBoard().get(61) == null && board.getPiecesOnBoard().get(62) == null) {
+                allLegalMoves.add(new Move.CastlingMove(board, this, destinationKingSideCastlingKing,
+                        board.getPiecesOnBoard().get(destinationKingSideCastlingKing + 1), destinationKingSideCastlingRook));
+            }
+        } else if (this.isFirstMove && board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2).isFirstMove) {
+            if (board.getPiecesOnBoard().get(1) == null && board.getPiecesOnBoard().get(2) == null
+                    && board.getPiecesOnBoard().get(3) == null || board.getPiecesOnBoard().get(57) == null && board.getPiecesOnBoard().get(58) == null
+                    && board.getPiecesOnBoard().get(59) == null) {
+                allLegalMoves.add(new Move.CastlingMove(board, this, destinationQueenSideCastlingKing,
+                        board.getPiecesOnBoard().get(destinationQueenSideCastlingKing - 2), destinationQueenSideCastlingRook));
+            }
+        }
     }
 }
-

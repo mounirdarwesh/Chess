@@ -6,7 +6,7 @@ import chess.Attributes.Color;
 import chess.controller.Move;
 
 /**
- * @author Ahmad Mohammad
+ * @author Gruppe 45
  * The Piece class 
  */
 public abstract class Piece {

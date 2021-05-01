@@ -6,7 +6,7 @@ import chess.Attributes;
 import chess.controller.Move;
 
 /**
- * @author TBD
+ * @author Gruppe 45
  *
  */
 public class Knight extends Piece {

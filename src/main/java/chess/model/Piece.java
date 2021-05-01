@@ -223,4 +223,6 @@ public abstract class Piece {
 	public static boolean isOutOfTheBoard(int position) {
 		return position >= 64 || position <= -1;
 	}
+
+
 }

@@ -15,7 +15,7 @@ public class King extends Piece {
 	 * all possible King move offset
 	 */
 	private static final int[] MOVE_OFFSET = {-9, -8, -7, -1, 1, 7, 8, 9};
-
+	private static final int[] MOVE_OFFSETCASTLING = {-2, 2};
 	// The name of the piece
 	protected String name = "K";
 
@@ -51,6 +51,26 @@ public class King extends Piece {
 			else if (isDestinationEmpty(destination))
 				allLegalMoves.add(new Move.NormalMove(board, this, destination));
 		}
+
+		int destinationKingSideCastlingKing = this.position + 2;
+		int destinationKingSideCastlingRook = board.getPiecesOnBoard().get(7).position - 2;
+		int destinationQueenSideCastlingKing = this.position - 2;
+		int destinationQueenSideCastlingRook = board.getPiecesOnBoard().get(0).position + 3;
+		if(this.isFirstMove && board.getPiecesOnBoard().get(7).isFirstMove){
+			if(board.getPiecesOnBoard().get(5) == null && board.getPiecesOnBoard().get(6) == null){
+				allLegalMoves.add(new Move.CastlingMove(board, this, destinationKingSideCastlingKing));
+				allLegalMoves.add(new Move.CastlingMove(board, board.getPiecesOnBoard().get(7), destinationKingSideCastlingRook));
+			}
+		}else if(this.isFirstMove && board.getPiecesOnBoard().get(0).isFirstMove){
+			if(board.getPiecesOnBoard().get(1) == null && board.getPiecesOnBoard().get(2) == null
+					&& board.getPiecesOnBoard().get(3) == null){
+				allLegalMoves.add(new Move.CastlingMove(board, this, destinationQueenSideCastlingKing));
+				allLegalMoves.add(new Move.CastlingMove(board, board.getPiecesOnBoard().get(7), destinationQueenSideCastlingRook));
+			}
+		}
+
 	}
+
+
 }
 

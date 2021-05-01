@@ -92,7 +92,42 @@ public abstract class Move {
 		}
 		
 	}
-	
+
+	public static class CastlingMove extends Move {
+
+		/**
+		 * A constructor for the Castling Move class
+		 * @param board The board on which the move is executed
+		 * @param piece The piece that performs the move
+		 * @param destination The desired location of the new position
+		 */
+		public CastlingMove(Board board, Piece pieceKing, int destinationKing, Piece pieceRook, int destinationRook) {
+			super(board, piece, destination);
+		}
+
+		@Override
+		public void execute() {
+			//Delete the King on the old position
+			board.getPiecesOnBoard().set(piece.getPosition(), null);
+			// Set King's new destination
+			piece.setPosition(destination);
+			// And update it in the list of pieces on the board
+			board.setPiece(piece);
+
+			//Delete the Rook on the old position
+			board.getPiecesOnBoard().set(piece.getPosition(), null);
+			// Set Rook's new destination
+			piece.setPosition(destination);
+			// And update it in the list of pieces on the board
+			board.setPiece(piece);
+
+			// Set the first move to false, because this is it's first move
+			if(piece.isFirstMove()) {
+				piece.setFirstMove(false);
+			}
+		}
+
+	}
 	/**
 	 * Here where the pawn can make double step
 	 * @author Gr. 45
@@ -294,6 +329,7 @@ public abstract class Move {
 			}
 		}
 	}
+
 }
 
 

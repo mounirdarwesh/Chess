@@ -59,15 +59,19 @@ public class King extends Piece {
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
         }
 
+
         // Handling Castling moves
+
+        if(!this.isFirstMove){
+            return;
+        }
         for (int j: CASTLING_OFFSETS) {
             int castlingDestination = this.position + j;
             // King side
             if(j == 2) {
                 Piece rock = board.getPiece(this.position + 3);
-                if(rock == null) continue;
-                else if(this.isFirstMove
-                        && rock.isFirstMove
+                if(!(rock instanceof Rook) || rock == null) continue;
+                else if(rock.isFirstMove
                         && rock.getColor() == this.color
                         && board.getPiece(this.position + 1) == null
                         && board.getPiece(this.position + 2) == null){
@@ -76,11 +80,10 @@ public class King extends Piece {
                 } else continue;
             }
             // Queen side
-            if (j == -2){
+            else if (j == -2){
                 Piece rock = board.getPiece(this.position - 4);
-
-                if(this.isFirstMove
-                        && rock.isFirstMove
+                if(!(rock instanceof Rook) || rock == null) continue;
+                else if(rock.isFirstMove
                         && rock.getColor() == this.color
                         && board.getPiece(this.position - 1) == null
                         && board.getPiece(this.position - 2) == null

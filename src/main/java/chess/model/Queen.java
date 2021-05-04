@@ -38,21 +38,26 @@ public class Queen extends Piece {
         for (int i : MOVE_OFFSETS) {
             int destination = this.position;
             // Always making sure that the Queen is staying within the board
-            while (isPositionInBounds(destination)) {
+            while (true) {
 
-                if ((isInFirstColumn(this.position) && (i == -9 || i == -1 || i == 7)) ||
-                        (isInLastColumn(this.position) && (i == -7 || i == 1 || i == 9))
-                        || !isPositionInBounds(destination)) {
+                if ((isInFirstColumn(destination) && (i == -9 || i == -1 || i == 7)) ||
+                        (isInLastColumn(destination) && (i == -7 || i == 1 || i == 9))) {
                     break;
                 }
                 destination += i;
-                if (isPositionInBounds(destination)) {
-                    if (!isFriendAtTheDestination(destination)) {
-                        allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-                        break;
-                    } else if (isDestinationEmpty(destination)) {
+                if (!isPositionInBounds(destination)) {
+                    break;
+                }
+
+                else {
+                    if(board.getPiece(destination) == null){
                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
-                    } else if (isFriendAtTheDestination(destination)) break;
+                    } else {
+                        if(board.getPiece(destination).getColor() != this.color){
+                            allLegalMoves.add(new Move.CaptureMove(board, this, destination));
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -64,3 +69,14 @@ public class Queen extends Piece {
     }
 
 }
+
+/**
+ * if (!isFriendAtTheDestination(destination)) {
+ *                         allLegalMoves.add(new Move.CaptureMove(board, this, destination));
+ *                         break;
+ *                     }
+ *                     else if (isDestinationEmpty(destination)) {
+ *                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
+ *                     }
+ *                     else if (isFriendAtTheDestination(destination)) break;
+ */

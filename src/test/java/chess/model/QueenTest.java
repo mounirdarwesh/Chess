@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QueenTest {
 
     Board board = new Board();
-    Piece queen = new Queen(5, Attributes.Color.WHITE, board);
+    Piece queen = new Queen(29, Attributes.Color.WHITE, board);
 
     @Test
     public void testCalculateLegalMoves() {

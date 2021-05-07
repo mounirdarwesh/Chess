@@ -1,8 +1,6 @@
 package chess.model;
 
 import java.util.ArrayList;
-
-import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
 

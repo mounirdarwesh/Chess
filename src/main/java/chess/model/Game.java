@@ -101,7 +101,7 @@ public class Game {
         notifyObservers();
 
         while (!FINISHED) {
-            controller.processtInputFromPlayer();
+            controller.processInputFromPlayer();
             notifyObservers();
             currentPlayer = getOpponent(currentPlayer);
         }

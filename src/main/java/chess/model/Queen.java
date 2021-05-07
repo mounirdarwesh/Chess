@@ -22,9 +22,10 @@ public class Queen extends Piece {
 
     /**
      * The constructor of the Queen Class
+     *
      * @param position The position of the Pawn
      * @param color    The type of the Pawn
-     * @param board    The boardoard
+     * @param board    The board
      */
     public Queen(int position, Color color, Board board) {
         super(position, color, board);
@@ -47,13 +48,11 @@ public class Queen extends Piece {
                 destination += i;
                 if (!isPositionInBounds(destination)) {
                     break;
-                }
-
-                else {
-                    if(board.getPiece(destination) == null){
+                } else {
+                    if (board.getPiece(destination) == null) {
                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
                     } else {
-                        if(board.getPiece(destination).getColor() != this.color){
+                        if (board.getPiece(destination).getColor() != this.color) {
                             allLegalMoves.add(new Move.CaptureMove(board, this, destination));
                         }
                         break;
@@ -70,13 +69,3 @@ public class Queen extends Piece {
 
 }
 
-/**
- * if (!isFriendAtTheDestination(destination)) {
- *                         allLegalMoves.add(new Move.CaptureMove(board, this, destination));
- *                         break;
- *                     }
- *                     else if (isDestinationEmpty(destination)) {
- *                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
- *                     }
- *                     else if (isFriendAtTheDestination(destination)) break;
- */

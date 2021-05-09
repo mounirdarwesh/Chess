@@ -1,39 +1,34 @@
 package chess.controller;
 
-import chess.model.Bishop;
-import chess.model.Board;
-import chess.model.Knight;
-import chess.model.Piece;
-import chess.model.Queen;
-import chess.model.Rook;
+import chess.model.*;
 
 /**
  * @author TBD
+ *
  */
 public abstract class Move {
 
     /**
-     * The board on which the move is performed
+     *  The board on which the move is performed
      */
     protected Board board;
 
     /**
-     * The position where the move starts
+     *  The position where the move starts
      */
     protected Piece piece;
 
     /**
-     * The position where the move ends
+     *  The position where the move ends
      */
     protected int destination;
 
 
     /**
      * The constructor for the move class
-     *
-     * @param board       The board on which the move is performed
-     * @param piece       The moved piece
-     * @param destination To where the piece should move
+     * @param board  The board on which the move is performed
+     * @param piece  The moved piece
+     * @param destination  To where the piece should move
      */
     public Move(Board board, Piece piece, int destination) {
         this.board = board;
@@ -48,7 +43,6 @@ public abstract class Move {
 
     /**
      * Getter of the destination of the move
-     *
      * @return the destination of the move
      */
     public int getDestination() {
@@ -62,7 +56,6 @@ public abstract class Move {
 
     /**
      * Here where the piece make a normal move
-     *
      * @author Gr. 45
      */
     public static class NormalMove extends Move {
@@ -70,9 +63,8 @@ public abstract class Move {
 
         /**
          * A constructor for the Normal Move class
-         *
-         * @param board       The board on which the move is executed
-         * @param piece       The piece that performs the move
+         * @param board The board on which the move is executed
+         * @param piece The piece that performs the move
          * @param destination The desired location of the new position
          */
         public NormalMove(Board board, Piece piece, int destination) {
@@ -89,8 +81,13 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            if (piece.isFirstMove()) {
+            if(piece.isFirstMove()) {
                 piece.setFirstMove(false);
+            }
+
+            //If the piece is pawn, cancel the ability to En Passant
+            if(piece instanceof Pawn){
+                piece.setEnPassant(false);
             }
         }
 
@@ -100,15 +97,14 @@ public abstract class Move {
 
         int destinationRook;
 
-        Piece pieceRook;
+        Piece pieceRook ;
 
         /**
          * A constructor for the Castling Move class
-         *
-         * @param board           The board on which the move is executed
-         * @param piece           The King that performs the move
-         * @param destination     The desired location of the new position for the King
-         * @param pieceRook       The Rook that performs the move
+         * @param board The board on which the move is executed
+         * @param piece The King that performs the move
+         * @param destination The desired location of the new position for the King
+         * @param pieceRook The Rook that performs the move
          * @param destinationRook The desired location of the new position for the Rook
          */
         public CastlingMove(Board board, Piece piece, int destination, Piece pieceRook, int destinationRook) {
@@ -126,7 +122,7 @@ public abstract class Move {
             piece.setPosition(destination);
             // And update it in the list of pieces on the board
             board.setPiece(piece);
-            if (piece.isFirstMove()) {
+            if(piece.isFirstMove()) {
                 piece.setFirstMove(false);
             }
 
@@ -138,25 +134,22 @@ public abstract class Move {
             board.setPiece(pieceRook);
 
             // Set the first move to false, because this is it's first move
-            if (pieceRook.isFirstMove()) {
+            if(pieceRook.isFirstMove()) {
                 pieceRook.setFirstMove(false);
             }
         }
 
     }
-
     /**
      * Here where the pawn can make double step
-     *
      * @author Gr. 45
      */
     public static class DoublePawnMove extends Move {
 
         /**
          * A constructor for the Double Pawn Move class
-         *
-         * @param board       The board on which the move is executed
-         * @param piece       The piece that performs the move
+         * @param board The board on which the move is executed
+         * @param piece The piece that performs the move
          * @param destination The desired location of the new position
          */
         public DoublePawnMove(Board board, Piece piece, int destination) {
@@ -175,7 +168,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            if (piece.isFirstMove()) {
+            if(piece.isFirstMove()) {
                 piece.setFirstMove(false);
             }
 
@@ -188,16 +181,14 @@ public abstract class Move {
 
     /**
      * Here where the piece perform a capture move
-     *
      * @author Gr. 45
      */
     public static class CaptureMove extends Move {
 
         /**
          * A constructor for the Capture Move class
-         *
-         * @param board       The board on which the move is executed
-         * @param piece       The piece that performs the move
+         * @param board The board on which the move is executed
+         * @param piece The piece that performs the move
          * @param destination The desired location of the new position
          */
         public CaptureMove(Board board, Piece piece, int destination) {
@@ -214,9 +205,7 @@ public abstract class Move {
             Piece captured = board.getPiecesOnBoard().set(destination, null);
 
             // And add it to player's beaten list
-            if (captured.getColor().isWhite()) {
-                board.getWhiteBeaten().add(captured);
-            } else board.getBlackBeaten().add(captured);
+            Game.addToBeaten(captured);
 
             // Update the piece's position
             piece.setPosition(destination);
@@ -226,9 +215,9 @@ public abstract class Move {
     }
 
     /**
-     * Here where to perform the classic En passant move
-     *
+     * Here where to pereform the classic En passant move
      * @author Gr. 45
+     *
      */
     public static class EnPassantMove extends Move {
 
@@ -240,10 +229,9 @@ public abstract class Move {
 
         /**
          * A constructor for the En Passant Move class
-         *
-         * @param board                 The board on which the move is executed
-         * @param piece                 The piece that performs the move
-         * @param destination           The desired location of the new position
+         * @param board The board on which the move is executed
+         * @param piece The piece that performs the move
+         * @param destination The desired location of the new position
          * @param pawnCapturedEnPassant The position of the pawn captured
          */
         public EnPassantMove(Board board, Piece piece, int destination, int pawnCapturedEnPassant) {
@@ -259,10 +247,9 @@ public abstract class Move {
 
             //Delete the piece on the destination
             Piece pawnCaptured = board.getPiecesOnBoard().set(pawnCapturedEnPassant, null);
+
             // And add it to player's beaten list
-            if (pawnCaptured.getColor().isWhite()) {
-                board.getWhiteBeaten().add(pawnCaptured);
-            } else board.getBlackBeaten().add(pawnCaptured);
+            Game.addToBeaten(pawnCaptured);
 
             // Update the piece's position
             piece.setPosition(destination);
@@ -274,7 +261,6 @@ public abstract class Move {
 
     /**
      * Here where the Promotion to a new piece is happening
-     *
      * @author Gr.45
      */
     public static class PromotionMove extends Move {
@@ -286,11 +272,10 @@ public abstract class Move {
 
         /**
          * A constructor for the Promotion Move class
-         *
-         * @param board       The board on which the move is executed
-         * @param piece       The piece that performs the move
+         * @param board The board on which the move is executed
+         * @param piece The piece that performs the move
          * @param destination The desired location of the new position
-         * @param promoted    The representation of the piece to promote
+         * @param promoted The representation of the piece to promote
          */
         public PromotionMove(Board board, Piece piece, int destination, char promoted) {
             super(board, piece, destination);
@@ -301,11 +286,9 @@ public abstract class Move {
         public void execute() {
 
             // Check if the pawn captured a piece to promote
-            if (board.getPiecesOnBoard().get(destination) != null) {
+            if(board.getPiecesOnBoard().get(destination) != null) {
                 // Then add it to beaten figures
-                if (board.getPiecesOnBoard().get(destination).getColor().isWhite()) {
-                    board.getWhiteBeaten().add(board.getPiecesOnBoard().get(destination));
-                } else board.getBlackBeaten().add(board.getPiecesOnBoard().get(destination));
+                Game.addToBeaten(board.getPiecesOnBoard().get(destination));
             }
 
             // Remove the piece from the board
@@ -316,19 +299,15 @@ public abstract class Move {
 
             // Switch through the possible promotion
             switch (Character.toLowerCase(promoted)) {
-
-                // The player didn't choose to promote the pawn so it's a normal move
-                case 'p':
-                    // Set it's new destination
-                    piece.setPosition(destination);
-                    // And update it in the list of pieces on the board
-                    board.setPiece(piece);
-                    // The player chooses to promote to a new Queen
                 case 'q':
+                case ' ':
                     // Create a new  Queen
                     promotedPiece = new Queen(destination, piece.getColor(), board);
-                    // And add it to the list of pieces on the board
+                    // add it to the list of pieces on the board
                     board.setPiece(promotedPiece);
+                    // Add update the available pieces for the current player
+                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     break;
 
                 // The player chooses to promote to a new Rook
@@ -337,6 +316,9 @@ public abstract class Move {
                     promotedPiece = new Rook(destination, piece.getColor(), board);
                     // And add it to the list of pieces on the board
                     board.setPiece(promotedPiece);
+                    // Add update the available pieces for the current player
+                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     break;
 
                 // The player chooses to promote to a new Knight
@@ -345,6 +327,9 @@ public abstract class Move {
                     promotedPiece = new Knight(destination, piece.getColor(), board);
                     // And add it to the list of pieces on the board
                     board.setPiece(promotedPiece);
+                    // Add update the available pieces for the current player
+                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     break;
 
                 // The player chooses to promote to a new Bishop
@@ -353,6 +338,9 @@ public abstract class Move {
                     promotedPiece = new Bishop(destination, piece.getColor(), board);
                     // And add it to the list of pieces on the board
                     board.setPiece(promotedPiece);
+                    // Add update the available pieces for the current player
+                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     break;
                 default:
                     break;

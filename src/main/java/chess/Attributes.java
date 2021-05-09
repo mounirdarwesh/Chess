@@ -1,18 +1,13 @@
-/**
- *
- */
 package chess;
 
 /**
- * @author Ahmad Mohammad
- *
+ * @author Gr.45
+ * The Attributes of the game
  */
 public class Attributes {
 
     /**
-     *
-     * @author Gr.45
-     *
+     * The available colors of the game
      */
     public enum Color {
         WHITE() {
@@ -50,7 +45,14 @@ public class Attributes {
         public abstract boolean isBlack();
 
         public abstract int getDirection();
+    }
 
+    /**
+     * The Game status
+     */
+    public enum GameStatus {
+
+        ENDED, KING_IN_CHECK
 
     }
 }

@@ -1,8 +1,10 @@
 package chess.view;
 
+import chess.Attributes;
 import chess.controller.CliController;
 import chess.controller.Controller;
 import chess.model.Game;
+import chess.model.Player;
 
 /**
  * The View Class, where the user interacts
@@ -56,4 +58,5 @@ public abstract class View {
 
     public abstract void readInputFromPlayer();
 
+    public abstract void notifyUser(Attributes.GameStatus status, Player player);
 }

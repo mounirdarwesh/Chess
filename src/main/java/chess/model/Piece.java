@@ -112,13 +112,6 @@ public abstract class Piece {
     }
 
     /**
-     * @param allLegalMoves the allLegalMoves to set
-     */
-    public void setAllLegalMoves(ArrayList<Move> allLegalMoves) {
-        this.allLegalMoves = allLegalMoves;
-    }
-
-    /**
      * @param enPassant the enPassant to set
      */
     public void setEnPassant(boolean enPassant) {

@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 
     @Override
     public void calculateLegalMoves() {
-        allLegalMoves = new ArrayList<Move>();
+        allLegalMoves = new ArrayList<>();
 
         // Iterating throw the possible offsets
         for (int i : MOVE_OFFSET) {
@@ -71,9 +71,6 @@ public class Pawn extends Piece {
                 case 9:
                     // Add if applicable a one step move up to the right to the legal moves
                     rightUpStep(pieceAtDest, destination);
-                    continue;
-                default:
-                    continue;
             }
         }
     }
@@ -92,18 +89,15 @@ public class Pawn extends Piece {
             // Check if the pawn can promote itself
             if (canPromote()) {
                 allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
-                return;
             }
 
             // If not, then add a normal move
             else {
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
-                return;
             }
         }
 
         // If there is a piece on that destination then don't do anything
-        else return;
     }
 
     /**
@@ -126,14 +120,9 @@ public class Pawn extends Piece {
             // If there is no piece in between
             if (blockedPiece == null) {
                 allLegalMoves.add(new Move.DoublePawnMove(board, this, destination));
-                return;
             }
-            // If not, do nothing
-            else return;
         }
-
         // If the above criteria is not fulfilled, do nothing
-        else return;
     }
 
 
@@ -154,17 +143,14 @@ public class Pawn extends Piece {
         // If there is an enemy piece on the destination, then capture it
         else {
             if (leftEnPassant() && pieceAtDest == null) {
-                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - 1 * color.getDirection()));
-                return;
+                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
             } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
                 // If the pawn can capture and promote itself then let it do it
                 if (canPromote()) {
                     allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
-                    return;
                 } // else just capture the enemy piece
                 else {
                     allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-                    return;
                 }
             }
         }
@@ -186,18 +172,16 @@ public class Pawn extends Piece {
 
         // If there is an enemy piece on the destination, then capture it
         else {
+
             if (rightEnPassant() && pieceAtDest == null) {
-                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + 1 * color.getDirection()));
-                return;
+                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
             } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
                 // If the pawn can capture and promote itself then let it do it
                 if (canPromote()) {
                     allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
-                    return;
                 } // else just capture the enemy piece
                 else {
                     allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-                    return;
                 }
             }
         }
@@ -220,7 +204,7 @@ public class Pawn extends Piece {
      * @return true if it can, false otherwise
      */
     private boolean leftEnPassant() {
-        Piece opponentPawn = board.getPiece(position - 1 * color.getDirection());
+        Piece opponentPawn = board.getPiece(position - color.getDirection());
         return (opponentPawn instanceof Pawn
                 && opponentPawn.getColor() != this.color
                 && opponentPawn.enPassant);
@@ -232,7 +216,7 @@ public class Pawn extends Piece {
      * @return true if it can, false otherwise
      */
     private boolean rightEnPassant() {
-        Piece opponentPawn = board.getPiece(position + 1 * color.getDirection());
+        Piece opponentPawn = board.getPiece(position + color.getDirection());
         return (opponentPawn instanceof Pawn
                 && opponentPawn.getColor() != this.color
                 && opponentPawn.enPassant);

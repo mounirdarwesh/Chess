@@ -2,7 +2,9 @@ package chess.cli;
 
 import java.util.Scanner;
 
+import chess.Attributes;
 import chess.controller.CliController;
+import chess.model.Player;
 import chess.view.View;
 
 /**
@@ -35,7 +37,14 @@ public class Cli extends View {
     public void readInputFromPlayer() {
 
         String input = scanner.nextLine();
+
         while (true) {
+            if(input.equals("beaten")){
+                System.out.println(controller.getBeatenPieces());
+                input = scanner.nextLine();
+                continue;
+            }
+
             if (!controller.isValidInput(input)) {
                 System.out.println("!Invalid move");
                 input = scanner.nextLine();
@@ -50,6 +59,17 @@ public class Cli extends View {
             break;
         }
 
+    }
+
+    @Override
+    public void notifyUser(Attributes.GameStatus status, Player player) {
+        if (status == Attributes.GameStatus.ENDED) {
+            System.out.println(player + " has won the game!");
+            System.exit(1);
+        }
+        if (status == Attributes.GameStatus.KING_IN_CHECK) {
+            System.out.println(player + "'s king is in check.");
+        }
     }
 
     /**

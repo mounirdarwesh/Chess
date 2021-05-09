@@ -1,14 +1,12 @@
 package chess.controller;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import chess.Attributes;
 import chess.Attributes.Color;
-import chess.model.Board;
-import chess.model.Game;
-import chess.model.Piece;
-import chess.model.mapBoard;
-import chess.player.HumanPlayer;
+import chess.model.*;
 import chess.view.View;
 
 /**
@@ -79,6 +77,17 @@ public class CliController extends Controller {
         game.getCurrentPlayer().makeMove(move);
     }
 
+    @Override
+    public ArrayList<Piece> getBeatenPieces() {
+        return game.getCurrentPlayer().getColor() == Color.WHITE ?
+                game.getWhiteBeaten() : game.getBlackBeaten();
+    }
+
+    @Override
+    public void notifyView(Attributes.GameStatus status, Player player) {
+        view.notifyUser(status, player);
+    }
+
 
     /**
      * Here where the controller checks if the user inputed
@@ -109,61 +118,16 @@ public class CliController extends Controller {
         // Calculate to where the move is performed
         int move_to = getMoveToPosition(input);
 
-        // Get the piece that will be moved
-        Piece piece = game.getBoard().getPiece(move_from);
 
-        // If there is no such piece, i.e. the player chooses an empty square,
-        // then ask for a new input
-        if (piece == null) {
+        // Check if the game allows the move from the current player
+        if(!game.isMoveAllowed(move_from, move_to)) {
             return false;
         }
 
-        // If the player chooses one of the opponent's pieces, the ask for
-        // another input
-        else if (piece.getColor() != game.getCurrentPlayer().getColor()) {
-            return false;
-        }
+        this.move = game.getAllowedMove();
 
-        //checks if the King is in Check.
-        if (game.getCurrentPlayer().isKingInCheck
-                (game.getCurrentPlayer().getKing(game.getBoard().getPiecesOnBoard()).getPosition()
-                        , game.getCurrentPlayer().calculateEnemyLegalMoves(game.getBoard().getPiecesOnBoard()))
-        ) {
-            if ((game.getBoard().getPiece(move_to) == null
-                    || game.getCurrentPlayer().getColor() != game.getBoard().getPiece(move_to).getColor()) &&
-                    !game.getCurrentPlayer().canProtectKing(piece, move_to, game)) {
-                return false;
-            }
-        }
-
-        // Prevents the User to get him self in Check
-        if ((game.getBoard().getPiece(move_to) == null
-                || game.getCurrentPlayer().getColor() != game.getBoard().getPiece(move_to).getColor()) &&
-                !game.getCurrentPlayer().canProtectKing(piece, move_to, game)) {
-            return false;
-        }
-
-
-        // If everything is OK, then calculate all legal moves form the selected
-        // piece based on it's current position
-        piece.calculateLegalMoves();
-
-        // Loop through all the available moves
-        for (Move move : piece.getAllLegalMoves()) {
-
-            // If one of the moves destination matches with what the player
-            // inputed as a destination, then return true
-            if (move.getDestination() == move_to) {
-                this.move = move;
-                return true;
-            }
-            // else just continue looping through the list
-            else continue;
-        }
-
-        // If something other that the above happened, then the is an input error,
-        // so return false
-        return false;
+        // If the game verifies the move than notify the player
+        return true;
     }
 
     /**
@@ -175,7 +139,7 @@ public class CliController extends Controller {
         try {
             game.setCharToPromote(input.charAt(5));
         } catch (IndexOutOfBoundsException e) {
-            game.setCharToPromote('P');
+            game.setCharToPromote(' ');
             return;
         }
     }
@@ -188,6 +152,7 @@ public class CliController extends Controller {
      */
     private int getMoveFromPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
+        matcher.matches();
         String fromIn = matcher.group(1);
         return MAPPER.map(fromIn);
     }
@@ -200,6 +165,7 @@ public class CliController extends Controller {
      */
     private int getMoveToPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
+        matcher.matches();
         String toIn = matcher.group(3);
         return MAPPER.map(toIn);
     }

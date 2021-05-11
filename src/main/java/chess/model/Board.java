@@ -67,6 +67,11 @@ public class Board {
         return this.piecesOnBoard;
     }
 
+    public void setPiecesOnBoard(String piecesOnBoard) {
+        this.piecesOnBoard = FenUtilities.loadBoardFromFEN(piecesOnBoard,this);
+    }
+
+
     /**
      * @return the whiteBeaten
      */
@@ -85,19 +90,19 @@ public class Board {
     @Override
     public String toString() {
 
-        String board_ = "";
+        StringBuilder board_ = new StringBuilder();
 
         for (int rank = 8; rank > 0; rank--) {
-            board_ += "" + rank;
+            board_.append(rank);
             for (int file = 0; file < 8; file++) {
                 Piece piece = piecesOnBoard.get((rank - 1) * 8 + file);
                 if (piece == null) {
-                    board_ += "  ";
-                } else board_ += " " + piece.toString();
+                    board_.append("  ");
+                } else board_.append(" ").append(piece);
             }
-            board_ += "\n";
+            board_.append("\n");
         }
-        board_ += "  a b c d e f g h";
-        return board_;
+        board_.append("  a b c d e f g h");
+        return board_.toString();
     }
 }

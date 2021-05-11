@@ -142,7 +142,7 @@ public class Pawn extends Piece {
 
         // If there is an enemy piece on the destination, then capture it
         else {
-            if (leftEnPassant() && pieceAtDest == null) {
+            if (leftEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
                 allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
             } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
                 // If the pawn can capture and promote itself then let it do it
@@ -173,7 +173,7 @@ public class Pawn extends Piece {
         // If there is an enemy piece on the destination, then capture it
         else {
 
-            if (rightEnPassant() && pieceAtDest == null) {
+            if (rightEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
                 allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
             } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
                 // If the pawn can capture and promote itself then let it do it
@@ -197,7 +197,6 @@ public class Pawn extends Piece {
                 (color.isBlack() && (8 <= position && position <= 15));
     }
 
-
     /**
      * Check of the pawn can perform En Passant
      *
@@ -206,8 +205,7 @@ public class Pawn extends Piece {
     private boolean leftEnPassant() {
         Piece opponentPawn = board.getPiece(position - color.getDirection());
         return (opponentPawn instanceof Pawn
-                && opponentPawn.getColor() != this.color
-                && opponentPawn.enPassant);
+                && opponentPawn.getColor() != this.color);
     }
 
     /**
@@ -218,8 +216,7 @@ public class Pawn extends Piece {
     private boolean rightEnPassant() {
         Piece opponentPawn = board.getPiece(position + color.getDirection());
         return (opponentPawn instanceof Pawn
-                && opponentPawn.getColor() != this.color
-                && opponentPawn.enPassant);
+                && opponentPawn.getColor() != this.color);
     }
 
     @Override

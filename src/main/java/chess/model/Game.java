@@ -67,8 +67,6 @@ public class Game {
      */
     private Move allowedMove;
 
-
-
     /**
      * The constructor of the game class. it creates a new game instance with the given Controller
      * @param controller The controller to manage this instance (MVC-patter)
@@ -133,6 +131,9 @@ public class Game {
      */
     public boolean isMoveAllowed(int move_from, int move_to) {
 
+        // Will the move be allowed?
+        boolean allow;
+
         // Reset the move from the previous round
         this.allowedMove = null;
 
@@ -163,77 +164,14 @@ public class Game {
         // If no such move is found, then ask for another input
         if(allowedMove == null) return false;
 
-        // If the piece is king, then some conditions should apply
-        if(piece instanceof King) {
-            return ((King) piece).checkForEnemyKing(move_to) && isStillInCheck(piece, move_from, move_to);
-        }
+        // If the current player's king is in check or might be in
+        // check if the move was executed, then preform the move
+        // temporarily and check if it saves or protects the King
+        allowedMove.execute();
+        allow = !currentPlayer.isKingInCheck();
+        allowedMove.undo();
 
-        // Is the player's king in check, then make sure the piece
-        // can move only to uncheck the king
-        if(currentPlayer.isKingInCheck()) {
-            return isStillInCheck(piece, move_from, move_to);
-        }
-
-        // Check if the piece moved, the king is still safe
-        // If everything is by the roles make the move
-        return !canThreatenKing(move_from, move_to);
-    }
-
-    /**
-     * Makes sure that if the player makes the move, the king will still be save
-     * @param piece The piece to move
-     * @param move_from The from position of the move
-     * @param move_to The to position of the move
-     * @return true if still the king in check after the move is preformed, false otherwise
-     */
-    private boolean isStillInCheck(Piece piece, int move_from, int move_to) {
-        boolean inCheck = false;
-
-        // Make temporarily adjustments to see if the check still exist
-        Piece toPiece = board.getPiecesOnBoard().set(move_to, piece);
-        Piece fromPiece = board.getPiecesOnBoard().set(move_from, null);
-        fromPiece.setPosition(move_to);
-        board.setPiece(fromPiece);
-        if(toPiece != null) getOpponent(currentPlayer).removeFromPlayersPieces(toPiece);
-
-        // Is still the king in check after the move is preformed, then return true
-        if(!currentPlayer.isKingInCheck()) {
-            inCheck = true;
-        }
-
-        // Reset the temporary adjustment made before
-        board.getPiecesOnBoard().set(move_to, toPiece);
-        board.getPiecesOnBoard().set(move_from, fromPiece);
-        fromPiece.setPosition(move_from);
-        board.setPiece(fromPiece);
-        if(toPiece != null) getOpponent(currentPlayer).addToPlayersPieces(toPiece);
-        return inCheck;
-    }
-
-    /**
-     * Check if the piece can threaten its own king if it moves
-     * @return true if the king can be threatened, false otherwise
-     */
-    private boolean canThreatenKing(int move_from, int move_to) {
-        // Make temporarily adjustments to see if the check still exist
-        Piece fromPiece = board.getPiecesOnBoard().set(move_from, null);
-        Piece toPiece = board.getPiecesOnBoard().set(move_to, fromPiece);
-        if(toPiece != null) getOpponent(currentPlayer).removeFromPlayersPieces(toPiece);
-
-        // Is still the king in check after the move is preformed, then return true
-        if(currentPlayer.isKingInCheck()) {
-            // Reset the temporary adjustment made before
-            board.getPiecesOnBoard().set(move_to, toPiece);
-            board.getPiecesOnBoard().set(move_from, fromPiece);
-            if(toPiece != null) getOpponent(currentPlayer).addToPlayersPieces(toPiece);
-            return true;
-        }
-
-        // Reset the temporary adjustment made before
-        board.getPiecesOnBoard().set(move_to, toPiece);
-        board.getPiecesOnBoard().set(move_from, fromPiece);
-        if(toPiece != null) getOpponent(currentPlayer).addToPlayersPieces(toPiece);
-        return false;
+        return allow;
     }
 
     /**
@@ -283,6 +221,19 @@ public class Game {
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).removeFromPlayersPieces(captured);
+    }
+
+    /**
+     * Remove the captured piece to the list of the player's beaten pieces
+     * @param captured The captured pieces
+     */
+    public static void removeFromBeaten(Piece captured) {
+        if(captured.getColor().isWhite()) {
+            whiteBeaten.remove(captured);
+        } else blackBeaten.remove(captured);
+
+        //And delete the piece from the players available pieces
+        getOpponent(currentPlayer).addToPlayersPieces(captured);
     }
 
     /**
@@ -347,5 +298,4 @@ public class Game {
     public void setCharToPromote(char charToPromote) {
         Game.charToPromote = charToPromote;
     }
-
 }

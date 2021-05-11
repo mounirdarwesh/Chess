@@ -35,13 +35,6 @@ public abstract class Piece {
      */
     protected boolean isFirstMove = true;
 
-
-    /**
-     * To check if En Passant is valid
-     */
-    protected boolean enPassant = false;
-
-
     /**
      * The constructor of the Piece Class
      *
@@ -109,13 +102,6 @@ public abstract class Piece {
      */
     public ArrayList<Move> getAllLegalMoves() {
         return allLegalMoves;
-    }
-
-    /**
-     * @param enPassant the enPassant to set
-     */
-    public void setEnPassant(boolean enPassant) {
-        this.enPassant = this instanceof Pawn ? enPassant : null;
     }
 
     /**

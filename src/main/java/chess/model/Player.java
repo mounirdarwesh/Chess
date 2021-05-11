@@ -23,6 +23,11 @@ public abstract class Player {
     protected ArrayList<Piece> playerPieces;
 
     /**
+     * To check if the pawn is allowed to do En Passant
+     */
+    private boolean allowEnPassant = false;
+
+    /**
      * The constructor of the class Player
      * @param color  the color that the player chooses to play with
      */
@@ -79,8 +84,8 @@ public abstract class Player {
             if(move.getDestination() == getKing().getPosition()
                     && (move instanceof Move.CaptureMove || move instanceof Move.PromotionMove)) {
                 kingInCheck = true;
+                break;
             }
-            if(kingInCheck) break;
         }
         return kingInCheck;
     }
@@ -103,6 +108,22 @@ public abstract class Player {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isAllowEnPassant() {
+        return allowEnPassant;
+    }
+
+    /**
+     *
+     * @param allowEnPassant
+     */
+    public void setAllowEnPassant(boolean allowEnPassant) {
+        this.allowEnPassant = allowEnPassant;
     }
 
     /**

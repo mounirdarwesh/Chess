@@ -275,6 +275,8 @@ public abstract class Move {
          */
         private int fromPiecePosition;
 
+
+
         /**
          * Temporary variable for the status of the piece first move
          */
@@ -284,6 +286,23 @@ public abstract class Move {
          * Temporary variable for the status of the En passant
          */
         private boolean wasEnPassant;
+
+        /**
+         *  Getter for wasFirstMove
+         * @return wasFirstMove
+         */
+        public boolean isWasFirstMove() {
+            return wasFirstMove;
+        }
+
+        /**
+         *  Setter for wasFirstMove
+         * @param wasFirstMove
+         */
+        public void setWasFirstMove(boolean wasFirstMove) {
+            this.wasFirstMove = wasFirstMove;
+        }
+
 
         /**
          * A constructor for the Double Pawn Move class

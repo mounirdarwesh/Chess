@@ -20,11 +20,7 @@ public class BishopTest {
 
     @Test
     public void testCalculateLegalMovesMiddle() {
-     /*   bishop.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishop.getAllLegalMoves();
-        for (Move move : allLegal) {
-            System.out.println(move.getDestination());
-        }*/
+
         ArrayList<Move> expected = new ArrayList<>();
         Piece bishopMiddle = new Bishop(27, Attributes.Color.WHITE, board);
         Move m1 = new Move.NormalMove(board,bishopMiddle,18);

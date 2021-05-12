@@ -20,11 +20,7 @@ public class RookTest {
 
     @Test
     public void testCalculateLegalMovesMiddle() {
-        /*rook.calculateLegalMoves();
-        ArrayList<Move> allLegal = rook.getAllLegalMoves();
-        for (Move move : allLegal) {
-            System.out.println(move.getDestination()+" "+move.toString());
-        }*/
+
         ArrayList<Move> expected = new ArrayList<>();
         Piece rookMiddle = new Rook(35, Attributes.Color.BLACK, board);
         Move m1 = new Move.NormalMove(board,rookMiddle,27);

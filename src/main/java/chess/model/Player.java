@@ -82,7 +82,7 @@ public abstract class Player {
     public boolean isKingInCheck() {
         boolean kingInCheck = false;
         // Calculate a list of enemy legal moves
-        ArrayList<Move> enemyLegalMoves = Game.getOpponent(Game.getCurrentPlayer()).calculatePlayerMoves();
+        ArrayList<Move> enemyLegalMoves = Game.getOpponent(this).calculatePlayerMoves();
         // Iterate through all of the enemy's legal moves. If a move is found that can threaten
         // the current player's king, return true
         for (Move move : enemyLegalMoves) {
@@ -96,17 +96,15 @@ public abstract class Player {
     }
 
     /**
-     * check all King Moves, if he can Escape.
-     *
-     * @return true, if the King has no Escape
+     * check all Player Moves
+     * @return true, if the player has no moves to preform
      */
-    boolean checkMate(Piece king) {
+    boolean checkMate() {
         boolean isCheckMate = true;
         if (this.isKingInCheck()) {
-            king.calculateLegalMoves();
-            for (Move move : king.getAllLegalMoves()) {
+            for (Move move : this.calculatePlayerMoves()) {
                 move.execute();
-                if (!isKingInCheck()) {
+                if(!this.isKingInCheck()) {
                     isCheckMate = false;
                     move.undo();
                     break;
@@ -119,11 +117,10 @@ public abstract class Player {
 
     /**
      * Getter to the player's king
-     *
      * @return
      */
     public Piece getKing() {
-        for (Piece piece : playerPieces) {
+        for (Piece piece : this.playerPieces) {
             if (piece instanceof King) return piece;
             else continue;
         }
@@ -132,7 +129,6 @@ public abstract class Player {
 
     /**
      * Getter of the players color to play
-     *
      * @return the color
      */
     public Color getColor() {

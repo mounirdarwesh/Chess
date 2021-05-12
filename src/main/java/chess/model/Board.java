@@ -16,16 +16,6 @@ public class Board {
     private ArrayList<Piece> piecesOnBoard;
 
     /**
-     * White beaten pieces
-     */
-    private ArrayList<Piece> whiteBeaten = new ArrayList<Piece>();
-
-    /**
-     * Black beaten pieces
-     */
-    private ArrayList<Piece> blackBeaten = new ArrayList<Piece>();
-
-    /**
      * The start FEN of the board
      */
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
@@ -75,22 +65,6 @@ public class Board {
     public void setPiecesOnBoard(String piecesOnBoard) {
         this.piecesOnBoard = FenUtilities.loadBoardFromFEN(piecesOnBoard, this);
     }
-
-
-    /**
-     * @return the whiteBeaten
-     */
-    public ArrayList<Piece> getWhiteBeaten() {
-        return whiteBeaten;
-    }
-
-    /**
-     * @return the blackBeaten
-     */
-    public ArrayList<Piece> getBlackBeaten() {
-        return blackBeaten;
-    }
-
 
     @Override
     public String toString() {

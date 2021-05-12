@@ -1,7 +1,6 @@
 package chess.model;
 
 import java.util.*;
-
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
@@ -74,6 +73,21 @@ public class Game {
         Game.currentPlayer = Game.playerOne;
     }
 
+    /// ----------- MVC ----------------- ///
+    public void addObserver(View observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(View observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (View observer : observers)
+            observer.modelChanged(this);
+    }
+    /// ------------------------------- ///
+
     /**
      * Loading the players pieces
      */
@@ -114,66 +128,7 @@ public class Game {
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).addToPlayersPieces(captured);
-    }
-    /// ------------------------------- ///
 
-    /**
-     * Getter for the current player of the game
-     *
-     * @return the currentPlayer
-     */
-    public static Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * Getting the opponent of the current player
-     *
-     * @param currentPlayer The current player of the game
-     */
-    public static Player getOpponent(Player currentPlayer) {
-        return currentPlayer.getColor() == playerOne.getColor() ? playerTwo : playerOne;
-    }
-
-    /**
-     * Getter for the board of the game
-     *
-     * @return the board
-     */
-    public static Board getBoard() {
-        return board;
-    }
-
-    /**
-     * Getter for the white beaten pieces
-     *
-     * @return white beaten pieces
-     */
-    public static ArrayList<Piece> getWhiteBeaten() {
-        return whiteBeaten;
-    }
-
-    /**
-     * Getter for the black beaten pieces
-     *
-     * @return black beaten pieces
-     */
-    public static ArrayList<Piece> getBlackBeaten() {
-        return blackBeaten;
-    }
-
-    /// ----------- MVC ----------------- ///
-    public void addObserver(View observer) {
-        observers.add(observer);
-    }
-
-    public void removeObserver(View observer) {
-        observers.remove(observer);
-    }
-
-    public void notifyObservers() {
-        for (View observer : observers)
-            observer.modelChanged(this);
     }
 
     /**
@@ -190,14 +145,14 @@ public class Game {
             // Get the input from the player and analyze it
             controller.processInputFromPlayer();
 
-            // Checking the status of the game after each move
-            checkGameStatus();
-
             // Switch the player
             currentPlayer = getOpponent(currentPlayer);
 
             // And then notify the observer
             notifyObservers();
+
+            // Checking the status of the game after each move
+            checkGameStatus();
         }
     }
 
@@ -257,11 +212,11 @@ public class Game {
      * Check the status of the game at each round
      */
     private void checkGameStatus() {
-        if (getOpponent(currentPlayer).isKingInCheck()) {
-            controller.notifyView(Attributes.GameStatus.KING_IN_CHECK, getOpponent(currentPlayer));
+        if (currentPlayer.isKingInCheck()) {
+            controller.notifyView(Attributes.GameStatus.KING_IN_CHECK, currentPlayer);
         }
-        if (hasGameEnded(getOpponent(currentPlayer))) {
-            controller.notifyView(Attributes.GameStatus.ENDED, currentPlayer);
+        if (hasGameEnded(currentPlayer)) {
+            controller.notifyView(Attributes.GameStatus.ENDED, getOpponent(currentPlayer));
             FINISHED = true;
         }
     }
@@ -274,8 +229,53 @@ public class Game {
      * @return true if the player has no moves left, false otherwise
      */
     private boolean hasGameEnded(Player player) {
-        return player.calculatePlayerMoves().isEmpty() || player.checkMate(currentPlayer.getKing());
+        return player.checkMate();
     }
+
+    /**
+     * Getter for the current player of the game
+     *
+     * @return the currentPlayer
+     */
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    /**
+     * Getting the opponent of the current player
+     * @param player The current player of the game
+     */
+    public static Player getOpponent(Player player) {
+        return player.getColor() == playerOne.getColor() ? playerTwo : playerOne;
+    }
+
+    /**
+     * Getter for the board of the game
+     *
+     * @return the board
+     */
+    public static Board getBoard() {
+        return board;
+    }
+
+    /**
+     * Getter for the white beaten pieces
+     *
+     * @return white beaten pieces
+     */
+    public static ArrayList<Piece> getWhiteBeaten() {
+        return whiteBeaten;
+    }
+
+    /**
+     * Getter for the black beaten pieces
+     *
+     * @return black beaten pieces
+     */
+    public static ArrayList<Piece> getBlackBeaten() {
+        return blackBeaten;
+    }
+
 
     /**
      * Getter for the Controller

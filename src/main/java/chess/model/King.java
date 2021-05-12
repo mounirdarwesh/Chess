@@ -94,24 +94,4 @@ public class King extends Piece {
             }
         }
     }
-
-    /**
-     * Handling the situation if the enemy king threatens the destination of the moved king
-     * @param destination
-     */
-    protected boolean checkForEnemyKing(int destination) {
-        Piece enemyKing = Game.getOpponent(Game.getCurrentPlayer()).getKing();
-        for (int i : MOVE_OFFSETS) {
-            int enemyDestination = enemyKing.position + i;
-            if ((isInFirstColumn(enemyKing.position) && (i == -9 || i == -1 || i == 7)) ||
-                    (isInLastColumn(enemyKing.position) && (i == -7 || i == 1 || i == 9))
-                    || !isPositionInBounds(enemyDestination)) {
-                continue;
-            }
-            if(enemyDestination == destination) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

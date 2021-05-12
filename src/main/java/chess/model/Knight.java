@@ -27,7 +27,6 @@ public class Knight extends Piece {
      */
     public Knight(int position, Attributes.Color color, Board board) {
         super(position, color, board);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

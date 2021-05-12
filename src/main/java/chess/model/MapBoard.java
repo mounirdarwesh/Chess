@@ -1,14 +1,20 @@
 package chess.model;
 
-/*
- * @author Mounir Darwish, Seyedbehnam Mirhashemi
+/**
+ * @author Gr.45
  */
 
-public class mapBoard {
-    public mapBoard() {
+public class MapBoard {
+    public MapBoard() {
 
     }
 
+    /**
+     * get for each Tile name an Index
+     *
+     * @param val Tile name
+     * @return the Index
+     */
     public int map(String val) {
         switch (val.toLowerCase()) {
             case "a1":

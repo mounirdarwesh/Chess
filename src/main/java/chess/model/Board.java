@@ -67,8 +67,13 @@ public class Board {
         return this.piecesOnBoard;
     }
 
+    /**
+     * setter for the board
+     *
+     * @param piecesOnBoard FEN String, contains the Pieces.
+     */
     public void setPiecesOnBoard(String piecesOnBoard) {
-        this.piecesOnBoard = FenUtilities.loadBoardFromFEN(piecesOnBoard,this);
+        this.piecesOnBoard = FenUtilities.loadBoardFromFEN(piecesOnBoard, this);
     }
 
 

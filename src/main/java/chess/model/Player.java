@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public abstract class Player {
 
     /**
-     *  The color of the player's chosen pieces
+     * The color of the player's chosen pieces
      */
     protected Color color;
 
@@ -29,11 +29,12 @@ public abstract class Player {
 
     /**
      * The constructor of the class Player
-     * @param color  the color that the player chooses to play with
+     *
+     * @param color the color that the player chooses to play with
      */
     public Player(Color color) {
         this.color = color;
-        playerPieces  = new ArrayList<>();
+        playerPieces = new ArrayList<>();
     }
 
     /**
@@ -43,22 +44,25 @@ public abstract class Player {
 
     /**
      * Adding to the list of player's available pieces
+     *
      * @param piece The piece to add
      */
-    public void addToPlayersPieces(Piece piece){
+    public void addToPlayersPieces(Piece piece) {
         playerPieces.add(piece);
     }
 
     /**
      * Removing from the player's available pieces
+     *
      * @param piece The piece to remove
      */
-    public void removeFromPlayersPieces(Piece piece){
+    public void removeFromPlayersPieces(Piece piece) {
         playerPieces.remove(piece);
     }
 
     /**
      * Here where all of player's legal moves are calculated
+     *
      * @return legalMoves All of the enemy's legal moves
      */
     protected ArrayList<Move> calculatePlayerMoves() {
@@ -72,6 +76,7 @@ public abstract class Player {
 
     /**
      * Checks if the players King is in check
+     *
      * @return true if the king is in check, false otherwise
      */
     public boolean isKingInCheck() {
@@ -81,7 +86,7 @@ public abstract class Player {
         // Iterate through all of the enemy's legal moves. If a move is found that can threaten
         // the current player's king, return true
         for (Move move : enemyLegalMoves) {
-            if(move.getDestination() == getKing().getPosition()
+            if (move.getDestination() == getKing().getPosition()
                     && (move instanceof Move.CaptureMove || move instanceof Move.PromotionMove)) {
                 kingInCheck = true;
                 break;
@@ -91,7 +96,30 @@ public abstract class Player {
     }
 
     /**
+     * check all King Moves, if he can Escape.
+     *
+     * @return true, if the King has no Escape
+     */
+    boolean checkMate(Piece king) {
+        boolean isCheckMate = true;
+        if (this.isKingInCheck()) {
+            king.calculateLegalMoves();
+            for (Move move : king.getAllLegalMoves()) {
+                move.execute();
+                if (!isKingInCheck()) {
+                    isCheckMate = false;
+                    move.undo();
+                    break;
+                }
+                move.undo();
+            }
+        } else isCheckMate = false;
+        return isCheckMate;
+    }
+
+    /**
      * Getter to the player's king
+     *
      * @return
      */
     public Piece getKing() {
@@ -104,6 +132,7 @@ public abstract class Player {
 
     /**
      * Getter of the players color to play
+     *
      * @return the color
      */
     public Color getColor() {
@@ -111,7 +140,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @return
      */
     public boolean isAllowEnPassant() {
@@ -119,7 +147,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @param allowEnPassant
      */
     public void setAllowEnPassant(boolean allowEnPassant) {
@@ -128,6 +155,7 @@ public abstract class Player {
 
     /**
      * Getter to the player's pieces
+     *
      * @return
      */
     public ArrayList<Piece> getPlayerPieces() {
@@ -135,7 +163,7 @@ public abstract class Player {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.color.isWhite() ? "White Player" : "Black player";
     }
 

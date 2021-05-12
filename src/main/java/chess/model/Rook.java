@@ -27,7 +27,6 @@ public class Rook extends Piece {
      */
     public Rook(int position, Attributes.Color color, Board board) {
         super(position, color, board);
-        // TODO Auto-generated constructor stub
     }
 
 

@@ -24,7 +24,7 @@ public class CliController extends Controller {
     /**
      * A board mapper, to map each input to its respective index
      */
-    private static final mapBoard MAPPER = new mapBoard();
+    private static final MapBoard MAPPER = new MapBoard();
 
     /**
      * The move to be performed on the piece
@@ -35,22 +35,25 @@ public class CliController extends Controller {
      * The constructor expects a view to construct itself.
      *
      * @param view The view that is connected to this controller
+     * @param FINISHED game status for the sake of TEST
      */
-    public CliController(View view) {
+    public CliController(View view, boolean FINISHED) {
         super(view);
 
         // Assigning the controller
         view.assignController(this);
 
         // When a player inputs something to the console
-        onActionPreformed();
+        onActionPreformed(FINISHED);
     }
 
 
     /**
      * This will be called when someone interacts with the Command Line Interface
+     *
+     * @param FINISHED game status
      */
-    private void onActionPreformed() {
+    private void onActionPreformed(boolean FINISHED) {
         // Create a new game
         game = new Game(this,
                 new Board(),
@@ -59,6 +62,9 @@ public class CliController extends Controller {
 
         // Set the game to the CLI view
         view.setGame(game);
+
+        // set initial status of the game
+        game.setFINISHED(FINISHED);
 
         // Start the game
         game.run();
@@ -150,7 +156,7 @@ public class CliController extends Controller {
      * @param input The input form the player
      * @return The index of the selected piece
      */
-    private int getMoveFromPosition(String input) {
+    int getMoveFromPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
         matcher.matches();
         String fromIn = matcher.group(1);
@@ -163,7 +169,7 @@ public class CliController extends Controller {
      * @param input The input form the player
      * @return The index of the destination
      */
-    private int getMoveToPosition(String input) {
+    int getMoveToPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
         matcher.matches();
         String toIn = matcher.group(3);

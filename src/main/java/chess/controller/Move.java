@@ -4,31 +4,31 @@ import chess.model.*;
 
 /**
  * @author Gr.45
- *
  */
 public abstract class Move {
 
     /**
-     *  The board on which the move is performed
+     * The board on which the move is performed
      */
     protected Board board;
 
     /**
-     *  The position where the move starts
+     * The position where the move starts
      */
     protected Piece piece;
 
     /**
-     *  The position where the move ends
+     * The position where the move ends
      */
     protected int destination;
 
 
     /**
      * The constructor for the move class
-     * @param board  The board on which the move is performed
-     * @param piece  The moved piece
-     * @param destination  To where the piece should move
+     *
+     * @param board       The board on which the move is performed
+     * @param piece       The moved piece
+     * @param destination To where the piece should move
      */
     public Move(Board board, Piece piece, int destination) {
         this.board = board;
@@ -48,6 +48,7 @@ public abstract class Move {
 
     /**
      * Getter of the destination of the move
+     *
      * @return the destination of the move
      */
     public int getDestination() {
@@ -61,6 +62,7 @@ public abstract class Move {
 
     /**
      * Here where the piece make a normal move
+     *
      * @author Gr. 45
      */
     public static class NormalMove extends Move {
@@ -87,8 +89,9 @@ public abstract class Move {
 
         /**
          * A constructor for the Normal Move class
-         * @param board The board on which the move is executed
-         * @param piece The piece that performs the move
+         *
+         * @param board       The board on which the move is executed
+         * @param piece       The piece that performs the move
          * @param destination The desired location of the new position
          */
         public NormalMove(Board board, Piece piece, int destination) {
@@ -110,7 +113,7 @@ public abstract class Move {
 
             // Set the first move to false, because this is it's first move
             wasFirstMove = piece.isFirstMove();
-            if(wasFirstMove) {
+            if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
 
@@ -183,10 +186,11 @@ public abstract class Move {
 
         /**
          * A constructor for the Castling Move class
-         * @param board The board on which the move is executed
-         * @param piece The King that performs the move
-         * @param destination The desired location of the new position for the King
-         * @param pieceRook The Rook that performs the move
+         *
+         * @param board           The board on which the move is executed
+         * @param piece           The King that performs the move
+         * @param destination     The desired location of the new position for the King
+         * @param pieceRook       The Rook that performs the move
          * @param destinationRook The desired location of the new position for the Rook
          */
         public CastlingMove(Board board, Piece piece, int destination, Piece pieceRook, int destinationRook) {
@@ -208,7 +212,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             wasKingFirstMove = piece.isFirstMove();
-            if(wasKingFirstMove) {
+            if (wasKingFirstMove) {
                 piece.setFirstMove(false);
             }
 
@@ -223,7 +227,7 @@ public abstract class Move {
 
             // Set the first move to false, because this is it's first move
             wasRookFirstMove = pieceRook.isFirstMove();
-            if(wasRookFirstMove) {
+            if (wasRookFirstMove) {
                 pieceRook.setFirstMove(false);
             }
 
@@ -253,8 +257,10 @@ public abstract class Move {
         }
 
     }
+
     /**
      * Here where the pawn can make double step
+     *
      * @author Gr. 45
      */
     public static class DoublePawnMove extends Move {
@@ -281,8 +287,9 @@ public abstract class Move {
 
         /**
          * A constructor for the Double Pawn Move class
-         * @param board The board on which the move is executed
-         * @param piece The piece that performs the move
+         *
+         * @param board       The board on which the move is executed
+         * @param piece       The piece that performs the move
          * @param destination The desired location of the new position
          */
         public DoublePawnMove(Board board, Piece piece, int destination) {
@@ -305,7 +312,7 @@ public abstract class Move {
 
             // Set the first move to false, because this is it's first move
             wasFirstMove = piece.isFirstMove();
-            if(wasFirstMove) {
+            if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
 
@@ -329,6 +336,7 @@ public abstract class Move {
 
     /**
      * Here where the piece perform a capture move
+     *
      * @author Gr. 45
      */
     public static class CaptureMove extends Move {
@@ -355,8 +363,9 @@ public abstract class Move {
 
         /**
          * A constructor for the Capture Move class
-         * @param board The board on which the move is executed
-         * @param piece The piece that performs the move
+         *
+         * @param board       The board on which the move is executed
+         * @param piece       The piece that performs the move
          * @param destination The desired location of the new position
          */
         public CaptureMove(Board board, Piece piece, int destination) {
@@ -403,9 +412,9 @@ public abstract class Move {
     }
 
     /**
-     * Here where to pereform the classic En passant move
-     * @author Gr. 45
+     * Here where to perform the classic En passant move
      *
+     * @author Gr. 45
      */
     public static class EnPassantMove extends Move {
 
@@ -437,9 +446,10 @@ public abstract class Move {
 
         /**
          * A constructor for the En Passant Move class
-         * @param board The board on which the move is executed
-         * @param piece The piece that performs the move
-         * @param destination The desired location of the new position
+         *
+         * @param board                 The board on which the move is executed
+         * @param piece                 The piece that performs the move
+         * @param destination           The desired location of the new position
          * @param pawnCapturedEnPassant The position of the pawn captured
          */
         public EnPassantMove(Board board, Piece piece, int destination, int pawnCapturedEnPassant) {
@@ -491,6 +501,7 @@ public abstract class Move {
 
     /**
      * Here where the Promotion to a new piece is happening
+     *
      * @author Gr.45
      */
     public static class PromotionMove extends Move {
@@ -516,16 +527,17 @@ public abstract class Move {
         private Piece captured;
 
         /**
-         *The promoted piece
+         * The promoted piece
          */
         private Piece promotedPiece;
 
         /**
          * A constructor for the Promotion Move class
-         * @param board The board on which the move is executed
-         * @param piece The piece that performs the move
+         *
+         * @param board       The board on which the move is executed
+         * @param piece       The piece that performs the move
          * @param destination The desired location of the new position
-         * @param promoted The representation of the piece to promote
+         * @param promoted    The representation of the piece to promote
          */
         public PromotionMove(Board board, Piece piece, int destination, char promoted) {
             super(board, piece, destination);
@@ -542,7 +554,7 @@ public abstract class Move {
             captured = board.getPiecesOnBoard().get(destination);
 
             // Check if the pawn captured a piece to promote
-            if(captured != null) {
+            if (captured != null) {
                 // Then add it to beaten figures
                 Game.addToBeaten(board.getPiecesOnBoard().get(destination));
             }
@@ -606,7 +618,7 @@ public abstract class Move {
 
         @Override
         public void undo() {
-            if(captured != null) {
+            if (captured != null) {
                 Game.removeFromBeaten(captured);
             }
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);

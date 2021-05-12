@@ -27,7 +27,6 @@ public class Bishop extends Piece {
      */
     public Bishop(int position, Attributes.Color color, Board board) {
         super(position, color, board);
-        // TODO Auto-generated constructor stub
     }
 
 

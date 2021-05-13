@@ -23,15 +23,31 @@ public class PlayerTest {
 
     @Test
    public void checkMate() {
-        /*Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
+        Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
         Piece rook = new Rook (7, Attributes.Color.BLACK, board);
         Piece queen = new Queen (46, Attributes.Color.BLACK, board);
+        kingCheckMate.isFirstMove = false;
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingCheckMate);
         board.setPiece(queen);
         board.setPiece(rook);
-        System.out.println(board.toString());
-        assertTrue(player2.checkMate());*/
+        player.addToPlayersPieces(rook);
+        player.addToPlayersPieces(queen);
+        player2.addToPlayersPieces(kingCheckMate);
+        assertTrue(player2.checkMate());
 
+    }
+
+    @Test
+    public void isKingInCheck() {
+        Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
+        Piece rook = new Rook (7, Attributes.Color.BLACK, board);
+        kingCheckMate.isFirstMove = false;
+        board.setPiecesOnBoard(EMPTY_FEN);
+        board.setPiece(kingCheckMate);
+        board.setPiece(rook);
+        player.addToPlayersPieces(rook);
+        player2.addToPlayersPieces(kingCheckMate);
+        assertTrue(player2.isKingInCheck());
     }
 }

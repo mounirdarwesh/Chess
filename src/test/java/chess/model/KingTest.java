@@ -121,21 +121,6 @@ public class KingTest {
     }
 
     @Test
-    public void checkMate(){
-
-        ArrayList<Move> expected = new ArrayList<>();
-        Piece kingCheckMate = new King(63, Attributes.Color.BLACK, board);
-        Piece rook = new Rook (7, Attributes.Color.WHITE, board);
-        Piece queen = new Queen (46, Attributes.Color.WHITE, board);
-        board.setPiece(kingCheckMate);
-        board.setPiece(queen);
-        board.setPiece(rook);
-
-        kingCheckMate.calculateLegalMoves();
-        assertEquals(expected.toString(), kingCheckMate.getAllLegalMoves().toString());
-    }
-
-    @Test
     public void castling(){
 
     }

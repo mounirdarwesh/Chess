@@ -55,7 +55,6 @@ public class KingTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingMiddle);
         kingMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), kingMiddle.getAllLegalMoves().toString());
     }
 
@@ -87,7 +86,6 @@ public class KingTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingMiddle);
         kingMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), kingMiddle.getAllLegalMoves().toString());
     }
 
@@ -109,7 +107,6 @@ public class KingTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingEdge);
         kingEdge.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingEdge.getAllLegalMoves();
         assertEquals(expected.toString(), kingEdge.getAllLegalMoves().toString());
     }
 
@@ -131,7 +128,6 @@ public class KingTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingEdge);
         kingEdge.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingEdge.getAllLegalMoves();
         assertEquals(expected.toString(), kingEdge.getAllLegalMoves().toString());
     }
 
@@ -163,7 +159,6 @@ public class KingTest {
         board.setPiece(king);
         board.setPiece(kingBlockByTeammate);
         kingBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), kingBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -195,7 +190,6 @@ public class KingTest {
         board.setPiece(king);
         board.setPiece(kingBlockByTeammate);
         kingBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), kingBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -241,7 +235,6 @@ public class KingTest {
         board.setPiece(king);
         board.setPiece(kingCaptureEnemy);
         kingCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(), kingCaptureEnemy.getAllLegalMoves().toString());
     }
 
@@ -287,24 +280,8 @@ public class KingTest {
         board.setPiece(king);
         board.setPiece(kingCaptureEnemy);
         kingCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = kingCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(), kingCaptureEnemy.getAllLegalMoves().toString());
     }
-
-/*    @Test
-    public void checkMate(){
-
-        ArrayList<Move> expected = new ArrayList<>();
-        Piece kingCheckMate = new King(63, Attributes.Color.BLACK, board);
-        Piece rook = new Rook (7, Attributes.Color.WHITE, board);
-        Piece queen = new Queen (46, Attributes.Color.WHITE, board);
-        board.setPiece(kingCheckMate);
-        board.setPiece(queen);
-        board.setPiece(rook);
-
-        kingCheckMate.calculateLegalMoves();
-        assertEquals(expected.toString(), kingCheckMate.getAllLegalMoves().toString());
-    }*/
 
 /*    @Test
     public void castling(){

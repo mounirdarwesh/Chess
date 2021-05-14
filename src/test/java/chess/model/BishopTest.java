@@ -67,7 +67,6 @@ public class BishopTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishopMiddle);
         bishopMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), bishopMiddle.getAllLegalMoves().toString());
     }
 
@@ -108,7 +107,6 @@ public class BishopTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishopMiddle);
         bishopMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), bishopMiddle.getAllLegalMoves().toString());
     }
 
@@ -137,7 +135,6 @@ public class BishopTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishopEdge);
         bishopEdge.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopEdge.getAllLegalMoves();
         assertEquals(expected.toString(), bishopEdge.getAllLegalMoves().toString());
     }
 
@@ -166,7 +163,6 @@ public class BishopTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishopEdge);
         bishopEdge.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopEdge.getAllLegalMoves();
         assertEquals(expected.toString(), bishopEdge.getAllLegalMoves().toString());
     }
 
@@ -188,7 +184,6 @@ public class BishopTest {
         board.setPiece(pawn);
         board.setPiece(bishopBlockByTeammate);
         bishopBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), bishopBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -210,7 +205,6 @@ public class BishopTest {
         board.setPiece(pawn);
         board.setPiece(bishopBlockByTeammate);
         bishopBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), bishopBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -219,7 +213,7 @@ public class BishopTest {
      */
     @Test
     public void testCalculateLegalMovesCaptureEnemyW() {
-        ArrayList<Move> expected = new ArrayList<Move>();
+        ArrayList<Move> expected = new ArrayList<>();
         Piece bishopCaptureEnemy = new Bishop(14, Attributes.Color.WHITE, board);
         Piece rook = new Rook(7, Attributes.Color.BLACK,board);
         Piece knight = new Knight(28, Attributes.Color.BLACK,board);
@@ -238,7 +232,6 @@ public class BishopTest {
         board.setPiece(knight);
         board.setPiece(bishopCaptureEnemy);
         bishopCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(),bishopCaptureEnemy.getAllLegalMoves().toString());
     }
 
@@ -247,7 +240,7 @@ public class BishopTest {
      */
     @Test
     public void testCalculateLegalMovesCaptureEnemyB() {
-        ArrayList<Move> expected = new ArrayList<Move>();
+        ArrayList<Move> expected = new ArrayList<>();
         Piece bishopCaptureEnemy = new Bishop(14, Attributes.Color.BLACK, board);
         Piece rook = new Rook(7, Attributes.Color.WHITE,board);
         Piece knight = new Knight(28, Attributes.Color.WHITE,board);
@@ -266,7 +259,6 @@ public class BishopTest {
         board.setPiece(knight);
         board.setPiece(bishopCaptureEnemy);
         bishopCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = bishopCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(),bishopCaptureEnemy.getAllLegalMoves().toString());
     }
 }

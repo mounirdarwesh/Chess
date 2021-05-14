@@ -54,7 +54,6 @@ public class KnightTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(knightMiddle);
         knightMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), knightMiddle.getAllLegalMoves().toString());
     }
 
@@ -85,8 +84,46 @@ public class KnightTest {
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(knightMiddle);
         knightMiddle.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightMiddle.getAllLegalMoves();
         assertEquals(expected.toString(), knightMiddle.getAllLegalMoves().toString());
+    }
+
+
+    /**
+     * Test all the legal moves of a white knight in a position on the edge of the board
+     */
+    @Test
+    public void testCalculateLegalMovesEdgeW() {
+
+        ArrayList<Move> expected = new ArrayList<>();
+        Piece knightEdge = new Knight(0, Attributes.Color.WHITE, board);
+        Move m1 = new Move.NormalMove(board,knightEdge,10);
+        expected.add(m1);
+        Move m2 = new Move.NormalMove(board,knightEdge,17);
+        expected.add(m2);
+
+        board.setPiecesOnBoard(EMPTY_FEN);
+        board.setPiece(knightEdge);
+        knightEdge.calculateLegalMoves();
+        assertEquals(expected.toString(), knightEdge.getAllLegalMoves().toString());
+    }
+
+    /**
+     * Test all the legal moves of a black knight in a position on the edge of the board
+     */
+    @Test
+    public void testCalculateLegalMovesEdgeB() {
+
+        ArrayList<Move> expected = new ArrayList<>();
+        Piece knightEdge = new Knight(63, Attributes.Color.BLACK, board);
+        Move m1 = new Move.NormalMove(board,knightEdge,46);
+        expected.add(m1);
+        Move m2 = new Move.NormalMove(board,knightEdge,53);
+        expected.add(m2);
+
+        board.setPiecesOnBoard(EMPTY_FEN);
+        board.setPiece(knightEdge);
+        knightEdge.calculateLegalMoves();
+        assertEquals(expected.toString(), knightEdge.getAllLegalMoves().toString());
     }
 
     /**
@@ -107,7 +144,6 @@ public class KnightTest {
         board.setPiece(pawn);
         board.setPiece(queen);
         knightBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), knightBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -129,7 +165,6 @@ public class KnightTest {
         board.setPiece(pawn);
         board.setPiece(queen);
         knightBlockByTeammate.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightBlockByTeammate.getAllLegalMoves();
         assertEquals(expected.toString(), knightBlockByTeammate.getAllLegalMoves().toString());
     }
 
@@ -158,7 +193,6 @@ public class KnightTest {
         board.setPiece(pawn);
         board.setPiece(queen);
         knightCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(), knightCaptureEnemy.getAllLegalMoves().toString());
     }
 
@@ -187,7 +221,6 @@ public class KnightTest {
         board.setPiece(pawn);
         board.setPiece(queen);
         knightCaptureEnemy.calculateLegalMoves();
-        ArrayList<Move> allLegal = knightCaptureEnemy.getAllLegalMoves();
         assertEquals(expected.toString(), knightCaptureEnemy.getAllLegalMoves().toString());
     }
 }

@@ -46,7 +46,6 @@ public class PawnTest {
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(pawnStartPosition);
 		pawnStartPosition.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnStartPosition.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnStartPosition.getAllLegalMoves().toString());
 	}
 
@@ -66,7 +65,6 @@ public class PawnTest {
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(pawnStartPosition);
 		pawnStartPosition.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnStartPosition.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnStartPosition.getAllLegalMoves().toString());
 	}
 
@@ -84,7 +82,6 @@ public class PawnTest {
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(pawnMiddle);
 		pawnMiddle.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnMiddle.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnMiddle.getAllLegalMoves().toString());
 	}
 
@@ -102,7 +99,6 @@ public class PawnTest {
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(pawnMiddle);
 		pawnMiddle.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnMiddle.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnMiddle.getAllLegalMoves().toString());
 	}
 
@@ -114,12 +110,16 @@ public class PawnTest {
 		ArrayList<Move> expected = new ArrayList<>();
 		Piece pawnBlockByTeammate = new Pawn(28, Attributes.Color.WHITE, board);
 		Piece bishop = new Bishop(36, Attributes.Color.WHITE,board);
+		Piece rook = new Rook(35, Attributes.Color.BLACK, board);
+
+		Move m1 = new Move.CaptureMove(board,pawnBlockByTeammate,35);
+		expected.add(m1);
 
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(bishop);
+		board.setPiece(rook);
 		board.setPiece(pawnBlockByTeammate);
 		pawnBlockByTeammate.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnBlockByTeammate.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnBlockByTeammate.getAllLegalMoves().toString());
 	}
 
@@ -131,12 +131,14 @@ public class PawnTest {
 		ArrayList<Move> expected = new ArrayList<>();
 		Piece pawnBlockByTeammate = new Pawn(38, Attributes.Color.BLACK, board);
 		Piece bishop = new Bishop(30, Attributes.Color.BLACK,board);
-
+		Piece rook = new Rook(31, Attributes.Color.WHITE, board);
+		Move m1 = new Move.CaptureMove(board,pawnBlockByTeammate,31);
+		expected.add(m1);
 		board.setPiecesOnBoard(EMPTY_FEN);
 		board.setPiece(bishop);
+		board.setPiece(rook);
 		board.setPiece(pawnBlockByTeammate);
 		pawnBlockByTeammate.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnBlockByTeammate.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnBlockByTeammate.getAllLegalMoves().toString());
 	}
 
@@ -162,7 +164,6 @@ public class PawnTest {
 		board.setPiece(rook);
 		board.setPiece(pawnCaptureEnemy);
 		pawnCaptureEnemy.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnCaptureEnemy.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
 	}
 
@@ -188,7 +189,6 @@ public class PawnTest {
 		board.setPiece(rook);
 		board.setPiece(pawnCaptureEnemy);
 		pawnCaptureEnemy.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnCaptureEnemy.getAllLegalMoves();
 		assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
 	}
 /*	@Test

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CliControllerTest {
+public class CliControllerTest {
     View view = new Cli();
     CliController cli = new CliController(view, true);
 

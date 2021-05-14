@@ -34,7 +34,7 @@ public class CliController extends Controller {
     /**
      * The constructor expects a view to construct itself.
      *
-     * @param view The view that is connected to this controller
+     * @param view     The view that is connected to this controller
      * @param FINISHED game status for the sake of TEST
      */
     public CliController(View view, boolean FINISHED) {
@@ -126,7 +126,7 @@ public class CliController extends Controller {
 
 
         // Check if the game allows the move from the current player
-        if(!game.isMoveAllowed(move_from, move_to)) {
+        if (!game.isMoveAllowed(move_from, move_to)) {
             return false;
         }
 
@@ -156,7 +156,7 @@ public class CliController extends Controller {
      * @param input The input form the player
      * @return The index of the selected piece
      */
-    int getMoveFromPosition(String input) {
+    public int getMoveFromPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
         matcher.matches();
         String fromIn = matcher.group(1);
@@ -169,7 +169,7 @@ public class CliController extends Controller {
      * @param input The input form the player
      * @return The index of the destination
      */
-    int getMoveToPosition(String input) {
+    public int getMoveToPosition(String input) {
         Matcher matcher = VALID_INPUT.matcher(input);
         matcher.matches();
         String toIn = matcher.group(3);

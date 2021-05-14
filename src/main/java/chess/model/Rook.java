@@ -51,10 +51,11 @@ public class Rook extends Piece {
                     if (!isFriendAtTheDestination(destination)) {
                         allLegalMoves.add(new Move.CaptureMove(board, this, destination));
                         break;
-                    } else if (isDestinationEmpty(destination))
+                    } else if (isDestinationEmpty(destination)) {
                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
-                    else if (isFriendAtTheDestination(destination))
+                    }else if (isFriendAtTheDestination(destination)){
                         break;
+                    }
                 }
             }
         }

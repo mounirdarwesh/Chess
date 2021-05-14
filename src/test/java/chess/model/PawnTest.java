@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
+ * Test of the class Pawn
  * @author Gruppe 45
  */
 public class PawnTest {

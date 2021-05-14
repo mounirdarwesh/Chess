@@ -3,8 +3,10 @@ package chess.model;
 /**
  * @author Gr.45
  */
-
 public class MapBoard {
+    /**
+     * MapBoard constructor
+     */
     public MapBoard() {
 
     }

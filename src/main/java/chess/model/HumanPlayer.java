@@ -1,13 +1,6 @@
 package chess.model;
-
 import chess.Attributes.Color;
 import chess.controller.Move;
-import chess.model.Game;
-import chess.model.King;
-import chess.model.Piece;
-import chess.model.Player;
-
-import java.util.ArrayList;
 
 /**
  * @author Ahmad Mohammad

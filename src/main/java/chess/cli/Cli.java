@@ -34,6 +34,7 @@ public class Cli extends View {
     /**
      * read Input from User
      */
+    @Override
     public void readInputFromPlayer() {
 
         String input = scanner.nextLine();
@@ -55,7 +56,7 @@ public class Cli extends View {
                 System.out.println("!Move not allowed");
                 input = scanner.nextLine();
                 continue;
-            } else System.out.println("!" + input);
+            } else {System.out.println("!" + input);}
             break;
         }
 
@@ -77,6 +78,7 @@ public class Cli extends View {
      *
      * @param controller that controls the View
      */
+    @Override
     public void assignController(CliController controller) {
         this.controller = controller;
     }

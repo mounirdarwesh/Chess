@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
+/**
+ * Test of the class Rook
+ * @author Gruppe 45
+ */
 public class RookTest {
     //Empty board
     private static final String EMPTY_FEN = "8/8/8/8/8/8/8/8";
@@ -37,39 +42,39 @@ public class RookTest {
     @Test
     public void testCalculateLegalMovesMiddleW() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookMiddle = new Rook(35, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,rookMiddle,27);
+        Piece rookMiddleW = new Rook(35, Attributes.Color.WHITE, board);
+        Move m1 = new Move.NormalMove(board,rookMiddleW,27);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookMiddle,19);
+        Move m2 = new Move.NormalMove(board,rookMiddleW,19);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,rookMiddle,11);
+        Move m3 = new Move.NormalMove(board,rookMiddleW,11);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,rookMiddle,3);
+        Move m4 = new Move.NormalMove(board,rookMiddleW,3);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookMiddle,34);
+        Move m5 = new Move.NormalMove(board,rookMiddleW,34);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,rookMiddle,33);
+        Move m6 = new Move.NormalMove(board,rookMiddleW,33);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,rookMiddle,32);
+        Move m7 = new Move.NormalMove(board,rookMiddleW,32);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,rookMiddle,36);
+        Move m8 = new Move.NormalMove(board,rookMiddleW,36);
         expected.add(m8);
-        Move m9 = new Move.NormalMove(board,rookMiddle,37);
+        Move m9 = new Move.NormalMove(board,rookMiddleW,37);
         expected.add(m9);
-        Move m10 = new Move.NormalMove(board,rookMiddle,38);
+        Move m10 = new Move.NormalMove(board,rookMiddleW,38);
         expected.add(m10);
-        Move m11 = new Move.NormalMove(board,rookMiddle,39);
+        Move m11 = new Move.NormalMove(board,rookMiddleW,39);
         expected.add(m11);
-        Move m12 = new Move.NormalMove(board,rookMiddle,43);
+        Move m12 = new Move.NormalMove(board,rookMiddleW,43);
         expected.add(m12);
-        Move m13 = new Move.NormalMove(board,rookMiddle,51);
+        Move m13 = new Move.NormalMove(board,rookMiddleW,51);
         expected.add(m13);
-        Move m14 = new Move.NormalMove(board,rookMiddle,59);
+        Move m14 = new Move.NormalMove(board,rookMiddleW,59);
         expected.add(m14);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookMiddle);
-        rookMiddle.calculateLegalMoves();
-        assertEquals(expected.toString(), rookMiddle.getAllLegalMoves().toString());
+        board.setPiece(rookMiddleW);
+        rookMiddleW.calculateLegalMoves();
+        assertEquals(expected.toString(), rookMiddleW.getAllLegalMoves().toString());
     }
 
     /**
@@ -79,39 +84,39 @@ public class RookTest {
     public void testCalculateLegalMovesMiddleB() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookMiddle = new Rook(35, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,rookMiddle,27);
+        Piece rookMiddleB = new Rook(35, Attributes.Color.BLACK, board);
+        Move m1 = new Move.NormalMove(board,rookMiddleB,27);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookMiddle,19);
+        Move m2 = new Move.NormalMove(board,rookMiddleB,19);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,rookMiddle,11);
+        Move m3 = new Move.NormalMove(board,rookMiddleB,11);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,rookMiddle,3);
+        Move m4 = new Move.NormalMove(board,rookMiddleB,3);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookMiddle,34);
+        Move m5 = new Move.NormalMove(board,rookMiddleB,34);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,rookMiddle,33);
+        Move m6 = new Move.NormalMove(board,rookMiddleB,33);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,rookMiddle,32);
+        Move m7 = new Move.NormalMove(board,rookMiddleB,32);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,rookMiddle,36);
+        Move m8 = new Move.NormalMove(board,rookMiddleB,36);
         expected.add(m8);
-        Move m9 = new Move.NormalMove(board,rookMiddle,37);
+        Move m9 = new Move.NormalMove(board,rookMiddleB,37);
         expected.add(m9);
-        Move m10 = new Move.NormalMove(board,rookMiddle,38);
+        Move m10 = new Move.NormalMove(board,rookMiddleB,38);
         expected.add(m10);
-        Move m11 = new Move.NormalMove(board,rookMiddle,39);
+        Move m11 = new Move.NormalMove(board,rookMiddleB,39);
         expected.add(m11);
-        Move m12 = new Move.NormalMove(board,rookMiddle,43);
+        Move m12 = new Move.NormalMove(board,rookMiddleB,43);
         expected.add(m12);
-        Move m13 = new Move.NormalMove(board,rookMiddle,51);
+        Move m13 = new Move.NormalMove(board,rookMiddleB,51);
         expected.add(m13);
-        Move m14 = new Move.NormalMove(board,rookMiddle,59);
+        Move m14 = new Move.NormalMove(board,rookMiddleB,59);
         expected.add(m14);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookMiddle);
-        rookMiddle.calculateLegalMoves();
-        assertEquals(expected.toString(), rookMiddle.getAllLegalMoves().toString());
+        board.setPiece(rookMiddleB);
+        rookMiddleB.calculateLegalMoves();
+        assertEquals(expected.toString(), rookMiddleB.getAllLegalMoves().toString());
     }
 
     /**
@@ -121,39 +126,39 @@ public class RookTest {
     public void testCalculateLegalMovesEdgeW() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookEdge = new Rook(0, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,rookEdge,1);
+        Piece rookEdgeW = new Rook(0, Attributes.Color.WHITE, board);
+        Move m1 = new Move.NormalMove(board,rookEdgeW,1);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookEdge,2);
+        Move m2 = new Move.NormalMove(board,rookEdgeW,2);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,rookEdge,3);
+        Move m3 = new Move.NormalMove(board,rookEdgeW,3);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,rookEdge,4);
+        Move m4 = new Move.NormalMove(board,rookEdgeW,4);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookEdge,5);
+        Move m5 = new Move.NormalMove(board,rookEdgeW,5);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,rookEdge,6);
+        Move m6 = new Move.NormalMove(board,rookEdgeW,6);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,rookEdge,7);
+        Move m7 = new Move.NormalMove(board,rookEdgeW,7);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,rookEdge,8);
+        Move m8 = new Move.NormalMove(board,rookEdgeW,8);
         expected.add(m8);
-        Move m9 = new Move.NormalMove(board,rookEdge,16);
+        Move m9 = new Move.NormalMove(board,rookEdgeW,16);
         expected.add(m9);
-        Move m10 = new Move.NormalMove(board,rookEdge,24);
+        Move m10 = new Move.NormalMove(board,rookEdgeW,24);
         expected.add(m10);
-        Move m11 = new Move.NormalMove(board,rookEdge,32);
+        Move m11 = new Move.NormalMove(board,rookEdgeW,32);
         expected.add(m11);
-        Move m12 = new Move.NormalMove(board,rookEdge,40);
+        Move m12 = new Move.NormalMove(board,rookEdgeW,40);
         expected.add(m12);
-        Move m13 = new Move.NormalMove(board,rookEdge,48);
+        Move m13 = new Move.NormalMove(board,rookEdgeW,48);
         expected.add(m13);
-        Move m14 = new Move.NormalMove(board,rookEdge,56);
+        Move m14 = new Move.NormalMove(board,rookEdgeW,56);
         expected.add(m14);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookEdge);
-        rookEdge.calculateLegalMoves();
-        assertEquals(expected.toString(), rookEdge.getAllLegalMoves().toString());
+        board.setPiece(rookEdgeW);
+        rookEdgeW.calculateLegalMoves();
+        assertEquals(expected.toString(), rookEdgeW.getAllLegalMoves().toString());
     }
 
     /**
@@ -163,39 +168,39 @@ public class RookTest {
     public void testCalculateLegalMovesEdgeB() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookEdge = new Rook(0, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,rookEdge,1);
+        Piece rookEdgeB = new Rook(0, Attributes.Color.BLACK, board);
+        Move m1 = new Move.NormalMove(board,rookEdgeB,1);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookEdge,2);
+        Move m2 = new Move.NormalMove(board,rookEdgeB,2);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,rookEdge,3);
+        Move m3 = new Move.NormalMove(board,rookEdgeB,3);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,rookEdge,4);
+        Move m4 = new Move.NormalMove(board,rookEdgeB,4);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookEdge,5);
+        Move m5 = new Move.NormalMove(board,rookEdgeB,5);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,rookEdge,6);
+        Move m6 = new Move.NormalMove(board,rookEdgeB,6);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,rookEdge,7);
+        Move m7 = new Move.NormalMove(board,rookEdgeB,7);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,rookEdge,8);
+        Move m8 = new Move.NormalMove(board,rookEdgeB,8);
         expected.add(m8);
-        Move m9 = new Move.NormalMove(board,rookEdge,16);
+        Move m9 = new Move.NormalMove(board,rookEdgeB,16);
         expected.add(m9);
-        Move m10 = new Move.NormalMove(board,rookEdge,24);
+        Move m10 = new Move.NormalMove(board,rookEdgeB,24);
         expected.add(m10);
-        Move m11 = new Move.NormalMove(board,rookEdge,32);
+        Move m11 = new Move.NormalMove(board,rookEdgeB,32);
         expected.add(m11);
-        Move m12 = new Move.NormalMove(board,rookEdge,40);
+        Move m12 = new Move.NormalMove(board,rookEdgeB,40);
         expected.add(m12);
-        Move m13 = new Move.NormalMove(board,rookEdge,48);
+        Move m13 = new Move.NormalMove(board,rookEdgeB,48);
         expected.add(m13);
-        Move m14 = new Move.NormalMove(board,rookEdge,56);
+        Move m14 = new Move.NormalMove(board,rookEdgeB,56);
         expected.add(m14);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookEdge);
-        rookEdge.calculateLegalMoves();
-        assertEquals(expected.toString(), rookEdge.getAllLegalMoves().toString());
+        board.setPiece(rookEdgeB);
+        rookEdgeB.calculateLegalMoves();
+        assertEquals(expected.toString(), rookEdgeB.getAllLegalMoves().toString());
     }
 
     /**
@@ -204,23 +209,23 @@ public class RookTest {
     @Test
     public void testCalculateLegalMovesBlockByTeammateW() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookBlockByTeammate = new Rook(36, Attributes.Color.WHITE, board);
+        Piece rookBlockByTeammateW = new Rook(36, Attributes.Color.WHITE, board);
         Piece bishop = new Bishop(35, Attributes.Color.WHITE,board);
         Piece knight = new Knight(37, Attributes.Color.WHITE,board);
         Piece pawn = new Pawn(28, Attributes.Color.WHITE,board);
         Piece queen = new Queen(60, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,rookBlockByTeammate,44);
+        Move m1 = new Move.NormalMove(board,rookBlockByTeammateW,44);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookBlockByTeammate,52);
+        Move m2 = new Move.NormalMove(board,rookBlockByTeammateW,52);
         expected.add(m2);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookBlockByTeammate);
+        board.setPiece(rookBlockByTeammateW);
         board.setPiece(knight);
         board.setPiece(pawn);
         board.setPiece(bishop);
         board.setPiece(queen);
-        rookBlockByTeammate.calculateLegalMoves();
-        assertEquals(expected.toString(), rookBlockByTeammate.getAllLegalMoves().toString());
+        rookBlockByTeammateW.calculateLegalMoves();
+        assertEquals(expected.toString(), rookBlockByTeammateW.getAllLegalMoves().toString());
     }
 
     /**
@@ -229,23 +234,23 @@ public class RookTest {
     @Test
     public void testCalculateLegalMovesBlockByTeammateB() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookBlockByTeammate = new Rook(36, Attributes.Color.BLACK, board);
+        Piece rookBlockByTeammateB = new Rook(36, Attributes.Color.BLACK, board);
         Piece bishop = new Bishop(35, Attributes.Color.BLACK,board);
         Piece knight = new Knight(37, Attributes.Color.BLACK,board);
         Piece pawn = new Pawn(28, Attributes.Color.BLACK,board);
         Piece queen = new Queen(60, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,rookBlockByTeammate,44);
+        Move m1 = new Move.NormalMove(board,rookBlockByTeammateB,44);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,rookBlockByTeammate,52);
+        Move m2 = new Move.NormalMove(board,rookBlockByTeammateB,52);
         expected.add(m2);
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookBlockByTeammate);
+        board.setPiece(rookBlockByTeammateB);
         board.setPiece(knight);
         board.setPiece(pawn);
         board.setPiece(bishop);
         board.setPiece(queen);
-        rookBlockByTeammate.calculateLegalMoves();
-        assertEquals(expected.toString(), rookBlockByTeammate.getAllLegalMoves().toString());
+        rookBlockByTeammateB.calculateLegalMoves();
+        assertEquals(expected.toString(), rookBlockByTeammateB.getAllLegalMoves().toString());
     }
 
     /**
@@ -254,27 +259,27 @@ public class RookTest {
     @Test
     public void testCalculateLegalMovesCaptureEnemyW() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookCaptureEnemy = new Rook(49, Attributes.Color.WHITE, board);
+        Piece rookCaptureEnemyW = new Rook(49, Attributes.Color.WHITE, board);
         Piece bishop = new Bishop(50, Attributes.Color.BLACK,board);
         Piece knight = new Knight(33, Attributes.Color.BLACK,board);
         Piece pawn = new Pawn(48, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,rookCaptureEnemy,41);
+        Move m1 = new Move.NormalMove(board,rookCaptureEnemyW,41);
         expected.add(m1);
-        Move m2 = new Move.CaptureMove(board,rookCaptureEnemy,33);
+        Move m2 = new Move.CaptureMove(board,rookCaptureEnemyW,33);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,rookCaptureEnemy,48);
+        Move m3 = new Move.CaptureMove(board,rookCaptureEnemyW,48);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,rookCaptureEnemy,50);
+        Move m4 = new Move.CaptureMove(board,rookCaptureEnemyW,50);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookCaptureEnemy,57);
+        Move m5 = new Move.NormalMove(board,rookCaptureEnemyW,57);
         expected.add(m5);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishop);
         board.setPiece(pawn);
         board.setPiece(knight);
-        board.setPiece(rookCaptureEnemy);
-        rookCaptureEnemy.calculateLegalMoves();
-        assertEquals(expected.toString(),rookCaptureEnemy.getAllLegalMoves().toString());
+        board.setPiece(rookCaptureEnemyW);
+        rookCaptureEnemyW.calculateLegalMoves();
+        assertEquals(expected.toString(),rookCaptureEnemyW.getAllLegalMoves().toString());
     }
 
     /**
@@ -283,26 +288,26 @@ public class RookTest {
     @Test
     public void testCalculateLegalMovesCaptureEnemyB() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece rookCaptureEnemy = new Rook(49, Attributes.Color.BLACK, board);
+        Piece rookCaptureEnemyB = new Rook(49, Attributes.Color.BLACK, board);
         Piece bishop = new Bishop(50, Attributes.Color.WHITE,board);
         Piece knight = new Knight(33, Attributes.Color.WHITE,board);
         Piece pawn = new Pawn(48, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,rookCaptureEnemy,41);
+        Move m1 = new Move.NormalMove(board,rookCaptureEnemyB,41);
         expected.add(m1);
-        Move m2 = new Move.CaptureMove(board,rookCaptureEnemy,33);
+        Move m2 = new Move.CaptureMove(board,rookCaptureEnemyB,33);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,rookCaptureEnemy,48);
+        Move m3 = new Move.CaptureMove(board,rookCaptureEnemyB,48);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,rookCaptureEnemy,50);
+        Move m4 = new Move.CaptureMove(board,rookCaptureEnemyB,50);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,rookCaptureEnemy,57);
+        Move m5 = new Move.NormalMove(board,rookCaptureEnemyB,57);
         expected.add(m5);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(bishop);
         board.setPiece(pawn);
         board.setPiece(knight);
-        board.setPiece(rookCaptureEnemy);
-        rookCaptureEnemy.calculateLegalMoves();
-        assertEquals(expected.toString(),rookCaptureEnemy.getAllLegalMoves().toString());
+        board.setPiece(rookCaptureEnemyB);
+        rookCaptureEnemyB.calculateLegalMoves();
+        assertEquals(expected.toString(),rookCaptureEnemyB.getAllLegalMoves().toString());
     }
 }

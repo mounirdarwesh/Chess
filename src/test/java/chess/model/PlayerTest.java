@@ -3,14 +3,16 @@ package chess.model;
 import chess.Attributes;
 import chess.cli.Cli;
 import chess.controller.CliController;
-import chess.controller.Move;
 import chess.view.View;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test of the class Player
+ * @author Gruppe45
+ */
 public class PlayerTest {
 
     View view = new Cli();
@@ -21,6 +23,9 @@ public class PlayerTest {
     Player player2 = new HumanPlayer(Attributes.Color.WHITE);
     Game game = new Game(cli,board,player,player2);
 
+    /**
+     * Test checkmate
+     */
     @Test
    public void checkMate() {
         Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
@@ -38,6 +43,9 @@ public class PlayerTest {
 
     }
 
+    /**
+     * Test if a king is in check
+     */
     @Test
     public void isKingInCheck() {
         Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);

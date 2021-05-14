@@ -111,7 +111,7 @@ public abstract class Player {
                 }
                 move.undo();
             }
-        } else isCheckMate = false;
+        } else {isCheckMate = false;}
         return isCheckMate;
     }
 
@@ -121,8 +121,8 @@ public abstract class Player {
      */
     public Piece getKing() {
         for (Piece piece : this.playerPieces) {
-            if (piece instanceof King) return piece;
-            else continue;
+            if (piece instanceof King) {return piece;
+            }else {continue;}
         }
         return null;
     }

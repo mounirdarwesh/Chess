@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test of the class King
+ * @author Gruppe 45
+ */
 public class KingTest {
     //Empty board
     private static final String EMPTY_FEN = "8/8/8/8/8/8/8/8";
@@ -34,28 +38,28 @@ public class KingTest {
     public void testCalculateLegalMovesMiddleW() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingMiddle = new King(35, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,kingMiddle,26);
+        Piece kingMiddleW = new King(35, Attributes.Color.WHITE, board);
+        Move m1 = new Move.NormalMove(board,kingMiddleW,26);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,kingMiddle,27);
+        Move m2 = new Move.NormalMove(board,kingMiddleW,27);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,kingMiddle,28);
+        Move m3 = new Move.NormalMove(board,kingMiddleW,28);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,kingMiddle,34);
+        Move m4 = new Move.NormalMove(board,kingMiddleW,34);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,kingMiddle,36);
+        Move m5 = new Move.NormalMove(board,kingMiddleW,36);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,kingMiddle,42);
+        Move m6 = new Move.NormalMove(board,kingMiddleW,42);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,kingMiddle,43);
+        Move m7 = new Move.NormalMove(board,kingMiddleW,43);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,kingMiddle,44);
+        Move m8 = new Move.NormalMove(board,kingMiddleW,44);
         expected.add(m8);
 
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingMiddle);
-        kingMiddle.calculateLegalMoves();
-        assertEquals(expected.toString(), kingMiddle.getAllLegalMoves().toString());
+        board.setPiece(kingMiddleW);
+        kingMiddleW.calculateLegalMoves();
+        assertEquals(expected.toString(), kingMiddleW.getAllLegalMoves().toString());
     }
 
     /**
@@ -65,28 +69,28 @@ public class KingTest {
     public void testCalculateLegalMovesMiddleB() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingMiddle = new King(35, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,kingMiddle,26);
+        Piece kingMiddleB = new King(35, Attributes.Color.BLACK, board);
+        Move m1 = new Move.NormalMove(board,kingMiddleB,26);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,kingMiddle,27);
+        Move m2 = new Move.NormalMove(board,kingMiddleB,27);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,kingMiddle,28);
+        Move m3 = new Move.NormalMove(board,kingMiddleB,28);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,kingMiddle,34);
+        Move m4 = new Move.NormalMove(board,kingMiddleB,34);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,kingMiddle,36);
+        Move m5 = new Move.NormalMove(board,kingMiddleB,36);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,kingMiddle,42);
+        Move m6 = new Move.NormalMove(board,kingMiddleB,42);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,kingMiddle,43);
+        Move m7 = new Move.NormalMove(board,kingMiddleB,43);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,kingMiddle,44);
+        Move m8 = new Move.NormalMove(board,kingMiddleB,44);
         expected.add(m8);
 
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingMiddle);
-        kingMiddle.calculateLegalMoves();
-        assertEquals(expected.toString(), kingMiddle.getAllLegalMoves().toString());
+        board.setPiece(kingMiddleB);
+        kingMiddleB.calculateLegalMoves();
+        assertEquals(expected.toString(), kingMiddleB.getAllLegalMoves().toString());
     }
 
     /**
@@ -96,18 +100,18 @@ public class KingTest {
     public void testCalculateLegalMovesEdgeW() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingEdge = new King(7, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,kingEdge,6);
+        Piece kingEdgeW = new King(7, Attributes.Color.WHITE, board);
+        Move m1 = new Move.NormalMove(board,kingEdgeW,6);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,kingEdge,14);
+        Move m2 = new Move.NormalMove(board,kingEdgeW,14);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,kingEdge,15);
+        Move m3 = new Move.NormalMove(board,kingEdgeW,15);
         expected.add(m3);
 
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingEdge);
-        kingEdge.calculateLegalMoves();
-        assertEquals(expected.toString(), kingEdge.getAllLegalMoves().toString());
+        board.setPiece(kingEdgeW);
+        kingEdgeW.calculateLegalMoves();
+        assertEquals(expected.toString(), kingEdgeW.getAllLegalMoves().toString());
     }
 
     /**
@@ -117,18 +121,18 @@ public class KingTest {
     public void testCalculateLegalMovesEdgeB() {
 
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingEdge = new King(7, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,kingEdge,6);
+        Piece kingEdgeB = new King(7, Attributes.Color.BLACK, board);
+        Move m1 = new Move.NormalMove(board,kingEdgeB,6);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,kingEdge,14);
+        Move m2 = new Move.NormalMove(board,kingEdgeB,14);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,kingEdge,15);
+        Move m3 = new Move.NormalMove(board,kingEdgeB,15);
         expected.add(m3);
 
         board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingEdge);
-        kingEdge.calculateLegalMoves();
-        assertEquals(expected.toString(), kingEdge.getAllLegalMoves().toString());
+        board.setPiece(kingEdgeB);
+        kingEdgeB.calculateLegalMoves();
+        assertEquals(expected.toString(), kingEdgeB.getAllLegalMoves().toString());
     }
 
     /**
@@ -137,7 +141,7 @@ public class KingTest {
     @Test
     public void testCalculateLegalMovesBlockByTeammateW() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingBlockByTeammate = new King(36, Attributes.Color.WHITE, board);
+        Piece kingBlockByTeammateW = new King(36, Attributes.Color.WHITE, board);
         Piece bishop = new Bishop(35, Attributes.Color.WHITE,board);
         Piece knight = new Knight(37, Attributes.Color.WHITE,board);
         Piece pawn = new Pawn(28, Attributes.Color.WHITE,board);
@@ -146,7 +150,7 @@ public class KingTest {
         Piece knight2 = new Knight (45, Attributes.Color.WHITE, board);
         Piece bishop2 = new Bishop(27, Attributes.Color.WHITE,board);
 
-        Move m1 = new Move.NormalMove(board,kingBlockByTeammate,44);
+        Move m1 = new Move.NormalMove(board,kingBlockByTeammateW,44);
         expected.add(m1);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -157,9 +161,9 @@ public class KingTest {
         board.setPiece(bishop);
         board.setPiece(bishop2);
         board.setPiece(king);
-        board.setPiece(kingBlockByTeammate);
-        kingBlockByTeammate.calculateLegalMoves();
-        assertEquals(expected.toString(), kingBlockByTeammate.getAllLegalMoves().toString());
+        board.setPiece(kingBlockByTeammateW);
+        kingBlockByTeammateW.calculateLegalMoves();
+        assertEquals(expected.toString(), kingBlockByTeammateW.getAllLegalMoves().toString());
     }
 
     /**
@@ -168,16 +172,16 @@ public class KingTest {
     @Test
     public void testCalculateLegalMovesBlockByTeammateB() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingBlockByTeammate = new King(36, Attributes.Color.BLACK, board);
-        Piece bishop = new Bishop(35, Attributes.Color.BLACK,board);
-        Piece knight = new Knight(37, Attributes.Color.BLACK,board);
-        Piece pawn = new Pawn(28, Attributes.Color.BLACK,board);
-        Piece rook = new Rook (29, Attributes.Color.BLACK, board);
-        Piece king = new King (43, Attributes.Color.BLACK, board);
-        Piece knight2 = new Knight (45, Attributes.Color.BLACK, board);
-        Piece bishop2 = new Bishop(27, Attributes.Color.BLACK,board);
+        Piece kingBlockByTeammateB = new King(35, Attributes.Color.BLACK, board);
+        Piece bishop = new Bishop(34, Attributes.Color.BLACK,board);
+        Piece knight = new Knight(36, Attributes.Color.BLACK,board);
+        Piece pawn = new Pawn(27, Attributes.Color.BLACK,board);
+        Piece rook = new Rook (28, Attributes.Color.BLACK, board);
+        Piece king = new King (42, Attributes.Color.BLACK, board);
+        Piece knight2 = new Knight (44, Attributes.Color.BLACK, board);
+        Piece bishop2 = new Bishop(26, Attributes.Color.BLACK,board);
 
-        Move m1 = new Move.NormalMove(board,kingBlockByTeammate,44);
+        Move m1 = new Move.NormalMove(board,kingBlockByTeammateB,43);
         expected.add(m1);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -188,9 +192,9 @@ public class KingTest {
         board.setPiece(bishop);
         board.setPiece(bishop2);
         board.setPiece(king);
-        board.setPiece(kingBlockByTeammate);
-        kingBlockByTeammate.calculateLegalMoves();
-        assertEquals(expected.toString(), kingBlockByTeammate.getAllLegalMoves().toString());
+        board.setPiece(kingBlockByTeammateB);
+        kingBlockByTeammateB.calculateLegalMoves();
+        assertEquals(expected.toString(), kingBlockByTeammateB.getAllLegalMoves().toString());
     }
 
     /**
@@ -199,7 +203,7 @@ public class KingTest {
     @Test
     public void testCalculateLegalMovesCaptureEnemyW() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingCaptureEnemy = new King(36, Attributes.Color.WHITE, board);
+        Piece kingCaptureEnemyW = new King(36, Attributes.Color.WHITE, board);
         Piece bishop = new Bishop(35, Attributes.Color.BLACK,board);
         Piece knight = new Knight(37, Attributes.Color.BLACK,board);
         Piece pawn = new Pawn(28, Attributes.Color.BLACK,board);
@@ -208,21 +212,21 @@ public class KingTest {
         Piece knight2 = new Knight (45, Attributes.Color.BLACK, board);
         Piece bishop2 = new Bishop(27, Attributes.Color.BLACK,board);
 
-        Move m1 = new Move.CaptureMove(board,kingCaptureEnemy,27);
+        Move m1 = new Move.CaptureMove(board,kingCaptureEnemyW,27);
         expected.add(m1);
-        Move m2 = new Move.CaptureMove(board,kingCaptureEnemy,28);
+        Move m2 = new Move.CaptureMove(board,kingCaptureEnemyW,28);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,kingCaptureEnemy,29);
+        Move m3 = new Move.CaptureMove(board,kingCaptureEnemyW,29);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,kingCaptureEnemy,35);
+        Move m4 = new Move.CaptureMove(board,kingCaptureEnemyW,35);
         expected.add(m4);
-        Move m5 = new Move.CaptureMove(board,kingCaptureEnemy,37);
+        Move m5 = new Move.CaptureMove(board,kingCaptureEnemyW,37);
         expected.add(m5);
-        Move m6 = new Move.CaptureMove(board,kingCaptureEnemy,43);
+        Move m6 = new Move.CaptureMove(board,kingCaptureEnemyW,43);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,kingCaptureEnemy,44);
+        Move m7 = new Move.NormalMove(board,kingCaptureEnemyW,44);
         expected.add(m7);
-        Move m8 = new Move.CaptureMove(board,kingCaptureEnemy,45);
+        Move m8 = new Move.CaptureMove(board,kingCaptureEnemyW,45);
         expected.add(m8);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -233,9 +237,9 @@ public class KingTest {
         board.setPiece(bishop);
         board.setPiece(bishop2);
         board.setPiece(king);
-        board.setPiece(kingCaptureEnemy);
-        kingCaptureEnemy.calculateLegalMoves();
-        assertEquals(expected.toString(), kingCaptureEnemy.getAllLegalMoves().toString());
+        board.setPiece(kingCaptureEnemyW);
+        kingCaptureEnemyW.calculateLegalMoves();
+        assertEquals(expected.toString(), kingCaptureEnemyW.getAllLegalMoves().toString());
     }
 
     /**
@@ -244,30 +248,30 @@ public class KingTest {
     @Test
     public void testCalculateLegalMovesCaptureEnemyB() {
         ArrayList<Move> expected = new ArrayList<>();
-        Piece kingCaptureEnemy = new King(36, Attributes.Color.BLACK, board);
-        Piece bishop = new Bishop(35, Attributes.Color.WHITE,board);
-        Piece knight = new Knight(37, Attributes.Color.WHITE,board);
-        Piece pawn = new Pawn(28, Attributes.Color.WHITE,board);
-        Piece rook = new Rook (29, Attributes.Color.WHITE, board);
-        Piece king = new King (43, Attributes.Color.WHITE, board);
-        Piece knight2 = new Knight (45, Attributes.Color.WHITE, board);
-        Piece bishop2 = new Bishop(27, Attributes.Color.WHITE,board);
+        Piece kingCaptureEnemyB = new King(37, Attributes.Color.BLACK, board);
+        Piece bishop = new Bishop(36, Attributes.Color.WHITE,board);
+        Piece knight = new Knight(38, Attributes.Color.WHITE,board);
+        Piece pawn = new Pawn(29, Attributes.Color.WHITE,board);
+        Piece rook = new Rook (30, Attributes.Color.WHITE, board);
+        Piece king = new King (44, Attributes.Color.WHITE, board);
+        Piece knight2 = new Knight (46, Attributes.Color.WHITE, board);
+        Piece bishop2 = new Bishop(28, Attributes.Color.WHITE,board);
 
-        Move m1 = new Move.CaptureMove(board,kingCaptureEnemy,27);
+        Move m1 = new Move.CaptureMove(board,kingCaptureEnemyB,28);
         expected.add(m1);
-        Move m2 = new Move.CaptureMove(board,kingCaptureEnemy,28);
+        Move m2 = new Move.CaptureMove(board,kingCaptureEnemyB,29);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,kingCaptureEnemy,29);
+        Move m3 = new Move.CaptureMove(board,kingCaptureEnemyB,30);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,kingCaptureEnemy,35);
+        Move m4 = new Move.CaptureMove(board,kingCaptureEnemyB,36);
         expected.add(m4);
-        Move m5 = new Move.CaptureMove(board,kingCaptureEnemy,37);
+        Move m5 = new Move.CaptureMove(board,kingCaptureEnemyB,38);
         expected.add(m5);
-        Move m6 = new Move.CaptureMove(board,kingCaptureEnemy,43);
+        Move m6 = new Move.CaptureMove(board,kingCaptureEnemyB,44);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,kingCaptureEnemy,44);
+        Move m7 = new Move.NormalMove(board,kingCaptureEnemyB,45);
         expected.add(m7);
-        Move m8 = new Move.CaptureMove(board,kingCaptureEnemy,45);
+        Move m8 = new Move.CaptureMove(board,kingCaptureEnemyB,46);
         expected.add(m8);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -278,9 +282,9 @@ public class KingTest {
         board.setPiece(bishop);
         board.setPiece(bishop2);
         board.setPiece(king);
-        board.setPiece(kingCaptureEnemy);
-        kingCaptureEnemy.calculateLegalMoves();
-        assertEquals(expected.toString(), kingCaptureEnemy.getAllLegalMoves().toString());
+        board.setPiece(kingCaptureEnemyB);
+        kingCaptureEnemyB.calculateLegalMoves();
+        assertEquals(expected.toString(), kingCaptureEnemyB.getAllLegalMoves().toString());
     }
 
 /*    @Test

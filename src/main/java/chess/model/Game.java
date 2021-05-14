@@ -83,8 +83,8 @@ public class Game {
     }
 
     public void notifyObservers() {
-        for (View observer : observers)
-            observer.modelChanged(this);
+        for (View observer : observers){
+            observer.modelChanged(this);}
     }
     /// ------------------------------- ///
 
@@ -93,11 +93,12 @@ public class Game {
      */
     protected static void loadPlayerPieces() {
         for (Piece piece : board.getPiecesOnBoard()) {
-            if (piece == null) continue;
-            else {
+            if (piece == null) {
+                continue;
+            }else {
                 if (piece.getColor() == playerOne.getColor()) {
                     playerOne.addToPlayersPieces(piece);
-                } else playerTwo.addToPlayersPieces(piece);
+                } else {playerTwo.addToPlayersPieces(piece);}
             }
         }
     }
@@ -110,7 +111,7 @@ public class Game {
     public static void addToBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
             whiteBeaten.add(captured);
-        } else blackBeaten.add(captured);
+        } else {blackBeaten.add(captured);}
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).removeFromPlayersPieces(captured);
@@ -124,7 +125,7 @@ public class Game {
     public static void removeFromBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
             whiteBeaten.remove(captured);
-        } else blackBeaten.remove(captured);
+        } else {blackBeaten.remove(captured);}
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).addToPlayersPieces(captured);

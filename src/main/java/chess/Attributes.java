@@ -11,10 +11,18 @@ public class Attributes {
      */
     public enum Color {
         WHITE() {
+            /**
+             * Color of a piece
+             * @return true if the piece is white
+             */
             public boolean isWhite() {
                 return true;
             }
 
+            /**
+             * Color of a piece
+             * @return false if the piece is black
+             */
             public boolean isBlack() {
                 return false;
             }
@@ -26,10 +34,18 @@ public class Attributes {
         },
 
         BLACK() {
+            /**
+             * Color of a piece
+             * @return false if the piece is white
+             */
             public boolean isWhite() {
                 return false;
             }
 
+            /**
+             * Color of a piece
+             * @return true if the piece is black
+             */
             public boolean isBlack() {
                 return true;
             }
@@ -40,10 +56,22 @@ public class Attributes {
             }
         };
 
+        /**
+         * Color of a piece: white
+         *
+         */
         public abstract boolean isWhite();
 
+        /**
+         * Color of a piece: black
+         *
+         */
         public abstract boolean isBlack();
 
+        /**
+         * get the direction of a piece
+         *
+         */
         public abstract int getDirection();
     }
 

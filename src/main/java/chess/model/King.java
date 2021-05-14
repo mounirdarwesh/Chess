@@ -53,10 +53,10 @@ public class King extends Piece {
                     || !isPositionInBounds(destination)) {
                 continue;
             }
-            if (!isFriendAtTheDestination(destination))
-                allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-            else if (isDestinationEmpty(destination))
-                allLegalMoves.add(new Move.NormalMove(board, this, destination));
+            if (!isFriendAtTheDestination(destination)){
+                allLegalMoves.add(new Move.CaptureMove(board, this, destination));}
+            else if (isDestinationEmpty(destination)){
+                allLegalMoves.add(new Move.NormalMove(board, this, destination));}
         }
 
 
@@ -70,19 +70,19 @@ public class King extends Piece {
             // King side
             if (j == 2) {
                 Piece rock = board.getPiece(this.position + 3);
-                if (!(rock instanceof Rook) || rock == null) continue;
+                if (!(rock instanceof Rook) || rock == null) {continue;}
                 else if (rock.isFirstMove
                         && rock.getColor() == this.color
                         && board.getPiece(this.position + 1) == null
                         && board.getPiece(this.position + 2) == null) {
                     allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination - 1));
                     continue;
-                } else continue;
+                } else {continue;}
             }
             // Queen side
             else if (j == -2) {
                 Piece rock = board.getPiece(this.position - 4);
-                if (!(rock instanceof Rook) || rock == null) continue;
+                if (!(rock instanceof Rook) || rock == null) {continue;}
                 else if (rock.isFirstMove
                         && rock.getColor() == this.color
                         && board.getPiece(this.position - 1) == null
@@ -90,7 +90,7 @@ public class King extends Piece {
                         && board.getPiece(this.position - 3) == null) {
                     allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination + 1));
                     continue;
-                } else continue;
+                } else {continue;}
             }
         }
     }

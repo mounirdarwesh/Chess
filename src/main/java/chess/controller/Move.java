@@ -137,6 +137,9 @@ public abstract class Move {
 
     }
 
+    /**
+     * Castling move
+     */
     public static class CastlingMove extends Move {
 
         /**

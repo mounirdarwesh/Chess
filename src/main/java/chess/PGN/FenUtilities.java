@@ -112,7 +112,7 @@ public class FenUtilities {
                         emptyFile = 0;
                     }
                     fen += board.getPiece(index).toString();
-                } else emptyFile++;
+                } else {emptyFile++;}
             }
             if (emptyFile != 0) {
                 fen += String.valueOf(emptyFile);

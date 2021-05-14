@@ -77,7 +77,7 @@ public class Board {
                 Piece piece = piecesOnBoard.get((rank - 1) * 8 + file);
                 if (piece == null) {
                     board_.append("  ");
-                } else board_.append(" ").append(piece);
+                } else {board_.append(" ").append(piece);}
             }
             board_.append("\n");
         }

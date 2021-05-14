@@ -47,10 +47,10 @@ public class Knight extends Piece {
                     || !isPositionInBounds(destination)) {
                 continue;
             }
-            if (!isFriendAtTheDestination(destination))
-                allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-            else if (isDestinationEmpty(destination))
-                allLegalMoves.add(new Move.NormalMove(board, this, destination));
+            if (!isFriendAtTheDestination(destination)){
+                allLegalMoves.add(new Move.CaptureMove(board, this, destination));}
+            else if (isDestinationEmpty(destination)){
+                allLegalMoves.add(new Move.NormalMove(board, this, destination));}
         }
     }
 }

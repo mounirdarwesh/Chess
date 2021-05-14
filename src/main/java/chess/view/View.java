@@ -54,9 +54,21 @@ public abstract class View {
         System.out.println(game.getBoard());
     }
 
+    /**
+     * Assign controller
+     * @param cliController
+     */
     public abstract void assignController(CliController cliController);
 
+    /**
+     * read input from the player
+     */
     public abstract void readInputFromPlayer();
 
+    /**
+     * notify user
+     * @param status
+     * @param player
+     */
     public abstract void notifyUser(Attributes.GameStatus status, Player player);
 }

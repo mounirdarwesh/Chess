@@ -1,11 +1,7 @@
 package chess.model;
 import chess.Attributes.Color;
 import chess.controller.Move;
-import chess.model.Game;
-import chess.model.Piece;
-import chess.model.Player;
 
-import java.util.ArrayList;
 
 /**
  * @author Ahmad Mohammad
@@ -14,7 +10,7 @@ import java.util.ArrayList;
 public class Computer extends Player {
 	
 	
-	/*
+	/**
 	 * The constructor of the computer class
 	 * @param color  the color that the computer is left with
 	 */

@@ -74,6 +74,7 @@ public class CliController extends Controller {
     /**
      * The controller process the input from the player
      */
+    @Override
     public void processInputFromPlayer() {
         // Read the input from the view
         view.readInputFromPlayer();

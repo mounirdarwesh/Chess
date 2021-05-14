@@ -4,8 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test of the class MapBoard
+ * @author Gruppe 45
+ */
 public class MapBoardTest {
 
+    /**
+     * Test map board
+     */
     @Test
     public void map() {
         MapBoard mapBoard = new MapBoard();

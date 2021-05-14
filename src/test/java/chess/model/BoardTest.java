@@ -7,11 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test of the class Board
+ *
  * @author Gruppe45
  */
 public class BoardTest {
     Board board = new Board();
-    Piece queen = new Queen(18, Attributes.Color.WHITE,board);
+    Piece queen = new Queen(18, Attributes.Color.WHITE, board);
 
     /**
      * Test if the board shows the right Alphabet
@@ -26,7 +27,7 @@ public class BoardTest {
                 "3                \n" +
                 "2 P P P P P P P P\n" +
                 "1 R N B Q K B N R\n" +
-                "  a b c d e f g h",board.toString());
+                "  a b c d e f g h", board.toString());
     }
 
     /**
@@ -35,7 +36,7 @@ public class BoardTest {
     @Test
     public void getPiece() {
         board.setPiece(queen);
-        assertEquals(queen,board.getPiece(18));
+        assertEquals(queen, board.getPiece(18));
     }
 
     /**
@@ -52,6 +53,6 @@ public class BoardTest {
                 "3     Q          \n" +
                 "2 P P P P P P P P\n" +
                 "1 R N B Q K B N R\n" +
-                "  a b c d e f g h",board.toString());
+                "  a b c d e f g h", board.toString());
     }
 }

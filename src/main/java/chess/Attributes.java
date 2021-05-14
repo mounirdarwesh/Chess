@@ -58,19 +58,16 @@ public class Attributes {
 
         /**
          * Color of a piece: white
-         *
          */
         public abstract boolean isWhite();
 
         /**
          * Color of a piece: black
-         *
          */
         public abstract boolean isBlack();
 
         /**
          * get the direction of a piece
-         *
          */
         public abstract int getDirection();
     }

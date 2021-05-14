@@ -1,4 +1,5 @@
 package chess.model;
+
 import chess.Attributes.Color;
 import chess.controller.Move;
 

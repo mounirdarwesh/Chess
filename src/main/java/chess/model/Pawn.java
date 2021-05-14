@@ -10,10 +10,6 @@ import chess.controller.Move;
  */
 public class Pawn extends Piece {
 
-    /**
-     * The name of the piece
-     */
-    protected String name = "P";
 
     /**
      * Pawn move offset
@@ -28,7 +24,7 @@ public class Pawn extends Piece {
      * @param board    The board
      */
     public Pawn(int position, Color color, Board board) {
-        super(position, color, board);
+        super("P", position, color, board);
     }
 
 
@@ -218,10 +214,4 @@ public class Pawn extends Piece {
         return (opponentPawn instanceof Pawn
                 && opponentPawn.getColor() != this.color);
     }
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
-    }
-
 }

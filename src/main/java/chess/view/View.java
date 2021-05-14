@@ -56,6 +56,7 @@ public abstract class View {
 
     /**
      * Assign controller
+     *
      * @param cliController
      */
     public abstract void assignController(CliController cliController);
@@ -67,6 +68,7 @@ public abstract class View {
 
     /**
      * notify user
+     *
      * @param status
      * @param player
      */

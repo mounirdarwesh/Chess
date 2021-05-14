@@ -10,10 +10,6 @@ import java.util.ArrayList;
  */
 public class Queen extends Piece {
 
-    /**
-     * The name of the piece
-     */
-    protected String name = "Q";
 
     /**
      * The possible offsets of the queen
@@ -28,7 +24,7 @@ public class Queen extends Piece {
      * @param board    The board
      */
     public Queen(int position, Color color, Board board) {
-        super(position, color, board);
+        super("Q", position, color, board);
     }
 
     @Override
@@ -61,11 +57,5 @@ public class Queen extends Piece {
             }
         }
     }
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
-    }
-
 }
 

@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test of the class Player
+ *
  * @author Gruppe45
  */
 public class PlayerTest {
@@ -21,16 +22,16 @@ public class PlayerTest {
     Board board = new Board();
     Player player = new HumanPlayer(Attributes.Color.BLACK);
     Player player2 = new HumanPlayer(Attributes.Color.WHITE);
-    Game game = new Game(cli,board,player,player2);
+    Game game = new Game(cli, board, player, player2);
 
     /**
      * Test checkmate
      */
     @Test
-   public void checkMate() {
+    public void checkMate() {
         Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
-        Piece rook = new Rook (7, Attributes.Color.BLACK, board);
-        Piece queen = new Queen (46, Attributes.Color.BLACK, board);
+        Piece rook = new Rook(7, Attributes.Color.BLACK, board);
+        Piece queen = new Queen(46, Attributes.Color.BLACK, board);
         kingCheckMate.isFirstMove = false;
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingCheckMate);
@@ -49,7 +50,7 @@ public class PlayerTest {
     @Test
     public void isKingInCheck() {
         Piece kingCheckMate = new King(63, Attributes.Color.WHITE, board);
-        Piece rook = new Rook (7, Attributes.Color.BLACK, board);
+        Piece rook = new Rook(7, Attributes.Color.BLACK, board);
         kingCheckMate.isFirstMove = false;
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(kingCheckMate);

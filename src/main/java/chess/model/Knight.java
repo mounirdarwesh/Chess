@@ -10,9 +10,6 @@ import chess.controller.Move;
  */
 public class Knight extends Piece {
 
-    // The name of the piece
-    protected String name = "N";
-
     /**
      * all possible Knight move offset
      */
@@ -26,14 +23,8 @@ public class Knight extends Piece {
      * @param board    on which he stand
      */
     public Knight(int position, Attributes.Color color, Board board) {
-        super(position, color, board);
+        super("N", position, color, board);
     }
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
-    }
-
 
     @Override
     public void calculateLegalMoves() {
@@ -47,10 +38,11 @@ public class Knight extends Piece {
                     || !isPositionInBounds(destination)) {
                 continue;
             }
-            if (!isFriendAtTheDestination(destination)){
-                allLegalMoves.add(new Move.CaptureMove(board, this, destination));}
-            else if (isDestinationEmpty(destination)){
-                allLegalMoves.add(new Move.NormalMove(board, this, destination));}
+            if (!isFriendAtTheDestination(destination)) {
+                allLegalMoves.add(new Move.CaptureMove(board, this, destination));
+            } else if (isDestinationEmpty(destination)) {
+                allLegalMoves.add(new Move.NormalMove(board, this, destination));
+            }
         }
     }
 }

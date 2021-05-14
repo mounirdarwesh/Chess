@@ -22,7 +22,7 @@ public class Main {
             // Create the view
             Cli cli = new Cli();
             // Create the controller and pass the view object to it
-            new CliController(cli,false);
+            new CliController(cli, false);
         } else {
             Gui.main(args);
         }

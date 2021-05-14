@@ -1,4 +1,4 @@
-package chess.PGN;
+package chess.pgn;
 
 import java.util.*;
 
@@ -31,8 +31,8 @@ public class FenUtilities {
      * @param fen the FEN string
      * @return board  the board
      */
-    public static ArrayList<Piece> loadBoardFromFEN(String fen, Board board) {
-        ArrayList<Piece> piecesOnBoard = new ArrayList<Piece>(Collections.nCopies(64, null));
+    public static List<Piece> loadBoardFromFEN(String fen, Board board) {
+        List<Piece> piecesOnBoard = new ArrayList<>(Collections.nCopies(64, null));
         int file = 0;
         int rank = 7;
 
@@ -112,7 +112,9 @@ public class FenUtilities {
                         emptyFile = 0;
                     }
                     fen += board.getPiece(index).toString();
-                } else {emptyFile++;}
+                } else {
+                    emptyFile++;
+                }
             }
             if (emptyFile != 0) {
                 fen += String.valueOf(emptyFile);

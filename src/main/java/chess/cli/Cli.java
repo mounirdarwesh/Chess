@@ -40,7 +40,7 @@ public class Cli extends View {
         String input = scanner.nextLine();
 
         while (true) {
-            if(input.equals("beaten")){
+            if (input.equals("beaten")) {
                 System.out.println(controller.getBeatenPieces());
                 input = scanner.nextLine();
                 continue;
@@ -56,7 +56,9 @@ public class Cli extends View {
                 System.out.println("!Move not allowed");
                 input = scanner.nextLine();
                 continue;
-            } else {System.out.println("!" + input);}
+            } else {
+                System.out.println("!" + input);
+            }
             break;
         }
 

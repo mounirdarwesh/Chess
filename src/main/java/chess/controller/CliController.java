@@ -1,6 +1,6 @@
 package chess.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,7 +85,7 @@ public class CliController extends Controller {
     }
 
     @Override
-    public ArrayList<Piece> getBeatenPieces() {
+    public List<Piece> getBeatenPieces() {
         return game.getCurrentPlayer().getColor() == Color.WHITE ?
                 game.getWhiteBeaten() : game.getBlackBeaten();
     }

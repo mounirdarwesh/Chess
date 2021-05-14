@@ -2,7 +2,7 @@ package chess.model;
 
 import java.util.*;
 
-import chess.PGN.FenUtilities;
+import chess.pgn.FenUtilities;
 
 /**
  * @author Ahmad Mohammad
@@ -13,7 +13,7 @@ public class Board {
     /**
      * The pieces on the board
      */
-    private ArrayList<Piece> piecesOnBoard;
+    private List<Piece> piecesOnBoard;
 
     /**
      * The start FEN of the board
@@ -53,7 +53,7 @@ public class Board {
      *
      * @return the pieces on the board
      */
-    public ArrayList<Piece> getPiecesOnBoard() {
+    public List<Piece> getPiecesOnBoard() {
         return this.piecesOnBoard;
     }
 
@@ -77,7 +77,9 @@ public class Board {
                 Piece piece = piecesOnBoard.get((rank - 1) * 8 + file);
                 if (piece == null) {
                     board_.append("  ");
-                } else {board_.append(" ").append(piece);}
+                } else {
+                    board_.append(" ").append(piece);
+                }
             }
             board_.append("\n");
         }

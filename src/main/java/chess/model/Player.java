@@ -5,6 +5,7 @@ import chess.controller.Move;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Gr.45
@@ -20,7 +21,7 @@ public abstract class Player {
     /**
      * All players pieces
      */
-    protected ArrayList<Piece> playerPieces;
+    protected List<Piece> playerPieces;
 
     /**
      * To check if the pawn is allowed to do En Passant
@@ -65,8 +66,8 @@ public abstract class Player {
      *
      * @return legalMoves All of the enemy's legal moves
      */
-    protected ArrayList<Move> calculatePlayerMoves() {
-        ArrayList<Move> legalMoves = new ArrayList<>();
+    protected List<Move> calculatePlayerMoves() {
+        List<Move> legalMoves = new ArrayList<>();
         for (Piece piece : playerPieces) {
             piece.calculateLegalMoves();
             legalMoves.addAll(piece.getAllLegalMoves());
@@ -82,7 +83,7 @@ public abstract class Player {
     public boolean isKingInCheck() {
         boolean kingInCheck = false;
         // Calculate a list of enemy legal moves
-        ArrayList<Move> enemyLegalMoves = Game.getOpponent(this).calculatePlayerMoves();
+        List<Move> enemyLegalMoves = Game.getOpponent(this).calculatePlayerMoves();
         // Iterate through all of the enemy's legal moves. If a move is found that can threaten
         // the current player's king, return true
         for (Move move : enemyLegalMoves) {
@@ -97,6 +98,7 @@ public abstract class Player {
 
     /**
      * check all Player Moves
+     *
      * @return true, if the player has no moves to preform
      */
     boolean checkMate() {
@@ -104,31 +106,38 @@ public abstract class Player {
         if (this.isKingInCheck()) {
             for (Move move : this.calculatePlayerMoves()) {
                 move.execute();
-                if(!this.isKingInCheck()) {
+                if (!this.isKingInCheck()) {
                     isCheckMate = false;
                     move.undo();
                     break;
                 }
                 move.undo();
             }
-        } else {isCheckMate = false;}
+        } else {
+            isCheckMate = false;
+        }
         return isCheckMate;
     }
 
     /**
      * Getter to the player's king
+     *
      * @return
      */
     public Piece getKing() {
         for (Piece piece : this.playerPieces) {
-            if (piece instanceof King) {return piece;
-            }else {continue;}
+            if (piece instanceof King) {
+                return piece;
+            } else {
+                continue;
+            }
         }
         return null;
     }
 
     /**
      * Getter of the players color to play
+     *
      * @return the color
      */
     public Color getColor() {
@@ -154,7 +163,7 @@ public abstract class Player {
      *
      * @return
      */
-    public ArrayList<Piece> getPlayerPieces() {
+    public List<Piece> getPlayerPieces() {
         return playerPieces;
     }
 

@@ -6,7 +6,7 @@ import chess.model.Piece;
 import chess.model.Player;
 import chess.view.View;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An abstract class of the controller
@@ -41,12 +41,14 @@ public abstract class Controller {
 
     /**
      * Returning the beaten pieces of the player
+     *
      * @return beaten pieces of the player
      */
-    public abstract ArrayList<Piece> getBeatenPieces();
+    public abstract List<Piece> getBeatenPieces();
 
     /**
      * Method to notify the user of the status of the game
+     *
      * @param status The status of the game
      * @param player The player
      */

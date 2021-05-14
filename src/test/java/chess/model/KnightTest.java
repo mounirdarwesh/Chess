@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test of the class Knight
+ *
  * @author Gruppe 45
  */
 public class KnightTest {
@@ -23,13 +24,17 @@ public class KnightTest {
      * Test if white knight shown with uppercase "N"
      */
     @Test
-    public void testToStringW() {assertEquals("N", knightW.toString());}
+    public void testToStringW() {
+        assertEquals("N", knightW.toString());
+    }
 
     /**
      * Test if black knight shown with lower "n"
      */
     @Test
-    public void testToStringB() {assertEquals("n", knightB.toString());}
+    public void testToStringB() {
+        assertEquals("n", knightB.toString());
+    }
 
     /**
      * Test all the legal moves of a white knight in a position in the middle of the board
@@ -39,21 +44,21 @@ public class KnightTest {
 
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightMiddleW = new Knight(27, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,knightMiddleW,10);
+        Move m1 = new Move.NormalMove(board, knightMiddleW, 10);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightMiddleW,12);
+        Move m2 = new Move.NormalMove(board, knightMiddleW, 12);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,knightMiddleW,17);
+        Move m3 = new Move.NormalMove(board, knightMiddleW, 17);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,knightMiddleW,21);
+        Move m4 = new Move.NormalMove(board, knightMiddleW, 21);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,knightMiddleW,33);
+        Move m5 = new Move.NormalMove(board, knightMiddleW, 33);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,knightMiddleW,37);
+        Move m6 = new Move.NormalMove(board, knightMiddleW, 37);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,knightMiddleW,42);
+        Move m7 = new Move.NormalMove(board, knightMiddleW, 42);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,knightMiddleW,44);
+        Move m8 = new Move.NormalMove(board, knightMiddleW, 44);
         expected.add(m8);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(knightMiddleW);
@@ -69,21 +74,21 @@ public class KnightTest {
 
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightMiddleB = new Knight(27, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,knightMiddleB,10);
+        Move m1 = new Move.NormalMove(board, knightMiddleB, 10);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightMiddleB,12);
+        Move m2 = new Move.NormalMove(board, knightMiddleB, 12);
         expected.add(m2);
-        Move m3 = new Move.NormalMove(board,knightMiddleB,17);
+        Move m3 = new Move.NormalMove(board, knightMiddleB, 17);
         expected.add(m3);
-        Move m4 = new Move.NormalMove(board,knightMiddleB,21);
+        Move m4 = new Move.NormalMove(board, knightMiddleB, 21);
         expected.add(m4);
-        Move m5 = new Move.NormalMove(board,knightMiddleB,33);
+        Move m5 = new Move.NormalMove(board, knightMiddleB, 33);
         expected.add(m5);
-        Move m6 = new Move.NormalMove(board,knightMiddleB,37);
+        Move m6 = new Move.NormalMove(board, knightMiddleB, 37);
         expected.add(m6);
-        Move m7 = new Move.NormalMove(board,knightMiddleB,42);
+        Move m7 = new Move.NormalMove(board, knightMiddleB, 42);
         expected.add(m7);
-        Move m8 = new Move.NormalMove(board,knightMiddleB,44);
+        Move m8 = new Move.NormalMove(board, knightMiddleB, 44);
         expected.add(m8);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(knightMiddleB);
@@ -100,9 +105,9 @@ public class KnightTest {
 
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightEdgeW = new Knight(0, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,knightEdgeW,10);
+        Move m1 = new Move.NormalMove(board, knightEdgeW, 10);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightEdgeW,17);
+        Move m2 = new Move.NormalMove(board, knightEdgeW, 17);
         expected.add(m2);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -119,9 +124,9 @@ public class KnightTest {
 
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightEdgeB = new Knight(63, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,knightEdgeB,46);
+        Move m1 = new Move.NormalMove(board, knightEdgeB, 46);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightEdgeB,53);
+        Move m2 = new Move.NormalMove(board, knightEdgeB, 53);
         expected.add(m2);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -137,10 +142,10 @@ public class KnightTest {
     public void testCalculateLegalMovesBlockByTeammateW() {
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightBlockByTeammateW = new Knight(54, Attributes.Color.WHITE, board);
-        Piece rook = new Rook(60, Attributes.Color.WHITE,board);
-        Piece pawn = new Pawn(44, Attributes.Color.WHITE,board);
+        Piece rook = new Rook(60, Attributes.Color.WHITE, board);
+        Piece pawn = new Pawn(44, Attributes.Color.WHITE, board);
         Piece queen = new Queen(37, Attributes.Color.WHITE, board);
-        Move m1 = new Move.NormalMove(board,knightBlockByTeammateW,39);
+        Move m1 = new Move.NormalMove(board, knightBlockByTeammateW, 39);
         expected.add(m1);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(rook);
@@ -158,10 +163,10 @@ public class KnightTest {
     public void testCalculateLegalMovesBlockByTeammateB() {
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightBlockByTeammateB = new Knight(54, Attributes.Color.BLACK, board);
-        Piece rook = new Rook(60, Attributes.Color.BLACK,board);
-        Piece pawn = new Pawn(44, Attributes.Color.BLACK,board);
+        Piece rook = new Rook(60, Attributes.Color.BLACK, board);
+        Piece pawn = new Pawn(44, Attributes.Color.BLACK, board);
         Piece queen = new Queen(37, Attributes.Color.BLACK, board);
-        Move m1 = new Move.NormalMove(board,knightBlockByTeammateB,39);
+        Move m1 = new Move.NormalMove(board, knightBlockByTeammateB, 39);
         expected.add(m1);
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(rook);
@@ -179,16 +184,16 @@ public class KnightTest {
     public void testCalculateLegalMovesCaptureEnemyW() {
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightCaptureEnemyW = new Knight(54, Attributes.Color.WHITE, board);
-        Piece rook = new Rook(60, Attributes.Color.BLACK,board);
-        Piece pawn = new Pawn(44, Attributes.Color.BLACK,board);
+        Piece rook = new Rook(60, Attributes.Color.BLACK, board);
+        Piece pawn = new Pawn(44, Attributes.Color.BLACK, board);
         Piece queen = new Queen(37, Attributes.Color.BLACK, board);
-        Move m1 = new Move.CaptureMove(board,knightCaptureEnemyW,37);
+        Move m1 = new Move.CaptureMove(board, knightCaptureEnemyW, 37);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightCaptureEnemyW,39);
+        Move m2 = new Move.NormalMove(board, knightCaptureEnemyW, 39);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,knightCaptureEnemyW,44);
+        Move m3 = new Move.CaptureMove(board, knightCaptureEnemyW, 44);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,knightCaptureEnemyW,60);
+        Move m4 = new Move.CaptureMove(board, knightCaptureEnemyW, 60);
         expected.add(m4);
 
         board.setPiecesOnBoard(EMPTY_FEN);
@@ -207,16 +212,16 @@ public class KnightTest {
     public void testCalculateLegalMovesCaptureEnemyB() {
         ArrayList<Move> expected = new ArrayList<>();
         Piece knightCaptureEnemyB = new Knight(54, Attributes.Color.BLACK, board);
-        Piece rook = new Rook(60, Attributes.Color.WHITE,board);
-        Piece pawn = new Pawn(44, Attributes.Color.WHITE,board);
+        Piece rook = new Rook(60, Attributes.Color.WHITE, board);
+        Piece pawn = new Pawn(44, Attributes.Color.WHITE, board);
         Piece queen = new Queen(37, Attributes.Color.WHITE, board);
-        Move m1 = new Move.CaptureMove(board,knightCaptureEnemyB,37);
+        Move m1 = new Move.CaptureMove(board, knightCaptureEnemyB, 37);
         expected.add(m1);
-        Move m2 = new Move.NormalMove(board,knightCaptureEnemyB,39);
+        Move m2 = new Move.NormalMove(board, knightCaptureEnemyB, 39);
         expected.add(m2);
-        Move m3 = new Move.CaptureMove(board,knightCaptureEnemyB,44);
+        Move m3 = new Move.CaptureMove(board, knightCaptureEnemyB, 44);
         expected.add(m3);
-        Move m4 = new Move.CaptureMove(board,knightCaptureEnemyB,60);
+        Move m4 = new Move.CaptureMove(board, knightCaptureEnemyB, 60);
         expected.add(m4);
 
         board.setPiecesOnBoard(EMPTY_FEN);

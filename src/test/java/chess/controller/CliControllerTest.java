@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test of the class CliController
+ *
  * @author Gruppe45
  */
 public class CliControllerTest {

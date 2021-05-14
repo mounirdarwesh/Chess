@@ -15,8 +15,6 @@ public class Bishop extends Piece {
      */
     private static final int[] MOVE_OFFSET = {-9, -7, 7, 9};
 
-    // The name of the piece
-    protected String name = "B";
 
     /**
      * constructor of the Bishop
@@ -26,13 +24,7 @@ public class Bishop extends Piece {
      * @param board    on which he stand
      */
     public Bishop(int position, Attributes.Color color, Board board) {
-        super(position, color, board);
-    }
-
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
+        super("B", position, color, board);
     }
 
 
@@ -53,7 +45,7 @@ public class Bishop extends Piece {
                         break;
                     } else if (isDestinationEmpty(destination)) {
                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
-                    }else if (isFriendAtTheDestination(destination)){
+                    } else if (isFriendAtTheDestination(destination)) {
                         break;
                     }
                 }

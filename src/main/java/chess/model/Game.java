@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.*;
+
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
@@ -39,11 +40,11 @@ public class Game {
     /**
      * White beaten pieces
      */
-    private static ArrayList<Piece> whiteBeaten = new ArrayList<>();
+    private static List<Piece> whiteBeaten = new ArrayList<>();
     /**
      * Black beaten pieces
      */
-    private static ArrayList<Piece> blackBeaten = new ArrayList<>();
+    private static List<Piece> blackBeaten = new ArrayList<>();
     /**
      * The controller of the game
      */
@@ -83,8 +84,9 @@ public class Game {
     }
 
     public void notifyObservers() {
-        for (View observer : observers){
-            observer.modelChanged(this);}
+        for (View observer : observers) {
+            observer.modelChanged(this);
+        }
     }
     /// ------------------------------- ///
 
@@ -95,10 +97,12 @@ public class Game {
         for (Piece piece : board.getPiecesOnBoard()) {
             if (piece == null) {
                 continue;
-            }else {
+            } else {
                 if (piece.getColor() == playerOne.getColor()) {
                     playerOne.addToPlayersPieces(piece);
-                } else {playerTwo.addToPlayersPieces(piece);}
+                } else {
+                    playerTwo.addToPlayersPieces(piece);
+                }
             }
         }
     }
@@ -111,7 +115,9 @@ public class Game {
     public static void addToBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
             whiteBeaten.add(captured);
-        } else {blackBeaten.add(captured);}
+        } else {
+            blackBeaten.add(captured);
+        }
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).removeFromPlayersPieces(captured);
@@ -125,7 +131,9 @@ public class Game {
     public static void removeFromBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
             whiteBeaten.remove(captured);
-        } else {blackBeaten.remove(captured);}
+        } else {
+            blackBeaten.remove(captured);
+        }
 
         //And delete the piece from the players available pieces
         getOpponent(currentPlayer).addToPlayersPieces(captured);
@@ -244,6 +252,7 @@ public class Game {
 
     /**
      * Getting the opponent of the current player
+     *
      * @param player The current player of the game
      */
     public static Player getOpponent(Player player) {
@@ -264,7 +273,7 @@ public class Game {
      *
      * @return white beaten pieces
      */
-    public static ArrayList<Piece> getWhiteBeaten() {
+    public static List<Piece> getWhiteBeaten() {
         return whiteBeaten;
     }
 
@@ -273,7 +282,7 @@ public class Game {
      *
      * @return black beaten pieces
      */
-    public static ArrayList<Piece> getBlackBeaten() {
+    public static List<Piece> getBlackBeaten() {
         return blackBeaten;
     }
 

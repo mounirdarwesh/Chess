@@ -15,9 +15,6 @@ public class Rook extends Piece {
      */
     private static final int[] MOVE_OFFSET = {-8, -1, 1, 8};
 
-    // The name of the piece
-    protected String name = "R";
-
     /**
      * constructor of the Rook
      *
@@ -26,15 +23,8 @@ public class Rook extends Piece {
      * @param board    on which he stand
      */
     public Rook(int position, Attributes.Color color, Board board) {
-        super(position, color, board);
+        super("R", position, color, board);
     }
-
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
-    }
-
 
     @Override
     public void calculateLegalMoves() {
@@ -53,7 +43,7 @@ public class Rook extends Piece {
                         break;
                     } else if (isDestinationEmpty(destination)) {
                         allLegalMoves.add(new Move.NormalMove(board, this, destination));
-                    }else if (isFriendAtTheDestination(destination)){
+                    } else if (isFriendAtTheDestination(destination)) {
                         break;
                     }
                 }

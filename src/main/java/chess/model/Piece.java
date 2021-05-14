@@ -1,6 +1,7 @@
 package chess.model;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import chess.Attributes.Color;
 import chess.controller.Move;
 
@@ -9,6 +10,11 @@ import chess.controller.Move;
  * The Piece class
  */
 public abstract class Piece {
+
+    /**
+     * The Name of the Piece
+     */
+    private final String name;
 
     /**
      * The position of the piece on the board
@@ -28,7 +34,7 @@ public abstract class Piece {
     /**
      * Legal moves of the piece
      */
-    protected ArrayList<Move> allLegalMoves;
+    protected List<Move> allLegalMoves;
 
     /**
      * boolean to check if the piece has moved before
@@ -38,15 +44,21 @@ public abstract class Piece {
     /**
      * The constructor of the Piece Class
      *
+     * @param name     the Name of the Piece
      * @param position The position of the piece
      * @param color    The type of the piece
      * @param board    The board
      */
-    Piece(int position, Color color, Board board) {
+    Piece(String name, int position, Color color, Board board) {
+        this.name = name;
         this.position = position;
         this.color = color;
         this.board = board;
+    }
 
+    @Override
+    public String toString() {
+        return this.color.isWhite() ? this.name : this.name.toLowerCase();
     }
 
     /**
@@ -86,7 +98,7 @@ public abstract class Piece {
      *
      * @return the isFirstMove
      */
-    public boolean isFirstMove() {
+    public boolean getFirstMove() {
         return isFirstMove;
     }
 
@@ -100,7 +112,7 @@ public abstract class Piece {
     /**
      * @return the allLegalMoves
      */
-    public ArrayList<Move> getAllLegalMoves() {
+    public List<Move> getAllLegalMoves() {
         return allLegalMoves;
     }
 

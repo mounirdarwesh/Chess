@@ -112,7 +112,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.isFirstMove();
+            wasFirstMove = piece.getFirstMove();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
@@ -214,7 +214,7 @@ public abstract class Move {
             // And update it in the list of pieces on the board
             board.setPiece(piece);
 
-            wasKingFirstMove = piece.isFirstMove();
+            wasKingFirstMove = piece.getFirstMove();
             if (wasKingFirstMove) {
                 piece.setFirstMove(false);
             }
@@ -229,7 +229,7 @@ public abstract class Move {
             board.setPiece(pieceRook);
 
             // Set the first move to false, because this is it's first move
-            wasRookFirstMove = pieceRook.isFirstMove();
+            wasRookFirstMove = pieceRook.getFirstMove();
             if (wasRookFirstMove) {
                 pieceRook.setFirstMove(false);
             }
@@ -333,7 +333,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.isFirstMove();
+            wasFirstMove = piece.getFirstMove();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }

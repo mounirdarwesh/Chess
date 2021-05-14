@@ -1,23 +1,25 @@
 package chess.cli;
+
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayInputStream;
+/*import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
+import java.io.PrintStream;*/
 
 
 /**
  * Test of the class Cli
+ *
  * @author Gruppe45
  */
 public class CliTest {
-    Cli cli = new Cli();
+/*    Cli cli = new Cli();
     private final InputStream systemIn = System.in;
     private final PrintStream systemOut = System.out;
     private ByteArrayInputStream testIn;
     private ByteArrayOutputStream testOut;
 
-  /*  @BeforeEach
+    @BeforeEach
     public void setUpOutput() {
         testOut = new ByteArrayOutputStream();
         System.setOut(new PrintStream(testOut));
@@ -37,10 +39,10 @@ public class CliTest {
     /**
      * Test read the inputs from player
      */
-    @Test
+    /*@Test
     public void readInputFromPlayer() {
-  /*     String expected = "!Invalid move";
-        *//*String input = "cc-a2";
+             String expected = "!Invalid move";
+        String input = "cc-a2";
         provideInput(input);*//*
         String data = "Hello, World!\r\n";
         InputStream stdin = System.in;
@@ -53,7 +55,5 @@ public class CliTest {
             cli.readInputFromPlayer();
             assertEquals(expected, stdin.toString());
         }
-*/
-
-    }
+    }*/
 }

@@ -38,6 +38,7 @@ public class Bishop extends Piece {
                         (isInLastColumn(destination) && (i == 9 || i == -7))) {
                     break;
                 }
+
                 destination += i;
                 if (isPositionInBounds(destination)) {
                     if (!isFriendAtTheDestination(destination)) {

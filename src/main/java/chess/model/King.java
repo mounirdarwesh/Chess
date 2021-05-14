@@ -38,11 +38,14 @@ public class King extends Piece {
         allLegalMoves = new ArrayList<>();
 
         //Handling normal and capture moves
-
+        boolean king917;
+        boolean king719;
         for (int i : MOVE_OFFSETS) {
+            king917 = i == -9 || i == -1 || i == 7;
+            king719 = i == -7 || i == 1 || i == 9;
             int destination = this.position + i;
-            if ((isInFirstColumn(this.position) && (i == -9 || i == -1 || i == 7)) ||
-                    (isInLastColumn(this.position) && (i == -7 || i == 1 || i == 9))
+            if ((isInFirstColumn(this.position) && king917) ||
+                    (isInLastColumn(this.position) && king719)
                     || !isPositionInBounds(destination)) {
                 continue;
             }

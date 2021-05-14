@@ -36,6 +36,7 @@ public class Rook extends Piece {
                         (isInLastColumn(destination) && (i == 1)))) {
                     break;
                 }
+
                 destination += i;
                 if (isPositionInBounds(destination)) {
                     if (!isFriendAtTheDestination(destination)) {

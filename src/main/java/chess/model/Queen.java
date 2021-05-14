@@ -41,6 +41,7 @@ public class Queen extends Piece {
                         (isInLastColumn(destination) && (i == -7 || i == 1 || i == 9))) {
                     break;
                 }
+
                 destination += i;
                 if (!isPositionInBounds(destination)) {
                     break;

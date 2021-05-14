@@ -11,6 +11,7 @@ import chess.controller.Move;
  */
 public abstract class Piece {
 
+
     /**
      * The Name of the Piece
      */

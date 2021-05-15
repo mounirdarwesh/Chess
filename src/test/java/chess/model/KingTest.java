@@ -291,9 +291,4 @@ public class KingTest {
         kingCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), kingCaptureEnemyB.getAllLegalMoves().toString());
     }
-
-/*    @Test
-    public void castling(){
-
-    }*/
 }

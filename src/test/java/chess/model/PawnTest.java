@@ -63,12 +63,11 @@ public class PawnTest {
     public void testCalculateLegalMovesStartPositionB() {
         ArrayList<Move> expected = new ArrayList<>();
         Piece pawnStartPosition = new Pawn(52, Attributes.Color.BLACK, board);
+        pawnStartPosition.setFirstMove(true);
         Move m1 = new Move.NormalMove(board, pawnStartPosition, 44);
         expected.add(m1);
         Move m2 = new Move.DoublePawnMove(board, pawnStartPosition, 36);
         expected.add(m2);
-
-        pawnStartPosition.isFirstMove = true;
         board.setPiecesOnBoard(EMPTY_FEN);
         board.setPiece(pawnStartPosition);
         pawnStartPosition.calculateLegalMoves();
@@ -198,23 +197,4 @@ public class PawnTest {
         pawnCaptureEnemy.calculateLegalMoves();
         assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
     }
-/*	@Test
-	public void testCalculateLegalMovesPassant() {
-		ArrayList<Move> expected = new ArrayList<>();
-		Piece pawnPassant = new Pawn(35, Attributes.Color.WHITE, board);
-		Piece pawn = new Pawn(34, Attributes.Color.BLACK,board);
-
-
-		Move m1 = new Move.NormalMove(board,pawnPassant,43);
-		expected.add(m1);
-		Move m2 = new Move.EnPassantMove(board,pawnPassant,42,34);
-		expected.add(m2);
-
-		board.setPiecesOnBoard(EMPTY_FEN);
-		board.setPiece(pawn);
-		board.setPiece(pawnPassant);
-		pawnPassant.calculateLegalMoves();
-		ArrayList<Move> allLegal = pawnPassant.getAllLegalMoves();
-		assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
-	}*/
 }

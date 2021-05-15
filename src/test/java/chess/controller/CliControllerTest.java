@@ -2,8 +2,12 @@ package chess.controller;
 
 
 import chess.cli.Cli;
+import chess.model.Piece;
 import chess.view.View;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,5 +58,15 @@ public class CliControllerTest {
         assertTrue(cli.isValidMove("a2-a4"));
         // Knight Move
         assertTrue(cli.isValidMove("g1-h3"));
+    }
+
+    /**
+     * get captured Pieces test
+     * must be empty in the beginning of the Game.
+     */
+    @Test
+    public void getBeatenPieces() {
+        List<Piece> empty = new ArrayList<>();
+        assertEquals(empty.toString(),cli.getBeatenPieces().toString());
     }
 }

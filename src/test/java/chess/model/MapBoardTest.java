@@ -1,20 +1,31 @@
 package chess.model;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test of the class MapBoard
+ *
  * @author Gruppe 45
  */
 public class MapBoardTest {
+    // Instance of MapBoard.
+    MapBoard mapBoard = new MapBoard();
+
+    /**
+     * test if there is no correspond Index for Input
+     */
+    @Test
+    public void map() {
+        assertEquals(-1, mapBoard.map("x1"));
+    }
 
     /**
      * Test first column of the map board
      */
     @Test
     public void map1Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapA = new Integer[]{mapBoard.map("a1"), mapBoard.map("a2"),
                 mapBoard.map("a3"), mapBoard.map("a4"),
                 mapBoard.map("a5"), mapBoard.map("a6"),
@@ -28,7 +39,6 @@ public class MapBoardTest {
      */
     @Test
     public void map2Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapB = new Integer[]{mapBoard.map("b1"), mapBoard.map("b2"),
                 mapBoard.map("b3"), mapBoard.map("b4"),
                 mapBoard.map("b5"), mapBoard.map("b6"),
@@ -42,7 +52,6 @@ public class MapBoardTest {
      */
     @Test
     public void map3Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapC = new Integer[]{mapBoard.map("c1"), mapBoard.map("c2"),
                 mapBoard.map("c3"), mapBoard.map("c4"),
                 mapBoard.map("c5"), mapBoard.map("c6"),
@@ -56,7 +65,6 @@ public class MapBoardTest {
      */
     @Test
     public void map4Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapD = new Integer[]{mapBoard.map("d1"), mapBoard.map("d2"),
                 mapBoard.map("d3"), mapBoard.map("d4"),
                 mapBoard.map("d5"), mapBoard.map("d6"),
@@ -70,7 +78,6 @@ public class MapBoardTest {
      */
     @Test
     public void map5Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapE = new Integer[]{mapBoard.map("e1"), mapBoard.map("e2"),
                 mapBoard.map("e3"), mapBoard.map("e4"),
                 mapBoard.map("e5"), mapBoard.map("e6"),
@@ -84,7 +91,6 @@ public class MapBoardTest {
      */
     @Test
     public void map6Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapF = new Integer[]{mapBoard.map("f1"), mapBoard.map("f2"),
                 mapBoard.map("f3"), mapBoard.map("f4"),
                 mapBoard.map("f5"), mapBoard.map("f6"),
@@ -98,7 +104,6 @@ public class MapBoardTest {
      */
     @Test
     public void map7Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapG = new Integer[]{mapBoard.map("g1"), mapBoard.map("g2"),
                 mapBoard.map("g3"), mapBoard.map("g4"),
                 mapBoard.map("g5"), mapBoard.map("g6"),
@@ -112,7 +117,6 @@ public class MapBoardTest {
      */
     @Test
     public void map8Column() {
-        MapBoard mapBoard = new MapBoard();
         Integer[] mapH = new Integer[]{mapBoard.map("h1"), mapBoard.map("h2"),
                 mapBoard.map("h3"), mapBoard.map("h4"),
                 mapBoard.map("h5"), mapBoard.map("h6"),

@@ -278,8 +278,6 @@ public abstract class Move {
          */
         private int fromPiecePosition;
 
-
-
         /**
          * Temporary variable for the status of the piece first move
          */

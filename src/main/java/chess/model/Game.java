@@ -75,14 +75,28 @@ public class Game {
     }
 
     /// ----------- MVC ----------------- ///
+
+    /**
+     * add Observer to view
+     *
+     * @param observer to observe the view
+     */
     public void addObserver(View observer) {
         observers.add(observer);
     }
 
+    /**
+     * remove Observer form View
+     *
+     * @param observer that should be removed
+     */
     public void removeObserver(View observer) {
         observers.remove(observer);
     }
 
+    /**
+     * tell the observer that somthing is changed.
+     */
     public void notifyObservers() {
         for (View observer : observers) {
             observer.modelChanged(this);
@@ -220,7 +234,7 @@ public class Game {
     /**
      * Check the status of the game at each round
      */
-    private void checkGameStatus() {
+    public void checkGameStatus() {
         if (currentPlayer.isKingInCheck()) {
             controller.notifyView(Attributes.GameStatus.KING_IN_CHECK, currentPlayer);
         }

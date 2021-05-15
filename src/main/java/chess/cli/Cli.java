@@ -36,22 +36,19 @@ public class Cli extends View {
      */
     @Override
     public void readInputFromPlayer() {
-
         String input = scanner.nextLine();
-
-        while (true) {
+        boolean FINISHED = false;
+        while (!FINISHED) {
             if (input.equals("beaten")) {
                 System.out.println(controller.getBeatenPieces());
                 input = scanner.nextLine();
                 continue;
             }
-
             if (!controller.isValidInput(input)) {
                 System.out.println("!Invalid move");
                 input = scanner.nextLine();
                 continue;
             }
-
             if (!controller.isValidMove(input)) {
                 System.out.println("!Move not allowed");
                 input = scanner.nextLine();
@@ -59,16 +56,15 @@ public class Cli extends View {
             } else {
                 System.out.println("!" + input);
             }
-            break;
+            FINISHED = true;
         }
-
     }
 
     @Override
     public void notifyUser(Attributes.GameStatus status, Player player) {
         if (status == Attributes.GameStatus.ENDED) {
             System.out.println(player + " has won the game!");
-            System.exit(1);
+            //System.exit(1);
         }
         if (status == Attributes.GameStatus.KING_IN_CHECK) {
             System.out.println(player + "'s king is in check.");

@@ -112,7 +112,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.getFirstMove();
+            wasFirstMove = piece.isFirstMoved();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
@@ -190,16 +190,20 @@ public abstract class Move {
         /**
          * A constructor for the Castling Move class
          *
-         * @param board           The board on which the move is executed
-         * @param piece           The King that performs the move
-         * @param destination     The desired location of the new position for the King
-         * @param pieceRook       The Rook that performs the move
-         * @param destinationRook The desired location of the new position for the Rook
+         * @param board       The board on which the move is executed
+         * @param piece       The King that performs the move
+         * @param destination The desired location of the new position for the King
+         * @param pieceRook   The Rook that performs the move
          */
-        public CastlingMove(Board board, Piece piece, int destination, Piece pieceRook, int destinationRook) {
+        public CastlingMove(Board board, Piece piece, int destination, Piece pieceRook) {
             super(board, piece, destination);
             this.pieceRook = pieceRook;
-            this.destinationRook = destinationRook;
+            // the destination of Rook
+            if (destination == 6 || destination == 62) {
+                this.destinationRook = destination - 1;
+            } else if (destination == 2 || destination == 58) {
+                this.destinationRook = destination + 1;
+            }
 
         }
 
@@ -214,7 +218,7 @@ public abstract class Move {
             // And update it in the list of pieces on the board
             board.setPiece(piece);
 
-            wasKingFirstMove = piece.getFirstMove();
+            wasKingFirstMove = piece.isFirstMoved();
             if (wasKingFirstMove) {
                 piece.setFirstMove(false);
             }
@@ -229,7 +233,7 @@ public abstract class Move {
             board.setPiece(pieceRook);
 
             // Set the first move to false, because this is it's first move
-            wasRookFirstMove = pieceRook.getFirstMove();
+            wasRookFirstMove = pieceRook.isFirstMoved();
             if (wasRookFirstMove) {
                 pieceRook.setFirstMove(false);
             }
@@ -287,8 +291,8 @@ public abstract class Move {
          * Temporary variable for the status of the En passant
          */
         private boolean wasEnPassant;
-/*
-        *//**
+        /*
+         *//**
          *  Getter for wasFirstMove
          * @return wasFirstMove
          *//*
@@ -331,7 +335,7 @@ public abstract class Move {
             board.setPiece(piece);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.getFirstMove();
+            wasFirstMove = piece.isFirstMoved();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }

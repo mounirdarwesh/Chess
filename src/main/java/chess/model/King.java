@@ -69,7 +69,7 @@ public class King extends Piece {
                         && rock.getColor() == this.color
                         && board.getPiece(this.position + 1) == null
                         && board.getPiece(this.position + 2) == null) {
-                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination - 1));
+                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
                     continue;
                 } else {
                     continue;
@@ -85,7 +85,7 @@ public class King extends Piece {
                         && board.getPiece(this.position - 1) == null
                         && board.getPiece(this.position - 2) == null
                         && board.getPiece(this.position - 3) == null) {
-                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock, castlingDestination + 1));
+                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
                     continue;
                 } else {
                     continue;

@@ -1,8 +1,9 @@
 package chess.controller;
 
 
+import chess.Attributes;
 import chess.cli.Cli;
-import chess.model.Piece;
+import chess.model.*;
 import chess.view.View;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CliControllerTest {
     View view = new Cli();
     CliController cli = new CliController(view, true);
+    Board board = new Board();
 
     /**
      * Test of a valid input
@@ -62,11 +64,20 @@ public class CliControllerTest {
 
     /**
      * get captured Pieces test
-     * must be empty in the beginning of the Game.
      */
     @Test
     public void getBeatenPieces() {
-        List<Piece> empty = new ArrayList<>();
-        assertEquals(empty.toString(),cli.getBeatenPieces().toString());
+        List<Piece> expected = new ArrayList<>();
+        Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
+        Piece queen = new Queen(27, Attributes.Color.BLACK, board);
+        Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
+        Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
+        Piece bishopB = new Bishop(62, Attributes.Color.BLACK, board);
+        expected.add(pawn);
+        expected.add(queen);
+        expected.add(rookB);
+        expected.add(knightB);
+        expected.add(bishopB);
+        assertEquals(expected.toString(), cli.getBeatenPieces().toString());
     }
 }

@@ -38,14 +38,6 @@ public class Game {
      */
     private static boolean FINISHED = false;
     /**
-     * White beaten pieces
-     */
-    private static List<Piece> whiteBeaten = new ArrayList<>();
-    /**
-     * Black beaten pieces
-     */
-    private static List<Piece> blackBeaten = new ArrayList<>();
-    /**
      * The controller of the game
      */
     private Controller controller;
@@ -95,7 +87,7 @@ public class Game {
     }
 
     /**
-     * tell the observer that somthing is changed.
+     * tell the observer that something is changed.
      */
     public void notifyObservers() {
         for (View observer : observers) {
@@ -128,9 +120,9 @@ public class Game {
      */
     public static void addToBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
-            whiteBeaten.add(captured);
+            playerOne.getBeaten().add(captured);
         } else {
-            blackBeaten.add(captured);
+            playerTwo.getBeaten().add(captured);
         }
 
         //And delete the piece from the players available pieces
@@ -144,9 +136,9 @@ public class Game {
      */
     public static void removeFromBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
-            whiteBeaten.remove(captured);
+            playerOne.getBeaten().remove(captured);
         } else {
-            blackBeaten.remove(captured);
+            playerTwo.getBeaten().remove(captured);
         }
 
         //And delete the piece from the players available pieces
@@ -283,25 +275,6 @@ public class Game {
     }
 
     /**
-     * Getter for the white beaten pieces
-     *
-     * @return white beaten pieces
-     */
-    public static List<Piece> getWhiteBeaten() {
-        return whiteBeaten;
-    }
-
-    /**
-     * Getter for the black beaten pieces
-     *
-     * @return black beaten pieces
-     */
-    public static List<Piece> getBlackBeaten() {
-        return blackBeaten;
-    }
-
-
-    /**
      * Getter for the Controller
      *
      * @return controller The controller of this game
@@ -333,5 +306,23 @@ public class Game {
      */
     public void setFINISHED(boolean FINISHED) {
         Game.FINISHED = FINISHED;
+    }
+
+    /**
+     * get playerOne
+     *
+     * @return playerOne
+     */
+    public static Player getPlayerOne() {
+        return playerOne;
+    }
+
+    /**
+     * get playerTwo
+     *
+     * @return playerTwo
+     */
+    public static Player getPlayerTwo() {
+        return playerTwo;
     }
 }

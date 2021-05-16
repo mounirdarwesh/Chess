@@ -99,7 +99,7 @@ public abstract class Piece {
      *
      * @return the isFirstMove
      */
-    public boolean getFirstMove() {
+    public boolean isFirstMoved() {
 
         return isFirstMove;
     }

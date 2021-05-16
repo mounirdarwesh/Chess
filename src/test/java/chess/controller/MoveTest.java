@@ -83,7 +83,7 @@ public class MoveTest {
 
         Move mk1 = new Move.NormalMove(board,kingW4,5);
         expectedK.add(mk1);
-        Move mk2 = new Move.CastlingMove(board,kingW4,6,rookW7,5);
+        Move mk2 = new Move.CastlingMove(board,kingW4,6,rookW7);
         expectedK.add(mk2);
         Move mr1 = new Move.NormalMove(board, rookW7,6);
         expectedR.add(mr1);
@@ -129,7 +129,7 @@ public class MoveTest {
 
         Move mk1 = new Move.NormalMove(board,kingW4,3);
         expectedK.add(mk1);
-        Move mk2 = new Move.CastlingMove(board,kingW4,2,rookW0,3);
+        Move mk2 = new Move.CastlingMove(board,kingW4,2,rookW0);
         expectedK.add(mk2);
         Move mr1 = new Move.NormalMove(board, rookW0,1);
         expectedR.add(mr1);

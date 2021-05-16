@@ -87,7 +87,7 @@ public class CliController extends Controller {
     @Override
     public List<Piece> getBeatenPieces() {
         return game.getCurrentPlayer().getColor() == Color.WHITE ?
-                game.getWhiteBeaten() : game.getBlackBeaten();
+                game.getPlayerOne().getBeaten() : game.getPlayerTwo().getBeaten();
     }
 
     @Override

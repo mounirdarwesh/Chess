@@ -17,12 +17,14 @@ public abstract class Player {
      * The color of the player's chosen pieces
      */
     protected Color color;
-
     /**
      * All players pieces
      */
     protected List<Piece> playerPieces;
-
+    /**
+     * beaten pieces
+     */
+    private static List<Piece> beaten = new ArrayList<>();
     /**
      * To check if the pawn is allowed to do En Passant
      */
@@ -59,6 +61,15 @@ public abstract class Player {
      */
     public void removeFromPlayersPieces(Piece piece) {
         playerPieces.remove(piece);
+    }
+
+    /**
+     * get Player Captured Pieces.
+     *
+     * @return Captured Pieces.
+     */
+    public List<Piece> getBeaten() {
+        return beaten;
     }
 
     /**

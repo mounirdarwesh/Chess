@@ -34,8 +34,9 @@ public class Bishop extends Piece {
         for (int i : MOVE_OFFSET) {
             int destination = this.position;
             while (isPositionInBounds(destination)) {
-                if ((isInFirstColumn(destination) && (i == -9 || i == 7)) ||
-                        (isInLastColumn(destination) && (i == 9 || i == -7))) {
+                boolean firstCol = isInFirstColumn(destination) && (i == -9 || i == 7);
+                boolean lastCol = isInLastColumn(destination) && (i == 9 || i == -7);
+                if (firstCol || lastCol ) {
                     break;
                 }
 

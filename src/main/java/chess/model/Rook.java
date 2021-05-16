@@ -32,8 +32,9 @@ public class Rook extends Piece {
         for (int i : MOVE_OFFSET) {
             int destination = this.position;
             while (isPositionInBounds(destination)) {
-                if ((isInFirstColumn(destination) && (i == -1) ||
-                        (isInLastColumn(destination) && (i == 1)))) {
+                boolean firstCol = isInFirstColumn(destination) && i == -1;
+                boolean secondCol = isInLastColumn(destination) && i == 1;
+                if (firstCol || secondCol) {
                     break;
                 }
 

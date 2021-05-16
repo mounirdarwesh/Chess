@@ -36,9 +36,9 @@ public class Queen extends Piece {
             int destination = this.position;
             // Always making sure that the Queen is staying within the board
             while (true) {
-
-                if ((isInFirstColumn(destination) && (i == -9 || i == -1 || i == 7)) ||
-                        (isInLastColumn(destination) && (i == -7 || i == 1 || i == 9))) {
+                boolean firstCol = isInFirstColumn(destination) && (i == -9 || i == -1 || i == 7);
+                boolean lastCol = isInLastColumn(destination) && (i == -7 || i == 1 || i == 9);
+                if (firstCol || lastCol) {
                     break;
                 }
 

@@ -41,44 +41,58 @@ public class FenUtilities {
                 file = 0;
                 rank--;
             } else {
+                //checks if a character is a digit
                 if (Character.isDigit(c)) {
                     file += (int) Character.getNumericValue(c);
                 } else {
                     int position = rank * 8 + file;
+                    //All the possibilities
                     switch (c) {
+                        // if it is a black rook
                         case 'r':
                             piecesOnBoard.set(position, new Rook(position, Color.BLACK, board));
                             break;
+                        // if it is a black knight
                         case 'n':
                             piecesOnBoard.set(position, new Knight(position, Color.BLACK, board));
                             break;
+                        // if it is a black bishop
                         case 'b':
                             piecesOnBoard.set(position, new Bishop(position, Color.BLACK, board));
                             break;
+                        // if it is a black queen
                         case 'q':
                             piecesOnBoard.set(position, new Queen(position, Color.BLACK, board));
                             break;
+                        // if it is a black king
                         case 'k':
                             piecesOnBoard.set(position, new King(position, Color.BLACK, board));
                             break;
+                        // if it is a black pawn
                         case 'p':
                             piecesOnBoard.set(position, new Pawn(position, Color.BLACK, board));
                             break;
+                        // if it is a white rook
                         case 'R':
                             piecesOnBoard.set(position, new Rook(position, Color.WHITE, board));
                             break;
+                        // if it is a white knight
                         case 'N':
                             piecesOnBoard.set(position, new Knight(position, Color.WHITE, board));
                             break;
+                        // if it is a white bishop
                         case 'B':
                             piecesOnBoard.set(position, new Bishop(position, Color.WHITE, board));
                             break;
+                        // if it is a white queen
                         case 'Q':
                             piecesOnBoard.set(position, new Queen(position, Color.WHITE, board));
                             break;
+                        // if it is a white king
                         case 'K':
                             piecesOnBoard.set(position, new King(position, Color.WHITE, board));
                             break;
+                        // if it is a white pawn
                         case 'P':
                             piecesOnBoard.set(position, new Pawn(position, Color.WHITE, board));
                             break;

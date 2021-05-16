@@ -31,11 +31,11 @@ public class Knight extends Piece {
         allLegalMoves = new ArrayList<>();
         for (int i : MOVE_OFFSET) {
             int destination = this.position + i;
-            if ((isInFirstColumn(this.position) && (i == -17 || i == -10 || i == 6 || i == 15)) ||
-                    (isInLastColumn(this.position) && (i == -15 || i == -6 || i == 10 || i == 17)) ||
-                    (isInSecondColumn(this.position) && (i == -10 || i == 6)) ||
-                    (isInSeventhColumn(this.position) && (i == -6 || i == 10))
-                    || !isPositionInBounds(destination)) {
+            boolean firstCol = isInFirstColumn(this.position) && (i == -17 || i == -10 || i == 6 || i == 15);
+            boolean lastCol = isInLastColumn(this.position) && (i == -15 || i == -6 || i == 10 || i == 17);
+            boolean secondCol = isInSecondColumn(this.position) && (i == -10 || i == 6);
+            boolean seventhCol = isInSeventhColumn(this.position) && (i == -6 || i == 10);
+            if (firstCol || lastCol || secondCol || seventhCol || !isPositionInBounds(destination)) {
                 continue;
             }
             if (!isFriendAtTheDestination(destination)) {

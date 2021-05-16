@@ -65,7 +65,6 @@ public class MoveTest {
         assertEquals(expected55.toString(), pawnW53.getAllLegalMoves().toString());
     }
 
-
     /**
      * Test of the castling move King side (right side)
      */
@@ -109,6 +108,7 @@ public class MoveTest {
         assertEquals(expectedK.toString(), kingW4.getAllLegalMoves().toString());
         assertEquals(expectedR.toString(), rookW7.getAllLegalMoves().toString());
     }
+
 
     /**
      * Test of the castling move Queen side (left side)
@@ -188,17 +188,19 @@ public class MoveTest {
         assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
     }
 
+
     /**
      * Test of the capture move
      */
     @Test
-    public void CaptureMoveW(){
+    public void CaptureMove(){
         ArrayList<Move> expected = new ArrayList<>();
         Piece rookW = new Rook(35, Attributes.Color.WHITE, board);
         Piece bishop = new Bishop(36, Attributes.Color.BLACK, board);
         Piece knight = new Knight(34, Attributes.Color.BLACK, board);
         Piece pawn = new Pawn(43, Attributes.Color.BLACK, board);
         Piece queen = new Queen(27, Attributes.Color.BLACK,board);
+
         Move m1 = new Move.CaptureMove(board, rookW, 27);
         expected.add(m1);
         Move m2 = new Move.CaptureMove(board, rookW, 34);
@@ -218,4 +220,5 @@ public class MoveTest {
         player.makeMove(m1);
         assertEquals(expected.toString(), rookW.getAllLegalMoves().toString());
     }
+
 }

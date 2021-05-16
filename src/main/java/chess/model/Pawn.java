@@ -131,8 +131,8 @@ public class Pawn extends Piece {
     private void leftUpStep(Piece pieceAtDest, int destination) {
 
         // If the pawn is on one of the sides depending on it's color, then do nothing
-        if ((color.isWhite() && isInFirstColumn(this.position)) ||
-                (color.isBlack() && isInLastColumn(this.position))) {
+        if (color.isWhite() && isInFirstColumn(this.position) ||
+                color.isBlack() && isInLastColumn(this.position)) {
             return;
         }
 
@@ -161,8 +161,8 @@ public class Pawn extends Piece {
     private void rightUpStep(Piece pieceAtDest, int destination) {
 
         // If the pawn is on one of the sides depending on it's color, then do nothing
-        if ((color.isWhite() && isInLastColumn(this.position)) ||
-                (color.isBlack() && isInFirstColumn(this.position))) {
+        if (color.isWhite() && isInLastColumn(this.position) ||
+                color.isBlack() && isInFirstColumn(this.position)) {
             return;
         }
 
@@ -189,8 +189,8 @@ public class Pawn extends Piece {
      * @return true if it can promote to another piece, false otherwise
      */
     private boolean canPromote() {
-        return (color.isWhite() && (48 <= position && position <= 55)) ||
-                (color.isBlack() && (8 <= position && position <= 15));
+        return color.isWhite() && 48 <= position && position <= 55 ||
+                color.isBlack() && 8 <= position && position <= 15;
     }
 
     /**
@@ -200,8 +200,8 @@ public class Pawn extends Piece {
      */
     private boolean leftEnPassant() {
         Piece opponentPawn = board.getPiece(position - color.getDirection());
-        return (opponentPawn instanceof Pawn
-                && opponentPawn.getColor() != this.color);
+        return opponentPawn instanceof Pawn
+                && opponentPawn.getColor() != this.color;
     }
 
     /**
@@ -211,7 +211,7 @@ public class Pawn extends Piece {
      */
     private boolean rightEnPassant() {
         Piece opponentPawn = board.getPiece(position + color.getDirection());
-        return (opponentPawn instanceof Pawn
-                && opponentPawn.getColor() != this.color);
+        return opponentPawn instanceof Pawn
+                && opponentPawn.getColor() != this.color;
     }
 }

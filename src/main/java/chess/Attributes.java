@@ -77,7 +77,9 @@ public class Attributes {
      */
     public enum GameStatus {
 
-        ENDED, KING_IN_CHECK
+        KING_IN_CHECK,
+        ENDED_IN_WIN,
+        ENDED_IN_DRAW
 
     }
 }

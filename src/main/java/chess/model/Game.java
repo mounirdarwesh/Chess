@@ -1,7 +1,6 @@
 package chess.model;
 
 import java.util.*;
-
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
@@ -52,7 +51,6 @@ public class Game {
 
     /**
      * The constructor of the game class. it creates a new game instance with the given Controller
-     *
      * @param controller The controller to manage this instance (MVC-patter)
      * @param playerOne  The first player of the game
      * @param playerTwo  The opponent
@@ -131,7 +129,6 @@ public class Game {
 
     /**
      * Remove the captured piece to the list of the player's beaten pieces
-     *
      * @param captured The captured pieces
      */
     public static void removeFromBeaten(Piece captured) {
@@ -169,11 +166,13 @@ public class Game {
             // Checking the status of the game after each move
             checkGameStatus();
         }
+
+        // End the game when we are out of the loop
+        //System.exit(1);
     }
 
     /**
      * Checking if the gives move is allowed by the game
-     *
      * @param move_from The position where the move is starting
      * @param move_to   The position where the move is ending
      * @return True if the move is allowed, false otherwise
@@ -216,40 +215,69 @@ public class Game {
         // If the current player's king is in check or might be in
         // check if the move was executed, then preform the move
         // temporarily and check if it saves or protects the King
-        allowedMove.execute();
-        allow = !currentPlayer.isKingInCheck();
-        allowedMove.undo();
+        allow = makeTempMoveAndCheck(allowedMove);
 
         return allow;
+    }
+
+    /**
+     * Make a temporary move and then check if it affects the players king
+     * @param allowedMove The temporary move
+     * @return true if there is no threat to the players king, false otherwise
+     */
+    private boolean makeTempMoveAndCheck(Move allowedMove) {
+        boolean allowAfterTempMove;
+        allowedMove.execute();
+        allowAfterTempMove = !currentPlayer.isKingInCheck();
+        allowedMove.undo();
+        return allowAfterTempMove;
     }
 
     /**
      * Check the status of the game at each round
      */
     public void checkGameStatus() {
+        if (hasGameEndedInWin()) {
+            controller.notifyView(Attributes.GameStatus.ENDED_IN_WIN, getOpponent(currentPlayer));
+            FINISHED = true;
+            return;
+        }
+        if (hasGameEndedInDraw()) {
+            controller.notifyView(Attributes.GameStatus.ENDED_IN_DRAW, currentPlayer);
+            FINISHED = true;
+            return;
+        }
         if (currentPlayer.isKingInCheck()) {
             controller.notifyView(Attributes.GameStatus.KING_IN_CHECK, currentPlayer);
-        }
-        if (hasGameEnded(currentPlayer)) {
-            controller.notifyView(Attributes.GameStatus.ENDED, getOpponent(currentPlayer));
-            FINISHED = true;
         }
     }
 
     /**
      * Checks if the player has no moves left and thus he lost the game
      * or the King is in Checkmate.
-     *
-     * @param player The player that might have lost
      * @return true if the player has no moves left, false otherwise
      */
-    private boolean hasGameEnded(Player player) {
-        return player.checkMate();
+    private boolean hasGameEndedInWin() {
+        return currentPlayer.checkMate();
+    }
+
+    /**
+     * Check if the game has ended with no winner
+     * @return true if the game has ended in a draw, false otherwise
+     */
+    private boolean hasGameEndedInDraw() {
+        // First check if the player has any legal moves
+        for (Move move : currentPlayer.calculatePlayerMoves()) {
+            if (makeTempMoveAndCheck(move)) {
+                return false;
+            }
+        }
+        // If no legal move is found, then check if the king is in check
+        return !currentPlayer.isKingInCheck();
     }
 
     /**
      * Getter for the current player of the game
-     *
      * @return the currentPlayer
      */
     public static Player getCurrentPlayer() {
@@ -258,7 +286,6 @@ public class Game {
 
     /**
      * Getting the opponent of the current player
-     *
      * @param player The current player of the game
      */
     public static Player getOpponent(Player player) {
@@ -267,7 +294,6 @@ public class Game {
 
     /**
      * Getter for the board of the game
-     *
      * @return the board
      */
     public static Board getBoard() {
@@ -276,7 +302,6 @@ public class Game {
 
     /**
      * Getter for the Controller
-     *
      * @return controller The controller of this game
      */
     public Controller getController() {
@@ -285,7 +310,6 @@ public class Game {
 
     /**
      * Getter for the allowed move
-     *
      * @return if the Move is allowed.
      */
     public Move getAllowedMove() {
@@ -301,7 +325,6 @@ public class Game {
 
     /**
      * to set game Status, for the sake of Tests.
-     *
      * @param FINISHED Game Status
      */
     public void setFINISHED(boolean FINISHED) {
@@ -310,7 +333,6 @@ public class Game {
 
     /**
      * get playerOne
-     *
      * @return playerOne
      */
     public static Player getPlayerOne() {
@@ -319,7 +341,6 @@ public class Game {
 
     /**
      * get playerTwo
-     *
      * @return playerTwo
      */
     public static Player getPlayerTwo() {

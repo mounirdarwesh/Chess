@@ -62,18 +62,20 @@ public class Cli extends View {
 
     @Override
     public void notifyUser(Attributes.GameStatus status, Player player) {
-        if (status == Attributes.GameStatus.ENDED) {
-            System.out.println(player + " has won the game!");
-            //System.exit(1);
-        }
-        if (status == Attributes.GameStatus.KING_IN_CHECK) {
-            System.out.println(player + "'s king is in check.");
+        switch (status) {
+            case ENDED_IN_WIN:
+                System.out.println(player + " has won the game!");
+                break;
+            case KING_IN_CHECK:
+                System.out.println(player + "'s king is in check.");
+                break;
+            case ENDED_IN_DRAW:
+                System.out.println("Game Ended in a draw.");
         }
     }
 
     /**
      * assigning Controller to View
-     *
      * @param controller that controls the View
      */
     @Override

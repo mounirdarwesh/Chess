@@ -69,8 +69,7 @@ public class GameTest {
         playerB.addToPlayersPieces(rook);
         playerB.addToPlayersPieces(queen);
         game.checkGameStatus();
-        assertEquals("White Player's king is in check.\r\n" +
-                "Black player has won the game!", outputStreamCaptor.toString()
+        assertEquals("Black player has won the game!", outputStreamCaptor.toString()
                 .trim());
     }
 }

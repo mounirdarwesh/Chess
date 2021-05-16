@@ -16,12 +16,6 @@ public class King extends Piece {
     private static final int[] MOVE_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
     /**
-     * all possible King castling offsets
-     */
-    private static final int[] CASTLING_OFFSETS = {-2, 2};
-
-
-    /**
      * constructor of the King
      *
      * @param position his Position
@@ -51,46 +45,40 @@ public class King extends Piece {
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
             }
         }
-
-
         // Handling Castling moves
-
-        if (!this.isFirstMove) {
-            return;
+        if (this.isFirstMove) {
+            handleKingSideCastle();
+            handleQueenSideCastle();
         }
-        for (int j : CASTLING_OFFSETS) {
-            int castlingDestination = this.position + j;
-            // King side
-            if (j == 2) {
-                Piece rock = board.getPiece(this.position + 3);
-                if (!(rock instanceof Rook) || rock == null) {
-                    continue;
-                } else if (rock.isFirstMove
-                        && rock.getColor() == this.color
-                        && board.getPiece(this.position + 1) == null
-                        && board.getPiece(this.position + 2) == null) {
-                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
-                    continue;
-                } else {
-                    continue;
-                }
-            }
-            // Queen side
-            else if (j == -2) {
-                Piece rock = board.getPiece(this.position - 4);
-                if (!(rock instanceof Rook) || rock == null) {
-                    continue;
-                } else if (rock.isFirstMove
-                        && rock.getColor() == this.color
-                        && board.getPiece(this.position - 1) == null
-                        && board.getPiece(this.position - 2) == null
-                        && board.getPiece(this.position - 3) == null) {
-                    allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
-                    continue;
-                } else {
-                    continue;
-                }
-            }
+    }
+
+    /**
+     *
+     */
+    private void handleKingSideCastle() {
+        int castlingDestination = this.position + 2;
+        Piece rock = board.getPiece(this.position + 3);
+        if (!(rock instanceof Rook) || rock == null) {
+            return;
+        } else if (rock.isFirstMove
+                && rock.getColor() == this.color
+                && board.getPiece(this.position + 1) == null
+                && board.getPiece(this.position + 2) == null) {
+            allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
+        }
+    }
+
+    private void handleQueenSideCastle() {
+        int castlingDestination = this.position - 2;
+        Piece rock = board.getPiece(this.position - 4);
+        if (!(rock instanceof Rook) || rock == null) {
+            return;
+        } else if (rock.isFirstMove
+                && rock.getColor() == this.color
+                && board.getPiece(this.position - 1) == null
+                && board.getPiece(this.position - 2) == null
+                && board.getPiece(this.position - 3) == null) {
+            allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
         }
     }
 }

@@ -61,11 +61,10 @@ public class Pawn extends Piece {
                     twoStepsForward(pieceAtDest, destination);
                     continue;
                 case 7:
-                    // Add if applicable a one step move up to the left to the legal moves
                     leftUpStep(pieceAtDest, destination);
                     continue;
                 case 9:
-                    // Add if applicable a one step move up to the right to the legal moves
+                    // The pawn should not be on one of the sides depending on it's color
                     rightUpStep(pieceAtDest, destination);
             }
         }
@@ -124,68 +123,56 @@ public class Pawn extends Piece {
 
     /**
      * If the player chooses to move the pawn to capture
-     *
      * @param pieceAtDest The piece at that destination
      * @param destination The destination of the move
      */
     private void leftUpStep(Piece pieceAtDest, int destination) {
 
-        // If the pawn is on one of the sides depending on it's color, then do nothing
-        if (color.isWhite() && isInFirstColumn(this.position) ||
-                color.isBlack() && isInLastColumn(this.position)) {
-            return;
-        }
+        // The pawn should not be on one of the sides depending on it's color
+        if(leftUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        else {
-            if (leftEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
-                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
-            } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
-                // If the pawn can capture and promote itself then let it do it
-                if (canPromote()) {
-                    allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
-                } // else just capture the enemy piece
-                else {
-                    allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-                }
+        if (leftEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
+            allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
+        }
+        else if (pieceAtDest != null && pieceAtDest.color != this.color) {
+            // If the pawn can capture and promote itself then let it do it
+            if (canPromote()) {
+                allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
+            } // else just capture the enemy piece
+            else {
+                allLegalMoves.add(new Move.CaptureMove(board, this, destination));
             }
         }
     }
 
     /**
      * If the player chooses to move the pawn to capture
-     *
      * @param pieceAtDest The piece at that destination
      * @param destination The destination of the move
      */
     private void rightUpStep(Piece pieceAtDest, int destination) {
 
-        // If the pawn is on one of the sides depending on it's color, then do nothing
-        if (color.isWhite() && isInLastColumn(this.position) ||
-                color.isBlack() && isInFirstColumn(this.position)) {
-            return;
-        }
+        // The pawn should not be on one of the sides depending on it's color
+        if(rightUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        else {
-
-            if (rightEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
-                allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
-            } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
-                // If the pawn can capture and promote itself then let it do it
-                if (canPromote()) {
-                    allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
-                } // else just capture the enemy piece
-                else {
-                    allLegalMoves.add(new Move.CaptureMove(board, this, destination));
-                }
+        if (rightEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
+            allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
+        }
+        else if (pieceAtDest != null && pieceAtDest.color != this.color) {
+            // If the pawn can capture and promote itself then let it do it
+            if (canPromote()) {
+                allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
+            } // else just capture the enemy piece
+            else {
+                allLegalMoves.add(new Move.CaptureMove(board, this, destination));
             }
         }
     }
 
     /**
      * check if the pawn can promote
-     *
      * @return true if it can promote to another piece, false otherwise
      */
     private boolean canPromote() {
@@ -195,7 +182,6 @@ public class Pawn extends Piece {
 
     /**
      * Check of the pawn can perform En Passant
-     *
      * @return true if it can, false otherwise
      */
     private boolean leftEnPassant() {
@@ -206,12 +192,29 @@ public class Pawn extends Piece {
 
     /**
      * Check of the pawn can perform En Passant
-     *
      * @return true if it can, false otherwise
      */
     private boolean rightEnPassant() {
         Piece opponentPawn = board.getPiece(position + color.getDirection());
         return opponentPawn instanceof Pawn
                 && opponentPawn.getColor() != this.color;
+    }
+
+    /**
+     * Check if the pawn on a certain column depending on its color
+     * @return true if the pawn on a certain column that will not make him make the move, false otherwise
+     */
+    private boolean leftUpColumnException() {
+        return color.isWhite() && isInFirstColumn(this.position) ||
+                color.isBlack() && isInLastColumn(this.position);
+    }
+
+    /**
+     * Check if the pawn on a certain column depending on its color
+     * @return true if the pawn on a certain column that will not make him make the move, false otherwise
+     */
+    private boolean rightUpColumnException() {
+        return color.isWhite() && isInLastColumn(this.position) ||
+                color.isBlack() && isInFirstColumn(this.position);
     }
 }

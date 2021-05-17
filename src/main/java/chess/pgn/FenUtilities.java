@@ -1,7 +1,6 @@
 package chess.pgn;
 
 import java.util.*;
-
 import chess.Attributes.Color;
 import chess.model.Bishop;
 import chess.model.Board;
@@ -14,8 +13,14 @@ import chess.model.Rook;
 
 /**
  * @author Ahmad Mohammad
+ * The class where it handles the Portable Game Notation
  */
 public class FenUtilities {
+
+    /**
+     * The pieces on the board
+     */
+    private static List<Piece> piecesOnBoard;
 
     /**
      * The constructor of the FenUtilities class
@@ -24,18 +29,15 @@ public class FenUtilities {
         throw new RuntimeException("I am NOT instantiable!");
     }
 
-
     /**
      * This is to load the board from a FEN string
-     *
      * @param fen the FEN string
      * @return board  the board
      */
     public static List<Piece> loadBoardFromFEN(String fen, Board board) {
-        List<Piece> piecesOnBoard = new ArrayList<>(Collections.nCopies(64, null));
+        piecesOnBoard = new ArrayList<>(Collections.nCopies(64, null));
         int file = 0;
         int rank = 7;
-
         for (char c : fen.toCharArray()) {
             if (c == '/') {
                 file = 0;
@@ -43,61 +45,13 @@ public class FenUtilities {
             } else {
                 //checks if a character is a digit
                 if (Character.isDigit(c)) {
-                    file += (int) Character.getNumericValue(c);
+                    file += Character.getNumericValue(c);
                 } else {
                     int position = rank * 8 + file;
-                    //All the possibilities
-                    switch (c) {
-                        // if it is a black rook
-                        case 'r':
-                            piecesOnBoard.set(position, new Rook(position, Color.BLACK, board));
-                            break;
-                        // if it is a black knight
-                        case 'n':
-                            piecesOnBoard.set(position, new Knight(position, Color.BLACK, board));
-                            break;
-                        // if it is a black bishop
-                        case 'b':
-                            piecesOnBoard.set(position, new Bishop(position, Color.BLACK, board));
-                            break;
-                        // if it is a black queen
-                        case 'q':
-                            piecesOnBoard.set(position, new Queen(position, Color.BLACK, board));
-                            break;
-                        // if it is a black king
-                        case 'k':
-                            piecesOnBoard.set(position, new King(position, Color.BLACK, board));
-                            break;
-                        // if it is a black pawn
-                        case 'p':
-                            piecesOnBoard.set(position, new Pawn(position, Color.BLACK, board));
-                            break;
-                        // if it is a white rook
-                        case 'R':
-                            piecesOnBoard.set(position, new Rook(position, Color.WHITE, board));
-                            break;
-                        // if it is a white knight
-                        case 'N':
-                            piecesOnBoard.set(position, new Knight(position, Color.WHITE, board));
-                            break;
-                        // if it is a white bishop
-                        case 'B':
-                            piecesOnBoard.set(position, new Bishop(position, Color.WHITE, board));
-                            break;
-                        // if it is a white queen
-                        case 'Q':
-                            piecesOnBoard.set(position, new Queen(position, Color.WHITE, board));
-                            break;
-                        // if it is a white king
-                        case 'K':
-                            piecesOnBoard.set(position, new King(position, Color.WHITE, board));
-                            break;
-                        // if it is a white pawn
-                        case 'P':
-                            piecesOnBoard.set(position, new Pawn(position, Color.WHITE, board));
-                            break;
-                        default:
-                            System.out.println("Error in the FEN string");
+                    if(Character.isUpperCase(c)) {
+                        initBoardWhitePieces(board, position, c);
+                    } else {
+                        initBoardBlackPieces(board, position, c);
                     }
                     file++;
                 }
@@ -106,15 +60,71 @@ public class FenUtilities {
         return piecesOnBoard;
     }
 
+    /**
+     * Here where the white pieces will get initialized for the board
+     * @param board The board of the game
+     * @param position The position of the piece
+     * @param c The char, aka, the string representation of the piece
+     */
+    private static void initBoardWhitePieces(Board board, int position, char c) {
+        switch (c) {
+            case 'R':
+                piecesOnBoard.set(position, new Rook(position, Color.WHITE, board));
+                break;
+            case 'N':
+                piecesOnBoard.set(position, new Knight(position, Color.WHITE, board));
+                break;
+            case 'B':
+                piecesOnBoard.set(position, new Bishop(position, Color.WHITE, board));
+                break;
+            case 'Q':
+                piecesOnBoard.set(position, new Queen(position, Color.WHITE, board));
+                break;
+            case 'K':
+                piecesOnBoard.set(position, new King(position, Color.WHITE, board));
+                break;
+            case 'P':
+                piecesOnBoard.set(position, new Pawn(position, Color.WHITE, board));
+                break;
+        }
+    }
+
+    /**
+     * Here where the black pieces will get initialized for the board
+     * @param board The board of the game
+     * @param position The position of the piece
+     * @param c The char, aka, the string representation of the piece
+     */
+    private static void initBoardBlackPieces(Board board, int position, char c) {
+        switch (c) {
+            case 'r':
+                piecesOnBoard.set(position, new Rook(position, Color.BLACK, board));
+                break;
+            case 'n':
+                piecesOnBoard.set(position, new Knight(position, Color.BLACK, board));
+                break;
+            case 'b':
+                piecesOnBoard.set(position, new Bishop(position, Color.BLACK, board));
+                break;
+            case 'q':
+                piecesOnBoard.set(position, new Queen(position, Color.BLACK, board));
+                break;
+            case 'k':
+                piecesOnBoard.set(position, new King(position, Color.BLACK, board));
+                break;
+            case 'p':
+                piecesOnBoard.set(position, new Pawn(position, Color.BLACK, board));
+                break;
+        }
+    }
 
     /**
      * This is to create a FEN string from the current board
-     *
      * @param board The current board
      * @return fen  The FEN representation of the board
      */
     public static String loadFENFromBoard(Board board) {
-        String fen = "";
+        StringBuilder fen = new StringBuilder();
 
         for (int rank = 7; rank >= 0; rank--) {
             int emptyFile = 0;
@@ -122,22 +132,21 @@ public class FenUtilities {
                 int index = rank * 8 + file;
                 if (board.getPiece(index) != null) {
                     if (emptyFile != 0) {
-                        fen += String.valueOf(emptyFile);
+                        fen.append(emptyFile);
                         emptyFile = 0;
                     }
-                    fen += board.getPiece(index).toString();
+                    fen.append(board.getPiece(index).toString());
                 } else {
                     emptyFile++;
                 }
             }
             if (emptyFile != 0) {
-                fen += String.valueOf(emptyFile);
+                fen.append(emptyFile);
             }
             if (rank != 0) {
-                fen += "/";
+                fen.append("/");
             }
         }
-        return fen;
+        return fen.toString();
     }
-
 }

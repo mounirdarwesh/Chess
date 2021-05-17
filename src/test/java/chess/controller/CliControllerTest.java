@@ -1,7 +1,5 @@
 package chess.controller;
 
-
-import chess.Attributes;
 import chess.cli.Cli;
 import chess.model.*;
 import chess.view.View;
@@ -68,7 +66,7 @@ public class CliControllerTest {
     @Test
     public void getBeatenPieces() {
         List<Piece> expected = new ArrayList<>();
-        Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
+/*      Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
         Piece queen = new Queen(27, Attributes.Color.BLACK, board);
         Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
         Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
@@ -77,7 +75,7 @@ public class CliControllerTest {
         expected.add(queen);
         expected.add(rookB);
         expected.add(knightB);
-        expected.add(bishopB);
+        expected.add(bishopB);*/
         assertEquals(expected.toString(), cli.getBeatenPieces().toString());
     }
 }

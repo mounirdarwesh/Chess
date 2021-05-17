@@ -14,14 +14,6 @@ public class MapBoardTest {
     MapBoard mapBoard = new MapBoard();
 
     /**
-     * test if there is no correspond Index for Input
-     */
-    @Test
-    public void map() {
-        assertEquals(-1, mapBoard.map("x1"));
-    }
-
-    /**
      * Test first column of the map board
      */
     @Test

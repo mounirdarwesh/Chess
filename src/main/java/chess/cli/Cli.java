@@ -1,5 +1,6 @@
 package chess.cli;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 import chess.Attributes;
@@ -30,6 +31,24 @@ public class Cli extends View {
         super();
     }
 
+    /**
+     * determine the Game Mode of the Player.
+     */
+    public void gameMode() {
+        boolean finish = false;
+        String gameMode;
+        System.out.println("Game against Human player press H\n" +
+                "Game against Computer press C");
+        while (!finish) {
+            gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
+            if (!(gameMode.equals("c") || gameMode.equals("h"))) {
+                System.out.println("Pleas enter a Valid Input!");
+                continue;
+            }
+            controller.isVsComp(gameMode);
+            finish = true;
+        }
+    }
 
     /**
      * read Input from User
@@ -76,6 +95,7 @@ public class Cli extends View {
 
     /**
      * assigning Controller to View
+     *
      * @param controller that controls the View
      */
     @Override

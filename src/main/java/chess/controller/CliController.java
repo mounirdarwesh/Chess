@@ -1,11 +1,13 @@
 package chess.controller;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import chess.Attributes;
 import chess.Attributes.Color;
+import chess.cli.Cli;
 import chess.model.*;
 import chess.view.View;
 
@@ -37,11 +39,12 @@ public class CliController extends Controller {
      * @param view     The view that is connected to this controller
      * @param FINISHED game status for the sake of TEST
      */
-    public CliController(View view, boolean FINISHED) {
+    public CliController(Cli view, boolean FINISHED) {
         super(view);
 
         // Assigning the controller
         view.assignController(this);
+        view.gameMode();
 
         // When a player inputs something to the console
         onActionPreformed(FINISHED);
@@ -55,10 +58,17 @@ public class CliController extends Controller {
      */
     private void onActionPreformed(boolean FINISHED) {
         // Create a new game
-        game = new Game(this,
-                new Board(),
-                new HumanPlayer(Color.WHITE),
-                new HumanPlayer(Color.BLACK));
+        if (!vsComp) {
+            game = new Game(this,
+                    new Board(),
+                    new HumanPlayer(Color.WHITE),
+                    new HumanPlayer(Color.BLACK));
+        } else {
+            game = new Game(this,
+                    new Board(),
+                    new HumanPlayer(Color.WHITE),
+                    new Computer(Color.BLACK));
+        }
 
         // Set the game to the CLI view
         view.setGame(game);
@@ -177,4 +187,8 @@ public class CliController extends Controller {
         return MAPPER.map(toIn);
     }
 
+    boolean vsComp;
+    public void isVsComp(String mode) {
+        vsComp = mode.equals("c");
+    }
 }

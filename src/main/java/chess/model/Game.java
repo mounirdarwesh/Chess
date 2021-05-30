@@ -1,6 +1,7 @@
 package chess.model;
 
 import java.util.*;
+
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
@@ -51,6 +52,7 @@ public class Game {
 
     /**
      * The constructor of the game class. it creates a new game instance with the given Controller
+     *
      * @param controller The controller to manage this instance (MVC-patter)
      * @param playerOne  The first player of the game
      * @param playerTwo  The opponent
@@ -129,6 +131,7 @@ public class Game {
 
     /**
      * Remove the captured piece to the list of the player's beaten pieces
+     *
      * @param captured The captured pieces
      */
     public static void removeFromBeaten(Piece captured) {
@@ -158,7 +161,11 @@ public class Game {
             controller.processInputFromPlayer();
 
             // Switch the player
-            currentPlayer = getOpponent(currentPlayer);
+            if (playerTwo instanceof Computer){
+                ((Computer) playerTwo).aiComp();
+            }
+            else currentPlayer = getOpponent(currentPlayer);
+
 
             // And then notify the observer
             notifyObservers();
@@ -173,6 +180,7 @@ public class Game {
 
     /**
      * Checking if the gives move is allowed by the game
+     *
      * @param move_from The position where the move is starting
      * @param move_to   The position where the move is ending
      * @return True if the move is allowed, false otherwise
@@ -222,6 +230,7 @@ public class Game {
 
     /**
      * Make a temporary move and then check if it affects the players king
+     *
      * @param allowedMove The temporary move
      * @return true if there is no threat to the players king, false otherwise
      */
@@ -255,6 +264,7 @@ public class Game {
     /**
      * Checks if the player has no moves left and thus he lost the game
      * or the King is in Checkmate.
+     *
      * @return true if the player has no moves left, false otherwise
      */
     private boolean hasGameEndedInWin() {
@@ -263,6 +273,7 @@ public class Game {
 
     /**
      * Check if the game has ended with no winner
+     *
      * @return true if the game has ended in a draw, false otherwise
      */
     private boolean hasGameEndedInDraw() {
@@ -278,6 +289,7 @@ public class Game {
 
     /**
      * Getter for the current player of the game
+     *
      * @return the currentPlayer
      */
     public static Player getCurrentPlayer() {
@@ -286,6 +298,7 @@ public class Game {
 
     /**
      * Getting the opponent of the current player
+     *
      * @param player The current player of the game
      */
     public static Player getOpponent(Player player) {
@@ -294,6 +307,7 @@ public class Game {
 
     /**
      * Getter for the board of the game
+     *
      * @return the board
      */
     public static Board getBoard() {
@@ -302,6 +316,7 @@ public class Game {
 
     /**
      * Getter for the Controller
+     *
      * @return controller The controller of this game
      */
     public Controller getController() {
@@ -310,6 +325,7 @@ public class Game {
 
     /**
      * Getter for the allowed move
+     *
      * @return if the Move is allowed.
      */
     public Move getAllowedMove() {
@@ -325,6 +341,7 @@ public class Game {
 
     /**
      * to set game Status, for the sake of Tests.
+     *
      * @param FINISHED Game Status
      */
     public void setFINISHED(boolean FINISHED) {
@@ -333,6 +350,7 @@ public class Game {
 
     /**
      * get playerOne
+     *
      * @return playerOne
      */
     public static Player getPlayerOne() {
@@ -341,6 +359,7 @@ public class Game {
 
     /**
      * get playerTwo
+     *
      * @return playerTwo
      */
     public static Player getPlayerTwo() {

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MoveTest {
     //Empty board
     private static final String EMPTY_FEN = "8/8/8/8/8/8/8/8";
-    View view = new Cli();
+    Cli view = new Cli();
     CliController cli = new CliController(view, true);
     Board board = new Board();
     Player player = new HumanPlayer(Attributes.Color.BLACK);

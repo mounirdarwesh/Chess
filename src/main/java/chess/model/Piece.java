@@ -2,6 +2,7 @@ package chess.model;
 
 import java.util.List;
 
+import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
 
@@ -187,4 +188,6 @@ public abstract class Piece {
     public static boolean isInSeventhColumn(int position) {
         return position % 8 == 6;
     }
+
+    public abstract String getSymbol() ;
 }

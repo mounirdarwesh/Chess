@@ -81,4 +81,19 @@ public class King extends Piece {
             allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
         }
     }
+
+    /**
+     * GUI Symbol
+     *
+     * @return the Symbol of the Piece
+     */
+    public String getSymbol() {
+        String symbol;
+        if (color == Attributes.Color.BLACK) {
+            symbol = "♚";
+        } else {
+            symbol = "♔";
+        }
+        return symbol;
+    }
 }

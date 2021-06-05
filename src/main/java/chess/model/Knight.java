@@ -45,6 +45,21 @@ public class Knight extends Piece {
             }
         }
     }
+
+    /**
+     * GUI Symbol
+     *
+     * @return the Symbol of the Piece
+     */
+    public String getSymbol() {
+        String symbol;
+        if (color == Attributes.Color.BLACK) {
+            symbol = "♞";
+        } else {
+            symbol = "♘";
+        }
+        return symbol;
+    }
 }
 
 

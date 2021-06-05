@@ -36,7 +36,7 @@ public class Bishop extends Piece {
             while (isPositionInBounds(destination)) {
                 boolean firstCol = isInFirstColumn(destination) && (i == -9 || i == 7);
                 boolean lastCol = isInLastColumn(destination) && (i == 9 || i == -7);
-                if (firstCol || lastCol ) {
+                if (firstCol || lastCol) {
                     break;
                 }
 
@@ -53,5 +53,20 @@ public class Bishop extends Piece {
                 }
             }
         }
+    }
+
+    /**
+     * GUI Symbol
+     *
+     * @return the Symbol of the Piece
+     */
+    public String getSymbol() {
+        String symbol;
+        if (color == Attributes.Color.BLACK) {
+            symbol = "♝";
+        } else {
+            symbol = "♗";
+        }
+        return symbol;
     }
 }

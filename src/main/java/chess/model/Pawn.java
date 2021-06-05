@@ -2,6 +2,7 @@ package chess.model;
 
 import java.util.ArrayList;
 
+import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
 
@@ -123,19 +124,19 @@ public class Pawn extends Piece {
 
     /**
      * If the player chooses to move the pawn to capture
+     *
      * @param pieceAtDest The piece at that destination
      * @param destination The destination of the move
      */
     private void leftUpStep(Piece pieceAtDest, int destination) {
 
         // The pawn should not be on one of the sides depending on it's color
-        if(leftUpColumnException()) return;
+        if (leftUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
         if (leftEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
-        }
-        else if (pieceAtDest != null && pieceAtDest.color != this.color) {
+        } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it
             if (canPromote()) {
                 allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
@@ -148,19 +149,19 @@ public class Pawn extends Piece {
 
     /**
      * If the player chooses to move the pawn to capture
+     *
      * @param pieceAtDest The piece at that destination
      * @param destination The destination of the move
      */
     private void rightUpStep(Piece pieceAtDest, int destination) {
 
         // The pawn should not be on one of the sides depending on it's color
-        if(rightUpColumnException()) return;
+        if (rightUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
         if (rightEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
-        }
-        else if (pieceAtDest != null && pieceAtDest.color != this.color) {
+        } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it
             if (canPromote()) {
                 allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
@@ -173,6 +174,7 @@ public class Pawn extends Piece {
 
     /**
      * check if the pawn can promote
+     *
      * @return true if it can promote to another piece, false otherwise
      */
     private boolean canPromote() {
@@ -182,6 +184,7 @@ public class Pawn extends Piece {
 
     /**
      * Check of the pawn can perform En Passant
+     *
      * @return true if it can, false otherwise
      */
     private boolean leftEnPassant() {
@@ -192,6 +195,7 @@ public class Pawn extends Piece {
 
     /**
      * Check of the pawn can perform En Passant
+     *
      * @return true if it can, false otherwise
      */
     private boolean rightEnPassant() {
@@ -202,6 +206,7 @@ public class Pawn extends Piece {
 
     /**
      * Check if the pawn on a certain column depending on its color
+     *
      * @return true if the pawn on a certain column that will not make him make the move, false otherwise
      */
     private boolean leftUpColumnException() {
@@ -211,10 +216,26 @@ public class Pawn extends Piece {
 
     /**
      * Check if the pawn on a certain column depending on its color
+     *
      * @return true if the pawn on a certain column that will not make him make the move, false otherwise
      */
     private boolean rightUpColumnException() {
         return color.isWhite() && isInLastColumn(this.position) ||
                 color.isBlack() && isInFirstColumn(this.position);
+    }
+
+    /**
+     * GUI Symbol
+     *
+     * @return the Symbol of the Piece
+     */
+    public String getSymbol() {
+        String symbol;
+        if (color == Attributes.Color.BLACK) {
+            symbol = "♟";
+        } else {
+            symbol = "♙";
+        }
+        return symbol;
     }
 }

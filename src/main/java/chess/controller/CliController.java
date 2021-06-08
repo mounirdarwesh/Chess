@@ -76,8 +76,8 @@ public class CliController extends Controller {
         }
         game = new Game(this,
                 new Board(),
-                new Computer(Color.WHITE),
-                new Computer(Color.BLACK));
+                new HumanPlayer(Color.WHITE),
+                opponent);
 
         // Set the game to the CLI view
         view.setGame(game);

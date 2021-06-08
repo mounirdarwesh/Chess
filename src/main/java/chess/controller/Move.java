@@ -2,6 +2,8 @@ package chess.controller;
 
 import chess.model.*;
 
+import java.util.Map;
+
 /**
  * @author Gr.45
  */
@@ -48,16 +50,30 @@ public abstract class Move {
 
     /**
      * Getter of the destination of the move
-     *
      * @return the destination of the move
      */
     public int getDestination() {
         return this.destination;
     }
 
+    /**
+     * Getting the string from the position
+     * @return
+     */
+    public <K, V> K getKey(Map<K, V> map, V value) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            if (entry.getValue().equals(value)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
-        return this.getClass() + " " + destination;
+        String from = getKey(MapBoard.mapper, piece.getPosition());
+        String to = getKey(MapBoard.mapper, destination);
+        return from + "-" + to;
     }
 
     /**

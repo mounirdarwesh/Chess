@@ -31,21 +31,35 @@ public class Cli extends View {
         super();
     }
 
+    public void showWelcomeScreen() {
+        System.out.println("*****************************************************" + "\n"
+                        +  "* Welcome to the beta version of the chess program! *" + "\n"
+                        +  "*****************************************************" + "\n"
+                        +  "*               Choose your opponent                *" + "\n"
+                        +  "*                                                   *" + "\n"
+                        +  "*     1. Human                       2. Computer    *" + "\n"
+                        +  "*****************************************************" + "\n"
+                        +  "*****************************************************" + "\n");
+    }
+
     /**
      * determine the Game Mode of the Player.
      */
     public void gameMode() {
         boolean finish = false;
         String gameMode;
-        System.out.println("Game against Human player press H\n" +
-                "Game against Computer press C");
         while (!finish) {
             gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
-            if (!(gameMode.equals("c") || gameMode.equals("h"))) {
+            if (gameMode.equals("1")) {
+                controller.setGameMode(Attributes.GameMode.HUMAN);
+            }
+            else if(gameMode.equals("2")) {
+                controller.setGameMode(Attributes.GameMode.COMPUTER);
+            }
+            else {
                 System.out.println("Pleas enter a Valid Input!");
                 continue;
             }
-            controller.isVsComp(gameMode);
             finish = true;
         }
     }
@@ -54,7 +68,7 @@ public class Cli extends View {
      * read Input from User
      */
     @Override
-    public void readInputFromPlayer() {
+    public void readInputFromHuman() {
         String input = scanner.nextLine();
         boolean FINISHED = false;
         while (!FINISHED) {
@@ -77,6 +91,15 @@ public class Cli extends View {
             }
             FINISHED = true;
         }
+    }
+
+    @Override
+    public boolean readInputFromComputer(String move) {
+        if (controller.isValidMove(move)) {
+            System.out.println("!" + move);
+            return true;
+        }
+        return false;
     }
 
     @Override

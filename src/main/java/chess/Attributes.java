@@ -80,7 +80,14 @@ public class Attributes {
         KING_IN_CHECK,
         ENDED_IN_WIN,
         ENDED_IN_DRAW
+    }
 
+    /**
+     * The Game Mode
+     */
+    public enum GameMode {
+        HUMAN,
+        COMPUTER
     }
 }
 

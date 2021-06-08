@@ -1,8 +1,6 @@
 package chess.model;
 
 import java.util.List;
-
-import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
 
@@ -12,6 +10,10 @@ import chess.controller.Move;
  */
 public abstract class Piece {
 
+    /**
+     * The value of the Piece
+     */
+    private final int value;
 
     /**
      * The Name of the Piece
@@ -51,8 +53,9 @@ public abstract class Piece {
      * @param color    The type of the piece
      * @param board    The board
      */
-    Piece(String name, int position, Color color, Board board) {
+    Piece(String name, int value, int position, Color color, Board board) {
         this.name = name;
+        this.value = value;
         this.position = position;
         this.color = color;
         this.board = board;
@@ -189,5 +192,15 @@ public abstract class Piece {
         return position % 8 == 6;
     }
 
-    public abstract String getSymbol() ;
+    /**
+     * Getter of the symbol of the piece
+     */
+    public abstract String getSymbol();
+
+    /**
+     * Getter of the value of the piece
+     */
+    public int getValue() {
+        return this.color.isWhite() ? this.value : -1 * this.value;
+    }
 }

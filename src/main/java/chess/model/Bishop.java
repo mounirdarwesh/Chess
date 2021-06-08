@@ -24,7 +24,7 @@ public class Bishop extends Piece {
      * @param board    on which he stand
      */
     public Bishop(int position, Attributes.Color color, Board board) {
-        super("B", position, color, board);
+        super("B", 350, position, color, board);
     }
 
 

@@ -23,7 +23,7 @@ public class Knight extends Piece {
      * @param board    on which he stand
      */
     public Knight(int position, Attributes.Color color, Board board) {
-        super("N", position, color, board);
+        super("N",350, position, color, board);
     }
 
     @Override

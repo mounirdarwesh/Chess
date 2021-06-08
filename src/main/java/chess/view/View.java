@@ -62,13 +62,18 @@ public abstract class View {
     public abstract void assignController(CliController cliController);
 
     /**
-     * read input from the player
+     * read input from the human
      */
-    public abstract void readInputFromPlayer();
+    public abstract void readInputFromHuman();
+
+    /**
+     * read input from the computer
+     * @param input
+     */
+    public abstract boolean readInputFromComputer(String input);
 
     /**
      * notify user
-     *
      * @param status
      * @param player
      */

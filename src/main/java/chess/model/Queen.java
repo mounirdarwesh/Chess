@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class Queen extends Piece {
 
-
     /**
      * The possible offsets of the queen
      */
@@ -25,7 +24,7 @@ public class Queen extends Piece {
      * @param board    The board
      */
     public Queen(int position, Color color, Board board) {
-        super("Q", position, color, board);
+        super("Q", 1000, position, color, board);
     }
 
     @Override

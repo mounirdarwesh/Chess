@@ -3,6 +3,7 @@ package chess.model;
 import chess.Attributes.Color;
 import chess.controller.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,6 +12,10 @@ import java.util.List;
  */
 public class Computer extends Player {
 
+    /**
+     * List of all the pieces that the computer can capture
+     */
+    private List<Piece> availableToCapture;
 
     /**
      * The constructor of the computer class
@@ -23,12 +28,26 @@ public class Computer extends Player {
 
     @Override
     public void makeMove(Move move) {
-        //TODO
+        move.execute();
     }
 
-    public void aiComp(){
-        List<Move> compMoves = calculatePlayerMoves();
-        compMoves.get(2).execute();
+    public Move evaluate() {
+        int bestValue = 0;
+        Move optimalMove = null;
+        for (Move move : this.calculatePlayerMoves()) {
+            Piece piece = Game.getBoard().getPiece(move.getDestination());
+            if (piece != null) {
+                int currentValue = piece.getValue();
+                if (currentValue >= bestValue) {
+                    bestValue = currentValue;
+                    optimalMove = move;
+                }
+            }
+        }
+        if(optimalMove == null) {
+            List<Move> compMoves = this.calculatePlayerMoves();
+            optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
+        }
+        return optimalMove;
     }
-
 }

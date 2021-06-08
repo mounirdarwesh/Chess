@@ -8,7 +8,7 @@ import static java.util.Map.entry;
  * @author Gr.45
  */
 public class MapBoard {
-    final static Map<String, Integer> mapper = Map.ofEntries(entry("a1", 0),
+    public final static Map<String, Integer> mapper = Map.ofEntries(entry("a1", 0),
             entry("a2", 8),
             entry("a3", 16),
             entry("a4", 24),

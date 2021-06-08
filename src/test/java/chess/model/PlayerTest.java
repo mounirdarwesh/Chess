@@ -39,7 +39,7 @@ public class PlayerTest {
         player.addToPlayersPieces(rook);
         player.addToPlayersPieces(queen);
         playerB.addToPlayersPieces(kingCheckMate);
-        assertTrue(playerB.checkMate());
+        assertTrue(playerB.isCheckMate());
     }
 
     /**

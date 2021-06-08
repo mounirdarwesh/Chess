@@ -1,19 +1,14 @@
 package chess.controller;
-
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import chess.Attributes;
 import chess.Attributes.Color;
 import chess.cli.Cli;
 import chess.model.*;
-import chess.view.View;
 
 /**
  * The Controller class for the Command Line Interface
- *
  * @author Gr.45
  */
 public class CliController extends Controller {
@@ -34,6 +29,11 @@ public class CliController extends Controller {
     private Move move;
 
     /**
+     * The mode of the game
+     */
+    private Attributes.GameMode gameMode;
+
+    /**
      * The constructor expects a view to construct itself.
      *
      * @param view     The view that is connected to this controller
@@ -44,6 +44,11 @@ public class CliController extends Controller {
 
         // Assigning the controller
         view.assignController(this);
+
+        // Showing the welcome screen
+        view.showWelcomeScreen();
+
+        // Getting the game mode
         view.gameMode();
 
         // When a player inputs something to the console
@@ -57,18 +62,22 @@ public class CliController extends Controller {
      * @param FINISHED game status
      */
     private void onActionPreformed(boolean FINISHED) {
+        Player opponent;
         // Create a new game
-        if (!vsComp) {
-            game = new Game(this,
-                    new Board(),
-                    new HumanPlayer(Color.WHITE),
-                    new HumanPlayer(Color.BLACK));
-        } else {
-            game = new Game(this,
-                    new Board(),
-                    new HumanPlayer(Color.WHITE),
-                    new Computer(Color.BLACK));
+        switch (gameMode) {
+            case HUMAN:
+                opponent = new HumanPlayer(Color.BLACK);
+                break;
+            case COMPUTER:
+                opponent = new Computer(Color.BLACK);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + gameMode);
         }
+        game = new Game(this,
+                new Board(),
+                new Computer(Color.WHITE),
+                new Computer(Color.BLACK));
 
         // Set the game to the CLI view
         view.setGame(game);
@@ -86,18 +95,33 @@ public class CliController extends Controller {
      */
     @Override
     public void processInputFromPlayer() {
-        // Read the input from the view
-        view.readInputFromPlayer();
 
-        // The the controller checks for certain criteria,
+        // The current player of the game
+        Player currentPlayer = game.getCurrentPlayer();
+
+        // Read the input from the view
+        if(currentPlayer instanceof HumanPlayer) {
+            view.readInputFromHuman();
+        }
+
+        // The controller checks for certain criteria,
         // and when all criteria meet, then tell the game to perform the move
-        game.getCurrentPlayer().makeMove(move);
+        if(currentPlayer instanceof HumanPlayer) {
+            currentPlayer.makeMove(move);
+        } else if(currentPlayer instanceof Computer) {
+            Move computerMove;
+            while (true) {
+                computerMove = ((Computer) currentPlayer).evaluate();
+                if(view.readInputFromComputer(computerMove.toString())) break;
+            }
+            currentPlayer.makeMove(computerMove);
+        }
     }
 
     @Override
     public List<Piece> getBeatenPieces() {
-        return game.getCurrentPlayer().getColor() == Color.WHITE ?
-                game.getPlayerOne().getBeaten() : game.getPlayerTwo().getBeaten();
+        return game.getCurrentPlayer().getColor().isWhite() ?
+                game.getWhitePlayer().getBeaten() : game.getBlackPlayer().getBeaten();
     }
 
     @Override
@@ -187,8 +211,19 @@ public class CliController extends Controller {
         return MAPPER.map(toIn);
     }
 
-    boolean vsComp;
-    public void isVsComp(String mode) {
-        vsComp = mode.equals("c");
+    /**
+     * Getter for the game mode
+     * @return
+     */
+    public Attributes.GameMode getGameMode() {
+        return gameMode;
+    }
+
+    /**
+     * Setter for the game mode
+     * @param gameMode
+     */
+    public void setGameMode(Attributes.GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 }

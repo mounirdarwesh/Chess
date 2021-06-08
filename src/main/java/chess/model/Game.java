@@ -20,11 +20,11 @@ public class Game {
     /**
      * The first player
      */
-    private static Player playerOne;
+    private static Player whitePlayer;
     /**
      * The second player
      */
-    private static Player playerTwo;
+    private static Player blackPlayer;
     /**
      * The current player of the game
      */
@@ -61,9 +61,9 @@ public class Game {
     public Game(Controller controller, Board board, Player playerOne, Player playerTwo) {
         this.controller = controller;
         Game.board = board;
-        Game.playerOne = playerOne;
-        Game.playerTwo = playerTwo;
-        Game.currentPlayer = Game.playerOne;
+        Game.whitePlayer = playerOne.getColor().isWhite() ? playerOne : playerTwo;
+        Game.blackPlayer = playerTwo.getColor().isBlack() ? playerTwo : playerOne;
+        Game.currentPlayer = Game.whitePlayer;
     }
 
     /// ----------- MVC ----------------- ///
@@ -104,10 +104,10 @@ public class Game {
             if (piece == null) {
                 continue;
             } else {
-                if (piece.getColor() == playerOne.getColor()) {
-                    playerOne.addToPlayersPieces(piece);
+                if (piece.getColor().isWhite()) {
+                    whitePlayer.addToPlayersPieces(piece);
                 } else {
-                    playerTwo.addToPlayersPieces(piece);
+                    blackPlayer.addToPlayersPieces(piece);
                 }
             }
         }
@@ -120,9 +120,9 @@ public class Game {
      */
     public static void addToBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
-            playerOne.getBeaten().add(captured);
+            whitePlayer.getBeaten().add(captured);
         } else {
-            playerTwo.getBeaten().add(captured);
+            blackPlayer.getBeaten().add(captured);
         }
 
         //And delete the piece from the players available pieces
@@ -136,9 +136,9 @@ public class Game {
      */
     public static void removeFromBeaten(Piece captured) {
         if (captured.getColor().isWhite()) {
-            playerOne.getBeaten().remove(captured);
+            whitePlayer.getBeaten().remove(captured);
         } else {
-            playerTwo.getBeaten().remove(captured);
+            blackPlayer.getBeaten().remove(captured);
         }
 
         //And delete the piece from the players available pieces
@@ -161,10 +161,7 @@ public class Game {
             controller.processInputFromPlayer();
 
             // Switch the player
-            if (playerTwo instanceof Computer){
-                ((Computer) playerTwo).aiComp();
-            }
-            else currentPlayer = getOpponent(currentPlayer);
+            currentPlayer = getOpponent(currentPlayer);
 
 
             // And then notify the observer
@@ -262,13 +259,20 @@ public class Game {
     }
 
     /**
+     * Checks if game has ended
+     */
+    public boolean hasGameEnded() {
+        return hasGameEndedInWin() || hasGameEndedInDraw();
+    }
+
+    /**
      * Checks if the player has no moves left and thus he lost the game
      * or the King is in Checkmate.
      *
      * @return true if the player has no moves left, false otherwise
      */
     private boolean hasGameEndedInWin() {
-        return currentPlayer.checkMate();
+        return currentPlayer.isCheckMate();
     }
 
     /**
@@ -302,7 +306,7 @@ public class Game {
      * @param player The current player of the game
      */
     public static Player getOpponent(Player player) {
-        return player.getColor() == playerOne.getColor() ? playerTwo : playerOne;
+        return player.getColor().isWhite() ? blackPlayer : whitePlayer;
     }
 
     /**
@@ -353,8 +357,8 @@ public class Game {
      *
      * @return playerOne
      */
-    public static Player getPlayerOne() {
-        return playerOne;
+    public static Player getWhitePlayer() {
+        return whitePlayer;
     }
 
     /**
@@ -362,7 +366,7 @@ public class Game {
      *
      * @return playerTwo
      */
-    public static Player getPlayerTwo() {
-        return playerTwo;
+    public static Player getBlackPlayer() {
+        return blackPlayer;
     }
 }

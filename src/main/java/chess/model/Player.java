@@ -31,6 +31,11 @@ public abstract class Player {
     private boolean allowEnPassant = false;
 
     /**
+     * To check if the player's king is castled
+     */
+    private boolean isCastled = false;
+
+    /**
      * The constructor of the class Player
      *
      * @param color the color that the player chooses to play with
@@ -77,7 +82,7 @@ public abstract class Player {
      *
      * @return legalMoves All of the enemy's legal moves
      */
-    protected List<Move> calculatePlayerMoves() {
+    public List<Move> calculatePlayerMoves() {
         List<Move> legalMoves = new ArrayList<>();
         for (Piece piece : playerPieces) {
             piece.calculateLegalMoves();
@@ -112,22 +117,22 @@ public abstract class Player {
      *
      * @return true, if the player has no moves to preform
      */
-    boolean checkMate() {
-        boolean isCheckMate = true;
+    public boolean isCheckMate() {
+        boolean CheckMate = true;
         if (this.isKingInCheck()) {
             for (Move move : this.calculatePlayerMoves()) {
                 move.execute();
                 if (!this.isKingInCheck()) {
-                    isCheckMate = false;
+                    CheckMate = false;
                     move.undo();
                     break;
                 }
                 move.undo();
             }
         } else {
-            isCheckMate = false;
+            CheckMate = false;
         }
-        return isCheckMate;
+        return CheckMate;
     }
 
     /**
@@ -177,10 +182,23 @@ public abstract class Player {
     public List<Piece> getPlayerPieces() {
         return playerPieces;
     }
+    /**
+     * Getter for isCastled
+     * @return
+     */
+    public boolean isCastled() {
+        return isCastled;
+    }
+    /**
+     * Setter for isCastled
+     * @param castled
+     */
+    public void setCastled(boolean castled) {
+        isCastled = castled;
+    }
 
     @Override
     public String toString() {
         return this.color.isWhite() ? "White Player" : "Black player";
     }
-
 }

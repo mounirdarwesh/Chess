@@ -11,7 +11,6 @@ import chess.controller.Move;
  */
 public class Pawn extends Piece {
 
-
     /**
      * Pawn move offset
      */
@@ -25,7 +24,7 @@ public class Pawn extends Piece {
      * @param board    The board
      */
     public Pawn(int position, Color color, Board board) {
-        super("P", position, color, board);
+        super("P", 100, position, color, board);
     }
 
 

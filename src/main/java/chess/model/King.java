@@ -23,7 +23,7 @@ public class King extends Piece {
      * @param board    on which he stand
      */
     public King(int position, Attributes.Color color, Board board) {
-        super("K", position, color, board);
+        super("K", 10000, position, color, board);
     }
 
 

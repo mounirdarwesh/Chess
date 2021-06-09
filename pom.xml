@@ -170,6 +170,7 @@
                         <!-- Ignore GUI classes for coverage -->
                         <exclude>chess/cli/**/*</exclude>
                         <exclude>chess/gui/**/*</exclude>
+                        <exclude>chess/controller/GuiController.class</exclude>
                         <exclude>chess/Main.class</exclude>
                     </excludes>
                 </configuration>

@@ -24,6 +24,10 @@ public abstract class Move {
      */
     protected int destination;
 
+    /**
+     * Piece Source Location.
+     */
+    protected int source;
 
     /**
      * The constructor for the move class
@@ -36,6 +40,7 @@ public abstract class Move {
         this.board = board;
         this.piece = piece;
         this.destination = destination;
+        this.source = piece.getPosition();
     }
 
     /**
@@ -73,7 +78,7 @@ public abstract class Move {
 
     @Override
     public String toString() {
-        String from = getKey(MapBoard.mapper, piece.getPosition());
+        String from = getKey(MapBoard.mapper, source);
         String to = getKey(MapBoard.mapper, destination);
         return from + "-" + to;
     }

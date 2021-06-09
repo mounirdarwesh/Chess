@@ -99,7 +99,7 @@ public class Game {
     /**
      * Loading the players pieces
      */
-    protected static void loadPlayerPieces() {
+    public static void loadPlayerPieces() {
         for (Piece piece : board.getPiecesOnBoard()) {
             if (piece == null) {
                 continue;

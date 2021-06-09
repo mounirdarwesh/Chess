@@ -3,6 +3,7 @@ package chess.gui;
 import chess.controller.GuiController;
 import chess.controller.Move;
 import chess.model.Board;
+import chess.model.Piece;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +12,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -42,6 +42,15 @@ public class GameView extends BorderPane {
     public static VBox beaten;
 
     /**
+     * Area to show History.
+     */
+    public static VBox history;
+    /**
+     *
+     */
+    public static HBox notification;
+
+    /**
      * Construct Game View Basis Elements.
      *
      * @param primaryStage  the Window
@@ -62,30 +71,35 @@ public class GameView extends BorderPane {
         setting.getItems().add(new CheckMenuItem("Rotate Field"));
         setting.getItems().add(new CheckMenuItem("Reselect Piece"));
         setting.getItems().add(new CheckMenuItem("Check Status Notification"));
-
         MenuBar gameMenu = new MenuBar();
         gameMenu.getMenus().addAll(gameOptions, setting);
 
-        // history Table
-        TableView<String> history = new TableView<>();
-        TableColumn<String, String> whiteBeaten = new TableColumn<>("White");
-        TableColumn<String, String> blackBeaten = new TableColumn<>("Black");
-        whiteBeaten.setResizable(true);
-        history.getColumns().add(blackBeaten);
-        history.getColumns().add(whiteBeaten);
+
+        history = new VBox();
+        history.setMinWidth(50);
+        history.setAlignment(Pos.TOP_CENTER);
+        ScrollPane historyScroll = new ScrollPane();
+        historyScroll.setMinWidth(55);
+        historyScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        historyScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        historyScroll.setContent(history);
 
         beaten = new VBox();
-        beaten.setPadding(new Insets(10));
-        beaten.setSpacing(8);
-        Label title = new Label("Beaten Pieces");
-        title.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-        beaten.getChildren().add(title);
+        beaten.setMinWidth(50);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setMinWidth(55);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setContent(beaten);
 
-        layout.setLeft(beaten);
+        notification = new HBox();
+        notification.setAlignment(Pos.CENTER);
+        layout.setBottom(notification);
+        layout.setLeft(scrollPane);
         layout.setTop(gameMenu);
         layout.setCenter(board);
-        layout.setRight(history);
-        primaryStage.setScene(new Scene(layout, 800, 505));
+        layout.setRight(historyScroll);
+        primaryStage.setScene(new Scene(layout, 591, 530));
     }
 }
 
@@ -150,6 +164,7 @@ class BoardView extends GridPane {
      * @param tile Clicked Tile
      */
     public void makeGuiMove(TileView tile) {
+        GameView.notification.getChildren().clear();
         if (firstClick) {
             if (guiController.validSelection(tile.getTileID())) {
                 guiController.setSource(tile.getTileID());
@@ -171,10 +186,30 @@ class BoardView extends GridPane {
                 tileDestination.getChildren().clear();
             }
             deHighlight();
-            /*if (guiController.getBeatenPieces().size() != 0)
-                GameView.beaten.getChildren().add(new Label(guiController.getBeatenPieces().get(0).getSymbol()));*/
+            showBeaten();
+            showHistory();
+            notification();
             tile.putPiece(guiController.getGame().getBoard());
         }
+    }
+
+    public void showHistory() {
+        if (guiController.wasLegalMove())
+            GameView.history.getChildren().add(new Label(guiController.getGame().getAllowedMove().toString()));
+    }
+
+    public void notification() {
+        GameView.notification.getChildren().add(new Label(guiController.getGame().getCurrentPlayer().toString()));
+    }
+
+    public void showBeaten() {
+        GameView.beaten.getChildren().clear();
+        if (guiController.getBeatenPieces().size() != 0)
+            for (Piece piece : guiController.getBeatenPieces()) {
+                Label beatenPiece = new Label(piece.getSymbol());
+                beatenPiece.setFont(new Font(40));
+                GameView.beaten.getChildren().add(beatenPiece);
+            }
     }
 
     /**

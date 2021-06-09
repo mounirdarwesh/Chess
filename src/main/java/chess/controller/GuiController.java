@@ -1,8 +1,10 @@
 package chess.controller;
 
 import chess.Attributes;
+import chess.gui.GameView;
 import chess.gui.Gui;
 import chess.model.*;
+import javafx.scene.control.Label;
 
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class GuiController extends Controller {
         // Set the game to the CLI view
         view.setGame(game);
 
+        game.loadPlayerPieces();
         // Start the game
         //game.run();
     }
@@ -57,10 +60,9 @@ public class GuiController extends Controller {
             if (allowedMove != null) {
                 currentPlayer.makeMove(allowedMove);
                 game.setCurrentPlayer(game.getOpponent(currentPlayer));
-                //game.getOpponent(game.getCurrentPlayer());
-                //game.getBoard().getPiecesOnBoard().set(source, null);
             }
         } else System.out.println("not allowed");
+        game.checkGameStatus();
     }
 
     /**
@@ -122,8 +124,7 @@ public class GuiController extends Controller {
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
-
+        System.out.println(status.toString() + " " + player.getColor().toString());
+        GameView.notification.getChildren().add(new Label(status + " " + player.getColor().toString()));
     }
-
-
 }

@@ -23,8 +23,14 @@ public class Main {
             // Create the view
             Cli cli = new Cli();
             // Create the controller and pass the view object to it
-            new CliController(cli, false);
-        } else {
+            new CliController(cli, false, false);
+        } else if(Arrays.asList(args).contains("--simple")) {
+            // Create the view
+            Cli cli = new Cli();
+            // Create the controller and pass the view object to it
+            new CliController(cli, false, true);
+        }
+        else {
             //Gui guiView = new Gui();
             //GuiController guiController = new GuiController(guiView);
             Gui.main(args);

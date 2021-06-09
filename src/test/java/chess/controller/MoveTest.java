@@ -16,7 +16,7 @@ public class MoveTest {
     //Empty board
     private static final String EMPTY_FEN = "8/8/8/8/8/8/8/8";
     Cli view = new Cli();
-    CliController cli = new CliController(view, true);
+    CliController cli = new CliController(view, true, true);
     Board board = new Board();
     Player player = new HumanPlayer(Attributes.Color.BLACK);
     Player player2 = new HumanPlayer(Attributes.Color.WHITE);
@@ -164,30 +164,31 @@ public class MoveTest {
      */
     @Test
     public void EnPassantMove(){
+
+        board.setPiecesOnBoard(EMPTY_FEN);
         ArrayList<Move> expected = new ArrayList<>();
         Piece pawnPassant = new Pawn(35, Attributes.Color.WHITE, board);
+        pawnPassant.setFirstMove(false);
+        board.setPiece(pawnPassant);
+        player2.addToPlayersPieces(pawnPassant);
+
         Piece pawn = new Pawn(50, Attributes.Color.BLACK,board);
+        board.setPiece(pawn);
+        player.addToPlayersPieces(pawn);
+
         pawn.setFirstMove(true);
         Move m0 = new Move.DoublePawnMove(board,pawn,34);
-        player2.makeMove(m0);
+        player.makeMove(m0);
 
         Move m1 = new Move.NormalMove(board,pawnPassant,43);
         expected.add(m1);
         Move m2 = new Move.EnPassantMove(board,pawnPassant,42,34);
         expected.add(m2);
 
-        pawnPassant.setFirstMove(false);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawn);
-        board.setPiece(pawnPassant);
-        player.addToPlayersPieces(pawn);
-        player2.addToPlayersPieces(pawnPassant);
-        player.setAllowEnPassant(true);
+        player2.setAllowEnPassant(true);
         pawnPassant.calculateLegalMoves();
-        player.makeMove(m2);
         assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
     }
-
 
     /**
      * Test of the capture move

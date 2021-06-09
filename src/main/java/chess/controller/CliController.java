@@ -39,17 +39,18 @@ public class CliController extends Controller {
      * @param view     The view that is connected to this controller
      * @param FINISHED game status for the sake of TEST
      */
-    public CliController(Cli view, boolean FINISHED) {
+    public CliController(Cli view, boolean FINISHED, boolean simpleGame) {
         super(view);
 
         // Assigning the controller
         view.assignController(this);
 
-        // Showing the welcome screen
-        view.showWelcomeScreen();
-
-        // Getting the game mode
-        view.gameMode();
+        if(!simpleGame) {
+            // Showing the welcome screen
+            view.showWelcomeScreen();
+            // Getting the game mode
+            view.gameMode();
+        }
 
         // When a player inputs something to the console
         onActionPreformed(FINISHED);
@@ -64,15 +65,10 @@ public class CliController extends Controller {
     private void onActionPreformed(boolean FINISHED) {
         Player opponent;
         // Create a new game
-        switch (gameMode) {
-            case HUMAN:
-                opponent = new HumanPlayer(Color.BLACK);
-                break;
-            case COMPUTER:
-                opponent = new Computer(Color.BLACK);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + gameMode);
+        if (gameMode == Attributes.GameMode.COMPUTER) {
+            opponent = new Computer(Color.BLACK);
+        } else {
+            opponent = new HumanPlayer(Color.BLACK);
         }
         game = new Game(this,
                 new Board(),

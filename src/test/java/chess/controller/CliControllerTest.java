@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CliControllerTest {
     Cli view = new Cli();
-    CliController cli = new CliController(view, true);
+    CliController cli = new CliController(view, true, true);
     Board board = new Board();
 
     /**

@@ -5,13 +5,19 @@ import java.util.Scanner;
 
 import chess.Attributes;
 import chess.controller.CliController;
+import chess.model.Game;
 import chess.model.Player;
 import chess.view.View;
 
 /**
  * The command line interface
  */
-public class Cli extends View {
+public class Cli implements View {
+
+    /**
+     * The connected game
+     */
+    protected Game game;
 
     /**
      * Scanner to get User Input
@@ -121,9 +127,30 @@ public class Cli extends View {
      *
      * @param controller that controls the View
      */
-    @Override
     public void assignController(CliController controller) {
         this.controller = controller;
     }
 
+    /**
+     * @return the game
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * @param game the game to set
+     */
+    public void setGame(Game game) {
+        this.game = game;
+        game.addObserver(this);
+    }
+
+    /**
+     * @param game The game to observe
+     */
+    public void modelChanged(Game game) {
+        this.game = game;
+        System.out.println(game.getBoard());
+    }
 }

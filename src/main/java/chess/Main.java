@@ -2,6 +2,7 @@ package chess;
 
 import chess.cli.Cli;
 import chess.controller.CliController;
+import chess.controller.GuiController;
 import chess.gui.Gui;
 
 import java.util.*;
@@ -24,6 +25,8 @@ public class Main {
             // Create the controller and pass the view object to it
             new CliController(cli, false);
         } else {
+            //Gui guiView = new Gui();
+            //GuiController guiController = new GuiController(guiView);
             Gui.main(args);
         }
     }

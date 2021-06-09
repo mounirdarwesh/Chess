@@ -50,6 +50,7 @@ public abstract class Move {
 
     /**
      * Getter of the destination of the move
+     *
      * @return the destination of the move
      */
     public int getDestination() {
@@ -58,6 +59,7 @@ public abstract class Move {
 
     /**
      * Getting the string from the position
+     *
      * @return
      */
     public <K, V> K getKey(Map<K, V> map, V value) {

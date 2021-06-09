@@ -369,4 +369,12 @@ public class Game {
     public static Player getBlackPlayer() {
         return blackPlayer;
     }
+
+    /**
+     * setter for the Current Player
+     * @param currentPlayer Current Player
+     */
+    public static void setCurrentPlayer(Player currentPlayer) {
+        Game.currentPlayer = currentPlayer;
+    }
 }

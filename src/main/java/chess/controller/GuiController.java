@@ -43,6 +43,11 @@ public class GuiController extends Controller{
     private Move validMove = null;
 
     /**
+     *
+     */
+    private boolean gameAgainstComputer = false;
+
+    /**
      * @param guiView
      */
     public GuiController(Gui guiView) {
@@ -61,6 +66,7 @@ public class GuiController extends Controller{
             guiView.createGameView();
         } else {
             guiView.getMainMenu().showColorChoiceWindow();
+            gameAgainstComputer = true;
         }
 
     }
@@ -126,6 +132,9 @@ public class GuiController extends Controller{
      */
     private void updateGame() {
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        if(gameAgainstComputer) {
+            letComputerPlay();
+        }
         game.checkGameStatus();
         game.notifyObservers();
     }
@@ -140,6 +149,26 @@ public class GuiController extends Controller{
                 opponent);
         game.loadPlayerPieces();
         guiView.setGame(game);
+        if(gameAgainstComputer && opponent.getColor().isWhite()) {
+            letComputerPlay();
+        }
+    }
+
+    /**
+     *
+     */
+    private void letComputerPlay() {
+        Move computerMove;
+        while (true) {
+            computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
+            // Calculate from where the move is performed
+            int move_from = getMoveFromPosition(computerMove.toString());
+            // Calculate to where the move is performed
+            int move_to = getMoveToPosition(computerMove.toString());
+            if(game.isMoveAllowed(move_from, move_to)) break;
+        }
+        game.getCurrentPlayer().makeMove(computerMove);
+        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
     }
 
     @Override
@@ -155,11 +184,6 @@ public class GuiController extends Controller{
             computerMove = ((Computer) currentPlayer).evaluate();
             currentPlayer.makeMove(computerMove);
         }
-    }
-
-    @Override
-    public List<Piece> getBeatenPieces() {
-        return null;
     }
 
     @Override

@@ -1,28 +1,16 @@
 package chess.controller;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import chess.Attributes;
 import chess.Attributes.Color;
 import chess.model.*;
 import chess.view.Cli;
-import chess.view.View;
 
 /**
  * The Controller class for the Command Line Interface
  * @author Gr.45
  */
 public class CliController extends Controller {
-
-    /**
-     * Pattern to verify the syntax of the User Input
-     */
-    private static final Pattern VALID_INPUT = Pattern.compile("([a-h][1-8])([-])([a-h][1-8])([QRNBqrnb]?)", Pattern.CASE_INSENSITIVE);
-
-    /**
-     * A board mapper, to map each input to its respective index
-     */
-    private static final MapBoard MAPPER = new MapBoard();
 
     /**
      * The move to be performed on the piece
@@ -114,11 +102,6 @@ public class CliController extends Controller {
         }
     }
 
-    @Override
-    public List<Piece> getBeatenPieces() {
-        return game.getCurrentPlayer().getColor().isWhite() ?
-                game.getWhitePlayer().getBeaten() : game.getBlackPlayer().getBeaten();
-    }
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
@@ -181,39 +164,7 @@ public class CliController extends Controller {
         }
     }
 
-    /**
-     * Here where we calculate the position where the piece should reside
-     *
-     * @param input The input form the player
-     * @return The index of the selected piece
-     */
-    public int getMoveFromPosition(String input) {
-        Matcher matcher = VALID_INPUT.matcher(input);
-        matcher.matches();
-        String fromIn = matcher.group(1);
-        return MAPPER.map(fromIn);
-    }
 
-    /**
-     * Here where we calculate the position to where the piece should move
-     *
-     * @param input The input form the player
-     * @return The index of the destination
-     */
-    public int getMoveToPosition(String input) {
-        Matcher matcher = VALID_INPUT.matcher(input);
-        matcher.matches();
-        String toIn = matcher.group(3);
-        return MAPPER.map(toIn);
-    }
-
-    /**
-     * Getter for the game mode
-     * @return
-     */
-    public Attributes.GameMode getGameMode() {
-        return gameMode;
-    }
 
     /**
      * Setter for the game mode

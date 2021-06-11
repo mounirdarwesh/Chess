@@ -1,9 +1,10 @@
 package chess;
 
-import chess.cli.Cli;
-import chess.controller.CliController;
 import chess.controller.GuiController;
-import chess.gui.Gui;
+import chess.view.Cli;
+import chess.controller.CliController;
+import chess.view.guiView.Gui;
+import javafx.application.Application;
 
 import java.util.*;
 
@@ -31,9 +32,7 @@ public class Main {
             new CliController(cli, false, true);
         }
         else {
-            //Gui guiView = new Gui();
-            //GuiController guiController = new GuiController(guiView);
-            Gui.main(args);
+            Application.launch(Gui.class, args);
         }
     }
 }

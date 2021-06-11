@@ -1,9 +1,8 @@
 package chess.model;
 
 import chess.Attributes;
-import chess.cli.Cli;
+import chess.view.Cli;
 import chess.controller.CliController;
-import chess.view.View;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

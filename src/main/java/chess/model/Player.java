@@ -31,11 +31,6 @@ public abstract class Player {
     private boolean allowEnPassant = false;
 
     /**
-     * To check if the player's king is castled
-     */
-    private boolean isCastled = false;
-
-    /**
      * The constructor of the class Player
      *
      * @param color the color that the player chooses to play with
@@ -181,20 +176,6 @@ public abstract class Player {
      */
     public List<Piece> getPlayerPieces() {
         return playerPieces;
-    }
-    /**
-     * Getter for isCastled
-     * @return
-     */
-    public boolean isCastled() {
-        return isCastled;
-    }
-    /**
-     * Setter for isCastled
-     * @param castled
-     */
-    public void setCastled(boolean castled) {
-        isCastled = castled;
     }
 
     @Override

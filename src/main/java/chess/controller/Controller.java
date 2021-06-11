@@ -21,13 +21,12 @@ public abstract class Controller {
     protected Game game;
 
     /**
-     * The view that is connected to this controller
+     * The CLI view that is connected to this controller
      */
     protected View view;
 
     /**
-     * The constructor expects a view to construct itself.
-     *
+     * The constructor expects a CLI view to construct itself.
      * @param view The view that is connected to this controller
      */
     public Controller(View view) {
@@ -41,16 +40,15 @@ public abstract class Controller {
 
     /**
      * Returning the beaten pieces of the player
-     *
      * @return beaten pieces of the player
      */
     public abstract List<Piece> getBeatenPieces();
 
     /**
      * Method to notify the user of the status of the game
-     *
      * @param status The status of the game
      * @param player The player
      */
     public abstract void notifyView(Attributes.GameStatus status, Player player);
+
 }

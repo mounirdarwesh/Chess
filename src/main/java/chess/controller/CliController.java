@@ -4,8 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import chess.Attributes;
 import chess.Attributes.Color;
-import chess.cli.Cli;
 import chess.model.*;
+import chess.view.Cli;
+import chess.view.View;
 
 /**
  * The Controller class for the Command Line Interface
@@ -33,15 +34,16 @@ public class CliController extends Controller {
      */
     private Attributes.GameMode gameMode;
 
+    private Cli view;
+
     /**
      * The constructor expects a view to construct itself.
-     *
-     * @param view     The view that is connected to this controller
+     *  @param view The view that is connected to this controller
      * @param FINISHED game status for the sake of TEST
      */
     public CliController(Cli view, boolean FINISHED, boolean simpleGame) {
         super(view);
-
+        this.view = view;
         // Assigning the controller
         view.assignController(this);
 
@@ -52,17 +54,15 @@ public class CliController extends Controller {
             view.gameMode();
         }
 
-        // When a player inputs something to the console
-        onActionPreformed(FINISHED);
+        // Start screen for the CLI
+        startScreen(FINISHED);
     }
-
 
     /**
      * This will be called when someone interacts with the Command Line Interface
-     *
      * @param FINISHED game status
      */
-    private void onActionPreformed(boolean FINISHED) {
+    private void startScreen(boolean FINISHED) {
         Player opponent;
         // Create a new game
         if (gameMode == Attributes.GameMode.COMPUTER) {

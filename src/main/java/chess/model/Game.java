@@ -1,17 +1,15 @@
 package chess.model;
 
-import java.util.*;
-
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
-import chess.view.View;
+import chess.util.Observable;
 
 /**
  * @author Gruppe 45
  * The class that controls the game
  */
-public class Game {
+public class Game extends Observable {
 
     /**
      * Promoted character
@@ -41,10 +39,7 @@ public class Game {
      * The controller of the game
      */
     private Controller controller;
-    /**
-     * A list of observer objects
-     */
-    private List<View> observers = new ArrayList<>();
+
     /**
      * The allowed move of the player
      */
@@ -66,35 +61,6 @@ public class Game {
         Game.currentPlayer = Game.whitePlayer;
     }
 
-    /// ----------- MVC ----------------- ///
-
-    /**
-     * add Observer to view
-     *
-     * @param observer to observe the view
-     */
-    public void addObserver(View observer) {
-        observers.add(observer);
-    }
-
-    /**
-     * remove Observer form View
-     *
-     * @param observer that should be removed
-     */
-    public void removeObserver(View observer) {
-        observers.remove(observer);
-    }
-
-    /**
-     * tell the observer that something is changed.
-     */
-    public void notifyObservers() {
-        for (View observer : observers) {
-            observer.modelChanged(this);
-        }
-    }
-    /// ------------------------------- ///
 
     /**
      * Loading the players pieces
@@ -155,14 +121,13 @@ public class Game {
         // Loading the players pieces
         loadPlayerPieces();
 
-        // Loop to the game
+        //Loop to the game
         while (!FINISHED) {
             // Get the input from the player and analyze it
             controller.processInputFromPlayer();
 
             // Switch the player
             currentPlayer = getOpponent(currentPlayer);
-
 
             // And then notify the observer
             notifyObservers();
@@ -177,7 +142,6 @@ public class Game {
 
     /**
      * Checking if the gives move is allowed by the game
-     *
      * @param move_from The position where the move is starting
      * @param move_to   The position where the move is ending
      * @return True if the move is allowed, false otherwise
@@ -227,7 +191,6 @@ public class Game {
 
     /**
      * Make a temporary move and then check if it affects the players king
-     *
      * @param allowedMove The temporary move
      * @return true if there is no threat to the players king, false otherwise
      */

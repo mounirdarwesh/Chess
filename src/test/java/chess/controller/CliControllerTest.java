@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.cli.Cli;
+import chess.view.Cli;
 import chess.model.*;
-import chess.view.View;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

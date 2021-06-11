@@ -1,130 +1,169 @@
 package chess.controller;
 
 import chess.Attributes;
-import chess.gui.GameView;
-import chess.gui.Gui;
 import chess.model.*;
-import javafx.scene.control.Label;
+import chess.view.View;
+import chess.view.guiView.Gui;
+import chess.view.guiView.TileView;
+import javafx.event.Event;
+import javafx.scene.Scene;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GuiController extends Controller {
+public class GuiController extends Controller{
     /**
-     * Source Tile
+     *
      */
-    int source;
-    /**
-     * Destination Tile
-     */
-    int destination;
-    /**
-     * contain if the Move Allowed
-     */
-    boolean wasLegalMove;
+    private Gui guiView;
 
     /**
-     * The constructor expects a view to construct itself.
-     *
-     * @param view The view that is connected to this controller
+     * The opponent
      */
-    public GuiController(Gui view) {
-        super(view);
-        view.assignController(this);
-        onActionPreformed();
+    private Player opponent;
+
+    /**
+     *
+     */
+    private Attributes.Color playerColor;
+
+    /**
+     *
+     */
+    private List<TileView> highlightedTiles;
+
+    /**
+     *
+     */
+    private Piece toMovePiece = null;
+
+    /**
+     *
+     */
+    private Move validMove = null;
+
+    /**
+     * @param guiView
+     */
+    public GuiController(Gui guiView) {
+        super(guiView);
+        this.guiView = guiView;
     }
 
     /**
-     * This will be called when someone interacts with the Command Line Interface
+     *Whenever the user interacts with the start screen menu
      */
-    private void onActionPreformed() {
-        // Create a new game
+    public void gameModeOnAction(Attributes.GameMode gameMode) {
+        if(gameMode == Attributes.GameMode.HUMAN){
+            opponent = new HumanPlayer(Attributes.Color.BLACK);
+            playerColor = Attributes.Color.WHITE;
+            createGame();
+            guiView.createGameView();
+        } else {
+            guiView.getMainMenu().showColorChoiceWindow();
+        }
+
+    }
+
+    /**
+     *
+     * @param color
+     */
+    public void colorChoiceOnAction(Attributes.Color color) {
+        if(color == Attributes.Color.WHITE) {
+            playerColor = Attributes.Color.WHITE;
+            opponent = new Computer(Attributes.Color.BLACK);
+        } else {
+            playerColor = Attributes.Color.BLACK;
+            opponent = new Computer(Attributes.Color.WHITE);
+        }
+        guiView.getMainMenu().getColorChoice().close();
+        createGame();
+        guiView.createGameView();
+    }
+
+    /**
+     *
+     * @param tiles
+     * @param tileID
+     */
+    public void handleClickOnTileToHighlight(List<TileView> tiles, int tileID) {
+        Piece piece = game.getBoard().getPiece(tileID);
+        if(piece.getColor() != game.getCurrentPlayer().getColor()) {
+            handleClickOnTileToMovePiece(tiles.get(tileID));
+            return;
+        }
+        toMovePiece = null;
+        tiles.get(tileID).deHighlight(highlightedTiles);
+        if(piece == null) {
+            return;
+        }
+        game.getCurrentPlayer().calculatePlayerMoves();
+        highlightedTiles = new ArrayList<>();
+        for (Move move : piece.getAllLegalMoves()) {
+            tiles.get(move.destination).highlight();
+            highlightedTiles.add(tiles.get(move.destination));
+            toMovePiece = piece;
+        }
+    }
+
+    /**
+     *
+     * @param tile
+     */
+    public void handleClickOnTileToMovePiece(TileView tile) {
+        if (toMovePiece != null) {
+            if (game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID())) {
+                game.getCurrentPlayer().makeMove(game.getAllowedMove());
+                updateGame();
+            }
+        }
+        toMovePiece = null;
+    }
+
+    /**
+     *
+     */
+    private void updateGame() {
+        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        game.checkGameStatus();
+        game.notifyObservers();
+    }
+
+    /**
+     *
+     */
+    public void createGame() {
         game = new Game(this,
                 new Board(),
-                new HumanPlayer(Attributes.Color.WHITE),
-                new HumanPlayer(Attributes.Color.BLACK));
-
-        // Set the game to the CLI view
-        view.setGame(game);
-
+                new HumanPlayer(playerColor),
+                opponent);
         game.loadPlayerPieces();
-        // Start the game
-        //game.run();
+        guiView.setGame(game);
     }
 
     @Override
     public void processInputFromPlayer() {
+        // The current player of the game
         Player currentPlayer = game.getCurrentPlayer();
-        this.wasLegalMove = game.isMoveAllowed(source, destination);
-        if (wasLegalMove) {
-            Move allowedMove = game.getAllowedMove();
-            if (allowedMove != null) {
-                currentPlayer.makeMove(allowedMove);
-                game.setCurrentPlayer(game.getOpponent(currentPlayer));
-            }
-        } else System.out.println("not allowed");
-        game.checkGameStatus();
-    }
 
-    /**
-     * getter for the Source Tile from GameView.
-     *
-     * @param source source
-     */
-    public void setSource(int source) {
-        this.source = source;
-        System.out.println("Source Tile " + source);
-    }
-
-    /**
-     * getter for the Destination Tile from GameView.
-     *
-     * @param destination Destination
-     */
-    public void setDestination(int destination) {
-        this.destination = destination;
-        System.out.println("Destination Tile " + destination);
-    }
-
-    /**
-     * check if the selected Piece belongs to the PLayer
-     * and the Tile not Empty.
-     *
-     * @param tileSourceId
-     * @return
-     */
-    public boolean validSelection(int tileSourceId) {
-        return game.getBoard().getPiece(tileSourceId) != null &&
-                game.getCurrentPlayer().getColor()
-                        == game.getBoard().getPiece(tileSourceId).getColor();
-    }
-
-    /**
-     * Getter for the Game
-     *
-     * @return
-     */
-    public Game getGame() {
-        return game;
-    }
-
-    /**
-     * get if last Move was Legal.
-     *
-     * @return
-     */
-    public boolean wasLegalMove() {
-        return wasLegalMove;
+        // Read the input from the view
+        if(currentPlayer instanceof HumanPlayer && validMove != null) {
+            currentPlayer.makeMove(validMove);
+        } else if(currentPlayer instanceof Computer) {
+            Move computerMove;
+            computerMove = ((Computer) currentPlayer).evaluate();
+            currentPlayer.makeMove(computerMove);
+        }
     }
 
     @Override
     public List<Piece> getBeatenPieces() {
-        return game.getCurrentPlayer().getColor().isWhite() ?
-                game.getWhitePlayer().getBeaten() : game.getBlackPlayer().getBeaten();
+        return null;
     }
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
-        System.out.println(status.toString() + " " + player.getColor().toString());
-        GameView.notification.getChildren().add(new Label(status + " " + player.getColor().toString()));
+
     }
 }

@@ -194,7 +194,7 @@ public class Game extends Observable {
      * @param allowedMove The temporary move
      * @return true if there is no threat to the players king, false otherwise
      */
-    private boolean makeTempMoveAndCheck(Move allowedMove) {
+    public static boolean makeTempMoveAndCheck(Move allowedMove) {
         boolean allowAfterTempMove;
         allowedMove.execute();
         allowAfterTempMove = !currentPlayer.isKingInCheck();

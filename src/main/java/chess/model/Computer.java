@@ -32,19 +32,25 @@ public class Computer extends Player {
     }
 
     public Move evaluate() {
+        boolean noMoves = false;
         int bestValue = 0;
         Move optimalMove = null;
         for (Move move : this.calculatePlayerMoves()) {
             Piece piece = Game.getBoard().getPiece(move.getDestination());
+            if(!Game.makeTempMoveAndCheck(move)){
+                noMoves = true;
+                continue;
+            }
             if (piece != null) {
                 int currentValue = piece.getValue();
                 if (currentValue >= bestValue) {
                     bestValue = currentValue;
                     optimalMove = move;
+                    noMoves = false;
                 }
             }
         }
-        if(optimalMove == null) {
+        if(optimalMove == null && !noMoves) {
             List<Move> compMoves = this.calculatePlayerMoves();
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }

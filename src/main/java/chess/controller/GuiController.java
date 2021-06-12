@@ -160,16 +160,11 @@ public class GuiController extends Controller{
      */
     private void letComputerPlay() {
         Move computerMove;
-        while (true) {
-            computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
-            // Calculate from where the move is performed
-            int move_from = getMoveFromPosition(computerMove.toString());
-            // Calculate to where the move is performed
-            int move_to = getMoveToPosition(computerMove.toString());
-            if(game.isMoveAllowed(move_from, move_to)) break;
+        computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
+        if(computerMove != null) {
+            game.getCurrentPlayer().makeMove(computerMove);
+            game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
         }
-        game.getCurrentPlayer().makeMove(computerMove);
-        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
     }
 
     @Override

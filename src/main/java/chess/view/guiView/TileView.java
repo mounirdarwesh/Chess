@@ -64,10 +64,13 @@ public class TileView extends StackPane {
      * @param highlightedTiles
      */
     public void deHighlight(List<TileView> highlightedTiles) {
-        if(highlightedTiles != null) {
-            for (TileView tile : highlightedTiles) {
-                tile.getChildren().clear();
+        for (TileView tile : highlightedTiles) {
+            if(tile.getChildren().size() > 1){
+                tile.getChildren().remove(1);
+                continue;
             }
+            tile.getChildren().clear();
         }
+        highlightedTiles.clear();
     }
 }

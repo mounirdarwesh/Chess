@@ -30,7 +30,7 @@ public class GuiController extends Controller{
     /**
      *
      */
-    private List<TileView> highlightedTiles;
+    private List<TileView> highlightedTiles = new ArrayList<>();
 
     /**
      *
@@ -100,8 +100,8 @@ public class GuiController extends Controller{
             return;
         }
         toMovePiece = null;
-        tiles.get(tileID).deHighlight(highlightedTiles);
-        if(piece == null) {
+        if(!highlightedTiles.isEmpty()) {
+            tiles.get(tileID).deHighlight(highlightedTiles);
             return;
         }
         game.getCurrentPlayer().calculatePlayerMoves();
@@ -124,6 +124,7 @@ public class GuiController extends Controller{
                 updateGame();
             }
         }
+        tile.deHighlight(highlightedTiles);
         toMovePiece = null;
     }
 

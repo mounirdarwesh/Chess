@@ -1,15 +1,12 @@
 package chess.view.guiView;
 
-import chess.Attributes;
+import chess.model.Piece;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 /**
  * Gui class that contains chess Board and Useful Elements
@@ -17,49 +14,39 @@ import javafx.stage.Stage;
  * @author Grupper 45
  */
 public class GameView extends BorderPane {
-
     /**
      * the Layout of the Game Interface.
      */
     private BorderPane root;
-
     /**
      * Menu of the Game
      */
     private MenuBar gameMenu;
-
-    public BoardView getBoard() {
-        return board;
-    }
-
-    public void setBoard(BoardView board) {
-        this.board = board;
-    }
-
     /**
      * The board view
      */
     private BoardView board;
-
     /**
      * The original gui
      */
     private Gui gui;
-
     /**
      * Area to show the Beaten Pieces.
      */
     public static VBox beaten;
-
     /**
      * Area to show History.
      */
     public static VBox history;
 
     /**
-     *
+     * Area to show the Notification.
      */
     public static HBox notification;
+    /**
+     * numbering the Moves.
+     */
+    int numMove = 1;
 
     /**
      * Construct Game View Basis Elements.
@@ -132,6 +119,50 @@ public class GameView extends BorderPane {
         gameMenu.getMenus().addAll(gameOptions, setting);
 
         setTop(gameMenu);
+    }
+
+    /**
+     * show the Beaten Piece of the Game.
+     */
+    public void showBeaten() {
+        GameView.beaten.getChildren().clear();
+        if (gui.guiController.getBeatenPieces().size() != 0)
+            for (Piece piece : gui.guiController.getBeatenPieces()) {
+                Label beatenPiece = new Label(piece.getSymbol());
+                beatenPiece.setFont(new Font(40));
+                GameView.beaten.getChildren().add(beatenPiece);
+            }
+    }
+
+    /**
+     * show every Move done by the Players.
+     */
+    public void showHistory() {
+
+        if (gui.guiController.wasLegalMove()) {
+            Label history = new Label(numMove + ": " + gui.game.getAllowedMove().toString());
+            history.setFont(new Font(15));
+            GameView.history.getChildren().add(history);
+        }
+        numMove++;
+    }
+
+    /**
+     * show when each Player turn.
+     */
+    public void notification() {
+        GameView.notification.getChildren().clear();
+        Label notification = new Label(gui.game.getCurrentPlayer().toString());
+        notification.setFont(new Font(20));
+        GameView.notification.getChildren().add(notification);
+    }
+
+    public BoardView getBoard() {
+        return board;
+    }
+
+    public void setBoard(BoardView board) {
+        this.board = board;
     }
 }
 

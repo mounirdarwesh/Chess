@@ -622,6 +622,12 @@ public abstract class Move {
                     // Add update the available pieces for the current player
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+                    // remove the Promoted Piece from Beaten.
+                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Queen && this.piece.getColor() == piece.getColor()){
+                            Game.getCurrentPlayer().getBeaten().remove(piece);
+                            break;
+                        }
                     break;
 
                 // The player chooses to promote to a new Rook
@@ -633,6 +639,12 @@ public abstract class Move {
                     // Add update the available pieces for the current player
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+                    // remove the Promoted Piece from Beaten.
+                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Rook && this.piece.getColor() == piece.getColor()){
+                            Game.getCurrentPlayer().getBeaten().remove(piece);
+                            break;
+                        }
                     break;
 
                 // The player chooses to promote to a new Knight
@@ -644,6 +656,12 @@ public abstract class Move {
                     // Add update the available pieces for the current player
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+                    // remove the Promoted Piece from Beaten.
+                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Knight && this.piece.getColor() == piece.getColor()){
+                            Game.getCurrentPlayer().getBeaten().remove(piece);
+                            break;
+                        }
                     break;
 
                 // The player chooses to promote to a new Bishop
@@ -655,6 +673,12 @@ public abstract class Move {
                     // Add update the available pieces for the current player
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+                    // remove the Promoted Piece from Beaten.
+                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()){
+                            Game.getCurrentPlayer().getBeaten().remove(piece);
+                            break;
+                        }
                     break;
                 default:
                     break;

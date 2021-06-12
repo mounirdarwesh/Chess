@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Chess Board
  */
-public class BoardView extends GridPane{
+public class BoardView extends GridPane {
 
     /**
      * The original GUI
@@ -41,7 +41,6 @@ public class BoardView extends GridPane{
 
 
     /**
-     *
      * @param gui
      */
     public BoardView(Gui gui) {
@@ -73,14 +72,13 @@ public class BoardView extends GridPane{
     }
 
     /**
-     *
      * @param tile
      */
     private void addListenersToTile(TileView tile) {
-        tile.setOnMouseClicked(Event ->{
-            if(tile.getChildren().isEmpty()){
+        tile.setOnMouseClicked(Event -> {
+            if (tile.getChildren().isEmpty()) {
                 return;
-            } else if (tile.getChildren().get(0) instanceof Circle){
+            } else if (tile.getChildren().get(0) instanceof Circle) {
                 gui.guiController.handleClickOnTileToMovePiece(tile);
             } else {
                 gui.guiController.handleClickOnTileToHighlight(tiles, tile.getTileID());
@@ -90,6 +88,7 @@ public class BoardView extends GridPane{
 
     /**
      * Paint each Tile on the Board with the right Color.
+     *
      * @param row    on which the Tile located
      * @param column on which the Tile located
      * @return the right color

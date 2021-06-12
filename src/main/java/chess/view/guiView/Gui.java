@@ -3,11 +3,14 @@ package chess.view.guiView;
 import chess.Attributes;
 import chess.controller.GuiController;
 import chess.model.Game;
+import chess.model.Player;
 import chess.util.Observer;
 import chess.view.View;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -46,7 +49,6 @@ public class Gui extends Application implements View, Observer {
     protected Scene scene;
 
 
-
     /**
      * The controller
      */
@@ -54,6 +56,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * This method is called by the Application to start the GUI.
+     *
      * @param primaryStage The initial root stage of the application.
      */
     @Override
@@ -74,7 +77,6 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     *
      * @param primaryStage
      */
     private void ConfigureBasics(Stage primaryStage) throws IOException {
@@ -93,6 +95,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * The entry point of the GUI application.
+     *
      * @param args The command line arguments passed to the application
      */
     public static void main(String[] args) {
@@ -121,6 +124,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * Getter for the start screen menu
+     *
      * @return
      */
     public StartMenuView getMainMenu() {
@@ -129,6 +133,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * Getter for the game view
+     *
      * @return
      */
     public GameView getGameView() {
@@ -136,7 +141,6 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     *
      * @param scene
      */
     public void setScene(Scene scene) {
@@ -145,10 +149,33 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     *
      * @return
      */
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+
+    /**
+     * Game Status
+     *
+     * @param status
+     * @param player
+     */
+    public void notifyUser(Attributes.GameStatus status, Player player) {
+        GameView.notification.getChildren().clear();
+        Label notify = new Label();
+        notify.setFont(new Font(20));
+        switch (status) {
+            case ENDED_IN_WIN:
+                notify.setText(player + " has won the game!");
+                break;
+            case KING_IN_CHECK:
+                notify.setText(player + "'s king is in check.");
+                break;
+            case ENDED_IN_DRAW:
+                notify.setText("Game Ended in a draw.");
+        }
+        GameView.notification.getChildren().add(notify);
     }
 }

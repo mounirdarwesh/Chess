@@ -46,7 +46,8 @@ public class King extends Piece {
             }
         }
         // Handling Castling moves
-        if (this.isFirstMove) {
+        if (this.isFirstMove && board.getPiece(this.position + 1) == null
+                && board.getPiece(this.position + 2) == null) {
             handleKingSideCastle();
             handleQueenSideCastle();
         }

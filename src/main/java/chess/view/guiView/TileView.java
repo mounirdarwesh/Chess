@@ -24,6 +24,7 @@ public class TileView extends StackPane {
 
     /**
      * Constructor of the Tile
+     *
      * @param tileID Tile Identifier
      */
     public TileView(int tileID) {
@@ -45,7 +46,6 @@ public class TileView extends StackPane {
     }
 
     /**
-     *
      * @return
      */
     public int getTileID() {
@@ -60,12 +60,11 @@ public class TileView extends StackPane {
     }
 
     /**
-     *
      * @param highlightedTiles
      */
     public void deHighlight(List<TileView> highlightedTiles) {
         for (TileView tile : highlightedTiles) {
-            if(tile.getChildren().size() > 1){
+            if (tile.getChildren().size() > 1) {
                 tile.getChildren().remove(1);
                 continue;
             }

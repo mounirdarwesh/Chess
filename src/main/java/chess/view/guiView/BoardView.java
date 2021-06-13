@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Chess Board
+ * Chess Board for Gui
  */
 public class BoardView extends GridPane {
 
@@ -89,15 +89,19 @@ public class BoardView extends GridPane {
                 new Background(new BackgroundFill(Color.web("#FFEBCD"), CornerRadii.EMPTY, Insets.EMPTY));
     }
 
+    /**
+     * this method rotate the board
+     * @param color color of pieces
+     */
     public void rotate(Attributes.Color color) {
         if (color == Attributes.Color.BLACK) {
             this.setScaleY(-1);
-            for (int i = 0; i < Attributes.BOARD_SIZE; i++)
-                tiles.get(i).setRotate(180);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++){
+                tiles.get(i).setRotate(180);}
         } else {
             this.setScaleY(1);
-            for (int i = 0; i < Attributes.BOARD_SIZE; i++)
-                tiles.get(i).setRotate(0);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++){
+                tiles.get(i).setRotate(0);}
         }
     }
 }

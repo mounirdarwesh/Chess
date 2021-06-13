@@ -36,15 +36,19 @@ public class Cli implements Observer, View {
         super();
     }
 
+    /**
+     * this method shows the welcome screen in console mode
+     */
     public void showWelcomeScreen() {
-        System.out.println("*****************************************************" + "\n"
+        String welcomeScreenStars = "*****************************************************";
+        System.out.println(welcomeScreenStars + "\n"
                 + "* Welcome to the beta version of the chess program! *" + "\n"
-                + "*****************************************************" + "\n"
+                + welcomeScreenStars + "\n"
                 + "*               Choose your opponent                *" + "\n"
                 + "*                                                   *" + "\n"
                 + "*     1. Human                       2. Computer    *" + "\n"
-                + "*****************************************************" + "\n"
-                + "*****************************************************" + "\n");
+                + welcomeScreenStars + "\n"
+                + welcomeScreenStars + "\n");
     }
 
     /**
@@ -95,6 +99,11 @@ public class Cli implements Observer, View {
         }
     }
 
+    /**
+     * this method reads inputs from computer
+     * @param move move of a piece
+     * @return boolean
+     */
     public boolean readInputFromComputer(String move) {
         if (controller.isValidMove(move)) {
             System.out.println("!" + move);
@@ -103,6 +112,11 @@ public class Cli implements Observer, View {
         return false;
     }
 
+    /**
+     * this method notifies player status of the game
+     * @param status status of the game
+     * @param player player
+     */
     public void notifyUser(Attributes.GameStatus status, Player player) {
         switch (status) {
             case ENDED_IN_WIN:
@@ -116,6 +130,10 @@ public class Cli implements Observer, View {
         }
     }
 
+    /**
+     * this method assigns controller
+     * @param controller controller of console
+     */
     public void assignController(Controller controller) {
         this.controller = (CliController) controller;
     }

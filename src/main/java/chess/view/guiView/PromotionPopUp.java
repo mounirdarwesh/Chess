@@ -8,6 +8,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * class for popup question which piece to promote to
+ */
 public class PromotionPopUp {
     /**
      * Promotion char

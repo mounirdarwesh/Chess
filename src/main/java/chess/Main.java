@@ -1,6 +1,5 @@
 package chess;
 
-import chess.controller.GuiController;
 import chess.view.Cli;
 import chess.controller.CliController;
 import chess.view.guiView.Gui;

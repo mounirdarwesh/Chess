@@ -40,7 +40,7 @@ public class TileView extends StackPane {
             symbol.setFont(new Font(50));
             this.getChildren().add(symbol);
             StackPane.setAlignment(symbol, Pos.CENTER);
-        } else this.getChildren().clear();
+        } else{ this.getChildren().clear();}
     }
 
     /**

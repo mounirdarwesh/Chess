@@ -26,6 +26,10 @@ public class Computer extends Player {
         move.execute();
     }
 
+    /**
+     * evaluate a move
+     * @return optimalMove
+     */
     public Move evaluate() {
         noMoves = false;
         int bestValue = 0;

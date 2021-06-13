@@ -10,12 +10,15 @@ import chess.view.guiView.TileView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Controller class for the Gui Interface
+ */
 public class GuiController extends Controller {
 
     /**
      * contain if the Move Allowed
      */
-    boolean wasLegalMove;
+    boolean wasALegalMove;
     /**
      *
      */
@@ -129,8 +132,8 @@ public class GuiController extends Controller {
             return;
         }
         if (toMovePiece != null) {
-            this.wasLegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
-            if (wasLegalMove) {
+            this.wasALegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
+            if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
                 updateGameView();
             }
@@ -214,7 +217,7 @@ public class GuiController extends Controller {
      * @return true, if legal.
      */
     public boolean wasLegalMove() {
-        return wasLegalMove;
+        return wasALegalMove;
     }
 
     /**
@@ -236,8 +239,8 @@ public class GuiController extends Controller {
      */
     public void handlePromote(int source) {
         if (game.getBoard().getPiece(source) instanceof Pawn
-                && (canPromote(game.getBoard().getPiece(source).getColor(),
-                game.getBoard().getPiece(source).getPosition()))) {
+                && canPromote(game.getBoard().getPiece(source).getColor(),
+                game.getBoard().getPiece(source).getPosition())) {
             PromotionPopUp.displayPopUp();
             game.setCharToPromote(PromotionPopUp.promote);
         }

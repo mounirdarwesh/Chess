@@ -6,15 +6,12 @@ import java.util.List;
 
 
 /**
- * @author Ahmad Mohammad
+ * @author GR. 45
  */
 public class Computer extends Player {
 
-    boolean noMoves;
-
     /**
      * The constructor of the computer class
-     *
      * @param color the color that the computer is left with
      */
     public Computer(Color color) {
@@ -31,7 +28,7 @@ public class Computer extends Player {
      * @return optimalMove
      */
     public Move evaluate() {
-        noMoves = false;
+        boolean noMoves = false;
         int bestValue = 0;
         Move optimalMove = null;
         for (Move move : this.calculatePlayerMoves()) {
@@ -54,13 +51,7 @@ public class Computer extends Player {
             List<Move> compMoves = this.calculatePlayerMoves();
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }
-        System.out.println(this.calculatePlayerMoves());
-        System.out.println(noMoves);
-        System.out.println(optimalMove);
         return optimalMove;
     }
 
-    public boolean isNoMoves() {
-        return noMoves;
-    }
 }

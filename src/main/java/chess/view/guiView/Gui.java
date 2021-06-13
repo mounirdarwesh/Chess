@@ -24,35 +24,38 @@ import java.nio.file.Paths;
 public class Gui extends Application implements View, Observer {
 
     /**
+     * The controller
+     */
+    public GuiController guiController;
+    /**
      * The game that is connected to the GUI
      */
     protected Game game;
-
     /**
      * The start menu of the GUI
      */
     protected StartMenuView mainMenu;
-
     /**
      * The game view
      */
     protected GameView gameView;
-
     /**
      * The stage of the GUI
      */
     protected Stage primaryStage;
-
     /**
      * The scene
      */
     protected Scene scene;
 
-
     /**
-     * The controller
+     * The entry point of the GUI application.
+     *
+     * @param args The command line arguments passed to the application
      */
-    public GuiController guiController;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * This method is called by the Application to start the GUI.
@@ -91,15 +94,6 @@ public class Gui extends Application implements View, Observer {
         Image icImg = new Image(icon);
         icon.close();
         primaryStage.getIcons().add(icImg);
-    }
-
-    /**
-     * The entry point of the GUI application.
-     *
-     * @param args The command line arguments passed to the application
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 
     @Override

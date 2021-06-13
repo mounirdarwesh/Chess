@@ -55,8 +55,11 @@ public class TileView extends StackPane {
     /**
      *
      */
-    public void highlight() {
-        getChildren().add(new Circle(0, 0, 5, Color.BLACK));
+    public void highlight(boolean visibility) {
+        Circle high = new Circle(0, 0, 5, Color.BLACK);
+        if (!visibility)
+            high.setVisible(false);
+        getChildren().add(high);
     }
 
     /**

@@ -19,16 +19,14 @@ public class Cli implements Observer, View {
      * The connected game
      */
     protected Game game;
-
-    /**
-     * Scanner to get User Input
-     */
-    Scanner scanner = new Scanner(System.in);
-
     /**
      * The CLIController
      */
     protected CliController controller;
+    /**
+     * Scanner to get User Input
+     */
+    Scanner scanner = new Scanner(System.in);
 
 
     /**
@@ -40,13 +38,13 @@ public class Cli implements Observer, View {
 
     public void showWelcomeScreen() {
         System.out.println("*****************************************************" + "\n"
-                        +  "* Welcome to the beta version of the chess program! *" + "\n"
-                        +  "*****************************************************" + "\n"
-                        +  "*               Choose your opponent                *" + "\n"
-                        +  "*                                                   *" + "\n"
-                        +  "*     1. Human                       2. Computer    *" + "\n"
-                        +  "*****************************************************" + "\n"
-                        +  "*****************************************************" + "\n");
+                + "* Welcome to the beta version of the chess program! *" + "\n"
+                + "*****************************************************" + "\n"
+                + "*               Choose your opponent                *" + "\n"
+                + "*                                                   *" + "\n"
+                + "*     1. Human                       2. Computer    *" + "\n"
+                + "*****************************************************" + "\n"
+                + "*****************************************************" + "\n");
     }
 
     /**
@@ -59,11 +57,9 @@ public class Cli implements Observer, View {
             gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
             if (gameMode.equals("1")) {
                 controller.setGameMode(Attributes.GameMode.HUMAN);
-            }
-            else if(gameMode.equals("2")) {
+            } else if (gameMode.equals("2")) {
                 controller.setGameMode(Attributes.GameMode.COMPUTER);
-            }
-            else {
+            } else {
                 System.out.println("Pleas enter a Valid Input!");
                 continue;
             }
@@ -129,17 +125,14 @@ public class Cli implements Observer, View {
         return game;
     }
 
-
-
-
-    @Override
-    public void update() {
-        System.out.println(game.getBoard());
-    }
-
     @Override
     public void setGame(Game game) {
         this.game = game;
         game.addObserver(this);
+    }
+
+    @Override
+    public void update() {
+        System.out.println(game.getBoard());
     }
 }

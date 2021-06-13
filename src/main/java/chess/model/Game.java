@@ -113,6 +113,74 @@ public class Game extends Observable {
     }
 
     /**
+     * Make a temporary move and then check if it affects the players king
+     *
+     * @param allowedMove The temporary move
+     * @return true if there is no threat to the players king, false otherwise
+     */
+    public static boolean makeTempMoveAndCheck(Move allowedMove) {
+        boolean allowAfterTempMove;
+        allowedMove.execute();
+        allowAfterTempMove = !currentPlayer.isKingInCheck();
+        allowedMove.undo();
+        return allowAfterTempMove;
+    }
+
+    /**
+     * Getter for the current player of the game
+     *
+     * @return the currentPlayer
+     */
+    public static Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    /**
+     * setter for the Current Player
+     *
+     * @param currentPlayer Current Player
+     */
+    public static void setCurrentPlayer(Player currentPlayer) {
+        Game.currentPlayer = currentPlayer;
+    }
+
+    /**
+     * Getting the opponent of the current player
+     *
+     * @param player The current player of the game
+     */
+    public static Player getOpponent(Player player) {
+        return player.getColor().isWhite() ? blackPlayer : whitePlayer;
+    }
+
+    /**
+     * Getter for the board of the game
+     *
+     * @return the board
+     */
+    public static Board getBoard() {
+        return board;
+    }
+
+    /**
+     * get playerOne
+     *
+     * @return playerOne
+     */
+    public static Player getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    /**
+     * get playerTwo
+     *
+     * @return playerTwo
+     */
+    public static Player getBlackPlayer() {
+        return blackPlayer;
+    }
+
+    /**
      * The brain of the game
      */
     public void run() {
@@ -142,6 +210,7 @@ public class Game extends Observable {
 
     /**
      * Checking if the gives move is allowed by the game
+     *
      * @param move_from The position where the move is starting
      * @param move_to   The position where the move is ending
      * @return True if the move is allowed, false otherwise
@@ -187,19 +256,6 @@ public class Game extends Observable {
         allow = makeTempMoveAndCheck(allowedMove);
 
         return allow;
-    }
-
-    /**
-     * Make a temporary move and then check if it affects the players king
-     * @param allowedMove The temporary move
-     * @return true if there is no threat to the players king, false otherwise
-     */
-    public static boolean makeTempMoveAndCheck(Move allowedMove) {
-        boolean allowAfterTempMove;
-        allowedMove.execute();
-        allowAfterTempMove = !currentPlayer.isKingInCheck();
-        allowedMove.undo();
-        return allowAfterTempMove;
     }
 
     /**
@@ -255,33 +311,6 @@ public class Game extends Observable {
     }
 
     /**
-     * Getter for the current player of the game
-     *
-     * @return the currentPlayer
-     */
-    public static Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * Getting the opponent of the current player
-     *
-     * @param player The current player of the game
-     */
-    public static Player getOpponent(Player player) {
-        return player.getColor().isWhite() ? blackPlayer : whitePlayer;
-    }
-
-    /**
-     * Getter for the board of the game
-     *
-     * @return the board
-     */
-    public static Board getBoard() {
-        return board;
-    }
-
-    /**
      * Getter for the Controller
      *
      * @return controller The controller of this game
@@ -313,31 +342,5 @@ public class Game extends Observable {
      */
     public void setFINISHED(boolean FINISHED) {
         Game.FINISHED = FINISHED;
-    }
-
-    /**
-     * get playerOne
-     *
-     * @return playerOne
-     */
-    public static Player getWhitePlayer() {
-        return whitePlayer;
-    }
-
-    /**
-     * get playerTwo
-     *
-     * @return playerTwo
-     */
-    public static Player getBlackPlayer() {
-        return blackPlayer;
-    }
-
-    /**
-     * setter for the Current Player
-     * @param currentPlayer Current Player
-     */
-    public static void setCurrentPlayer(Player currentPlayer) {
-        Game.currentPlayer = currentPlayer;
     }
 }

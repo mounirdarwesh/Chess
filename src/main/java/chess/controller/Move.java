@@ -30,7 +30,6 @@ public abstract class Move {
     protected int source;
 
 
-
     /**
      * The constructor for the move class
      *
@@ -316,23 +315,6 @@ public abstract class Move {
          * Temporary variable for the status of the En passant
          */
         private boolean wasEnPassant;
-        /*
-         *//**
-         *  Getter for wasFirstMove
-         * @return wasFirstMove
-         *//*
-        public boolean isWasFirstMove() {
-            return wasFirstMove;
-        }
-
-        *//**
-         *  Setter for wasFirstMove
-         * @param wasFirstMove
-         *//*
-        public void setWasFirstMove(boolean wasFirstMove) {
-            this.wasFirstMove = wasFirstMove;
-        }*/
-
 
         /**
          * A constructor for the Double Pawn Move class
@@ -409,6 +391,10 @@ public abstract class Move {
          * Temporary variable for the status of the En passant
          */
         private boolean wasEnPassant;
+        /**
+         * store if the Piece to first time move.
+         */
+        private boolean wasFirstMove;
 
         /**
          * A constructor for the Capture Move class
@@ -426,8 +412,14 @@ public abstract class Move {
             //Saving the previous position of the piece
             fromPiecePosition = piece.getPosition();
 
+
             //Delete the piece on the old position
             fromPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
+
+            // if his first time, should not be anymore.
+            wasFirstMove = piece.isFirstMoved();
+            if (wasFirstMove)
+                piece.setFirstMove(false);
 
             //Delete the piece on the destination
             captured = board.getPiecesOnBoard().set(destination, null);
@@ -456,6 +448,7 @@ public abstract class Move {
             fromPiece.setPosition(fromPiecePosition);
             board.setPiece(fromPiece);
             Game.removeFromBeaten(captured);
+            fromPiece.setFirstMove(wasFirstMove);
             Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
         }
     }
@@ -623,8 +616,8 @@ public abstract class Move {
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     // remove the Promoted Piece from Beaten.
-                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
-                        if (piece instanceof Queen && this.piece.getColor() == piece.getColor()){
+                    for (Piece piece : Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Queen && this.piece.getColor() == piece.getColor()) {
                             Game.getCurrentPlayer().getBeaten().remove(piece);
                             break;
                         }
@@ -640,8 +633,8 @@ public abstract class Move {
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     // remove the Promoted Piece from Beaten.
-                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
-                        if (piece instanceof Rook && this.piece.getColor() == piece.getColor()){
+                    for (Piece piece : Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Rook && this.piece.getColor() == piece.getColor()) {
                             Game.getCurrentPlayer().getBeaten().remove(piece);
                             break;
                         }
@@ -657,8 +650,8 @@ public abstract class Move {
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     // remove the Promoted Piece from Beaten.
-                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
-                        if (piece instanceof Knight && this.piece.getColor() == piece.getColor()){
+                    for (Piece piece : Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Knight && this.piece.getColor() == piece.getColor()) {
                             Game.getCurrentPlayer().getBeaten().remove(piece);
                             break;
                         }
@@ -674,8 +667,8 @@ public abstract class Move {
                     Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
                     Game.getCurrentPlayer().getPlayerPieces().remove(piece);
                     // remove the Promoted Piece from Beaten.
-                    for (Piece piece: Game.getCurrentPlayer().getBeaten())
-                        if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()){
+                    for (Piece piece : Game.getCurrentPlayer().getBeaten())
+                        if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()) {
                             Game.getCurrentPlayer().getBeaten().remove(piece);
                             break;
                         }

@@ -6,6 +6,8 @@ package chess;
  */
 public class Attributes {
 
+    public static final int BOARD_SIZE = 64;
+
     /**
      * The available colors of the game
      */
@@ -76,7 +78,6 @@ public class Attributes {
      * The Game status
      */
     public enum GameStatus {
-
         KING_IN_CHECK,
         ENDED_IN_WIN,
         ENDED_IN_DRAW

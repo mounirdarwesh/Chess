@@ -17,45 +17,37 @@ import java.util.List;
 
 public class GuiController extends Controller {
     /**
+     * contain if the Move Allowed
+     */
+    boolean wasLegalMove;
+    /**
      *
      */
     private Gui guiView;
-
     /**
      * The opponent
      */
     private Player opponent;
-
     /**
      *
      */
     private Attributes.Color playerColor;
-
     /**
      *
      */
     private List<TileView> highlightedTiles = new ArrayList<>();
-
     /**
      *
      */
     private Piece toMovePiece = null;
-
     /**
      *
      */
     private Move validMove = null;
-
     /**
      *
      */
     private boolean gameAgainstComputer = false;
-
-
-    /**
-     * contain if the Move Allowed
-     */
-    boolean wasLegalMove;
 
 
     /**
@@ -104,6 +96,7 @@ public class GuiController extends Controller {
      */
     public void handleClickOnTileToHighlight(List<TileView> tiles, int tileID) {
         Piece piece = game.getBoard().getPiece(tileID);
+        // If the player puts the mouse on an enemy piece, so kill
         if (piece.getColor() != game.getCurrentPlayer().getColor()) {
             handleClickOnTileToMovePiece(tiles.get(tileID));
             return;
@@ -116,7 +109,7 @@ public class GuiController extends Controller {
         game.getCurrentPlayer().calculatePlayerMoves();
         highlightedTiles = new ArrayList<>();
         for (Move move : piece.getAllLegalMoves()) {
-            tiles.get(move.destination).highlight();
+            tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
             highlightedTiles.add(tiles.get(move.destination));
             toMovePiece = piece;
         }
@@ -140,7 +133,8 @@ public class GuiController extends Controller {
         toMovePiece = null;
         guiView.getGameView().showBeaten();
         guiView.getGameView().notification();
-        game.checkGameStatus();
+        if (GameView.rotate.isSelected())
+            guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
     }
 
     /**

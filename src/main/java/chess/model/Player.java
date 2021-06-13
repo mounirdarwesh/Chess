@@ -14,6 +14,10 @@ import java.util.List;
 public abstract class Player {
 
     /**
+     * beaten pieces
+     */
+    private static List<Piece> beaten = new ArrayList<>();
+    /**
      * The color of the player's chosen pieces
      */
     protected Color color;
@@ -21,10 +25,6 @@ public abstract class Player {
      * All players pieces
      */
     protected List<Piece> playerPieces;
-    /**
-     * beaten pieces
-     */
-    private static List<Piece> beaten = new ArrayList<>();
     /**
      * To check if the pawn is allowed to do En Passant
      */

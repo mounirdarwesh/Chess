@@ -10,13 +10,13 @@ import javafx.stage.Stage;
 
 public class PromotionPopUp {
     /**
-     * the PopUp window
-     */
-    static Stage promotion;
-    /**
      * Promotion char
      */
     public static char promote = 'q';
+    /**
+     * the PopUp window
+     */
+    static Stage promotion;
 
     /**
      * configure the PopUP with the Figures.
@@ -52,6 +52,7 @@ public class PromotionPopUp {
 
     /**
      * set the right char to Promote
+     *
      * @param promoted the desired char
      */
     public static void setPromoteChar(char promoted) {

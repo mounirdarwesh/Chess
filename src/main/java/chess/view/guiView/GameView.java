@@ -15,6 +15,34 @@ import javafx.scene.text.Font;
  */
 public class GameView extends BorderPane {
     /**
+     * Area to show the Beaten Pieces.
+     */
+    public static VBox beaten;
+    /**
+     * Area to show History.
+     */
+    public static VBox history;
+    /**
+     * Area to show the Notification.
+     */
+    public static HBox notification;
+    /**
+     * enable or disable notification.
+     */
+    public static CheckMenuItem notificationSetting;
+    /**
+     * Highlight visibility.
+     */
+    public static CheckMenuItem highlightVisibility;
+    /**
+     * Board Rotation
+     */
+    public static CheckMenuItem rotate;
+    /**
+     * numbering the Moves.
+     */
+    int numMove = 1;
+    /**
      * the Layout of the Game Interface.
      */
     private BorderPane root;
@@ -30,23 +58,6 @@ public class GameView extends BorderPane {
      * The original gui
      */
     private Gui gui;
-    /**
-     * Area to show the Beaten Pieces.
-     */
-    public static VBox beaten;
-    /**
-     * Area to show History.
-     */
-    public static VBox history;
-
-    /**
-     * Area to show the Notification.
-     */
-    public static HBox notification;
-    /**
-     * numbering the Moves.
-     */
-    int numMove = 1;
 
     /**
      * Construct Game View Basis Elements.
@@ -112,10 +123,15 @@ public class GameView extends BorderPane {
         MenuItem mainScreen = new MenuItem("Main Screen");
         gameOptions.getItems().add(mainScreen);
         Menu setting = new Menu("Settings");
-        setting.getItems().add(new CheckMenuItem("Rotate Field"));
+        rotate = new CheckMenuItem("Rotate Field");
+        setting.getItems().add(rotate);
         setting.getItems().add(new CheckMenuItem("Reselect Piece"));
-        setting.getItems().add(new CheckMenuItem("Check Status Notification"));
-        setting.getItems().add(new CheckMenuItem("Highlight Field"));
+        notificationSetting = new CheckMenuItem("Check Status Notification");
+        notificationSetting.setSelected(true);
+        setting.getItems().add(notificationSetting);
+        highlightVisibility = new CheckMenuItem("Show Highlighting");
+        setting.getItems().add(highlightVisibility);
+        highlightVisibility.setSelected(true);
         gameMenu.getMenus().addAll(gameOptions, setting);
 
         setTop(gameMenu);
@@ -138,7 +154,6 @@ public class GameView extends BorderPane {
      * show every Move done by the Players.
      */
     public void showHistory() {
-
         if (gui.guiController.wasLegalMove()) {
             Label history = new Label(numMove + ": " + gui.game.getAllowedMove().toString());
             history.setFont(new Font(15));
@@ -151,10 +166,13 @@ public class GameView extends BorderPane {
      * show when each Player turn.
      */
     public void notification() {
-        GameView.notification.getChildren().clear();
-        Label notification = new Label(gui.game.getCurrentPlayer().toString());
-        notification.setFont(new Font(20));
-        GameView.notification.getChildren().add(notification);
+        if (notificationSetting.isSelected()) {
+            notification.getChildren().clear();
+            Label notification = new Label(gui.game.getCurrentPlayer().toString());
+            notification.setFont(new Font(20));
+            GameView.notification.getChildren().add(notification);
+            gui.game.checkGameStatus();
+        }
     }
 
     public BoardView getBoard() {
@@ -164,5 +182,6 @@ public class GameView extends BorderPane {
     public void setBoard(BoardView board) {
         this.board = board;
     }
+
 }
 

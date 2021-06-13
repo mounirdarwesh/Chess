@@ -46,15 +46,14 @@ public class King extends Piece {
             }
         }
         // Handling Castling moves
-        if (this.isFirstMove && board.getPiece(this.position + 1) == null
-                && board.getPiece(this.position + 2) == null) {
+        if (this.isFirstMove) {
             handleKingSideCastle();
             handleQueenSideCastle();
         }
     }
 
     /**
-     *
+     * King side Castling
      */
     private void handleKingSideCastle() {
         int castlingDestination = this.position + 2;
@@ -69,6 +68,9 @@ public class King extends Piece {
         }
     }
 
+    /**
+     * Queen side Castling
+     */
     private void handleQueenSideCastle() {
         int castlingDestination = this.position - 2;
         Piece rock = board.getPiece(this.position - 4);

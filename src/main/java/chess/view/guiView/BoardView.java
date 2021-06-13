@@ -1,5 +1,6 @@
 package chess.view.guiView;
 
+import chess.Attributes;
 import chess.controller.GuiController;
 import chess.controller.Move;
 import chess.model.Board;
@@ -50,7 +51,7 @@ public class BoardView extends GridPane {
     }
 
     /**
-     *
+     * draw the board tile and fetch every Piece.
      */
     public void drawBoard() {
         tiles = new ArrayList<>();
@@ -97,5 +98,17 @@ public class BoardView extends GridPane {
         return (row + column) % 2 != 0 ?
                 new Background(new BackgroundFill(Color.web("#D2691E"), CornerRadii.EMPTY, Insets.EMPTY)) :
                 new Background(new BackgroundFill(Color.web("#FFEBCD"), CornerRadii.EMPTY, Insets.EMPTY));
+    }
+
+    public void rotate(Attributes.Color color) {
+        if (color == Attributes.Color.BLACK) {
+            this.setScaleY(-1);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++)
+                tiles.get(i).setRotate(180);
+        } else {
+            this.setScaleY(1);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++)
+                tiles.get(i).setRotate(0);
+        }
     }
 }

@@ -11,14 +11,13 @@ import chess.pgn.FenUtilities;
 public class Board {
 
     /**
-     * The pieces on the board
-     */
-    private List<Piece> piecesOnBoard;
-
-    /**
      * The start FEN of the board
      */
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    /**
+     * The pieces on the board
+     */
+    private List<Piece> piecesOnBoard;
 
 
     /**

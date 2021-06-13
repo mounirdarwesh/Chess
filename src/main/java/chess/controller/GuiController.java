@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiController extends Controller {
+
     /**
      * contain if the Move Allowed
      */
@@ -43,6 +44,11 @@ public class GuiController extends Controller {
      *
      */
     private boolean gameAgainstComputer = false;
+
+    /**
+     *
+     */
+    private Attributes.GameStatus gameStatus;
 
 
     /**
@@ -91,6 +97,9 @@ public class GuiController extends Controller {
      * @param tileID int number for each tile
      */
     public void handleClickOnTileToHighlight(List<TileView> tiles, int tileID) {
+        if(game.isFINISHED()) {
+            return;
+        }
         Piece piece = game.getBoard().getPiece(tileID);
         // If the player puts the mouse on an enemy piece, so kill
         if (piece.getColor() != game.getCurrentPlayer().getColor()) {
@@ -100,7 +109,6 @@ public class GuiController extends Controller {
         toMovePiece = null;
         if (!highlightedTiles.isEmpty()) {
             tiles.get(tileID).deHighlight(highlightedTiles);
-            return;
         }
         game.getCurrentPlayer().calculatePlayerMoves();
         highlightedTiles = new ArrayList<>();
@@ -117,20 +125,19 @@ public class GuiController extends Controller {
      * @param tile tile of the board
      */
     public void handleClickOnTileToMovePiece(TileView tile) {
+        if(game.isFINISHED()) {
+            return;
+        }
         if (toMovePiece != null) {
             this.wasLegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
             if (wasLegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
-                updateGame();
-                guiView.getGameView().showHistory();
+                updateGameView();
             }
         }
         tile.deHighlight(highlightedTiles);
         toMovePiece = null;
-        guiView.getGameView().showBeaten();
-        guiView.getGameView().notification();
-        if (GameView.rotate.isSelected())
-            guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
+        updateGame();
     }
 
     /**
@@ -138,11 +145,22 @@ public class GuiController extends Controller {
      */
     private void updateGame() {
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
-        if (gameAgainstComputer) {
+        game.checkGameStatus();
+        if (!game.isFINISHED() && gameAgainstComputer) {
             letComputerPlay();
         }
-        //game.checkGameStatus();
         game.notifyObservers();
+    }
+
+    /**
+     *
+     */
+    private void updateGameView() {
+        guiView.getGameView().showHistory();
+        guiView.getGameView().showBeaten();
+        guiView.getGameView().notification();
+        if (GameView.rotate.isSelected())
+            guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
     }
 
     /**
@@ -171,29 +189,22 @@ public class GuiController extends Controller {
             int move_from = getMoveFromPosition(computerMove.toString());
             // Calculate to where the move is performed
             int move_to = getMoveToPosition(computerMove.toString());
-            if (game.isMoveAllowed(move_from, move_to)) break;
+            if (game.isMoveAllowed(move_from, move_to)) {
+                game.getCurrentPlayer().makeMove(computerMove);
+                break;
+            }
         }
-        game.getCurrentPlayer().makeMove(computerMove);
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
     }
 
+
     @Override
     public void processInputFromPlayer() {
-        // The current player of the game
-        Player currentPlayer = game.getCurrentPlayer();
-
-        // Read the input from the view
-        if (currentPlayer instanceof HumanPlayer && validMove != null) {
-            currentPlayer.makeMove(validMove);
-        } else if (currentPlayer instanceof Computer) {
-            Move computerMove;
-            computerMove = ((Computer) currentPlayer).evaluate();
-            currentPlayer.makeMove(computerMove);
-        }
     }
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
+        this.gameStatus = status;
         guiView.notifyUser(status, player);
     }
 

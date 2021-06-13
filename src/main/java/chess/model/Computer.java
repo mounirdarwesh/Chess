@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class Computer extends Player {
 
+    boolean noMoves;
+
     /**
      * The constructor of the computer class
      *
@@ -25,7 +27,7 @@ public class Computer extends Player {
     }
 
     public Move evaluate() {
-        boolean noMoves = false;
+        noMoves = false;
         int bestValue = 0;
         Move optimalMove = null;
         for (Move move : this.calculatePlayerMoves()) {
@@ -34,6 +36,7 @@ public class Computer extends Player {
                 noMoves = true;
                 continue;
             }
+            noMoves = false;
             if (piece != null) {
                 int currentValue = piece.getValue();
                 if (currentValue >= bestValue) {
@@ -43,10 +46,17 @@ public class Computer extends Player {
                 }
             }
         }
-        if(optimalMove == null && !noMoves) {
+        if(optimalMove == null || noMoves) {
             List<Move> compMoves = this.calculatePlayerMoves();
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }
+        System.out.println(this.calculatePlayerMoves());
+        System.out.println(noMoves);
+        System.out.println(optimalMove);
         return optimalMove;
+    }
+
+    public boolean isNoMoves() {
+        return noMoves;
     }
 }

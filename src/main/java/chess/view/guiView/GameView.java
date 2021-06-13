@@ -42,10 +42,7 @@ public class GameView extends BorderPane {
      * numbering the Moves.
      */
     int numMove = 1;
-    /**
-     * the Layout of the Game Interface.
-     */
-    private BorderPane root;
+
     /**
      * Menu of the Game
      */

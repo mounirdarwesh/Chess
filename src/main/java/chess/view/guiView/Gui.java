@@ -135,24 +135,7 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     * @param scene scene of the game
-     */
-    public void setScene(Scene scene) {
-        this.scene = scene;
-        primaryStage.setScene(scene);
-    }
-
-    /**
-     * @return primaryStage
-     */
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-
-    /**
      * Game Status
-     *
      * @param status status of the game
      * @param player player
      */

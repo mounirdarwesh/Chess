@@ -31,6 +31,7 @@ public class Game extends Observable {
      * The board to the game
      */
     private static Board board;
+
     /**
      * The status of the game
      */
@@ -44,6 +45,7 @@ public class Game extends Observable {
      * The allowed move of the player
      */
     private Move allowedMove;
+
 
     /**
      * The constructor of the game class. it creates a new game instance with the given Controller
@@ -335,5 +337,13 @@ public class Game extends Observable {
      */
     public void setFINISHED(boolean FINISHED) {
         Game.FINISHED = FINISHED;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static boolean isFINISHED() {
+        return FINISHED;
     }
 }

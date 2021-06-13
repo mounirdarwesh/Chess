@@ -157,7 +157,7 @@ public class Gui extends Application implements View, Observer {
      * @param player player
      */
     public void notifyUser(Attributes.GameStatus status, Player player) {
-        GameView.notification.getChildren().clear();
+        GameView.report.getChildren().clear();
         Label notify = new Label();
         notify.setFont(new Font(20));
         switch (status) {
@@ -170,6 +170,6 @@ public class Gui extends Application implements View, Observer {
             case ENDED_IN_DRAW:
                 notify.setText("Game Ended in a draw.");
         }
-        GameView.notification.getChildren().add(notify);
+        GameView.report.getChildren().add(notify);
     }
 }

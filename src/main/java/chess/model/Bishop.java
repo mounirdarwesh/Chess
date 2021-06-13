@@ -60,6 +60,7 @@ public class Bishop extends Piece {
      *
      * @return the Symbol of the Piece
      */
+    @Override
     public String getSymbol() {
         String symbol;
         if (color == Attributes.Color.BLACK) {

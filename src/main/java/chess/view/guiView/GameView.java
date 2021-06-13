@@ -25,7 +25,7 @@ public class GameView extends BorderPane {
     /**
      * Area to show the Notification.
      */
-    public static HBox notification;
+    public static HBox report;
     /**
      * enable or disable notification.
      */
@@ -45,7 +45,7 @@ public class GameView extends BorderPane {
     /**
      * the Layout of the Game Interface.
      */
-    private BorderPane root;
+    //private BorderPane root;
     /**
      * Menu of the Game
      */
@@ -73,9 +73,9 @@ public class GameView extends BorderPane {
         setCenter(board);
 
         //Notification panel
-        notification = new HBox();
-        notification.setAlignment(Pos.CENTER);
-        setBottom(notification);
+        report = new HBox();
+        report.setAlignment(Pos.CENTER);
+        setBottom(report);
 
         // Creating a history panel
         configureHistoryPanel();
@@ -167,10 +167,10 @@ public class GameView extends BorderPane {
      */
     public void notification() {
         if (notificationSetting.isSelected()) {
-            notification.getChildren().clear();
+            report.getChildren().clear();
             Label notification = new Label(gui.game.getCurrentPlayer().toString());
             notification.setFont(new Font(20));
-            GameView.notification.getChildren().add(notification);
+            GameView.report.getChildren().add(notification);
             gui.game.checkGameStatus();
         }
     }

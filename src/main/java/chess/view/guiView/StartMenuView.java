@@ -120,6 +120,10 @@ public class StartMenuView {
         });
     }
 
+    /**
+     * this methode return a node as parent
+     * @return root
+     */
     public Parent asParent() {
         return root;
     }

@@ -8,5 +8,5 @@ public interface Observer {
     /**
      * Update the observer
      */
-    public void update();
+    void update();
 }

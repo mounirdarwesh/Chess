@@ -66,13 +66,7 @@ public class BoardView extends GridPane {
      */
     private void addListenersToTile(TileView tile) {
         tile.setOnMouseClicked(Event -> {
-            if (tile.getChildren().isEmpty()) {
-                return;
-            } else if (tile.getChildren().get(0) instanceof Circle) {
-                gui.guiController.handleClickOnTileToMovePiece(tile);
-            } else {
-                gui.guiController.handleClickOnTileToHighlight(tiles, tile.getTileID());
-            }
+            gui.guiController.handleClickOnTileAction(tiles, tile);
         });
     }
 

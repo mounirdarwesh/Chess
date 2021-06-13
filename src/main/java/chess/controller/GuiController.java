@@ -3,10 +3,10 @@ package chess.controller;
 import chess.Attributes;
 import chess.model.*;
 
-import chess.view.guiView.GameView;
-import chess.view.guiView.Gui;
-import chess.view.guiView.PromotionPopUp;
-import chess.view.guiView.TileView;
+import chess.view.gui.GameView;
+import chess.view.gui.Gui;
+import chess.view.gui.PromotionPopUp;
+import chess.view.gui.TileView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +39,7 @@ public class GuiController extends Controller {
      *
      */
     private Piece toMovePiece = null;
-    /**
-     *
-     */
-    private Move validMove = null;
+
     /**
      *
      */
@@ -97,22 +94,29 @@ public class GuiController extends Controller {
 
     /**
      * @param tiles tiles of the board
-     * @param tileID int number for each tile
+     * @param tile the clicked tile
      */
-    public void handleClickOnTileToHighlight(List<TileView> tiles, int tileID) {
+    public void handleClickOnTileAction(List<TileView> tiles, TileView tile) {
+        Piece piece = game.getBoard().getPiece(tile.getTileID());
+
+        // If the player clicks on a tile or the game has ended then do noting
         if(game.isFINISHED()) {
             return;
         }
-        Piece piece = game.getBoard().getPiece(tileID);
-        // If the player puts the mouse on an enemy piece, so kill
-        if (piece.getColor() != game.getCurrentPlayer().getColor()) {
-            handleClickOnTileToMovePiece(tiles.get(tileID));
+        // If the player puts the mouse on an enemy piece, capture
+        if ((toMovePiece != null && piece == null) ||
+                (piece != null &&
+                        piece.getColor() != game.getCurrentPlayer().getColor())) {
+            movePieceAction(toMovePiece, tile);
+            tile.deHighlight(highlightedTiles);
             return;
         }
-        toMovePiece = null;
+        // If there is highlights on the board then delete them
         if (!highlightedTiles.isEmpty()) {
-            tiles.get(tileID).deHighlight(highlightedTiles);
+            tiles.get(tile.getTileID()).deHighlight(highlightedTiles);
         }
+
+        // If the player wants to move a piece on the board
         game.getCurrentPlayer().calculatePlayerMoves();
         highlightedTiles = new ArrayList<>();
         for (Move move : piece.getAllLegalMoves()) {
@@ -120,27 +124,24 @@ public class GuiController extends Controller {
             highlightedTiles.add(tiles.get(move.destination));
             toMovePiece = piece;
         }
-        // check if there is chance to Promote.
-        handlePromote(tileID);
     }
 
     /**
-     * @param tile tile of the board
+     * @param toMovePiece the selected piece
+     * @param tile the selected tile
      */
-    public void handleClickOnTileToMovePiece(TileView tile) {
-        if(game.isFINISHED()) {
-            return;
-        }
+    public void movePieceAction(Piece toMovePiece, TileView tile) {
         if (toMovePiece != null) {
+            // check if there is chance to Promote.
+            handlePromote(toMovePiece);
             this.wasALegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
                 updateGameView();
+                toMovePiece = null;
+                updateGame();
             }
         }
-        tile.deHighlight(highlightedTiles);
-        toMovePiece = null;
-        updateGame();
     }
 
     /**
@@ -213,7 +214,6 @@ public class GuiController extends Controller {
 
     /**
      * contains if the last move was a Legal move
-     *
      * @return true, if legal.
      */
     public boolean wasLegalMove() {
@@ -234,13 +234,10 @@ public class GuiController extends Controller {
 
     /**
      * when a Pawn can Promote, show a PopUp Window to select the promoted Piece.
-     *
-     * @param source of the Pawn.
+     * @param piece of the Pawn.
      */
-    public void handlePromote(int source) {
-        if (game.getBoard().getPiece(source) instanceof Pawn
-                && canPromote(game.getBoard().getPiece(source).getColor(),
-                game.getBoard().getPiece(source).getPosition())) {
+    public void handlePromote(Piece piece) {
+        if (piece instanceof Pawn && canPromote(piece.getColor(), piece.getPosition())) {
             PromotionPopUp.displayPopUp();
             game.setCharToPromote(PromotionPopUp.promote);
         }

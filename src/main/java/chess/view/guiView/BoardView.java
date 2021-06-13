@@ -1,22 +1,11 @@
 package chess.view.guiView;
 
 import chess.Attributes;
-import chess.controller.GuiController;
-import chess.controller.Move;
-import chess.model.Board;
-import chess.model.Piece;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +31,7 @@ public class BoardView extends GridPane {
 
 
     /**
-     * @param gui
+     * @param gui gui of the game
      */
     public BoardView(Gui gui) {
         this.gui = gui;
@@ -73,7 +62,7 @@ public class BoardView extends GridPane {
     }
 
     /**
-     * @param tile
+     * @param tile tile of the board
      */
     private void addListenersToTile(TileView tile) {
         tile.setOnMouseClicked(Event -> {

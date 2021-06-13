@@ -2,8 +2,6 @@ package chess.model;
 
 import chess.Attributes.Color;
 import chess.controller.Move;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,11 +9,6 @@ import java.util.List;
  * @author Ahmad Mohammad
  */
 public class Computer extends Player {
-
-    /**
-     * List of all the pieces that the computer can capture
-     */
-    private List<Piece> availableToCapture;
 
     /**
      * The constructor of the computer class

@@ -133,7 +133,7 @@ public abstract class Player {
     /**
      * Getter to the player's king
      *
-     * @return
+     * @return piece
      */
     public Piece getKing() {
         for (Piece piece : this.playerPieces) {
@@ -156,14 +156,14 @@ public abstract class Player {
     }
 
     /**
-     * @return
+     * @return allowEnPassant
      */
     public boolean isAllowEnPassant() {
         return allowEnPassant;
     }
 
     /**
-     * @param allowEnPassant
+     * @param allowEnPassant allows EnPassant
      */
     public void setAllowEnPassant(boolean allowEnPassant) {
         this.allowEnPassant = allowEnPassant;
@@ -172,7 +172,7 @@ public abstract class Player {
     /**
      * Getter to the player's pieces
      *
-     * @return
+     * @return playerPieces
      */
     public List<Piece> getPlayerPieces() {
         return playerPieces;

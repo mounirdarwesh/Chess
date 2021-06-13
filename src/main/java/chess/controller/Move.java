@@ -66,7 +66,7 @@ public abstract class Move {
     /**
      * Getting the string from the position
      *
-     * @return
+     * @return entry.getKey()
      */
     public <K, V> K getKey(Map<K, V> map, V value) {
         for (Map.Entry<K, V> entry : map.entrySet()) {

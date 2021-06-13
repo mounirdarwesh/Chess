@@ -278,13 +278,6 @@ public class Game extends Observable {
     }
 
     /**
-     * Checks if game has ended
-     */
-    public boolean hasGameEnded() {
-        return hasGameEndedInWin() || hasGameEndedInDraw();
-    }
-
-    /**
      * Checks if the player has no moves left and thus he lost the game
      * or the King is in Checkmate.
      *

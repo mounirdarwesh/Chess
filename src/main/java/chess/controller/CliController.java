@@ -1,6 +1,5 @@
 package chess.controller;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import chess.Attributes;
 import chess.Attributes.Color;
 import chess.model.*;

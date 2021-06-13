@@ -3,8 +3,6 @@ package chess.view.guiView;
 import chess.model.Board;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -46,7 +44,7 @@ public class TileView extends StackPane {
     }
 
     /**
-     * @return
+     * @return tileID
      */
     public int getTileID() {
         return tileID;
@@ -63,7 +61,7 @@ public class TileView extends StackPane {
     }
 
     /**
-     * @param highlightedTiles
+     * @param highlightedTiles highlights tiles
      */
     public void deHighlight(List<TileView> highlightedTiles) {
         for (TileView tile : highlightedTiles) {

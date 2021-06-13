@@ -2,16 +2,11 @@ package chess.controller;
 
 import chess.Attributes;
 import chess.model.*;
-import chess.view.View;
+
 import chess.view.guiView.GameView;
 import chess.view.guiView.Gui;
 import chess.view.guiView.PromotionPopUp;
 import chess.view.guiView.TileView;
-import javafx.event.Event;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +46,8 @@ public class GuiController extends Controller {
 
 
     /**
-     * @param guiView
+     *
+     * @param guiView The view that is connected to this controller
      */
     public GuiController(Gui guiView) {
         super(guiView);
@@ -75,7 +71,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     * @param color
+     * @param color color of the player on action
      */
     public void colorChoiceOnAction(Attributes.Color color) {
         if (color == Attributes.Color.WHITE) {
@@ -91,8 +87,8 @@ public class GuiController extends Controller {
     }
 
     /**
-     * @param tiles
-     * @param tileID
+     * @param tiles tiles of the board
+     * @param tileID int number for each tile
      */
     public void handleClickOnTileToHighlight(List<TileView> tiles, int tileID) {
         Piece piece = game.getBoard().getPiece(tileID);
@@ -118,7 +114,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     * @param tile
+     * @param tile tile of the board
      */
     public void handleClickOnTileToMovePiece(TileView tile) {
         if (toMovePiece != null) {

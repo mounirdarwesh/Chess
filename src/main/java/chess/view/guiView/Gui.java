@@ -119,7 +119,7 @@ public class Gui extends Application implements View, Observer {
     /**
      * Getter for the start screen menu
      *
-     * @return
+     * @return mainMenu
      */
     public StartMenuView getMainMenu() {
         return mainMenu;
@@ -128,14 +128,14 @@ public class Gui extends Application implements View, Observer {
     /**
      * Getter for the game view
      *
-     * @return
+     * @return gameView
      */
     public GameView getGameView() {
         return gameView;
     }
 
     /**
-     * @param scene
+     * @param scene scene of the game
      */
     public void setScene(Scene scene) {
         this.scene = scene;
@@ -143,7 +143,7 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     * @return
+     * @return primaryStage
      */
     public Stage getPrimaryStage() {
         return primaryStage;
@@ -153,8 +153,8 @@ public class Gui extends Application implements View, Observer {
     /**
      * Game Status
      *
-     * @param status
-     * @param player
+     * @param status status of the game
+     * @param player player
      */
     public void notifyUser(Attributes.GameStatus status, Player player) {
         GameView.notification.getChildren().clear();

@@ -15,7 +15,7 @@ public class Observable {
 
     /**
      * Add an observer
-     * @param obs
+     * @param obs observer
      */
     public void addObserver(Observer obs) {
         observers.add(obs);
@@ -23,7 +23,7 @@ public class Observable {
 
     /**
      * Delete an observer
-     * @param obs
+     * @param obs observer
      */
     public void removeObserver(Observer obs) {
         observers.remove(obs);

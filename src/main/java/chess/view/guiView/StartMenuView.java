@@ -1,8 +1,6 @@
 package chess.view.guiView;
 
 import chess.Attributes;
-import chess.controller.GuiController;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -13,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -62,7 +59,7 @@ public class StartMenuView {
 
     /**
      * The constructor of the start menu class
-     * @throws Exception
+     * @throws Exception exception
      */
     public StartMenuView(Gui gui) throws Exception {
         this.gui = gui;
@@ -168,7 +165,7 @@ public class StartMenuView {
 
     /**
      *
-     * @return
+     * @return black
      */
     public Button getBlack() {
         return black;
@@ -176,7 +173,7 @@ public class StartMenuView {
 
     /**
      *
-     * @return
+     * @return white
      */
     public Button getWhite() {
         return white;
@@ -184,7 +181,7 @@ public class StartMenuView {
 
     /**
      *
-     * @return
+     * @return colorChoice
      */
     public Stage getColorChoice() {
         return colorChoice;

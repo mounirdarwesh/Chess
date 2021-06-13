@@ -6,5 +6,5 @@ module chess {
     requires transitive javafx.graphics;
     
     exports chess.view;
-    exports chess.view.guiView;
+    exports chess.view.gui;
 }

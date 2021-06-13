@@ -1,4 +1,4 @@
-package chess.view.guiView;
+package chess.view.gui;
 
 import chess.model.Board;
 import javafx.geometry.Pos;

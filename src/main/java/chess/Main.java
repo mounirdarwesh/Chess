@@ -2,7 +2,7 @@ package chess;
 
 import chess.view.Cli;
 import chess.controller.CliController;
-import chess.view.guiView.Gui;
+import chess.view.gui.Gui;
 import javafx.application.Application;
 
 import java.util.*;

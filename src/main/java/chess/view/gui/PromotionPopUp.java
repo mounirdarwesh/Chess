@@ -1,4 +1,4 @@
-package chess.view.guiView;
+package chess.view.gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

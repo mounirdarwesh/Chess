@@ -104,9 +104,9 @@ public class GuiController extends Controller {
             return;
         }
         // If the player puts the mouse on an enemy piece, capture
-        if ((toMovePiece != null && piece == null) ||
-                (piece != null &&
-                        piece.getColor() != game.getCurrentPlayer().getColor())) {
+        if (toMovePiece != null && piece == null ||
+                piece != null &&
+                        piece.getColor() != game.getCurrentPlayer().getColor()) {
             movePieceAction(toMovePiece, tile);
             tile.deHighlight(highlightedTiles);
             return;

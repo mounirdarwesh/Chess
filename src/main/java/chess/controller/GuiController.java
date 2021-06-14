@@ -7,6 +7,7 @@ import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,14 +46,11 @@ public class GuiController extends Controller {
      */
     private boolean gameAgainstComputer = false;
 
-    /**
-     *
-     */
-    private Attributes.GameStatus gameStatus;
+
+    //private Attributes.GameStatus gameStatus;
 
 
     /**
-     *
      * @param guiView The view that is connected to this controller
      */
     public GuiController(Gui guiView) {
@@ -94,13 +92,13 @@ public class GuiController extends Controller {
 
     /**
      * @param tiles tiles of the board
-     * @param tile the clicked tile
+     * @param tile  the clicked tile
      */
     public void handleClickOnTileAction(List<TileView> tiles, TileView tile) {
         Piece piece = game.getBoard().getPiece(tile.getTileID());
 
         // If the player clicks on a tile or the game has ended then do noting
-        if(game.isFINISHED()) {
+        if (game.isFINISHED()) {
             return;
         }
         // If the player puts the mouse on an enemy piece, capture
@@ -128,7 +126,7 @@ public class GuiController extends Controller {
 
     /**
      * @param toMovePiece the selected piece
-     * @param tile the selected tile
+     * @param tile        the selected tile
      */
     public void movePieceAction(Piece toMovePiece, TileView tile) {
         if (toMovePiece != null) {
@@ -139,7 +137,7 @@ public class GuiController extends Controller {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
                 updateGame();
                 updateGameView();
-                toMovePiece = null;
+                //toMovePiece = null;
             }
         }
     }
@@ -208,12 +206,13 @@ public class GuiController extends Controller {
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
-        this.gameStatus = status;
+        //this.gameStatus = status;
         guiView.notifyUser(status, player);
     }
 
     /**
      * contains if the last move was a Legal move
+     *
      * @return true, if legal.
      */
     public boolean wasLegalMove() {
@@ -234,6 +233,7 @@ public class GuiController extends Controller {
 
     /**
      * when a Pawn can Promote, show a PopUp Window to select the promoted Piece.
+     *
      * @param piece of the Pawn.
      */
     public void handlePromote(Piece piece) {

@@ -60,6 +60,7 @@ public class StartMenuView {
     /**
      * The constructor of the start menu class
      * @throws Exception exception
+     * @param gui View.
      */
     public StartMenuView(Gui gui) throws Exception {
         this.gui = gui;

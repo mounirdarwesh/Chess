@@ -39,7 +39,6 @@ public class Bishop extends Piece {
                 if (firstCol || lastCol) {
                     break;
                 }
-
                 destination += i;
                 if (isPositionInBounds(destination)) {
                     if (!isFriendAtTheDestination(destination)) {

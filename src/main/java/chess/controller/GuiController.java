@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.Attributes;
 import chess.model.*;
-
 import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
@@ -44,12 +43,19 @@ public class GuiController extends Controller {
      *
      */
     private boolean gameAgainstComputer = false;
-
     /**
      *
      */
     private Attributes.GameStatus gameStatus;
 
+    /**
+     *
+     */
+    private boolean allowReselect = true;
+    /**
+     *
+     */
+    private boolean firstClick = true;
 
     /**
      *
@@ -98,31 +104,36 @@ public class GuiController extends Controller {
      */
     public void handleClickOnTileAction(List<TileView> tiles, TileView tile) {
         Piece piece = game.getBoard().getPiece(tile.getTileID());
-
         // If the player clicks on a tile or the game has ended then do noting
         if(game.isFINISHED()) {
             return;
         }
         // If the player puts the mouse on an enemy piece, capture
-        if ((toMovePiece != null && piece == null) ||
-                (piece != null &&
-                        piece.getColor() != game.getCurrentPlayer().getColor())) {
+        if ((toMovePiece != null && piece == null)
+            || (piece != null
+                && piece.getColor() != game.getCurrentPlayer().getColor())) {
             movePieceAction(toMovePiece, tile);
-            tile.deHighlight(highlightedTiles);
+            if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
+                tile.deHighlight(highlightedTiles);
+            }
             return;
         }
         // If there is highlights on the board then delete them
-        if (!highlightedTiles.isEmpty()) {
+        if (!highlightedTiles.isEmpty() &&
+                (allowReselect || game.getCurrentPlayer().isFirstClick())) {
             tiles.get(tile.getTileID()).deHighlight(highlightedTiles);
         }
 
         // If the player wants to move a piece on the board
-        game.getCurrentPlayer().calculatePlayerMoves();
-        highlightedTiles = new ArrayList<>();
-        for (Move move : piece.getAllLegalMoves()) {
-            tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
-            highlightedTiles.add(tiles.get(move.destination));
-            toMovePiece = piece;
+        if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
+            game.getCurrentPlayer().calculatePlayerMoves();
+            highlightedTiles = new ArrayList<>();
+            for (Move move : piece.getAllLegalMoves()) {
+                tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
+                highlightedTiles.add(tiles.get(move.destination));
+                toMovePiece = piece;
+            }
+            game.getCurrentPlayer().setFirstClick(false);
         }
     }
 
@@ -149,6 +160,7 @@ public class GuiController extends Controller {
      */
     private void updateGame() {
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        game.getCurrentPlayer().setFirstClick(true);
         game.checkGameStatus();
         if (!game.isFINISHED() && gameAgainstComputer) {
             letComputerPlay();
@@ -241,5 +253,14 @@ public class GuiController extends Controller {
             PromotionPopUp.displayPopUp();
             game.setCharToPromote(PromotionPopUp.promote);
         }
+    }
+
+    /**
+     *
+     * @param allowReselect
+     */
+    public void setAllowReselect(boolean allowReselect) {
+        this.allowReselect = allowReselect;
+        game.getCurrentPlayer().setFirstClick(true);
     }
 }

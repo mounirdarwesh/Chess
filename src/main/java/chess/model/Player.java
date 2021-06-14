@@ -31,6 +31,11 @@ public abstract class Player {
     private boolean allowEnPassant = false;
 
     /**
+     *
+     */
+    private boolean firstClick = true;
+
+    /**
      * The constructor of the class Player
      *
      * @param color the color that the player chooses to play with
@@ -176,6 +181,22 @@ public abstract class Player {
      */
     public List<Piece> getPlayerPieces() {
         return playerPieces;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isFirstClick() {
+        return firstClick;
+    }
+
+    /**
+     *
+     * @param firstClick
+     */
+    public void setFirstClick(boolean firstClick) {
+        this.firstClick = firstClick;
     }
 
     @Override

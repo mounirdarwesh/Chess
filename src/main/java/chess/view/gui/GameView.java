@@ -1,6 +1,7 @@
 package chess.view.gui;
 
 import chess.model.Piece;
+import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -38,6 +39,8 @@ public class GameView extends BorderPane {
      * Board Rotation
      */
     public static CheckMenuItem rotate;
+
+    private CheckMenuItem reselect;
     /**
      * numbering the Moves.
      */
@@ -122,7 +125,9 @@ public class GameView extends BorderPane {
         Menu setting = new Menu("Settings");
         rotate = new CheckMenuItem("Rotate Field");
         setting.getItems().add(rotate);
-        setting.getItems().add(new CheckMenuItem("Reselect Piece"));
+        reselect = new CheckMenuItem("Reselect Piece");
+        reselect.setSelected(true);
+        setting.getItems().add(reselect);
         notificationSetting = new CheckMenuItem("Check Status Notification");
         notificationSetting.setSelected(true);
         setting.getItems().add(notificationSetting);
@@ -132,6 +137,21 @@ public class GameView extends BorderPane {
         gameMenu.getMenus().addAll(gameOptions, setting);
 
         setTop(gameMenu);
+
+        addActionListeners();
+    }
+
+    /**
+     *
+     */
+    private void addActionListeners() {
+        reselect.setOnAction(Event -> {
+            if(reselect.isSelected()) {
+                gui.guiController.setAllowReselect(true);
+            } else {
+                gui.guiController.setAllowReselect(false);
+            }
+        });
     }
 
     /**

@@ -93,5 +93,4 @@ public abstract class Controller {
         String toIn = matcher.group(3);
         return MAPPER.map(toIn);
     }
-
 }

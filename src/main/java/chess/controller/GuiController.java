@@ -62,6 +62,7 @@ public class GuiController extends Controller {
      */
     public void gameModeOnAction(Attributes.GameMode gameMode) {
         if (gameMode == Attributes.GameMode.HUMAN) {
+            gameAgainstComputer = false;
             opponent = new HumanPlayer(Attributes.Color.BLACK);
             playerColor = Attributes.Color.WHITE;
             createGame();
@@ -102,9 +103,6 @@ public class GuiController extends Controller {
         // If the player puts the mouse on an enemy piece, capture
         if (movePieceActionException(piece)) {
             movePieceAction(toMovePiece, tile);
-            if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
-                tile.deHighlight(highlightedTiles);
-            }
             return;
         }
         // If there is highlights on the board then delete them
@@ -152,6 +150,9 @@ public class GuiController extends Controller {
                 updateGame();
                 updateGameView();
             }
+        }
+        if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
+            tile.deHighlight(highlightedTiles);
         }
     }
 

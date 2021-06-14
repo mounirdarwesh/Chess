@@ -43,19 +43,11 @@ public class GuiController extends Controller {
      *
      */
     private boolean gameAgainstComputer = false;
-    /**
-     *
-     */
-    private Attributes.GameStatus gameStatus;
 
     /**
      *
      */
     private boolean allowReselect = true;
-    /**
-     *
-     */
-    private boolean firstClick = true;
 
     /**
      * @param guiView The view that is connected to this controller
@@ -220,7 +212,6 @@ public class GuiController extends Controller {
 
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
-        this.gameStatus = status;
         guiView.notifyUser(status, player);
     }
 
@@ -234,7 +225,6 @@ public class GuiController extends Controller {
 
     /**
      * check if the Pawn can Promote.
-     *
      * @param color    of the Pawn
      * @param position of the Pawn
      * @return true, if he can promote.

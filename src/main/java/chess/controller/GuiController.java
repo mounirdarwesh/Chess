@@ -146,7 +146,6 @@ public class GuiController extends Controller {
             this.wasALegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
-                updateGameView();
                 updateGame();
                 updateGameView();
             }

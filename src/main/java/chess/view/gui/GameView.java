@@ -60,7 +60,10 @@ public class GameView extends BorderPane {
      *
      */
     private MenuItem mainScreen;
-
+    /**
+     * Move numbering
+     */
+    int numMove = 1;
     /**
      * Construct Game View Basis Elements.
      *
@@ -159,6 +162,8 @@ public class GameView extends BorderPane {
 
         mainScreen.setOnAction(Event -> {
             gui.backToMainMenu();
+            // delete old game Beaten.
+            gui.guiController.getBeatenPieces().clear();
         });
     }
 
@@ -175,11 +180,12 @@ public class GameView extends BorderPane {
             }
     }
 
+
     /**
      * show every Move done by the Players.
      */
     public void showHistory() {
-        int numMove = 1;
+
         if (gui.guiController.wasLegalMove()) {
             Label history = new Label(numMove + ": " + gui.game.getAllowedMove().toString());
             history.setFont(new Font(15));

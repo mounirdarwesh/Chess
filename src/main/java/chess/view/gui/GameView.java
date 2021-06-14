@@ -1,7 +1,6 @@
 package chess.view.gui;
 
 import chess.model.Piece;
-import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -40,11 +39,10 @@ public class GameView extends BorderPane {
      */
     public static CheckMenuItem rotate;
 
-    private CheckMenuItem reselect;
     /**
-     * numbering the Moves.
+     *
      */
-    int numMove = 1;
+    private CheckMenuItem reselect;
 
     /**
      * Menu of the Game
@@ -181,6 +179,7 @@ public class GameView extends BorderPane {
      * show every Move done by the Players.
      */
     public void showHistory() {
+        int numMove = 1;
         if (gui.guiController.wasLegalMove()) {
             Label history = new Label(numMove + ": " + gui.game.getAllowedMove().toString());
             history.setFont(new Font(15));

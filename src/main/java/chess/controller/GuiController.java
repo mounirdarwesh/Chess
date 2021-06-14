@@ -100,9 +100,7 @@ public class GuiController extends Controller {
             return;
         }
         // If the player puts the mouse on an enemy piece, capture
-        if ((toMovePiece != null && piece == null)
-            || (piece != null
-                && piece.getColor() != game.getCurrentPlayer().getColor())) {
+        if (movePieceActionException(piece)) {
             movePieceAction(toMovePiece, tile);
             if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
                 tile.deHighlight(highlightedTiles);
@@ -129,6 +127,17 @@ public class GuiController extends Controller {
     }
 
     /**
+     *
+     * @param piece
+     * @return
+     */
+    private boolean movePieceActionException(Piece piece) {
+        return toMovePiece != null && piece == null
+                || piece != null
+                && piece.getColor() != game.getCurrentPlayer().getColor();
+    }
+
+    /**
      * @param toMovePiece the selected piece
      * @param tile the selected tile
      */
@@ -140,7 +149,6 @@ public class GuiController extends Controller {
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
                 updateGameView();
-                toMovePiece = null;
                 updateGame();
                 updateGameView();
             }

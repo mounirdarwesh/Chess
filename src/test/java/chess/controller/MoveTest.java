@@ -54,12 +54,18 @@ public class MoveTest {
 
         pawnW48.calculateLegalMoves();
         pawnW53.calculateLegalMoves();
+        Game.getCurrentPlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE,board));
+        Game.getCurrentPlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE,board));
+        Game.getCurrentPlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE,board));
+        Game.getCurrentPlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE,board));
 
         player.makeMove(m1);
         player.makeMove(m2);
         player.makeMove(m3);
         player.makeMove(m4);
         player.makeMove(m5);
+
+
 
         assertEquals(expected48.toString(), pawnW48.getAllLegalMoves().toString());
         assertEquals(expected55.toString(), pawnW53.getAllLegalMoves().toString());

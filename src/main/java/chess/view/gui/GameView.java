@@ -61,6 +61,8 @@ public class GameView extends BorderPane {
 
     /**
      * Construct Game View Basis Elements.
+     *
+     * @param gui View
      */
     public GameView(Gui gui) {
         this.gui = gui;

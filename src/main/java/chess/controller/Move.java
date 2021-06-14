@@ -608,75 +608,19 @@ public abstract class Move {
             switch (Character.toLowerCase(promoted)) {
                 case 'q':
                 case ' ':
-                    // Create a new  Queen
-                    promotedPiece = new Queen(destination, piece.getColor(), board);
-                    // add it to the list of pieces on the board
-                    board.setPiece(promotedPiece);
-                    // Add update the available pieces for the current player
-                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
-                    // remove the Promoted Piece from Beaten.
-                    for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
-                        if (piece instanceof Queen && this.piece.getColor() == piece.getColor()) {
-                            Game.getCurrentPlayer().getBeaten().remove(piece);
-                            break;
-                        }
-                    }
+                    promoteQueen();
                     break;
-
-
                 // The player chooses to promote to a new Rook
                 case 'r':
-                    // Create a new  Rook
-                    promotedPiece = new Rook(destination, piece.getColor(), board);
-                    // And add it to the list of pieces on the board
-                    board.setPiece(promotedPiece);
-                    // Add update the available pieces for the current player
-                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
-                    // remove the Promoted Piece from Beaten.
-                    for (Piece piece : Game.getCurrentPlayer().getBeaten()){
-                        if (piece instanceof Rook && this.piece.getColor() == piece.getColor()) {
-                            Game.getCurrentPlayer().getBeaten().remove(piece);
-                            break;
-                        }
-                    }
+                    promoteRook();
                     break;
-
                 // The player chooses to promote to a new Knight
                 case 'n':
-                    // Create a new  Knight
-                    promotedPiece = new Knight(destination, piece.getColor(), board);
-                    // And add it to the list of pieces on the board
-                    board.setPiece(promotedPiece);
-                    // Add update the available pieces for the current player
-                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
-                    // remove the Promoted Piece from Beaten.
-                    for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
-                        if (piece instanceof Knight && this.piece.getColor() == piece.getColor()) {
-                            Game.getCurrentPlayer().getBeaten().remove(piece);
-                            break;
-                        }
-                    }
+                    promoteKnight();
                     break;
-
                 // The player chooses to promote to a new Bishop
                 case 'b':
-                    // Create a new Bishop
-                    promotedPiece = new Bishop(destination, piece.getColor(), board);
-                    // And add it to the list of pieces on the board
-                    board.setPiece(promotedPiece);
-                    // Add update the available pieces for the current player
-                    Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-                    Game.getCurrentPlayer().getPlayerPieces().remove(piece);
-                    // remove the Promoted Piece from Beaten.
-                    for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
-                        if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()) {
-                            Game.getCurrentPlayer().getBeaten().remove(piece);
-                            break;
-                        }
-                    }
+                    promoteBishop();
                     break;
                 default:
                     break;
@@ -685,6 +629,86 @@ public abstract class Move {
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
             Game.getCurrentPlayer().setAllowEnPassant(false);
+        }
+
+        /**
+         * promote Pawn to Queen.
+         */
+        private void promoteQueen() {
+            // Create a new  Queen
+            promotedPiece = new Queen(destination, piece.getColor(), board);
+            // add it to the list of pieces on the board
+            board.setPiece(promotedPiece);
+            // Add update the available pieces for the current player
+            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            // remove the Promoted Piece from Beaten.
+            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+                if (piece instanceof Queen && this.piece.getColor() == piece.getColor()) {
+                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    break;
+                }
+            }
+        }
+
+        /**
+         * promote Pawn to Rook.
+         */
+        private void promoteRook() {
+            // Create a new  Rook
+            promotedPiece = new Rook(destination, piece.getColor(), board);
+            // And add it to the list of pieces on the board
+            board.setPiece(promotedPiece);
+            // Add update the available pieces for the current player
+            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            // remove the Promoted Piece from Beaten.
+            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+                if (piece instanceof Rook && this.piece.getColor() == piece.getColor()) {
+                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    break;
+                }
+            }
+        }
+
+        /**
+         * promote Pawn to Knight.
+         */
+        private void promoteKnight() {
+            // Create a new  Knight
+            promotedPiece = new Knight(destination, piece.getColor(), board);
+            // And add it to the list of pieces on the board
+            board.setPiece(promotedPiece);
+            // Add update the available pieces for the current player
+            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            // remove the Promoted Piece from Beaten.
+            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+                if (piece instanceof Knight && this.piece.getColor() == piece.getColor()) {
+                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    break;
+                }
+            }
+        }
+
+        /**
+         * promote Pawn to Bishop.
+         */
+        private void promoteBishop() {
+            // Create a new Bishop
+            promotedPiece = new Bishop(destination, piece.getColor(), board);
+            // And add it to the list of pieces on the board
+            board.setPiece(promotedPiece);
+            // Add update the available pieces for the current player
+            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            // remove the Promoted Piece from Beaten.
+            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+                if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()) {
+                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    break;
+                }
+            }
         }
 
         @Override

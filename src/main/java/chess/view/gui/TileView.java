@@ -51,7 +51,7 @@ public class TileView extends StackPane {
     }
 
     /**
-     *
+     * @param visibility set the Visibility of the Highlights.
      */
     public void highlight(boolean visibility) {
         Circle high = new Circle(0, 0, 5, Color.BLACK);

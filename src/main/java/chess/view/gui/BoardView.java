@@ -89,12 +89,16 @@ public class BoardView extends GridPane {
     public void rotate(Attributes.Color color) {
         if (color == Attributes.Color.BLACK) {
             this.setScaleY(-1);
-            for (int i = 0; i < Attributes.BOARD_SIZE; i++){
-                tiles.get(i).setRotate(180);}
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++) {
+                tiles.get(i).setRotate(180);
+                tiles.get(i).setScaleX(-1);
+            }
         } else {
             this.setScaleY(1);
-            for (int i = 0; i < Attributes.BOARD_SIZE; i++){
-                tiles.get(i).setRotate(0);}
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++) {
+                tiles.get(i).setRotate(0);
+                tiles.get(i).setScaleX(1);
+            }
         }
     }
 }

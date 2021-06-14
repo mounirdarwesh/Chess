@@ -58,7 +58,6 @@ public class GuiController extends Controller {
     private boolean firstClick = true;
 
     /**
-     *
      * @param guiView The view that is connected to this controller
      */
     public GuiController(Gui guiView) {
@@ -100,12 +99,12 @@ public class GuiController extends Controller {
 
     /**
      * @param tiles tiles of the board
-     * @param tile the clicked tile
+     * @param tile  the clicked tile
      */
     public void handleClickOnTileAction(List<TileView> tiles, TileView tile) {
         Piece piece = game.getBoard().getPiece(tile.getTileID());
         // If the player clicks on a tile or the game has ended then do noting
-        if(game.isFINISHED()) {
+        if (game.isFINISHED()) {
             return;
         }
         // If the player puts the mouse on an enemy piece, capture
@@ -151,6 +150,7 @@ public class GuiController extends Controller {
                 updateGameView();
                 toMovePiece = null;
                 updateGame();
+                updateGameView();
             }
         }
     }

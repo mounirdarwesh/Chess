@@ -155,4 +155,12 @@ public class Gui extends Application implements View, Observer {
         }
         GameView.report.getChildren().add(notify);
     }
+
+    /**
+     *
+     */
+    public void backToMainMenu() {
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 }

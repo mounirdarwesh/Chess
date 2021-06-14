@@ -58,6 +58,10 @@ public class GameView extends BorderPane {
      * The original gui
      */
     private Gui gui;
+    /**
+     *
+     */
+    private MenuItem mainScreen;
 
     /**
      * Construct Game View Basis Elements.
@@ -122,7 +126,7 @@ public class GameView extends BorderPane {
     private void configureMenuBar() {
         gameMenu = new MenuBar();
         Menu gameOptions = new Menu("Game");
-        MenuItem mainScreen = new MenuItem("Main Screen");
+        mainScreen = new MenuItem("Main Screen");
         gameOptions.getItems().add(mainScreen);
         Menu setting = new Menu("Settings");
         rotate = new CheckMenuItem("Rotate Field");
@@ -153,6 +157,10 @@ public class GameView extends BorderPane {
             } else {
                 gui.guiController.setAllowReselect(false);
             }
+        });
+
+        mainScreen.setOnAction(Event -> {
+            gui.backToMainMenu();
         });
     }
 

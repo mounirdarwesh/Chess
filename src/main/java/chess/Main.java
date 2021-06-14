@@ -19,16 +19,17 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        if (Arrays.asList(args).contains("--no-gui")) {
-            // Create the view
-            Cli cli = new Cli();
-            // Create the controller and pass the view object to it
-            new CliController(cli, false, false);
-        } else if(Arrays.asList(args).contains("--simple")) {
+        if (Arrays.asList(args).contains("--simple")) {
             // Create the view
             Cli cli = new Cli();
             // Create the controller and pass the view object to it
             new CliController(cli, false, true);
+
+        } else if(Arrays.asList(args).contains("--no-gui")) {
+            // Create the view
+            Cli cli = new Cli();
+            // Create the controller and pass the view object to it
+            new CliController(cli, false, false);
         }
         else {
             Application.launch(Gui.class, args);

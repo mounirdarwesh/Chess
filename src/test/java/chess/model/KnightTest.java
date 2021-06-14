@@ -232,4 +232,20 @@ public class KnightTest {
         knightCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), knightCaptureEnemyB.getAllLegalMoves().toString());
     }
+
+    @Test
+    public void getSymbolTest(){
+        Piece knightW = new Knight(44,Attributes.Color.WHITE,board);
+        assertEquals("♘", knightW.getSymbol());
+        Piece knightB = new Knight(10, Attributes.Color.BLACK,board);
+        assertEquals("♞", knightB.getSymbol());
+    }
+
+    @Test
+    public void getValueTest(){
+        Piece knightW = new Knight(45,Attributes.Color.WHITE,board);
+        Piece knightB = new Knight(15, Attributes.Color.BLACK,board);
+        assertEquals(350, knightW.getValue());
+        assertEquals(-350,knightB.getValue());
+    }
 }

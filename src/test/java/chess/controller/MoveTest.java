@@ -60,8 +60,10 @@ public class MoveTest {
         player.makeMove(m3);
         player.makeMove(m4);
         player.makeMove(m5);
+
         assertEquals(expected48.toString(), pawnW48.getAllLegalMoves().toString());
         assertEquals(expected55.toString(), pawnW53.getAllLegalMoves().toString());
+
     }
 
     /**
@@ -106,6 +108,7 @@ public class MoveTest {
 
         assertEquals(expectedK.toString(), kingW4.getAllLegalMoves().toString());
         assertEquals(expectedR.toString(), rookW7.getAllLegalMoves().toString());
+        mk2.undo();
     }
 
 
@@ -187,6 +190,8 @@ public class MoveTest {
         player2.setAllowEnPassant(true);
         pawnPassant.calculateLegalMoves();
         assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
+        player.makeMove(m2);
+        m2.undo();
     }
 
     /**

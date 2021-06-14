@@ -311,4 +311,20 @@ public class RookTest {
         rookCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), rookCaptureEnemyB.getAllLegalMoves().toString());
     }
+
+    @Test
+    public void getSymbolTest(){
+        Piece rookW = new Rook(44,Attributes.Color.WHITE,board);
+        assertEquals("♖", rookW.getSymbol());
+        Piece rookB = new Rook(10, Attributes.Color.BLACK,board);
+        assertEquals("♜", rookB.getSymbol());
+    }
+
+    @Test
+    public void getValueTest(){
+        Piece rookW = new Rook(46,Attributes.Color.WHITE,board);
+        Piece rookB = new Rook(16, Attributes.Color.BLACK,board);
+        assertEquals(525, rookW.getValue());
+        assertEquals(-525,rookB.getValue());
+    }
 }

@@ -267,4 +267,20 @@ public class BishopTest {
         bishopCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), bishopCaptureEnemyB.getAllLegalMoves().toString());
     }
+
+    @Test
+    public void getSymbolTest(){
+        Piece bishopW = new Bishop(44,Attributes.Color.WHITE,board);
+        assertEquals("♗", bishopW.getSymbol());
+        Piece bishopB = new Bishop(10, Attributes.Color.BLACK,board);
+        assertEquals("♝", bishopB.getSymbol());
+    }
+
+    @Test
+    public void getValueTest(){
+        Piece bishopW = new Bishop(40,Attributes.Color.WHITE,board);
+        Piece bishopB = new Bishop(20, Attributes.Color.BLACK,board);
+        assertEquals(350, bishopW.getValue());
+        assertEquals(-350,bishopB.getValue());
+    }
 }

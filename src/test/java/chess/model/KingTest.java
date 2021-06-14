@@ -291,4 +291,20 @@ public class KingTest {
         kingCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), kingCaptureEnemyB.getAllLegalMoves().toString());
     }
+
+    @Test
+    public void getSymbolTest(){
+        Piece kingW = new King(44,Attributes.Color.WHITE,board);
+        assertEquals("♔", kingW.getSymbol());
+        Piece kingB = new King(10, Attributes.Color.BLACK,board);
+        assertEquals("♚", kingB.getSymbol());
+    }
+
+    @Test
+    public void getValueTest(){
+        Piece kingW = new King(40,Attributes.Color.WHITE,board);
+        Piece kingB = new King(30, Attributes.Color.BLACK,board);
+        assertEquals(10000, kingW.getValue());
+        assertEquals(-10000,kingB.getValue());
+    }
 }

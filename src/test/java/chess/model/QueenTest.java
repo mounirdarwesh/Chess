@@ -227,4 +227,20 @@ public class QueenTest {
         expected.addAll(0, queenCaptureEnemyB.getAllLegalMoves());
         assertEquals(expected.toString(), queenCaptureEnemyB.getAllLegalMoves().toString());
     }
+
+    @Test
+    public void getSymbolTest(){
+        Piece queenW = new Queen(44,Attributes.Color.WHITE,board);
+        assertEquals("♕", queenW.getSymbol());
+        Piece queenB = new Queen(10, Attributes.Color.BLACK,board);
+        assertEquals("♛", queenB.getSymbol());
+    }
+
+    @Test
+    public void getValueTest(){
+        Piece queenW = new Queen(44,Attributes.Color.WHITE,board);
+        Piece queenB = new Queen(10, Attributes.Color.BLACK,board);
+        assertEquals(1000, queenW.getValue());
+        assertEquals(-1000,queenB.getValue());
+    }
 }

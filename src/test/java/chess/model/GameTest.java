@@ -71,4 +71,14 @@ public class GameTest {
         assertEquals("Black player has won the game!", outputStreamCaptor.toString()
                 .trim());
     }
+
+    @Test
+    public void getWhitePlayer() {
+        assertEquals("White Player",Game.getWhitePlayer().toString());
+    }
+
+    @Test
+    public void getBlackPlayer() {
+        assertEquals("Black player",Game.getBlackPlayer().toString());
+    }
 }

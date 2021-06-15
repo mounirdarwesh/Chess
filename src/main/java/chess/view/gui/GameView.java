@@ -40,7 +40,7 @@ public class GameView extends BorderPane {
     public static CheckMenuItem rotate;
 
     /**
-     *
+     * reselect a piece
      */
     private CheckMenuItem reselect;
 
@@ -57,7 +57,7 @@ public class GameView extends BorderPane {
      */
     private Gui gui;
     /**
-     *
+     * the main screen
      */
     private MenuItem mainScreen;
     /**
@@ -92,12 +92,13 @@ public class GameView extends BorderPane {
     }
 
     /**
-     *
+     * Beaten Pieces Section.
      */
     private void configureBeatenPiecesPanel() {
         beaten = new VBox();
+        beaten.setAlignment(Pos.TOP_CENTER);
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setMinWidth(200);
+        scrollPane.setMinWidth(100);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setContent(beaten);
@@ -106,14 +107,14 @@ public class GameView extends BorderPane {
     }
 
     /**
-     *
+     * History panel section
      */
     private void configureHistoryPanel() {
         // history Table
         history = new VBox();
         history.setAlignment(Pos.TOP_CENTER);
         ScrollPane historyScroll = new ScrollPane();
-        historyScroll.setMinWidth(200);
+        historyScroll.setMinWidth(100);
         historyScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         historyScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         historyScroll.setContent(history);
@@ -122,7 +123,7 @@ public class GameView extends BorderPane {
     }
 
     /**
-     *
+     * configure the menu bar in Gui
      */
     private void configureMenuBar() {
         gameMenu = new MenuBar();
@@ -149,7 +150,7 @@ public class GameView extends BorderPane {
     }
 
     /**
-     *
+     * Listener for the reselect Menu Item
      */
     private void addActionListeners() {
         reselect.setOnAction(Event -> {
@@ -207,10 +208,18 @@ public class GameView extends BorderPane {
         }
     }
 
+    /**
+     * getter of the board
+     * @return board
+     */
     public BoardView getBoard() {
         return board;
     }
 
+    /**
+     * setter of the board
+     * @param board
+     */
     public void setBoard(BoardView board) {
         this.board = board;
     }

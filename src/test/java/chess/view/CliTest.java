@@ -8,6 +8,9 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * test of the class Cli
+ */
 public class CliTest {
     Cli cli = new Cli();
 
@@ -20,6 +23,10 @@ public class CliTest {
     public void setUp() {
         System.setOut(new PrintStream(outputStreamCaptor));
     }
+
+    /**
+     * test for welcome screen show in console
+     */
     @Test
     public void showWelcomeScreen() {
         cli.showWelcomeScreen();

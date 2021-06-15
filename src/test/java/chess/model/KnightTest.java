@@ -233,6 +233,9 @@ public class KnightTest {
         assertEquals(expected.toString(), knightCaptureEnemyB.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for knight
+     */
     @Test
     public void getSymbolTest(){
         Piece knightW = new Knight(44,Attributes.Color.WHITE,board);
@@ -241,6 +244,9 @@ public class KnightTest {
         assertEquals("♞", knightB.getSymbol());
     }
 
+    /**
+     * test if knight has the right value
+     */
     @Test
     public void getValueTest(){
         Piece knightW = new Knight(45,Attributes.Color.WHITE,board);

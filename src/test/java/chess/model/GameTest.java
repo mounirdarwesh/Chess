@@ -72,11 +72,17 @@ public class GameTest {
                 .trim());
     }
 
+    /**
+     * test white player
+     */
     @Test
     public void getWhitePlayer() {
         assertEquals("White Player",Game.getWhitePlayer().toString());
     }
 
+    /**
+     * test black player
+     */
     @Test
     public void getBlackPlayer() {
         assertEquals("Black player",Game.getBlackPlayer().toString());

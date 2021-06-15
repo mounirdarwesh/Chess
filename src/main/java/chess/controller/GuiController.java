@@ -50,6 +50,7 @@ public class GuiController extends Controller {
     private boolean allowReselect = true;
 
     /**
+     * constructor of the class
      * @param guiView The view that is connected to this controller
      */
     public GuiController(Gui guiView) {
@@ -75,6 +76,7 @@ public class GuiController extends Controller {
     }
 
     /**
+     * color of the player against AI
      * @param color color of the player on action
      */
     public void colorChoiceOnAction(Attributes.Color color) {
@@ -91,6 +93,7 @@ public class GuiController extends Controller {
     }
 
     /**
+     *  handles the click on a tile of the board
      * @param tiles tiles of the board
      * @param tile  the clicked tile
      */
@@ -127,7 +130,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * condition to make a move for a selected piece
      * @param piece
      * @return
      */
@@ -138,6 +141,7 @@ public class GuiController extends Controller {
     }
 
     /**
+     * make a move for a selected piece
      * @param toMovePiece the selected piece
      * @param tile the selected tile
      */
@@ -157,7 +161,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * update game board and player
      */
     private void updateGame() {
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
@@ -170,7 +174,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * update all the panels
      */
     private void updateGameView() {
         guiView.getGameView().showHistory();
@@ -181,7 +185,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * create a game
      */
     public void createGame() {
         game = new Game(this,
@@ -196,7 +200,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * let AI to make a move
      */
     private void letComputerPlay() {
         Move computerMove;
@@ -248,14 +252,16 @@ public class GuiController extends Controller {
      * @param piece of the Pawn.
      */
     public void handlePromote(Piece piece) {
-        if (piece instanceof Pawn && canPromote(piece.getColor(), piece.getPosition())) {
+        piece.calculateLegalMoves();
+        if (piece instanceof Pawn && canPromote(piece.getColor(), piece.getPosition())
+                && piece.getAllLegalMoves() != null) {
             PromotionPopUp.displayPopUp();
             game.setCharToPromote(PromotionPopUp.promote);
         }
     }
 
     /**
-     *
+     * allows to reselect another piece
      * @param allowReselect
      */
     public void setAllowReselect(boolean allowReselect) {

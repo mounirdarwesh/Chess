@@ -268,6 +268,9 @@ public class BishopTest {
         assertEquals(expected.toString(), bishopCaptureEnemyB.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for bishop
+     */
     @Test
     public void getSymbolTest(){
         Piece bishopW = new Bishop(44,Attributes.Color.WHITE,board);
@@ -276,6 +279,9 @@ public class BishopTest {
         assertEquals("♝", bishopB.getSymbol());
     }
 
+    /**
+     * test if bishop has the right value
+     */
     @Test
     public void getValueTest(){
         Piece bishopW = new Bishop(40,Attributes.Color.WHITE,board);

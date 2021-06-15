@@ -292,6 +292,9 @@ public class KingTest {
         assertEquals(expected.toString(), kingCaptureEnemyB.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for king
+     */
     @Test
     public void getSymbolTest(){
         Piece kingW = new King(44,Attributes.Color.WHITE,board);
@@ -300,6 +303,9 @@ public class KingTest {
         assertEquals("♚", kingB.getSymbol());
     }
 
+    /**
+     * test if king has the right value
+     */
     @Test
     public void getValueTest(){
         Piece kingW = new King(40,Attributes.Color.WHITE,board);

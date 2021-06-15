@@ -228,6 +228,9 @@ public class QueenTest {
         assertEquals(expected.toString(), queenCaptureEnemyB.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for queen
+     */
     @Test
     public void getSymbolTest(){
         Piece queenW = new Queen(44,Attributes.Color.WHITE,board);
@@ -236,6 +239,9 @@ public class QueenTest {
         assertEquals("♛", queenB.getSymbol());
     }
 
+    /**
+     * test if queen has the right value
+     */
     @Test
     public void getValueTest(){
         Piece queenW = new Queen(44,Attributes.Color.WHITE,board);

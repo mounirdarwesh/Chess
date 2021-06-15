@@ -198,6 +198,9 @@ public class PawnTest {
         assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for pawn
+     */
     @Test
     public void getSymbolTest(){
         Piece pawnW = new Pawn(44,Attributes.Color.WHITE,board);
@@ -206,6 +209,9 @@ public class PawnTest {
         assertEquals("♟", pawnB.getSymbol());
     }
 
+    /**
+     * test if pawn has the right value
+     */
     @Test
     public void getValueTest(){
         Piece pawnW = new Pawn(48,Attributes.Color.WHITE,board);

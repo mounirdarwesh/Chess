@@ -44,6 +44,7 @@ public class TileView extends StackPane {
     }
 
     /**
+     * Getter for the tileID
      * @return tileID
      */
     public int getTileID() {
@@ -51,6 +52,7 @@ public class TileView extends StackPane {
     }
 
     /**
+     * highlight a tile
      * @param visibility set the Visibility of the Highlights.
      */
     public void highlight(boolean visibility) {
@@ -61,6 +63,7 @@ public class TileView extends StackPane {
     }
 
     /**
+     * highlighted tiles
      * @param highlightedTiles highlights tiles
      */
     public void deHighlight(List<TileView> highlightedTiles) {

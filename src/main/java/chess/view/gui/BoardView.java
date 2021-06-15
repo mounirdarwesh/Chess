@@ -30,6 +30,7 @@ public class BoardView extends GridPane {
 
 
     /**
+     * constructor
      * @param gui gui of the game
      */
     public BoardView(Gui gui) {
@@ -61,6 +62,7 @@ public class BoardView extends GridPane {
     }
 
     /**
+     * listener for each tile
      * @param tile tile of the board
      */
     private void addListenersToTile(TileView tile) {

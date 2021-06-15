@@ -231,8 +231,8 @@ public class Pawn extends Piece {
     @Override
     public String getSymbol() {
         String symbol;
-            symbol = "♟";
         if (color == Attributes.Color.BLACK) {
+            symbol = "♟";
         } else {
             symbol = "♙";
         }

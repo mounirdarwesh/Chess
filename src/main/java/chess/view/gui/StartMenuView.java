@@ -85,6 +85,9 @@ public class StartMenuView {
         configureGameModePanel();
     }
 
+    /**
+     * welcome screen for the Gui
+     */
     private void configureGameModePanel() {
         //Creating a new Grid
         GridPane gameModePanel = new GridPane();
@@ -111,6 +114,9 @@ public class StartMenuView {
 
     }
 
+    /**
+     * listener for the welcome screen
+     */
     private void AddListenersToGameMode() {
         againstHuman.setOnAction(Event -> {
             gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN);
@@ -130,7 +136,7 @@ public class StartMenuView {
     }
 
     /**
-     *
+     * shows the popup menu to choose the color (white or black)
      */
     public void showColorChoiceWindow() {
         colorChoice = new Stage();
@@ -151,6 +157,9 @@ public class StartMenuView {
         AddListenersToColorChoice();
     }
 
+    /**
+     * listener for the choose color popup
+     */
     private void AddListenersToColorChoice() {
         white.setOnAction(Event -> {
             gui.guiController.colorChoiceOnAction(Attributes.Color.WHITE);
@@ -161,7 +170,7 @@ public class StartMenuView {
     }
 
     /**
-     *
+     * Getter for the black button in choose color popup
      * @return black
      */
     public Button getBlack() {
@@ -169,7 +178,7 @@ public class StartMenuView {
     }
 
     /**
-     *
+     * Getter for the white button in choose color popup
      * @return white
      */
     public Button getWhite() {
@@ -177,7 +186,7 @@ public class StartMenuView {
     }
 
     /**
-     *
+     * stage of choose the color
      * @return colorChoice
      */
     public Stage getColorChoice() {

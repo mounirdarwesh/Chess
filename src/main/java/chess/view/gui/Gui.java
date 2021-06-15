@@ -80,6 +80,7 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
+     * config basics interface element
      * @param primaryStage
      */
     private void ConfigureBasics(Stage primaryStage) throws IOException {
@@ -113,7 +114,7 @@ public class Gui extends Application implements View, Observer {
      */
     public void createGameView() {
         gameView = new GameView(this);
-        primaryStage.setScene(new Scene(gameView, 950, 700));
+        primaryStage.setScene(new Scene(gameView, 750, 600));
     }
 
     /**
@@ -157,7 +158,7 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     *
+     * back to main menu option
      */
     public void backToMainMenu() {
         primaryStage.setScene(scene);

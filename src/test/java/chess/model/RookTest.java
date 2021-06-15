@@ -312,6 +312,9 @@ public class RookTest {
         assertEquals(expected.toString(), rookCaptureEnemyB.getAllLegalMoves().toString());
     }
 
+    /**
+     * test if the system shows the correct symbol for rook
+     */
     @Test
     public void getSymbolTest(){
         Piece rookW = new Rook(44,Attributes.Color.WHITE,board);
@@ -320,6 +323,9 @@ public class RookTest {
         assertEquals("♜", rookB.getSymbol());
     }
 
+    /**
+     * test if rook has the right value
+     */
     @Test
     public void getValueTest(){
         Piece rookW = new Rook(46,Attributes.Color.WHITE,board);

@@ -129,14 +129,6 @@ public class StartMenuView {
         return root;
     }
 
-    public Button getAgainstAI() {
-        return againstAI;
-    }
-
-    public Button getAgainstHuman() {
-        return againstHuman;
-    }
-
     /**
      *
      */

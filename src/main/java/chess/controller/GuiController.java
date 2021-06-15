@@ -27,25 +27,25 @@ public class GuiController extends Controller {
      */
     private Player opponent;
     /**
-     *
+     * shows the color of the player
      */
     private Attributes.Color playerColor;
     /**
-     *
+     * list of the highlighted tiles
      */
     private List<TileView> highlightedTiles = new ArrayList<>();
     /**
-     *
+     * the piece that player clicked on it
      */
     private Piece toMovePiece = null;
 
     /**
-     *
+     * if the game is against AI or not
      */
     private boolean gameAgainstComputer = false;
 
     /**
-     *
+     * allows player to reselect a piece
      */
     private boolean allowReselect = true;
 
@@ -122,6 +122,8 @@ public class GuiController extends Controller {
             }
             game.getCurrentPlayer().setFirstClick(false);
         }
+        // check if there is chance to Promote.
+        handlePromote(toMovePiece);
     }
 
     /**
@@ -141,8 +143,7 @@ public class GuiController extends Controller {
      */
     public void movePieceAction(Piece toMovePiece, TileView tile) {
         if (toMovePiece != null) {
-            // check if there is chance to Promote.
-            handlePromote(toMovePiece);
+
             this.wasALegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());

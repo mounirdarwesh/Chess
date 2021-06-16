@@ -6,6 +6,7 @@ import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class GuiController extends Controller {
      */
     boolean wasALegalMove;
     /**
-     *
+     * the GUI view
      */
     private Gui guiView;
     /**
@@ -48,9 +49,18 @@ public class GuiController extends Controller {
      * allows player to reselect a piece
      */
     private boolean allowReselect = true;
+    /**
+     * Computer Move
+     */
+    private Move computerMove;
+    /**
+     * the last legal Human Move.
+     */
+    private Move allowedMoveHuman;
 
     /**
      * constructor of the class
+     *
      * @param guiView The view that is connected to this controller
      */
     public GuiController(Gui guiView) {
@@ -72,11 +82,11 @@ public class GuiController extends Controller {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
         }
-
     }
 
     /**
      * color of the player against AI
+     *
      * @param color color of the player on action
      */
     public void colorChoiceOnAction(Attributes.Color color) {
@@ -93,7 +103,8 @@ public class GuiController extends Controller {
     }
 
     /**
-     *  handles the click on a tile of the board
+     * handles the click on a tile of the board
+     *
      * @param tiles tiles of the board
      * @param tile  the clicked tile
      */
@@ -115,7 +126,7 @@ public class GuiController extends Controller {
         }
 
         // If the player wants to move a piece on the board
-        if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
+        if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
             game.getCurrentPlayer().calculatePlayerMoves();
             highlightedTiles = new ArrayList<>();
             for (Move move : piece.getAllLegalMoves()) {
@@ -131,6 +142,7 @@ public class GuiController extends Controller {
 
     /**
      * condition to make a move for a selected piece
+     *
      * @param piece
      * @return
      */
@@ -142,20 +154,21 @@ public class GuiController extends Controller {
 
     /**
      * make a move for a selected piece
+     *
      * @param toMovePiece the selected piece
-     * @param tile the selected tile
+     * @param tile        the selected tile
      */
     public void movePieceAction(Piece toMovePiece, TileView tile) {
         if (toMovePiece != null) {
-
             this.wasALegalMove = game.isMoveAllowed(toMovePiece.getPosition(), tile.getTileID());
+            this.allowedMoveHuman = game.getAllowedMove();
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
                 updateGame();
                 updateGameView();
             }
         }
-        if(allowReselect || game.getCurrentPlayer().isFirstClick()) {
+        if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
             tile.deHighlight(highlightedTiles);
         }
     }
@@ -182,6 +195,8 @@ public class GuiController extends Controller {
         guiView.getGameView().notification();
         if (GameView.rotate.isSelected())
             guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
+        if (gameAgainstComputer)
+            guiView.getGameView().showHistoryComp();
     }
 
     /**
@@ -203,7 +218,6 @@ public class GuiController extends Controller {
      * let AI to make a move
      */
     private void letComputerPlay() {
-        Move computerMove;
         while (true) {
             computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
             // Calculate from where the move is performed
@@ -230,6 +244,7 @@ public class GuiController extends Controller {
 
     /**
      * contains if the last move was a Legal move
+     *
      * @return true, if legal.
      */
     public boolean wasLegalMove() {
@@ -238,6 +253,7 @@ public class GuiController extends Controller {
 
     /**
      * check if the Pawn can Promote.
+     *
      * @param color    of the Pawn
      * @param position of the Pawn
      * @return true, if he can promote.
@@ -249,6 +265,7 @@ public class GuiController extends Controller {
 
     /**
      * when a Pawn can Promote, show a PopUp Window to select the promoted Piece.
+     *
      * @param piece of the Pawn.
      */
     public void handlePromote(Piece piece) {
@@ -262,10 +279,29 @@ public class GuiController extends Controller {
 
     /**
      * allows to reselect another piece
-     * @param allowReselect
+     *
+     * @param allowReselect true, if Figure reselect allowed.
      */
     public void setAllowReselect(boolean allowReselect) {
         this.allowReselect = allowReselect;
         game.getCurrentPlayer().setFirstClick(true);
+    }
+
+    /**
+     * Getter Human last legal Move
+     *
+     * @return last legal Move
+     */
+    public Move getAllowedMoveHuman() {
+        return allowedMoveHuman;
+    }
+
+    /**
+     * Getter last Computer Move.
+     *
+     * @return last Computer Move.
+     */
+    public Move getComputerMove() {
+        return computerMove;
     }
 }

@@ -38,12 +38,14 @@ public class GameView extends BorderPane {
      * Board Rotation
      */
     public static CheckMenuItem rotate;
-
+    /**
+     * Move numbering
+     */
+    int numMove = 1;
     /**
      * reselect a piece
      */
     private CheckMenuItem reselect;
-
     /**
      * Menu of the Game
      */
@@ -60,10 +62,7 @@ public class GameView extends BorderPane {
      * the main screen
      */
     private MenuItem mainScreen;
-    /**
-     * Move numbering
-     */
-    int numMove = 1;
+
     /**
      * Construct Game View Basis Elements.
      *
@@ -154,7 +153,7 @@ public class GameView extends BorderPane {
      */
     private void addActionListeners() {
         reselect.setOnAction(Event -> {
-            if(reselect.isSelected()) {
+            if (reselect.isSelected()) {
                 gui.guiController.setAllowReselect(true);
             } else {
                 gui.guiController.setAllowReselect(false);
@@ -181,17 +180,23 @@ public class GameView extends BorderPane {
             }
     }
 
-
     /**
      * show every Move done by the Players.
      */
     public void showHistory() {
+        Label history = new Label(numMove + ": " + gui.guiController.getAllowedMoveHuman().toString());
+        history.setFont(new Font(15));
+        GameView.history.getChildren().add(history);
+        numMove++;
+    }
 
-        if (gui.guiController.wasLegalMove()) {
-            Label history = new Label(numMove + ": " + gui.game.getAllowedMove().toString());
-            history.setFont(new Font(15));
-            GameView.history.getChildren().add(history);
-        }
+    /**
+     * show every Move done by the Computer.
+     */
+    public void showHistoryComp() {
+        Label history = new Label(numMove + ": " + gui.guiController.getComputerMove().toString() + " AI");
+        history.setFont(new Font(15));
+        GameView.history.getChildren().add(history);
         numMove++;
     }
 
@@ -210,6 +215,7 @@ public class GameView extends BorderPane {
 
     /**
      * getter of the board
+     *
      * @return board
      */
     public BoardView getBoard() {
@@ -218,7 +224,8 @@ public class GameView extends BorderPane {
 
     /**
      * setter of the board
-     * @param board
+     *
+     * @param board the Board
      */
     public void setBoard(BoardView board) {
         this.board = board;

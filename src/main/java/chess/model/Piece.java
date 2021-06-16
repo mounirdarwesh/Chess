@@ -203,4 +203,5 @@ public abstract class Piece {
     public int getValue() {
         return this.color.isWhite() ? this.value : -1 * this.value;
     }
+
 }

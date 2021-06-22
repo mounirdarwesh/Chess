@@ -46,6 +46,11 @@ public class Game extends Observable {
      */
     private Move allowedMove;
 
+    /**
+     * The EnPassant pawn
+     */
+    private static Piece enPassantPawn;
+
 
     /**
      * The constructor of the game class. it creates a new game instance with the given Controller
@@ -324,9 +329,25 @@ public class Game extends Observable {
     }
 
     /**
+     *
+     * @return
+     */
+    public static Piece getEnPassantPawn() {
+        return enPassantPawn;
+    }
+
+    /**
+     *
+     * @param enPassantPawn
+     */
+    public static void setEnPassantPawn(Piece enPassantPawn) {
+        Game.enPassantPawn = enPassantPawn;
+    }
+
+    /**
      * @param charToPromote the charToPromote to set
      */
-    public void setCharToPromote(char charToPromote) {
+    public static void setCharToPromote(char charToPromote) {
         Game.charToPromote = charToPromote;
     }
 

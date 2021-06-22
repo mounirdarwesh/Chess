@@ -1,4 +1,5 @@
 package chess.controller;
+import java.util.List;
 import java.util.regex.Matcher;
 import chess.Attributes;
 import chess.Attributes.Color;
@@ -21,6 +22,9 @@ public class CliController extends Controller {
      */
     private Attributes.GameMode gameMode;
 
+    /**
+     *
+     */
     private Cli view;
 
     /**
@@ -101,12 +105,15 @@ public class CliController extends Controller {
         }
     }
 
-
+    /**
+     *
+     * @param status The status of the game
+     * @param player The player
+     */
     @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
         view.notifyUser(status, player);
     }
-
 
     /**
      * Here where the controller checks if the user inputed
@@ -119,7 +126,6 @@ public class CliController extends Controller {
         Matcher matcher = VALID_INPUT.matcher(input);
         return matcher.matches();
     }
-
 
     /**
      * Check if the input from the player is a valid move

@@ -244,7 +244,6 @@ public class GuiController extends Controller {
 
     /**
      * contains if the last move was a Legal move
-     *
      * @return true, if legal.
      */
     public boolean wasLegalMove() {

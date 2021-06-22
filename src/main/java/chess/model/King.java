@@ -16,6 +16,16 @@ public class King extends Piece {
     private static final int[] MOVE_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
     /**
+     * Boolean to check if the king can preform a queen side castle
+     */
+    private boolean queenSideCastle;
+
+    /**
+     * Boolean to check if the king can preform a king side castle
+     */
+    private boolean kingSideCastle;
+
+    /**
      * constructor of the King
      *
      * @param position his Position
@@ -59,11 +69,13 @@ public class King extends Piece {
         int castlingDestination = this.position + 2;
         Piece rock = board.getPiece(this.position + 3);
         if (!(rock instanceof Rook) || rock == null) {
+            kingSideCastle = false;
             return;
         } else if (rock.isFirstMove
                 && rock.getColor() == this.color
                 && board.getPiece(this.position + 1) == null
                 && board.getPiece(this.position + 2) == null) {
+            kingSideCastle = true;
             allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
         }
     }
@@ -75,14 +87,32 @@ public class King extends Piece {
         int castlingDestination = this.position - 2;
         Piece rock = board.getPiece(this.position - 4);
         if (!(rock instanceof Rook) || rock == null) {
+            kingSideCastle = false;
             return;
         } else if (rock.isFirstMove
                 && rock.getColor() == this.color
                 && board.getPiece(this.position - 1) == null
                 && board.getPiece(this.position - 2) == null
                 && board.getPiece(this.position - 3) == null) {
+            queenSideCastle = true;
             allLegalMoves.add(new Move.CastlingMove(board, this, castlingDestination, rock));
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isKingSideCastle() {
+        return kingSideCastle;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isQueenSideCastle() {
+        return queenSideCastle;
     }
 
     /**

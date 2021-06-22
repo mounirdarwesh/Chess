@@ -51,6 +51,9 @@ public class Computer extends Player {
             List<Move> compMoves = this.calculatePlayerMoves();
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }
+        if(optimalMove instanceof Move.PromotionMove) {
+            Game.setCharToPromote('q');
+        }
         return optimalMove;
     }
 

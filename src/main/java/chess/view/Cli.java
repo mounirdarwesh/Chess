@@ -19,15 +19,16 @@ public class Cli implements Observer, View {
      * The connected game
      */
     protected Game game;
+
     /**
      * The CLIController
      */
     protected CliController controller;
+
     /**
      * Scanner to get User Input
      */
     Scanner scanner = new Scanner(System.in);
-
 
     /**
      * The constructor of the view of the CLI application.

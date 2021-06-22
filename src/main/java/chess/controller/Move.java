@@ -330,6 +330,9 @@ public abstract class Move {
         @Override
         public void execute() {
 
+            //Set the game EnPassant piece
+            Game.setEnPassantPawn(piece);
+
             //Saving the previous position of the piece
             fromPiecePosition = piece.getPosition();
 

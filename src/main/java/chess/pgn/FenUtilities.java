@@ -2,14 +2,7 @@ package chess.pgn;
 
 import java.util.*;
 import chess.Attributes.Color;
-import chess.model.Bishop;
-import chess.model.Board;
-import chess.model.King;
-import chess.model.Knight;
-import chess.model.Pawn;
-import chess.model.Piece;
-import chess.model.Queen;
-import chess.model.Rook;
+import chess.model.*;
 
 /**
  * @author Ahmad Mohammad
@@ -116,6 +109,66 @@ public class FenUtilities {
                 piecesOnBoard.set(position, new Pawn(position, Color.BLACK, board));
                 break;
         }
+    }
+
+    /**
+     *
+     * @param board
+     * @return
+     */
+    public static String createFENFromGame(Board board) {
+        return loadFENFromBoard(board) + " " +
+                loadPlayerText() + " " +
+                loadCastleInformation() + " " +
+                loadEnPassantInformation() + " ";
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static String loadEnPassantInformation() {
+        Piece enPassantPawn = Game.getEnPassantPawn();
+        if(enPassantPawn != null) {
+            for (Map.Entry<String, Integer> entry : MapBoard.mapper.entrySet()) {
+                if (entry.getValue().equals(enPassantPawn.getPosition() +
+                        8 * - enPassantPawn.getColor().getDirection())) {
+                    return entry.getKey();
+                }
+            }
+        }
+        return "-";
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static String loadCastleInformation() {
+        StringBuilder castleInfo = new StringBuilder();
+
+        if(Game.getWhitePlayer().isKingSideCastleAllowed()){
+            castleInfo.append("K");
+        }
+        if(Game.getWhitePlayer().isQueenSideCastleAllowed()){
+            castleInfo.append("Q");
+        }
+        if(Game.getBlackPlayer().isKingSideCastleAllowed()){
+            castleInfo.append("k");
+        }
+        if(Game.getBlackPlayer().isQueenSideCastleAllowed()){
+            castleInfo.append("q");
+        }
+
+        return castleInfo.toString().isEmpty() ? "-" : castleInfo.toString();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static String loadPlayerText() {
+        return Game.getCurrentPlayer().toString().substring(0, 1).toLowerCase();
     }
 
     /**

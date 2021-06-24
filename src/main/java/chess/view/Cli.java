@@ -84,6 +84,16 @@ public class Cli implements Observer, View {
                 input = scanner.nextLine();
                 continue;
             }
+            if(input.equals("undo")) {
+                controller.undoMove();
+                input = scanner.nextLine();
+                continue;
+            }
+            if(input.equals("redo")) {
+                controller.redoMove();
+                input = scanner.nextLine();
+                continue;
+            }
             if (!controller.isValidInput(input)) {
                 System.out.println("!Invalid move");
                 input = scanner.nextLine();

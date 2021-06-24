@@ -3,7 +3,11 @@ package chess.model;
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.controller.Move;
+import chess.pgn.FenUtilities;
 import chess.util.Observable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Gruppe 45
@@ -53,6 +57,12 @@ public class Game extends Observable {
 
 
     /**
+     * List of all the game's FEN Strings
+     */
+    private List<String> gameFENStrings;
+
+
+    /**
      * The constructor of the game class. it creates a new game instance with the given Controller
      *
      * @param controller The controller to manage this instance (MVC-patter)
@@ -62,6 +72,7 @@ public class Game extends Observable {
      */
     public Game(Controller controller, Board board, Player playerOne, Player playerTwo) {
         this.controller = controller;
+        this.gameFENStrings = new ArrayList<>();
         Game.board = board;
         Game.whitePlayer = playerOne.getColor().isWhite() ? playerOne : playerTwo;
         Game.blackPlayer = playerTwo.getColor().isBlack() ? playerTwo : playerOne;
@@ -191,6 +202,7 @@ public class Game extends Observable {
      * The brain of the game
      */
     public void run() {
+        gameFENStrings.add("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
         // Notify the observer at the start of the game
         notifyObservers();
         // Loading the players pieces
@@ -200,6 +212,8 @@ public class Game extends Observable {
         while (!FINISHED) {
             // Get the input from the player and analyze it
             controller.processInputFromPlayer();
+
+            gameFENStrings.add(FenUtilities.loadFENFromBoard(board));
 
             // Switch the player
             currentPlayer = getOpponent(currentPlayer);
@@ -366,5 +380,21 @@ public class Game extends Observable {
      */
     public static boolean isFINISHED() {
         return FINISHED;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<String> getGameFENStrings() {
+        return gameFENStrings;
+    }
+
+    /**
+     *
+     * @param gameFENStrings
+     */
+    public void setGameFENStrings(List<String> gameFENStrings) {
+        this.gameFENStrings = gameFENStrings;
     }
 }

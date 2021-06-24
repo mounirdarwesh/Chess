@@ -7,6 +7,7 @@ import chess.model.Piece;
 import chess.model.Player;
 import chess.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +39,20 @@ public abstract class Controller {
      */
     protected static final Pattern VALID_INPUT = Pattern.compile("([a-h][1-8])([-])([a-h][1-8])([QRNBqrnb]?)", Pattern.CASE_INSENSITIVE);
 
+    /**
+     *
+     */
+    protected List<String> redidFENs;
+
+    /**
+     * The mode of the game
+     */
+    protected Attributes.GameMode gameMode;
+
+    /**
+     *
+     */
+    private boolean hasPlayerUndidAMove = false;
 
     /**
      * The constructor expects a CLI view to construct itself.
@@ -94,4 +109,37 @@ public abstract class Controller {
         return MAPPER.map(toIn);
     }
 
+    /**
+     *
+     */
+    public void undoMove() {
+        redidFENs = new ArrayList<>();
+        int fullFENsSize = game.getGameFENStrings().size();
+        if(fullFENsSize <= 2) return;
+        redidFENs.add(
+                game.getGameFENStrings().remove(game.getGameFENStrings().size() - 2)
+        );
+        redidFENs.add(
+                game.getGameFENStrings().remove(game.getGameFENStrings().size() - 1)
+        );
+        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
+                game.getGameFENStrings().size()-1
+        ));
+        hasPlayerUndidAMove = true;
+        game.notifyObservers();
+    }
+
+    /**
+     *
+     */
+    public void redoMove() {
+        if (!hasPlayerUndidAMove) {
+            return;
+        }
+        game.getGameFENStrings().addAll(redidFENs);
+        hasPlayerUndidAMove = false;
+        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
+                game.getGameFENStrings().size()-1));
+        game.notifyObservers();
+    }
 }

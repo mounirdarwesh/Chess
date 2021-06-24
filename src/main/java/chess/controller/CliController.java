@@ -1,5 +1,4 @@
 package chess.controller;
-import java.util.List;
 import java.util.regex.Matcher;
 import chess.Attributes;
 import chess.Attributes.Color;
@@ -18,14 +17,10 @@ public class CliController extends Controller {
     private Move move;
 
     /**
-     * The mode of the game
-     */
-    private Attributes.GameMode gameMode;
-
-    /**
      *
      */
     private Cli view;
+
 
     /**
      * The constructor expects a view to construct itself.
@@ -97,10 +92,9 @@ public class CliController extends Controller {
             currentPlayer.makeMove(move);
         } else if(currentPlayer instanceof Computer) {
             Move computerMove;
-            while (true) {
+            do {
                 computerMove = ((Computer) currentPlayer).evaluate();
-                if(view.readInputFromComputer(computerMove.toString())) break;
-            }
+            } while (!view.readInputFromComputer(computerMove.toString()));
             currentPlayer.makeMove(computerMove);
         }
     }
@@ -114,6 +108,8 @@ public class CliController extends Controller {
     public void notifyView(Attributes.GameStatus status, Player player) {
         view.notifyUser(status, player);
     }
+
+
 
     /**
      * Here where the controller checks if the user inputed

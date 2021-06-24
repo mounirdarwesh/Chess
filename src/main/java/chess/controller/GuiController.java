@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.Attributes;
 import chess.model.*;
+import chess.pgn.FenUtilities;
 import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
@@ -177,6 +178,7 @@ public class GuiController extends Controller {
      * update game board and player
      */
     private void updateGame() {
+        game.getGameFENStrings().add(FenUtilities.loadFENFromBoard(Game.getBoard()));
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
         game.getCurrentPlayer().setFirstClick(true);
         game.checkGameStatus();
@@ -207,6 +209,7 @@ public class GuiController extends Controller {
                 new Board(),
                 new HumanPlayer(playerColor),
                 opponent);
+        game.getGameFENStrings().add("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
         game.loadPlayerPieces();
         guiView.setGame(game);
         if (gameAgainstComputer && opponent.getColor().isWhite()) {

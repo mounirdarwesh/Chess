@@ -63,6 +63,7 @@ public class GameView extends BorderPane {
      */
     private MenuItem mainScreen;
 
+
     /**
      * Construct Game View Basis Elements.
      *
@@ -88,7 +89,10 @@ public class GameView extends BorderPane {
 
         //Creating a panel for the beaten pieces
         configureBeatenPiecesPanel();
+
     }
+
+
 
     /**
      * Beaten Pieces Section.
@@ -118,6 +122,21 @@ public class GameView extends BorderPane {
         historyScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         historyScroll.setContent(history);
 
+        Button undo = new Button("undo");
+        Button redo = new Button("redo");
+        history.getChildren().addAll(undo, redo);
+
+        undo.setOnAction(e -> {
+            gui.guiController.undoMove();
+            gui.guiController.clearUndidHistory();
+            gui.guiController.setHistoryCleared(true);
+        });
+        redo.setOnAction(e -> {
+            gui.guiController.redoMove();
+            gui.guiController.addUndidHistory();
+            gui.guiController.setHistoryCleared(false);
+        });
+
         setRight(historyScroll);
     }
 
@@ -141,6 +160,7 @@ public class GameView extends BorderPane {
         highlightVisibility = new CheckMenuItem("Show Highlighting");
         setting.getItems().add(highlightVisibility);
         highlightVisibility.setSelected(true);
+
         gameMenu.getMenus().addAll(gameOptions, setting);
 
         setTop(gameMenu);
@@ -184,9 +204,15 @@ public class GameView extends BorderPane {
      * show every Move done by the Players.
      */
     public void showHistory() {
-        Label history = new Label(numMove + ": " + gui.guiController.getAllowedMoveHuman().toString());
-        history.setFont(new Font(15));
-        GameView.history.getChildren().add(history);
+        if (gui.guiController.isHistoryCleared()) {
+            numMove = history.getChildren().size() - 1;
+        }
+        Label move = new Label(numMove + ": " + gui.guiController.getAllowedMoveHuman().toString());
+        move.setFont(new Font(15));
+        GameView.history.getChildren().add(move);
+        move.setOnMouseClicked(e -> {
+            gui.guiController.undoMoveFromHistory(history.getChildren().indexOf(move));
+        });
         numMove++;
     }
 

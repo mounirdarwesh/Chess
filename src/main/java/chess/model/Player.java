@@ -37,6 +37,11 @@ public abstract class Player {
     private boolean firstClick = true;
 
     /**
+     *
+     */
+    protected boolean hasPlayerUndidAMove = false;
+
+    /**
      * The constructor of the class Player
      * @param color the color that the player chooses to play with
      */
@@ -204,6 +209,22 @@ public abstract class Player {
      */
     public void setFirstClick(boolean firstClick) {
         this.firstClick = firstClick;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean hasPlayerUndidAMove() {
+        return hasPlayerUndidAMove;
+    }
+
+    /**
+     *
+     * @param hasPlayerUndidAMove
+     */
+    public void setHasPlayerUndidAMove(boolean hasPlayerUndidAMove) {
+        this.hasPlayerUndidAMove = hasPlayerUndidAMove;
     }
 
     @Override

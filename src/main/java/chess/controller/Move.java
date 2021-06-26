@@ -129,7 +129,8 @@ public abstract class Move {
             fromPiecePosition = piece.getPosition();
 
             //Delete the piece on the old position
-            fromPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
+            fromPiece = piece;
+            board.getPiecesOnBoard().set(piece.getPosition(), null);
             // Set it's new destination
             piece.setPosition(destination);
             // And update it in the list of pieces on the board

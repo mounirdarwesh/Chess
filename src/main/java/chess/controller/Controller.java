@@ -5,7 +5,10 @@ import chess.model.Game;
 import chess.model.MapBoard;
 import chess.model.Piece;
 import chess.model.Player;
+import chess.pgn.FenUtilities;
 import chess.view.View;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +55,18 @@ public abstract class Controller {
     /**
      *
      */
-    private boolean hasPlayerUndidAMove = false;
+    protected List<Node> redidHistory;
+
+
+    /**
+     *
+     */
+    protected boolean historyCleared = false;
+
+    /**
+     *
+     */
+    protected Piece beatenPieces;
 
     /**
      * The constructor expects a CLI view to construct itself.
@@ -113,9 +127,11 @@ public abstract class Controller {
      *
      */
     public void undoMove() {
-        redidFENs = new ArrayList<>();
         int fullFENsSize = game.getGameFENStrings().size();
-        if(fullFENsSize <= 2) return;
+        if(fullFENsSize <= 2 || Game.getCurrentPlayer().hasPlayerUndidAMove()) {
+            return;
+        }
+        redidFENs = new ArrayList<>();
         redidFENs.add(
                 game.getGameFENStrings().remove(game.getGameFENStrings().size() - 2)
         );
@@ -125,21 +141,37 @@ public abstract class Controller {
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
                 game.getGameFENStrings().size()-1
         ));
-        hasPlayerUndidAMove = true;
+        Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
         game.notifyObservers();
+
     }
 
     /**
      *
      */
     public void redoMove() {
-        if (!hasPlayerUndidAMove) {
+        if (!Game.getCurrentPlayer().hasPlayerUndidAMove()) {
             return;
         }
         game.getGameFENStrings().addAll(redidFENs);
-        hasPlayerUndidAMove = false;
+        Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
                 game.getGameFENStrings().size()-1));
         game.notifyObservers();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isHistoryCleared() {
+        return historyCleared;
+    }
+    /**
+     *
+     * @return
+     */
+    public void setHistoryCleared(boolean historyCleared) {
+        this.historyCleared = historyCleared;
     }
 }

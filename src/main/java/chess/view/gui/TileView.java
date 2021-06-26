@@ -36,7 +36,7 @@ public class TileView extends StackPane {
      */
     public void putPiece(Board chessBoard) {
         if (chessBoard.getPiece(tileID) != null) {
-            Label symbol = new Label(chessBoard.getPiece(tileID).getSymbol());
+            Label symbol = new Label(chessBoard.getPiecesOnBoard().get(tileID).getSymbol());
             symbol.setFont(new Font(50));
             this.getChildren().add(symbol);
             StackPane.setAlignment(symbol, Pos.CENTER);

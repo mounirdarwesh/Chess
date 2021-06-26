@@ -105,7 +105,7 @@ public class Pawn extends Piece {
 
         // Checking if there is no piece at desired destination and
         // if it is the first move of the pawn
-        if (isFirstMove && pieceAtDest == null) {
+        if (canDouble() && pieceAtDest == null) {
 
             // The position between the pawn and it's desired destination
             int blockedSquare = position + 8 * color.getDirection();
@@ -190,6 +190,15 @@ public class Pawn extends Piece {
         Piece opponentPawn = board.getPiece(position - color.getDirection());
         return opponentPawn instanceof Pawn
                 && opponentPawn.getColor() != this.color;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private boolean canDouble() {
+        return color.isWhite() && 8 <= position && position <= 15 ||
+                color.isBlack() && 48 <= position && position <= 55;
     }
 
     /**

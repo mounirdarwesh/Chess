@@ -7,7 +7,6 @@ import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +57,7 @@ public class GuiController extends Controller {
      * the last legal Human Move.
      */
     private Move allowedMoveHuman;
+
 
     /**
      * constructor of the class
@@ -115,7 +115,8 @@ public class GuiController extends Controller {
         if (game.isFINISHED()) {
             return;
         }
-        // If the player puts the mouse on an enemy piece, capture
+        // If the player puts the mouse on an enemy piece or on an empty square
+        // to move there
         if (movePieceActionException(piece)) {
             movePieceAction(toMovePiece, tile);
             return;
@@ -128,7 +129,7 @@ public class GuiController extends Controller {
 
         // If the player wants to move a piece on the board
         if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
-            game.getCurrentPlayer().calculatePlayerMoves();
+            piece.calculateLegalMoves();
             highlightedTiles = new ArrayList<>();
             for (Move move : piece.getAllLegalMoves()) {
                 tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
@@ -165,8 +166,10 @@ public class GuiController extends Controller {
             this.allowedMoveHuman = game.getAllowedMove();
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
+                Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
                 updateGame();
                 updateGameView();
+                historyCleared = false;
             }
         }
         if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
@@ -175,9 +178,54 @@ public class GuiController extends Controller {
     }
 
     /**
+     *
+     */
+    public void clearUndidHistory() {
+        if(guiView.getGameView().history.getChildren().size() <= 3
+                || historyCleared) return;
+        redidHistory = new ArrayList<>();
+        redidHistory.add(guiView.getGameView().history.getChildren().get(
+                guiView.getGameView().history.getChildren().size() - 2));
+        redidHistory.add(guiView.getGameView().history.getChildren().get(
+                guiView.getGameView().history.getChildren().size() - 1));
+
+        guiView.getGameView().history.getChildren().remove(
+                guiView.getGameView().history.getChildren().size() -2,
+                guiView.getGameView().history.getChildren().size()
+        );
+        if (allowedMoveHuman instanceof Move.CaptureMove) {
+            beatenPieces = getBeatenPieces().remove(getBeatenPieces().size()-1);
+            guiView.getGameView().showBeaten();
+        }
+    }
+
+    /**
+     *
+     */
+    public void addUndidHistory() {
+        try {
+            guiView.getGameView().history.getChildren().addAll(redidHistory);
+            getBeatenPieces().add(beatenPieces);
+            updateGameView();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    /**
+     *
+     * @param index
+     */
+    public void undoMoveFromHistory(int index) {
+        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index-1));
+        Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
+        game.notifyObservers();
+    }
+
+    /**
      * update game board and player
      */
-    private void updateGame() {
+    public void updateGame() {
         game.getGameFENStrings().add(FenUtilities.loadFENFromBoard(Game.getBoard()));
         game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
         game.getCurrentPlayer().setFirstClick(true);
@@ -306,4 +354,7 @@ public class GuiController extends Controller {
     public Move getComputerMove() {
         return computerMove;
     }
+
+
+
 }

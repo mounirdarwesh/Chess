@@ -174,4 +174,6 @@ public abstract class Controller {
     public void setHistoryCleared(boolean historyCleared) {
         this.historyCleared = historyCleared;
     }
+
+    public abstract void showTime(String time);
 }

@@ -1,23 +1,32 @@
 package chess.view.gui;
 
 import chess.Attributes;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
  * Main Screen Layout.
+ *
  * @author Gruppe 45
  */
 public class StartMenuView {
@@ -57,10 +66,15 @@ public class StartMenuView {
      */
     private Gui gui;
 
+    RadioButton withTimer;
+
+    TextField duration;
+
     /**
      * The constructor of the start menu class
-     * @throws Exception exception
+     *
      * @param gui View.
+     * @throws Exception exception
      */
     public StartMenuView(Gui gui) throws Exception {
         this.gui = gui;
@@ -79,7 +93,7 @@ public class StartMenuView {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(1.0, 1.0,
                         true, true, false, false)
-                )));
+        )));
 
         // Creating the Game mode panel
         configureGameModePanel();
@@ -92,9 +106,9 @@ public class StartMenuView {
         //Creating a new Grid
         GridPane gameModePanel = new GridPane();
         gameModePanel.setAlignment(Pos.CENTER);
-        gameModePanel.setPadding(new Insets(20,20,20,20));
-        gameModePanel.setVgap(10);
-        gameModePanel.setHgap(10);
+        gameModePanel.setPadding(new Insets(20, 20, 20, 20));
+        gameModePanel.setVgap(20);
+        gameModePanel.setHgap(20);
 
         Label mode = new Label("Select your opponent");
         mode.setFont(new Font("Sans-serif", 20));
@@ -107,7 +121,21 @@ public class StartMenuView {
         againstAI.setMinWidth(55);
         GridPane.setConstraints(againstAI, 1, 1);
 
-        gameModePanel.getChildren().addAll(mode, againstHuman, againstAI);
+        withTimer = new RadioButton();
+        withTimer.setFont(new Font("Sans-serif", 12));
+        withTimer.setStyle("-fx-font-weight: bold;");
+        withTimer.setTextFill(Color.BLACK);
+        withTimer.setText("Game with Timer?");
+        GridPane.setConstraints(withTimer, 0, 2);
+
+        duration = new TextField();
+        duration.setPromptText("just numeric Value!");
+        inputFilter();
+        duration.setDisable(true);
+        GridPane.setConstraints(duration, 0, 3);
+        timerChoice();
+
+        gameModePanel.getChildren().addAll(mode, againstHuman, againstAI, withTimer, duration);
         root.getChildren().add(gameModePanel);
 
         AddListenersToGameMode();
@@ -115,20 +143,52 @@ public class StartMenuView {
     }
 
     /**
+     * choose a game with timer option
+     */
+    public void timerChoice() {
+        withTimer.setOnAction(Event -> {
+            duration.setDisable(!withTimer.isSelected());
+        });
+    }
+
+    /**
+     *  force the field to be numeric only
+     */
+    public void inputFilter(){
+        duration.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    duration.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+    }
+
+    /**
      * listener for the welcome screen
      */
     private void AddListenersToGameMode() {
         againstHuman.setOnAction(Event -> {
-            gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN);
+            if (withTimer.isSelected()) {
+                if (!duration.getText().equals(""))
+                    gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN_TIMER, duration.getText());
+                else duration.setPromptText("Please enter a Number Value!");
+            } else gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN, null);
         });
 
         againstAI.setOnAction(Event -> {
-            gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER);
+            if (withTimer.isSelected()) {
+                gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER_TIMER, duration.getText());
+            }
+            gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER, null);
         });
     }
 
     /**
      * this methode return a node as parent
+     *
      * @return root
      */
     public Parent asParent() {
@@ -171,6 +231,7 @@ public class StartMenuView {
 
     /**
      * Getter for the black button in choose color popup
+     *
      * @return black
      */
     public Button getBlack() {
@@ -179,6 +240,7 @@ public class StartMenuView {
 
     /**
      * Getter for the white button in choose color popup
+     *
      * @return white
      */
     public Button getWhite() {
@@ -187,6 +249,7 @@ public class StartMenuView {
 
     /**
      * stage of choose the color
+     *
      * @return colorChoice
      */
     public Stage getColorChoice() {

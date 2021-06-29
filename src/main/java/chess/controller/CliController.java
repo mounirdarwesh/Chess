@@ -21,6 +21,7 @@ public class CliController extends Controller {
      */
     private Cli view;
 
+    ChessClock chessClock ;
 
     /**
      * The constructor expects a view to construct itself.
@@ -38,6 +39,7 @@ public class CliController extends Controller {
             view.showWelcomeScreen();
             // Getting the game mode
             view.gameMode();
+
         }
 
         // Start screen for the CLI
@@ -53,8 +55,18 @@ public class CliController extends Controller {
         // Create a new game
         if (gameMode == Attributes.GameMode.COMPUTER) {
             opponent = new Computer(Color.BLACK);
-        } else {
+        } else if (gameMode == Attributes.GameMode.HUMAN) {
             opponent = new HumanPlayer(Color.BLACK);
+        }
+        else if (gameMode == Attributes.GameMode.HUMAN_TIMER){
+            opponent = new HumanPlayer(Color.BLACK);
+            chessClock = new ChessClock(this,Long.parseLong(view.getTime()));
+            chessClock.start();
+        }
+        else {
+            opponent = new Computer(Color.BLACK);
+            chessClock = new ChessClock(this,Long.parseLong(view.getTime()));
+            chessClock.start();
         }
         game = new Game(this,
                 new Board(),
@@ -69,6 +81,7 @@ public class CliController extends Controller {
 
         // Start the game
         game.run();
+
     }
 
 
@@ -90,6 +103,8 @@ public class CliController extends Controller {
         // and when all criteria meet, then tell the game to perform the move
         if(currentPlayer instanceof HumanPlayer) {
             currentPlayer.makeMove(move);
+            // Print the left Time after each Move.
+            System.out.println(chessClock.getLeftTime(currentPlayer.getColor()));
         } else if(currentPlayer instanceof Computer) {
             Move computerMove;
             do {
@@ -173,5 +188,10 @@ public class CliController extends Controller {
      */
     public void setGameMode(Attributes.GameMode gameMode) {
         this.gameMode = gameMode;
+    }
+
+    @Override
+    public void showTime(String time){
+        System.out.println(time);
     }
 }

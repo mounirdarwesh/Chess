@@ -88,7 +88,9 @@ public class Attributes {
      */
     public enum GameMode {
         HUMAN,
-        COMPUTER
+        COMPUTER,
+        HUMAN_TIMER,
+        COMPUTER_TIMER
     }
 }
 

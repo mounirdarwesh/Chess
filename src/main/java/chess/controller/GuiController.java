@@ -7,6 +7,8 @@ import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
+import javafx.application.Platform;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,10 @@ public class GuiController extends Controller {
      * the last legal Human Move.
      */
     private Move allowedMoveHuman;
-
+    /**
+     *
+     */
+    ChessClock chessClock;
 
     /**
      * constructor of the class
@@ -72,14 +77,28 @@ public class GuiController extends Controller {
     /**
      * Whenever the user interacts with the start screen menu
      */
-    public void gameModeOnAction(Attributes.GameMode gameMode) {
+    public void gameModeOnAction(Attributes.GameMode gameMode, String duration) {
         if (gameMode == Attributes.GameMode.HUMAN) {
             gameAgainstComputer = false;
             opponent = new HumanPlayer(Attributes.Color.BLACK);
             playerColor = Attributes.Color.WHITE;
             createGame();
             guiView.createGameView();
-        } else {
+        } else if(gameMode == Attributes.GameMode.HUMAN_TIMER){
+            gameAgainstComputer = false;
+            opponent = new HumanPlayer(Attributes.Color.BLACK);
+            playerColor = Attributes.Color.WHITE;
+            createGame();
+            guiView.createGameView();
+            chessClock = new ChessClock(this,Long.parseLong(duration));
+            chessClock.start();
+        }else if(gameMode == Attributes.GameMode.COMPUTER_TIMER){
+            guiView.getMainMenu().showColorChoiceWindow();
+            gameAgainstComputer = true;
+            chessClock = new ChessClock(this,Long.parseLong(duration));
+            chessClock.start();
+        }
+        else {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
         }
@@ -128,6 +147,7 @@ public class GuiController extends Controller {
         }
 
         // If the player wants to move a piece on the board
+        if(piece != null){
         if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
             piece.calculateLegalMoves();
             highlightedTiles = new ArrayList<>();
@@ -139,6 +159,7 @@ public class GuiController extends Controller {
             game.getCurrentPlayer().setFirstClick(false);
         }
         // check if there is chance to Promote.
+        }
         handlePromote(toMovePiece);
     }
 
@@ -178,7 +199,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * clearing history
      */
     public void clearUndidHistory() {
         if(guiView.getGameView().history.getChildren().size() <= 3
@@ -200,7 +221,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * add to history
      */
     public void addUndidHistory() {
         try {
@@ -213,7 +234,7 @@ public class GuiController extends Controller {
     }
 
     /**
-     *
+     * undoing a move in History
      * @param index
      */
     public void undoMoveFromHistory(int index) {
@@ -356,5 +377,19 @@ public class GuiController extends Controller {
     }
 
 
+    /**
+     * Shows the timer in gui
+     * @param time
+     */
+    public void showTime(String time){
+        Platform.runLater(() -> GameView.showTime(time));
+    }
 
+    /**
+     *
+     * @return
+     */
+    public ChessClock getChessClock() {
+        return chessClock;
+    }
 }

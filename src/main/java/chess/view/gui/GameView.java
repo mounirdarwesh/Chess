@@ -1,5 +1,7 @@
 package chess.view.gui;
 
+import chess.Attributes;
+import chess.model.Game;
 import chess.model.Piece;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -93,7 +95,6 @@ public class GameView extends BorderPane {
     }
 
 
-
     /**
      * Beaten Pieces Section.
      */
@@ -184,6 +185,8 @@ public class GameView extends BorderPane {
             gui.backToMainMenu();
             // delete old game Beaten.
             gui.guiController.getBeatenPieces().clear();
+            Game.setFINISHED(false);
+            gui.guiController.getChessClock().cancel();
         });
     }
 
@@ -198,6 +201,18 @@ public class GameView extends BorderPane {
                 beatenPiece.setFont(new Font(40));
                 GameView.beaten.getChildren().add(beatenPiece);
             }
+    }
+
+    /**
+     * show the timer of players
+     * @param label Output String
+     */
+    public static void showTime(String label) {
+        report.getChildren().clear();
+        Label time = new Label();
+        time.setFont(new Font(20));
+        time.setText(label);
+        GameView.report.getChildren().add(time);
     }
 
     /**

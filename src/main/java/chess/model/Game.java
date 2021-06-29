@@ -1,6 +1,7 @@
 package chess.model;
 
 import chess.Attributes;
+import chess.controller.ChessClock;
 import chess.controller.Controller;
 import chess.controller.Move;
 import chess.pgn.FenUtilities;
@@ -370,7 +371,7 @@ public class Game extends Observable {
      *
      * @param FINISHED Game Status
      */
-    public void setFINISHED(boolean FINISHED) {
+    public static void setFINISHED(boolean FINISHED) {
         Game.FINISHED = FINISHED;
     }
 
@@ -397,4 +398,6 @@ public class Game extends Observable {
     public void setGameFENStrings(List<String> gameFENStrings) {
         this.gameFENStrings = gameFENStrings;
     }
+
+
 }

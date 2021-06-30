@@ -321,15 +321,6 @@ public class GuiController extends Controller {
     }
 
     /**
-     * contains if the last move was a Legal move
-     *
-     * @return true, if legal.
-     */
-    public boolean wasLegalMove() {
-        return wasALegalMove;
-    }
-
-    /**
      * check if the Pawn can Promote.
      *
      * @param color    of the Pawn

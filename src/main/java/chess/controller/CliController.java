@@ -28,6 +28,10 @@ public class CliController extends Controller {
      * Chess Clock of Cli
      */
     ChessClock chessClock;
+    /**
+     * check if the Timer Running
+     */
+    boolean isClockRunning = false;
 
     /**
      * The constructor expects a view to construct itself.
@@ -67,10 +71,12 @@ public class CliController extends Controller {
             opponent = new Computer(Color.BLACK);
             chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
             chessClock.start();
+            isClockRunning = true;
         } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
             opponent = new HumanPlayer(Color.BLACK);
             chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
             chessClock.start();
+            isClockRunning = true;
         } else {
             opponent = new HumanPlayer(Color.BLACK);
         }
@@ -110,7 +116,8 @@ public class CliController extends Controller {
         if (currentPlayer instanceof HumanPlayer) {
             currentPlayer.makeMove(move);
             // Print the left Time after each Move.
-            System.out.println(chessClock.getLeftTime(currentPlayer.getColor()));
+            if (isClockRunning)
+                System.out.println(chessClock.getLeftTime(currentPlayer.getColor()));
         } else if (currentPlayer instanceof Computer) {
             Move computerMove;
             do {

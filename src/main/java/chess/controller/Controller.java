@@ -162,14 +162,14 @@ public abstract class Controller {
     }
 
     /**
-     * @return
+     * @return historyCleared
      */
     public boolean isHistoryCleared() {
         return historyCleared;
     }
 
     /**
-     * @return
+     * setter for historyCleared
      */
     public void setHistoryCleared(boolean historyCleared) {
         this.historyCleared = historyCleared;

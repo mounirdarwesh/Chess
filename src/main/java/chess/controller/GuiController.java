@@ -163,8 +163,9 @@ public class GuiController extends Controller {
                 game.getCurrentPlayer().setFirstClick(false);
             }
             // check if there is chance to Promote.
+            handlePromote(toMovePiece);
         }
-        handlePromote(toMovePiece);
+
     }
 
     /**

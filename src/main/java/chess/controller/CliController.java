@@ -188,7 +188,7 @@ public class CliController extends Controller {
     /**
      * Setter for the game mode
      *
-     * @param gameMode
+     * @param gameMode Mode of the game (Human,Human with timer, AI, AI with Timer)
      */
     public void setGameMode(Attributes.GameMode gameMode) {
         this.gameMode = gameMode;

@@ -1,16 +1,11 @@
 package chess.view.gui;
 
 import chess.Attributes;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -28,8 +23,14 @@ import java.nio.file.Paths;
  */
 public class StartMenuView {
 
+    /**
+     * Radio Button in start menu
+     */
     RadioButton withTimer;
-    TextField duration;
+    /**
+     * drop down choice box in start menu
+     */
+    ChoiceBox<String> choiceBox = new ChoiceBox<>();
     /**
      * The main layout
      */
@@ -114,17 +115,17 @@ public class StartMenuView {
         withTimer.setFont(new Font("Sans-serif", 12));
         withTimer.setStyle("-fx-font-weight: bold;");
         withTimer.setTextFill(Color.BLACK);
-        withTimer.setText("Game with Timer?(in Minutes and 60 Min is Maximum)");
+        withTimer.setText("Game with Timer in Minutes?");
         GridPane.setConstraints(withTimer, 0, 2);
 
-        duration = new TextField();
-        duration.setPromptText("just numeric Value!");
-        inputFilter();
-        duration.setDisable(true);
-        GridPane.setConstraints(duration, 0, 3);
+        choiceBox.getItems().addAll("1","2","3","4","5","10","15","20","30","40","50","60");
+        //set the default Value
+        choiceBox.setValue("1");
+        choiceBox.setDisable(true);
+        GridPane.setConstraints(choiceBox, 0,3);
         timerChoice();
 
-        gameModePanel.getChildren().addAll(mode, againstHuman, againstAI, withTimer, duration);
+        gameModePanel.getChildren().addAll(mode, againstHuman, againstAI, withTimer, choiceBox);
         root.getChildren().add(gameModePanel);
 
         AddListenersToGameMode();
@@ -136,22 +137,7 @@ public class StartMenuView {
      */
     public void timerChoice() {
         withTimer.setOnAction(Event -> {
-            duration.setDisable(!withTimer.isSelected());
-        });
-    }
-
-    /**
-     * force the field to be numeric only
-     */
-    public void inputFilter() {
-        duration.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    duration.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
+            choiceBox.setDisable(!withTimer.isSelected());
         });
     }
 
@@ -161,11 +147,8 @@ public class StartMenuView {
     private void AddListenersToGameMode() {
         againstHuman.setOnAction(Event -> {
             if (withTimer.isSelected()) {
-                if (!duration.getText().equals("")) {
-                    gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN_TIMER, duration.getText());
-                } else {
-                    duration.setPromptText("Please enter a Number Value!");
-                }
+                    gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN_TIMER,  choiceBox.getSelectionModel().getSelectedItem());
+
             } else {
                 gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN, null);
             }
@@ -173,7 +156,7 @@ public class StartMenuView {
 
         againstAI.setOnAction(Event -> {
             if (withTimer.isSelected()) {
-                gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER_TIMER, duration.getText());
+                gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER_TIMER, choiceBox.getSelectionModel().getSelectedItem());
             }
             gui.guiController.gameModeOnAction(Attributes.GameMode.COMPUTER, null);
         });

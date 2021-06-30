@@ -33,14 +33,14 @@ public abstract class Player {
     private boolean allowEnPassant = false;
 
     /**
-     *
+     * boolean that shows if it is a first click
      */
     private boolean firstClick = true;
 
     /**
-     *
+     * boolean that if a player undo a move
      */
-    protected boolean hasPlayerUndidAMove = false;
+    protected boolean hasPlayerUndoAMove = false;
 
     /**
      * The constructor of the class Player
@@ -166,7 +166,9 @@ public abstract class Player {
     }
 
     /**
-     * @return
+     * check if king side castling is allowed
+     *
+     * @return boolean
      */
     public boolean isKingSideCastleAllowed() {
         this.getKing().calculateLegalMoves();
@@ -174,7 +176,9 @@ public abstract class Player {
     }
 
     /**
-     * @return
+     * check if the queen side castling is allowed
+     *
+     * @return boolean
      */
     public boolean isQueenSideCastleAllowed() {
         this.getKing().calculateLegalMoves();
@@ -182,13 +186,17 @@ public abstract class Player {
     }
 
     /**
-     * @return allowEnPassant
+     * check if EnPassant is allowed
+     *
+     * @return boolean
      */
     public boolean isAllowEnPassant() {
         return allowEnPassant;
     }
 
     /**
+     * setter for allowEnPassant
+     *
      * @param allowEnPassant allows EnPassant
      */
     public void setAllowEnPassant(boolean allowEnPassant) {
@@ -198,20 +206,24 @@ public abstract class Player {
     /**
      * Getter to the player's pieces
      *
-     * @return playerPieces
+     * @return List of pieces
      */
     public List<Piece> getPlayerPieces() {
         return playerPieces;
     }
 
     /**
-     * @return
+     * check if it the first click
+     *
+     * @return boolean
      */
     public boolean isFirstClick() {
         return firstClick;
     }
 
     /**
+     * setter for firstClick
+     *
      * @param firstClick
      */
     public void setFirstClick(boolean firstClick) {
@@ -219,17 +231,21 @@ public abstract class Player {
     }
 
     /**
-     * @return
+     * checks if the player undo a move
+     *
+     * @return boolean
      */
     public boolean hasPlayerUndidAMove() {
-        return hasPlayerUndidAMove;
+        return hasPlayerUndoAMove;
     }
 
     /**
+     * setter for hasPlayerUndidAMove
+     *
      * @param hasPlayerUndidAMove
      */
     public void setHasPlayerUndidAMove(boolean hasPlayerUndidAMove) {
-        this.hasPlayerUndidAMove = hasPlayerUndidAMove;
+        this.hasPlayerUndoAMove = hasPlayerUndidAMove;
     }
 
     @Override

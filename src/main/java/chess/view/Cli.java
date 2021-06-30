@@ -94,7 +94,10 @@ public class Cli implements Observer, View {
             if (time.matches("\\d*")) {
                 if (time.equals("0")) {
                     controller.setGameMode(mode);
-                } else {
+                } else if(time.matches("")) {
+                    System.out.println("Pleas enter a Valid Input!");
+                    continue;
+                }else {
                     controller.setGameMode(modeWithTimer);
                 }
                 finish = true;

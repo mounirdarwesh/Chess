@@ -344,7 +344,6 @@ public class Game extends Observable {
     }
 
     /**
-     *
      * @return
      */
     public static Piece getEnPassantPawn() {
@@ -352,7 +351,6 @@ public class Game extends Observable {
     }
 
     /**
-     *
      * @param enPassantPawn
      */
     public static void setEnPassantPawn(Piece enPassantPawn) {
@@ -376,7 +374,6 @@ public class Game extends Observable {
     }
 
     /**
-     *
      * @return
      */
     public static boolean isFINISHED() {
@@ -384,7 +381,6 @@ public class Game extends Observable {
     }
 
     /**
-     *
      * @return
      */
     public List<String> getGameFENStrings() {
@@ -392,7 +388,6 @@ public class Game extends Observable {
     }
 
     /**
-     *
      * @param gameFENStrings
      */
     public void setGameFENStrings(List<String> gameFENStrings) {

@@ -31,44 +31,36 @@ import java.nio.file.Paths;
  */
 public class StartMenuView {
 
+    RadioButton withTimer;
+    TextField duration;
     /**
      * The main layout
      */
     private GridPane root;
-
     /**
      *
      */
     private Button againstHuman;
-
     /**
      *
      */
     private Button againstAI;
-
     /**
      * Button to choose the white pieces
      */
     private Button white;
-
     /**
      * Button to choose the black pieces
      */
     private Button black;
-
     /**
      * Popup window when the player chooses to play against an AI
      */
     private Stage colorChoice;
-
     /**
      * The original GUI Object
      */
     private Gui gui;
-
-    RadioButton withTimer;
-
-    TextField duration;
 
     /**
      * The constructor of the start menu class
@@ -125,7 +117,7 @@ public class StartMenuView {
         withTimer.setFont(new Font("Sans-serif", 12));
         withTimer.setStyle("-fx-font-weight: bold;");
         withTimer.setTextFill(Color.BLACK);
-        withTimer.setText("Game with Timer?");
+        withTimer.setText("Game with Timer?(in Minutes and 60 Min is Maximum)");
         GridPane.setConstraints(withTimer, 0, 2);
 
         duration = new TextField();
@@ -152,9 +144,9 @@ public class StartMenuView {
     }
 
     /**
-     *  force the field to be numeric only
+     * force the field to be numeric only
      */
-    public void inputFilter(){
+    public void inputFilter() {
         duration.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,

@@ -22,6 +22,14 @@ public class GuiController extends Controller {
      */
     boolean wasALegalMove;
     /**
+     * Game Clock
+     */
+    ChessClock chessClock;
+    /**
+     * to get if the Timer Running
+     */
+    boolean isClockRunning = false;
+    /**
      * the GUI view
      */
     private Gui guiView;
@@ -41,12 +49,10 @@ public class GuiController extends Controller {
      * the piece that player clicked on it
      */
     private Piece toMovePiece = null;
-
     /**
      * if the game is against AI or not
      */
     private boolean gameAgainstComputer = false;
-
     /**
      * allows player to reselect a piece
      */
@@ -59,10 +65,6 @@ public class GuiController extends Controller {
      * the last legal Human Move.
      */
     private Move allowedMoveHuman;
-    /**
-     *
-     */
-    ChessClock chessClock;
 
     /**
      * constructor of the class
@@ -84,21 +86,22 @@ public class GuiController extends Controller {
             playerColor = Attributes.Color.WHITE;
             createGame();
             guiView.createGameView();
-        } else if(gameMode == Attributes.GameMode.HUMAN_TIMER){
+        } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
             gameAgainstComputer = false;
             opponent = new HumanPlayer(Attributes.Color.BLACK);
             playerColor = Attributes.Color.WHITE;
             createGame();
             guiView.createGameView();
-            chessClock = new ChessClock(this,Long.parseLong(duration));
+            chessClock = new ChessClock(this, Long.parseLong(duration));
             chessClock.start();
-        }else if(gameMode == Attributes.GameMode.COMPUTER_TIMER){
+            isClockRunning = true;
+        } else if (gameMode == Attributes.GameMode.COMPUTER_TIMER) {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
-            chessClock = new ChessClock(this,Long.parseLong(duration));
-            chessClock.start();
-        }
-        else {
+            chessClock = new ChessClock(this, Long.parseLong(duration));
+
+            isClockRunning = true;
+        } else {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
         }
@@ -117,6 +120,8 @@ public class GuiController extends Controller {
             playerColor = Attributes.Color.BLACK;
             opponent = new Computer(Attributes.Color.WHITE);
         }
+        if(isClockRunning)
+            chessClock.start();
         guiView.getMainMenu().getColorChoice().close();
         createGame();
         guiView.createGameView();
@@ -147,18 +152,18 @@ public class GuiController extends Controller {
         }
 
         // If the player wants to move a piece on the board
-        if(piece != null){
-        if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
-            piece.calculateLegalMoves();
-            highlightedTiles = new ArrayList<>();
-            for (Move move : piece.getAllLegalMoves()) {
-                tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
-                highlightedTiles.add(tiles.get(move.destination));
-                toMovePiece = piece;
+        if (piece != null) {
+            if (allowReselect || game.getCurrentPlayer().isFirstClick()) {
+                piece.calculateLegalMoves();
+                highlightedTiles = new ArrayList<>();
+                for (Move move : piece.getAllLegalMoves()) {
+                    tiles.get(move.destination).highlight(GameView.highlightVisibility.isSelected());
+                    highlightedTiles.add(tiles.get(move.destination));
+                    toMovePiece = piece;
+                }
+                game.getCurrentPlayer().setFirstClick(false);
             }
-            game.getCurrentPlayer().setFirstClick(false);
-        }
-        // check if there is chance to Promote.
+            // check if there is chance to Promote.
         }
         handlePromote(toMovePiece);
     }
@@ -202,7 +207,7 @@ public class GuiController extends Controller {
      * clearing history
      */
     public void clearUndidHistory() {
-        if(guiView.getGameView().history.getChildren().size() <= 3
+        if (guiView.getGameView().history.getChildren().size() <= 3
                 || historyCleared) return;
         redidHistory = new ArrayList<>();
         redidHistory.add(guiView.getGameView().history.getChildren().get(
@@ -211,11 +216,11 @@ public class GuiController extends Controller {
                 guiView.getGameView().history.getChildren().size() - 1));
 
         guiView.getGameView().history.getChildren().remove(
-                guiView.getGameView().history.getChildren().size() -2,
+                guiView.getGameView().history.getChildren().size() - 2,
                 guiView.getGameView().history.getChildren().size()
         );
         if (allowedMoveHuman instanceof Move.CaptureMove) {
-            beatenPieces = getBeatenPieces().remove(getBeatenPieces().size()-1);
+            beatenPieces = getBeatenPieces().remove(getBeatenPieces().size() - 1);
             guiView.getGameView().showBeaten();
         }
     }
@@ -235,10 +240,11 @@ public class GuiController extends Controller {
 
     /**
      * undoing a move in History
+     *
      * @param index
      */
     public void undoMoveFromHistory(int index) {
-        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index-1));
+        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index - 1));
         Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
         game.notifyObservers();
     }
@@ -316,6 +322,7 @@ public class GuiController extends Controller {
 
     /**
      * contains if the last move was a Legal move
+     *
      * @return true, if legal.
      */
     public boolean wasLegalMove() {
@@ -378,18 +385,29 @@ public class GuiController extends Controller {
 
 
     /**
-     * Shows the timer in gui
-     * @param time
+     * notify Player left time
+     *
+     * @param time rest time
      */
-    public void showTime(String time){
-        Platform.runLater(() -> GameView.showTime(time));
+    public void showTime(String time) {
+        guiView.notifyClock(time);
     }
 
     /**
+     * Getter for Clock
      *
-     * @return
+     * @return the clock
      */
     public ChessClock getChessClock() {
         return chessClock;
+    }
+
+    /**
+     * Getter if the Timer Running
+     *
+     * @return true, if Running
+     */
+    public boolean isClockRunning() {
+        return isClockRunning;
     }
 }

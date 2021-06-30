@@ -1,6 +1,5 @@
 package chess.view.gui;
 
-import chess.Attributes;
 import chess.model.Game;
 import chess.model.Piece;
 import javafx.geometry.Pos;
@@ -44,6 +43,7 @@ public class GameView extends BorderPane {
      * Move numbering
      */
     int numMove = 1;
+    static HBox clock;
     /**
      * reselect a piece
      */
@@ -65,6 +65,7 @@ public class GameView extends BorderPane {
      */
     private MenuItem mainScreen;
 
+    static HBox bottomNotification;
 
     /**
      * Construct Game View Basis Elements.
@@ -84,7 +85,16 @@ public class GameView extends BorderPane {
         //Notification panel
         report = new HBox();
         report.setAlignment(Pos.CENTER);
-        setBottom(report);
+        //setBottom(report);
+
+        clock = new HBox();
+        clock.setAlignment(Pos.CENTER);
+
+        bottomNotification = new HBox();
+        bottomNotification.setAlignment(Pos.CENTER);
+        bottomNotification.setSpacing(5);
+        setBottom(bottomNotification);
+        bottomNotification.getChildren().addAll(report, clock);
 
         // Creating a history panel
         configureHistoryPanel();
@@ -94,6 +104,18 @@ public class GameView extends BorderPane {
 
     }
 
+    /**
+     * show the timer of players
+     *
+     * @param leftTime the left Time
+     */
+    public static void showClock(String leftTime) {
+        clock.getChildren().clear();
+        Label time = new Label();
+        time.setFont(new Font(20));
+        time.setText(leftTime);
+        GameView.clock.getChildren().add(time);
+    }
 
     /**
      * Beaten Pieces Section.
@@ -186,7 +208,8 @@ public class GameView extends BorderPane {
             // delete old game Beaten.
             gui.guiController.getBeatenPieces().clear();
             Game.setFINISHED(false);
-            gui.guiController.getChessClock().cancel();
+            if (gui.guiController.isClockRunning())
+                gui.guiController.getChessClock().cancel();
         });
     }
 
@@ -201,18 +224,6 @@ public class GameView extends BorderPane {
                 beatenPiece.setFont(new Font(40));
                 GameView.beaten.getChildren().add(beatenPiece);
             }
-    }
-
-    /**
-     * show the timer of players
-     * @param label Output String
-     */
-    public static void showTime(String label) {
-        report.getChildren().clear();
-        Label time = new Label();
-        time.setFont(new Font(20));
-        time.setText(label);
-        GameView.report.getChildren().add(time);
     }
 
     /**

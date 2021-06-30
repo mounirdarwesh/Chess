@@ -100,7 +100,6 @@ public class King extends Piece {
     }
 
     /**
-     *
      * @return
      */
     public boolean isKingSideCastle() {
@@ -108,7 +107,6 @@ public class King extends Piece {
     }
 
     /**
-     *
      * @return
      */
     public boolean isQueenSideCastle() {

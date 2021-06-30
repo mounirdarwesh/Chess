@@ -232,10 +232,10 @@ public class QueenTest {
      * test if the system shows the correct symbol for queen
      */
     @Test
-    public void getSymbolTest(){
-        Piece queenW = new Queen(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece queenW = new Queen(44, Attributes.Color.WHITE, board);
         assertEquals("♕", queenW.getSymbol());
-        Piece queenB = new Queen(10, Attributes.Color.BLACK,board);
+        Piece queenB = new Queen(10, Attributes.Color.BLACK, board);
         assertEquals("♛", queenB.getSymbol());
     }
 
@@ -243,10 +243,10 @@ public class QueenTest {
      * test if queen has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece queenW = new Queen(44,Attributes.Color.WHITE,board);
-        Piece queenB = new Queen(10, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece queenW = new Queen(44, Attributes.Color.WHITE, board);
+        Piece queenB = new Queen(10, Attributes.Color.BLACK, board);
         assertEquals(1000, queenW.getValue());
-        assertEquals(-1000,queenB.getValue());
+        assertEquals(-1000, queenB.getValue());
     }
 }

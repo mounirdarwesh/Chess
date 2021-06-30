@@ -7,6 +7,7 @@ import chess.model.Player;
 import chess.util.Observer;
 import chess.view.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -81,7 +82,8 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * config basics interface element
-     * @param primaryStage
+     *
+     * @param primaryStage the main Window
      */
     private void ConfigureBasics(Stage primaryStage) throws IOException {
         //Disable resizability
@@ -89,6 +91,12 @@ public class Gui extends Application implements View, Observer {
 
         // Setting the title of the program
         primaryStage.setTitle("Chess");
+
+        // cancel the Timer when the Window closed
+        primaryStage.setOnCloseRequest(event -> {
+            if (guiController.isClockRunning())
+                guiController.getChessClock().cancel();
+        });
 
         // Setting the icon for the program
         InputStream icon = Files.newInputStream(Paths.get("src/main/res/icon.png"));
@@ -137,6 +145,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * Game Status
+     *
      * @param status status of the game
      * @param player player
      */
@@ -163,5 +172,14 @@ public class Gui extends Application implements View, Observer {
     public void backToMainMenu() {
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    /**
+     * shows the Countdown on the Game Field
+     *
+     * @param time the left time
+     */
+    public void notifyClock(String time) {
+        Platform.runLater(() -> GameView.showClock(time));
     }
 }

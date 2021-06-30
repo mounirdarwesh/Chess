@@ -296,10 +296,10 @@ public class KingTest {
      * test if the system shows the correct symbol for king
      */
     @Test
-    public void getSymbolTest(){
-        Piece kingW = new King(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece kingW = new King(44, Attributes.Color.WHITE, board);
         assertEquals("♔", kingW.getSymbol());
-        Piece kingB = new King(10, Attributes.Color.BLACK,board);
+        Piece kingB = new King(10, Attributes.Color.BLACK, board);
         assertEquals("♚", kingB.getSymbol());
     }
 
@@ -307,10 +307,10 @@ public class KingTest {
      * test if king has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece kingW = new King(40,Attributes.Color.WHITE,board);
-        Piece kingB = new King(30, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece kingW = new King(40, Attributes.Color.WHITE, board);
+        Piece kingB = new King(30, Attributes.Color.BLACK, board);
         assertEquals(10000, kingW.getValue());
-        assertEquals(-10000,kingB.getValue());
+        assertEquals(-10000, kingB.getValue());
     }
 }

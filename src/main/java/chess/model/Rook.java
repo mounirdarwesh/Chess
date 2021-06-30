@@ -23,7 +23,7 @@ public class Rook extends Piece {
      * @param board    on which he stand
      */
     public Rook(int position, Attributes.Color color, Board board) {
-        super("R",525, position, color, board);
+        super("R", 525, position, color, board);
     }
 
     @Override

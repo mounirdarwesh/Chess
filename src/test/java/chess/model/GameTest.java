@@ -77,7 +77,7 @@ public class GameTest {
      */
     @Test
     public void getWhitePlayer() {
-        assertEquals("White Player",Game.getWhitePlayer().toString());
+        assertEquals("White Player", Game.getWhitePlayer().toString());
     }
 
     /**
@@ -85,6 +85,6 @@ public class GameTest {
      */
     @Test
     public void getBlackPlayer() {
-        assertEquals("Black player",Game.getBlackPlayer().toString());
+        assertEquals("Black player", Game.getBlackPlayer().toString());
     }
 }

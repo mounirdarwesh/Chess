@@ -4,7 +4,7 @@
 module chess {
     requires javafx.controls;
     requires transitive javafx.graphics;
-    
+
     exports chess.view;
     exports chess.view.gui;
 }

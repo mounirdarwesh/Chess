@@ -1,6 +1,7 @@
 package chess.pgn;
 
 import java.util.*;
+
 import chess.Attributes.Color;
 import chess.model.*;
 
@@ -24,6 +25,7 @@ public class FenUtilities {
 
     /**
      * This is to load the board from a FEN string
+     *
      * @param fen the FEN string
      * @return board  the board
      */
@@ -41,7 +43,7 @@ public class FenUtilities {
                     file += Character.getNumericValue(c);
                 } else {
                     int position = rank * 8 + file;
-                    if(Character.isUpperCase(c)) {
+                    if (Character.isUpperCase(c)) {
                         initBoardWhitePieces(board, position, c);
                     } else {
                         initBoardBlackPieces(board, position, c);
@@ -55,9 +57,10 @@ public class FenUtilities {
 
     /**
      * Here where the white pieces will get initialized for the board
-     * @param board The board of the game
+     *
+     * @param board    The board of the game
      * @param position The position of the piece
-     * @param c The char, aka, the string representation of the piece
+     * @param c        The char, aka, the string representation of the piece
      */
     private static void initBoardWhitePieces(Board board, int position, char c) {
         switch (c) {
@@ -84,9 +87,10 @@ public class FenUtilities {
 
     /**
      * Here where the black pieces will get initialized for the board
-     * @param board The board of the game
+     *
+     * @param board    The board of the game
      * @param position The position of the piece
-     * @param c The char, aka, the string representation of the piece
+     * @param c        The char, aka, the string representation of the piece
      */
     private static void initBoardBlackPieces(Board board, int position, char c) {
         switch (c) {
@@ -112,7 +116,6 @@ public class FenUtilities {
     }
 
     /**
-     *
      * @param board
      * @return
      */
@@ -124,15 +127,14 @@ public class FenUtilities {
     }
 
     /**
-     *
      * @return
      */
     private static String loadEnPassantInformation() {
         Piece enPassantPawn = Game.getEnPassantPawn();
-        if(enPassantPawn != null) {
+        if (enPassantPawn != null) {
             for (Map.Entry<String, Integer> entry : MapBoard.mapper.entrySet()) {
                 if (entry.getValue().equals(enPassantPawn.getPosition() +
-                        8 * - enPassantPawn.getColor().getDirection())) {
+                        8 * -enPassantPawn.getColor().getDirection())) {
                     return entry.getKey();
                 }
             }
@@ -141,22 +143,21 @@ public class FenUtilities {
     }
 
     /**
-     *
      * @return
      */
     private static String loadCastleInformation() {
         StringBuilder castleInfo = new StringBuilder();
 
-        if(Game.getWhitePlayer().isKingSideCastleAllowed()){
+        if (Game.getWhitePlayer().isKingSideCastleAllowed()) {
             castleInfo.append("K");
         }
-        if(Game.getWhitePlayer().isQueenSideCastleAllowed()){
+        if (Game.getWhitePlayer().isQueenSideCastleAllowed()) {
             castleInfo.append("Q");
         }
-        if(Game.getBlackPlayer().isKingSideCastleAllowed()){
+        if (Game.getBlackPlayer().isKingSideCastleAllowed()) {
             castleInfo.append("k");
         }
-        if(Game.getBlackPlayer().isQueenSideCastleAllowed()){
+        if (Game.getBlackPlayer().isQueenSideCastleAllowed()) {
             castleInfo.append("q");
         }
 
@@ -164,7 +165,6 @@ public class FenUtilities {
     }
 
     /**
-     *
      * @return
      */
     private static String loadPlayerText() {
@@ -173,6 +173,7 @@ public class FenUtilities {
 
     /**
      * This is to create a FEN string from the current board
+     *
      * @param board The current board
      * @return fen  The FEN representation of the board
      */

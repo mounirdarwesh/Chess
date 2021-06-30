@@ -1,5 +1,7 @@
 package chess.controller;
+
 import java.util.regex.Matcher;
+
 import chess.Attributes;
 import chess.Attributes.Color;
 import chess.model.*;
@@ -7,6 +9,7 @@ import chess.view.Cli;
 
 /**
  * The Controller class for the Command Line Interface
+ *
  * @author Gr.45
  */
 public class CliController extends Controller {
@@ -21,11 +24,12 @@ public class CliController extends Controller {
      */
     private Cli view;
 
-    ChessClock chessClock ;
+    ChessClock chessClock;
 
     /**
      * The constructor expects a view to construct itself.
-     *  @param view The view that is connected to this controller
+     *
+     * @param view     The view that is connected to this controller
      * @param FINISHED game status for the sake of TEST
      */
     public CliController(Cli view, boolean FINISHED, boolean simpleGame) {
@@ -34,7 +38,7 @@ public class CliController extends Controller {
         // Assigning the controller
         view.assignController(this);
 
-        if(!simpleGame) {
+        if (!simpleGame) {
             // Showing the welcome screen
             view.showWelcomeScreen();
             // Getting the game mode
@@ -48,6 +52,7 @@ public class CliController extends Controller {
 
     /**
      * This will be called when someone interacts with the Command Line Interface
+     *
      * @param FINISHED game status
      */
     private void startScreen(boolean FINISHED) {
@@ -57,15 +62,13 @@ public class CliController extends Controller {
             opponent = new Computer(Color.BLACK);
         } else if (gameMode == Attributes.GameMode.HUMAN) {
             opponent = new HumanPlayer(Color.BLACK);
-        }
-        else if (gameMode == Attributes.GameMode.HUMAN_TIMER){
+        } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
             opponent = new HumanPlayer(Color.BLACK);
-            chessClock = new ChessClock(this,Long.parseLong(view.getTime()));
+            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
             chessClock.start();
-        }
-        else {
+        } else {
             opponent = new Computer(Color.BLACK);
-            chessClock = new ChessClock(this,Long.parseLong(view.getTime()));
+            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
             chessClock.start();
         }
         game = new Game(this,
@@ -95,17 +98,17 @@ public class CliController extends Controller {
         Player currentPlayer = game.getCurrentPlayer();
 
         // Read the input from the view
-        if(currentPlayer instanceof HumanPlayer) {
+        if (currentPlayer instanceof HumanPlayer) {
             view.readInputFromHuman();
         }
 
         // The controller checks for certain criteria,
         // and when all criteria meet, then tell the game to perform the move
-        if(currentPlayer instanceof HumanPlayer) {
+        if (currentPlayer instanceof HumanPlayer) {
             currentPlayer.makeMove(move);
             // Print the left Time after each Move.
             System.out.println(chessClock.getLeftTime(currentPlayer.getColor()));
-        } else if(currentPlayer instanceof Computer) {
+        } else if (currentPlayer instanceof Computer) {
             Move computerMove;
             do {
                 computerMove = ((Computer) currentPlayer).evaluate();
@@ -115,7 +118,6 @@ public class CliController extends Controller {
     }
 
     /**
-     *
      * @param status The status of the game
      * @param player The player
      */
@@ -123,7 +125,6 @@ public class CliController extends Controller {
     public void notifyView(Attributes.GameStatus status, Player player) {
         view.notifyUser(status, player);
     }
-
 
 
     /**
@@ -181,9 +182,9 @@ public class CliController extends Controller {
     }
 
 
-
     /**
      * Setter for the game mode
+     *
      * @param gameMode
      */
     public void setGameMode(Attributes.GameMode gameMode) {
@@ -191,7 +192,7 @@ public class CliController extends Controller {
     }
 
     @Override
-    public void showTime(String time){
+    public void showTime(String time) {
         System.out.println(time);
     }
 }

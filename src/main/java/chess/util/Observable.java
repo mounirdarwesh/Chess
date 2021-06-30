@@ -15,6 +15,7 @@ public class Observable {
 
     /**
      * Add an observer
+     *
      * @param obs observer
      */
     public void addObserver(Observer obs) {
@@ -23,6 +24,7 @@ public class Observable {
 
     /**
      * Delete an observer
+     *
      * @param obs observer
      */
     public void removeObserver(Observer obs) {
@@ -40,7 +42,7 @@ public class Observable {
      * Notify the observer that something changed
      */
     public void notifyObservers() {
-        for (Observer obs: observers) {
+        for (Observer obs : observers) {
             obs.update();
         }
     }

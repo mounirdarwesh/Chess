@@ -70,6 +70,7 @@ public abstract class Controller {
 
     /**
      * The constructor expects a CLI view to construct itself.
+     *
      * @param view The view that is connected to this controller
      */
     public Controller(View view) {
@@ -83,6 +84,7 @@ public abstract class Controller {
 
     /**
      * Returning the beaten pieces of the player
+     *
      * @return beaten pieces of the player
      */
     public List<Piece> getBeatenPieces() {
@@ -92,6 +94,7 @@ public abstract class Controller {
 
     /**
      * Method to notify the user of the status of the game
+     *
      * @param status The status of the game
      * @param player The player
      */
@@ -128,7 +131,7 @@ public abstract class Controller {
      */
     public void undoMove() {
         int fullFENsSize = game.getGameFENStrings().size();
-        if(fullFENsSize <= 2 || Game.getCurrentPlayer().hasPlayerUndidAMove()) {
+        if (fullFENsSize <= 2 || Game.getCurrentPlayer().hasPlayerUndidAMove()) {
             return;
         }
         redidFENs = new ArrayList<>();
@@ -139,7 +142,7 @@ public abstract class Controller {
                 game.getGameFENStrings().remove(game.getGameFENStrings().size() - 1)
         );
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
-                game.getGameFENStrings().size()-1
+                game.getGameFENStrings().size() - 1
         ));
         Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
         game.notifyObservers();
@@ -156,19 +159,18 @@ public abstract class Controller {
         game.getGameFENStrings().addAll(redidFENs);
         Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
-                game.getGameFENStrings().size()-1));
+                game.getGameFENStrings().size() - 1));
         game.notifyObservers();
     }
 
     /**
-     *
      * @return
      */
     public boolean isHistoryCleared() {
         return historyCleared;
     }
+
     /**
-     *
      * @return
      */
     public void setHistoryCleared(boolean historyCleared) {

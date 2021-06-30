@@ -193,7 +193,6 @@ public class Pawn extends Piece {
     }
 
     /**
-     *
      * @return
      */
     private boolean canDouble() {

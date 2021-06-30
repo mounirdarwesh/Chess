@@ -237,10 +237,10 @@ public class KnightTest {
      * test if the system shows the correct symbol for knight
      */
     @Test
-    public void getSymbolTest(){
-        Piece knightW = new Knight(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece knightW = new Knight(44, Attributes.Color.WHITE, board);
         assertEquals("♘", knightW.getSymbol());
-        Piece knightB = new Knight(10, Attributes.Color.BLACK,board);
+        Piece knightB = new Knight(10, Attributes.Color.BLACK, board);
         assertEquals("♞", knightB.getSymbol());
     }
 
@@ -248,10 +248,10 @@ public class KnightTest {
      * test if knight has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece knightW = new Knight(45,Attributes.Color.WHITE,board);
-        Piece knightB = new Knight(15, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece knightW = new Knight(45, Attributes.Color.WHITE, board);
+        Piece knightB = new Knight(15, Attributes.Color.BLACK, board);
         assertEquals(350, knightW.getValue());
-        assertEquals(-350,knightB.getValue());
+        assertEquals(-350, knightB.getValue());
     }
 }

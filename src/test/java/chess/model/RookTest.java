@@ -316,10 +316,10 @@ public class RookTest {
      * test if the system shows the correct symbol for rook
      */
     @Test
-    public void getSymbolTest(){
-        Piece rookW = new Rook(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece rookW = new Rook(44, Attributes.Color.WHITE, board);
         assertEquals("♖", rookW.getSymbol());
-        Piece rookB = new Rook(10, Attributes.Color.BLACK,board);
+        Piece rookB = new Rook(10, Attributes.Color.BLACK, board);
         assertEquals("♜", rookB.getSymbol());
     }
 
@@ -327,10 +327,10 @@ public class RookTest {
      * test if rook has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece rookW = new Rook(46,Attributes.Color.WHITE,board);
-        Piece rookB = new Rook(16, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece rookW = new Rook(46, Attributes.Color.WHITE, board);
+        Piece rookB = new Rook(16, Attributes.Color.BLACK, board);
         assertEquals(525, rookW.getValue());
-        assertEquals(-525,rookB.getValue());
+        assertEquals(-525, rookB.getValue());
     }
 }

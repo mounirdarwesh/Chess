@@ -40,11 +40,14 @@ public class TileView extends StackPane {
             symbol.setFont(new Font(50));
             this.getChildren().add(symbol);
             StackPane.setAlignment(symbol, Pos.CENTER);
-        } else{ this.getChildren().clear();}
+        } else {
+            this.getChildren().clear();
+        }
     }
 
     /**
      * Getter for the tileID
+     *
      * @return tileID
      */
     public int getTileID() {
@@ -53,6 +56,7 @@ public class TileView extends StackPane {
 
     /**
      * highlight a tile
+     *
      * @param visibility set the Visibility of the Highlights.
      */
     public void highlight(boolean visibility) {
@@ -64,6 +68,7 @@ public class TileView extends StackPane {
 
     /**
      * highlighted tiles
+     *
      * @param highlightedTiles highlights tiles
      */
     public void deHighlight(List<TileView> highlightedTiles) {

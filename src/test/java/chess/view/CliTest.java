@@ -31,13 +31,13 @@ public class CliTest {
     public void showWelcomeScreen() {
         cli.showWelcomeScreen();
         assertEquals("*****************************************************\n" +
-                "* Welcome to the beta version of the chess program! *\n" +
-                "*****************************************************\n" +
-                "*               Choose your opponent                *\n" +
-                "*                                                   *\n" +
-                "*     1. Human                       2. Computer    *\n" +
-                "*****************************************************\n" +
-                "*****************************************************",
+                        "* Welcome to the beta version of the chess program! *\n" +
+                        "*****************************************************\n" +
+                        "*               Choose your opponent                *\n" +
+                        "*                                                   *\n" +
+                        "*     1. Human                       2. Computer    *\n" +
+                        "*****************************************************\n" +
+                        "*****************************************************",
                 outputStreamCaptor.toString().trim());
     }
 }

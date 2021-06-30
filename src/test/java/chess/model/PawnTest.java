@@ -202,10 +202,10 @@ public class PawnTest {
      * test if the system shows the correct symbol for pawn
      */
     @Test
-    public void getSymbolTest(){
-        Piece pawnW = new Pawn(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece pawnW = new Pawn(44, Attributes.Color.WHITE, board);
         assertEquals("♙", pawnW.getSymbol());
-        Piece pawnB = new Pawn(10, Attributes.Color.BLACK,board);
+        Piece pawnB = new Pawn(10, Attributes.Color.BLACK, board);
         assertEquals("♟", pawnB.getSymbol());
     }
 
@@ -213,10 +213,10 @@ public class PawnTest {
      * test if pawn has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece pawnW = new Pawn(48,Attributes.Color.WHITE,board);
-        Piece pawnB = new Pawn(16, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece pawnW = new Pawn(48, Attributes.Color.WHITE, board);
+        Piece pawnB = new Pawn(16, Attributes.Color.BLACK, board);
         assertEquals(100, pawnW.getValue());
-        assertEquals(-100,pawnB.getValue());
+        assertEquals(-100, pawnB.getValue());
     }
 }

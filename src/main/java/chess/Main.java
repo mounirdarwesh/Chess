@@ -25,13 +25,12 @@ public class Main {
             // Create the controller and pass the view object to it
             new CliController(cli, false, true);
 
-        } else if(Arrays.asList(args).contains("--no-gui")) {
+        } else if (Arrays.asList(args).contains("--no-gui")) {
             // Create the view
             Cli cli = new Cli();
             // Create the controller and pass the view object to it
             new CliController(cli, false, false);
-        }
-        else {
+        } else {
             Application.launch(Gui.class, args);
         }
     }

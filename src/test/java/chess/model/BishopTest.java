@@ -272,10 +272,10 @@ public class BishopTest {
      * test if the system shows the correct symbol for bishop
      */
     @Test
-    public void getSymbolTest(){
-        Piece bishopW = new Bishop(44,Attributes.Color.WHITE,board);
+    public void getSymbolTest() {
+        Piece bishopW = new Bishop(44, Attributes.Color.WHITE, board);
         assertEquals("♗", bishopW.getSymbol());
-        Piece bishopB = new Bishop(10, Attributes.Color.BLACK,board);
+        Piece bishopB = new Bishop(10, Attributes.Color.BLACK, board);
         assertEquals("♝", bishopB.getSymbol());
     }
 
@@ -283,10 +283,10 @@ public class BishopTest {
      * test if bishop has the right value
      */
     @Test
-    public void getValueTest(){
-        Piece bishopW = new Bishop(40,Attributes.Color.WHITE,board);
-        Piece bishopB = new Bishop(20, Attributes.Color.BLACK,board);
+    public void getValueTest() {
+        Piece bishopW = new Bishop(40, Attributes.Color.WHITE, board);
+        Piece bishopB = new Bishop(20, Attributes.Color.BLACK, board);
         assertEquals(350, bishopW.getValue());
-        assertEquals(-350,bishopB.getValue());
+        assertEquals(-350, bishopB.getValue());
     }
 }

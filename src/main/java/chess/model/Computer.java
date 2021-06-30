@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.Attributes.Color;
 import chess.controller.Move;
+
 import java.util.List;
 
 
@@ -12,6 +13,7 @@ public class Computer extends Player {
 
     /**
      * The constructor of the computer class
+     *
      * @param color the color that the computer is left with
      */
     public Computer(Color color) {
@@ -25,6 +27,7 @@ public class Computer extends Player {
 
     /**
      * evaluate a move
+     *
      * @return optimalMove
      */
     public Move evaluate() {
@@ -33,7 +36,7 @@ public class Computer extends Player {
         Move optimalMove = null;
         for (Move move : this.calculatePlayerMoves()) {
             Piece piece = Game.getBoard().getPiece(move.getDestination());
-            if(!Game.makeTempMoveAndCheck(move)){
+            if (!Game.makeTempMoveAndCheck(move)) {
                 noMoves = true;
                 continue;
             }
@@ -47,11 +50,11 @@ public class Computer extends Player {
                 }
             }
         }
-        if(optimalMove == null || noMoves) {
+        if (optimalMove == null || noMoves) {
             List<Move> compMoves = this.calculatePlayerMoves();
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }
-        if(optimalMove instanceof Move.PromotionMove) {
+        if (optimalMove instanceof Move.PromotionMove) {
             Game.setCharToPromote('q');
         }
         return optimalMove;

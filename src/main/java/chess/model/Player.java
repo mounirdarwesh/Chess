@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.Attributes.Color;
 import chess.controller.Move;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public abstract class Player {
 
     /**
      * The constructor of the class Player
+     *
      * @param color the color that the player chooses to play with
      */
     public Player(Color color) {
@@ -57,6 +59,7 @@ public abstract class Player {
 
     /**
      * Adding to the list of player's available pieces
+     *
      * @param piece The piece to add
      */
     public void addToPlayersPieces(Piece piece) {
@@ -65,6 +68,7 @@ public abstract class Player {
 
     /**
      * Removing from the player's available pieces
+     *
      * @param piece The piece to remove
      */
     public void removeFromPlayersPieces(Piece piece) {
@@ -73,6 +77,7 @@ public abstract class Player {
 
     /**
      * get Player Captured Pieces.
+     *
      * @return Captured Pieces.
      */
     public List<Piece> getBeaten() {
@@ -81,6 +86,7 @@ public abstract class Player {
 
     /**
      * Here where all of player's legal moves are calculated
+     *
      * @return legalMoves All of the enemy's legal moves
      */
     public List<Move> calculatePlayerMoves() {
@@ -115,6 +121,7 @@ public abstract class Player {
 
     /**
      * check all Player Moves
+     *
      * @return true, if the player has no moves to preform
      */
     public boolean isCheckMate() {
@@ -137,6 +144,7 @@ public abstract class Player {
 
     /**
      * Getter to the player's king
+     *
      * @return piece
      */
     public King getKing() {
@@ -150,6 +158,7 @@ public abstract class Player {
 
     /**
      * Getter of the players color to play
+     *
      * @return the color
      */
     public Color getColor() {
@@ -157,7 +166,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @return
      */
     public boolean isKingSideCastleAllowed() {
@@ -166,7 +174,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @return
      */
     public boolean isQueenSideCastleAllowed() {
@@ -190,6 +197,7 @@ public abstract class Player {
 
     /**
      * Getter to the player's pieces
+     *
      * @return playerPieces
      */
     public List<Piece> getPlayerPieces() {
@@ -197,7 +205,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @return
      */
     public boolean isFirstClick() {
@@ -212,7 +219,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @return
      */
     public boolean hasPlayerUndidAMove() {
@@ -220,7 +226,6 @@ public abstract class Player {
     }
 
     /**
-     *
      * @param hasPlayerUndidAMove
      */
     public void setHasPlayerUndidAMove(boolean hasPlayerUndidAMove) {

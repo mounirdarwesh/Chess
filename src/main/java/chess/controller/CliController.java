@@ -24,6 +24,9 @@ public class CliController extends Controller {
      */
     private Cli view;
 
+    /**
+     * Chess Clock of Cli
+     */
     ChessClock chessClock;
 
     /**
@@ -60,16 +63,16 @@ public class CliController extends Controller {
         // Create a new game
         if (gameMode == Attributes.GameMode.COMPUTER) {
             opponent = new Computer(Color.BLACK);
-        } else if (gameMode == Attributes.GameMode.HUMAN) {
-            opponent = new HumanPlayer(Color.BLACK);
+        } else if (gameMode == Attributes.GameMode.COMPUTER_TIMER) {
+            opponent = new Computer(Color.BLACK);
+            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
+            chessClock.start();
         } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
             opponent = new HumanPlayer(Color.BLACK);
             chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
             chessClock.start();
         } else {
-            opponent = new Computer(Color.BLACK);
-            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
-            chessClock.start();
+            opponent = new HumanPlayer(Color.BLACK);
         }
         game = new Game(this,
                 new Board(),

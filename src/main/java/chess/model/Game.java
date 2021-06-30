@@ -1,7 +1,6 @@
 package chess.model;
 
 import chess.Attributes;
-import chess.controller.ChessClock;
 import chess.controller.Controller;
 import chess.controller.Move;
 import chess.pgn.FenUtilities;

@@ -7,7 +7,6 @@ import chess.view.gui.GameView;
 import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
-import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class GuiController extends Controller {
     /**
      * to get if the Timer Running
      */
-    boolean isClockRunning = false;
+    boolean isClkRunning = false;
     /**
      * the GUI view
      */
@@ -94,13 +93,13 @@ public class GuiController extends Controller {
             guiView.createGameView();
             chessClock = new ChessClock(this, Long.parseLong(duration));
             chessClock.start();
-            isClockRunning = true;
+            isClkRunning = true;
         } else if (gameMode == Attributes.GameMode.COMPUTER_TIMER) {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
             chessClock = new ChessClock(this, Long.parseLong(duration));
 
-            isClockRunning = true;
+            isClkRunning = true;
         } else {
             guiView.getMainMenu().showColorChoiceWindow();
             gameAgainstComputer = true;
@@ -120,7 +119,7 @@ public class GuiController extends Controller {
             playerColor = Attributes.Color.BLACK;
             opponent = new Computer(Attributes.Color.WHITE);
         }
-        if(isClockRunning)
+        if (isClkRunning)
             chessClock.start();
         guiView.getMainMenu().getColorChoice().close();
         createGame();
@@ -389,6 +388,7 @@ public class GuiController extends Controller {
      *
      * @param time rest time
      */
+    @Override
     public void showTime(String time) {
         guiView.notifyClock(time);
     }
@@ -408,6 +408,6 @@ public class GuiController extends Controller {
      * @return true, if Running
      */
     public boolean isClockRunning() {
-        return isClockRunning;
+        return isClkRunning;
     }
 }

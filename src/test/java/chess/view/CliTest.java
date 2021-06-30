@@ -36,6 +36,7 @@ public class CliTest {
                         "*               Choose your opponent                *\n" +
                         "*                                                   *\n" +
                         "*     1. Human                       2. Computer    *\n" +
+                        "*                                                   *\n" +
                         "*****************************************************\n" +
                         "*****************************************************",
                 outputStreamCaptor.toString().trim());

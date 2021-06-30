@@ -34,6 +34,7 @@ public class ChessClock {
      * when to start the timer and when to stop it
      */
     TimerTask task = new TimerTask() {
+        @Override
         public void run() {
             if (Game.getCurrentPlayer().getColor() == Attributes.Color.WHITE) {
                 if (leftTimeWhite != 0) {
@@ -94,9 +95,11 @@ public class ChessClock {
      * @return the reset Time.
      */
     public String getLeftTime(Attributes.Color color) {
-        if (color == Attributes.Color.WHITE)
+        if (color == Attributes.Color.WHITE) {
             return "White player time left: " + convertTime(leftTimeWhite);
-        else return "Black player time left: " + convertTime(leftTimeBlack);
+        } else {
+            return "Black player time left: " + convertTime(leftTimeBlack);
+        }
     }
 
     /**

@@ -3,7 +3,6 @@ package chess.view.gui;
 import chess.Attributes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -16,8 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.InputStream;
@@ -164,10 +161,14 @@ public class StartMenuView {
     private void AddListenersToGameMode() {
         againstHuman.setOnAction(Event -> {
             if (withTimer.isSelected()) {
-                if (!duration.getText().equals(""))
+                if (!duration.getText().equals("")) {
                     gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN_TIMER, duration.getText());
-                else duration.setPromptText("Please enter a Number Value!");
-            } else gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN, null);
+                } else {
+                    duration.setPromptText("Please enter a Number Value!");
+                }
+            } else {
+                gui.guiController.gameModeOnAction(Attributes.GameMode.HUMAN, null);
+            }
         });
 
         againstAI.setOnAction(Event -> {

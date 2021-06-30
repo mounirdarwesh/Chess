@@ -19,6 +19,7 @@ public class CliControllerTest {
     CliController cli = new CliController(view, true, true);
     Board board = new Board();
 
+
     /**
      * Test of a valid input
      */

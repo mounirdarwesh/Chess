@@ -92,9 +92,11 @@ public class Cli implements Observer, View {
             System.out.println("Please Enter the Game Time(Enter 0 if you wish to play without Timer): ");
             time = scanDuration.nextLine();
             if (time.matches("\\d*")) {
-                if (time.equals("0"))
+                if (time.equals("0")) {
                     controller.setGameMode(mode);
-                else controller.setGameMode(modeWithTimer);
+                } else {
+                    controller.setGameMode(modeWithTimer);
+                }
                 finish = true;
             } else {
                 System.out.println("Please enter a Number!");

@@ -5,10 +5,8 @@ import chess.model.Game;
 import chess.model.MapBoard;
 import chess.model.Piece;
 import chess.model.Player;
-import chess.pgn.FenUtilities;
 import chess.view.View;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,5 +175,10 @@ public abstract class Controller {
         this.historyCleared = historyCleared;
     }
 
+    /**
+     * get timer Information from Clock to show on Interface
+     *
+     * @param time left time
+     */
     public abstract void showTime(String time);
 }

@@ -1,13 +1,17 @@
 package chess.controller;
 
 import chess.Attributes;
-import chess.model.Game;
-import chess.model.MapBoard;
-import chess.model.Piece;
-import chess.model.Player;
+import chess.model.*;
 import chess.view.View;
 import javafx.scene.Node;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,7 +59,6 @@ public abstract class Controller {
      */
     protected List<Node> redidHistory;
 
-
     /**
      *
      */
@@ -65,6 +68,40 @@ public abstract class Controller {
      *
      */
     protected Piece beatenPieces;
+    /**
+     *
+     */
+    protected Socket socket;
+    /**
+     *
+     */
+    protected DataOutputStream dos;
+    /**
+     *
+     */
+    protected DataInputStream dis;
+    /**
+     *
+     */
+    protected ServerSocket serverSocket;
+
+    /**
+     * The opponent
+     */
+    protected Player opponent;
+    /**
+     * shows the color of the player
+     */
+    protected Attributes.Color playerColor;
+    /**
+     *
+     */
+    protected boolean allowRedo;
+    /**
+     *
+     */
+    protected boolean allowTimer;
+
 
     /**
      * The constructor expects a CLI view to construct itself.
@@ -143,8 +180,6 @@ public abstract class Controller {
                 game.getGameFENStrings().size() - 1
         ));
         Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
-        game.notifyObservers();
-
     }
 
     /**
@@ -156,9 +191,102 @@ public abstract class Controller {
         }
         game.getGameFENStrings().addAll(redidFENs);
         Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
+        Game.getCurrentPlayer().setHasPlayerRedidAMove(true);
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
                 game.getGameFENStrings().size() - 1));
-        game.notifyObservers();
+    }
+
+    /**
+     *
+     */
+    public void initServer() {
+        try {
+            serverSocket = new ServerSocket(23456,
+                    8, InetAddress.getByName("localhost"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param ip
+     * @param port
+     */
+    public void joinHostServer(String ip, String port) {
+        System.out.println("s");
+        try {
+            socket = new Socket(ip, Integer.parseInt(port));
+            dos = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("s");
+    }
+
+    /**
+     *
+     * @param port
+     * @return
+     */
+    public boolean checkJoinLANSettings(String port) {
+        return Integer.parseInt(port) < 1 || Integer.parseInt(port) > 65535;
+    }
+
+    /**
+     *
+     * @param piecesColor
+     * @param undoAllowed
+     * @param timerAllowed
+     */
+    public void initLANGameSettings(String piecesColor, String undoAllowed, String timerAllowed) {
+        switch (piecesColor) {
+            case "White":
+                playerColor = Attributes.Color.WHITE;
+                opponent = new HumanPlayer(Attributes.Color.BLACK);
+                break;
+            case "Black":
+                playerColor = Attributes.Color.BLACK;
+                opponent = new HumanPlayer(Attributes.Color.WHITE);
+                break;
+        }
+
+        switch (undoAllowed) {
+            case "Yes":
+                allowRedo = true;
+                break;
+            case "No":
+                allowRedo = false;
+                break;
+        }
+
+        switch (timerAllowed) {
+            case "Yes":
+                allowTimer = true;
+                break;
+            case "No":
+                allowTimer = false;
+                break;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean listenForServerRequest() {
+        boolean accepted = false;
+        Socket socket;
+        try {
+            socket = serverSocket.accept();
+            dos = new DataOutputStream(socket.getOutputStream());
+            dis = new DataInputStream(socket.getInputStream());
+            accepted = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return accepted;
     }
 
     /**
@@ -181,4 +309,5 @@ public abstract class Controller {
      * @param time left time
      */
     public abstract void showTime(String time);
+
 }

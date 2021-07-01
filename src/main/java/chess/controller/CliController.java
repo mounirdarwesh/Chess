@@ -111,8 +111,9 @@ public class CliController extends Controller {
             view.readInputFromHuman();
         }
 
-        // The controller checks for certain criteria,
-        // and when all criteria meet, then tell the game to perform the move
+        if(currentPlayer.hasPlayerUndidAMove()
+                || currentPlayer.hasPlayerRedidAMove()) return;
+
         if (currentPlayer instanceof HumanPlayer) {
             currentPlayer.makeMove(move);
             // Print the left Time after each Move.

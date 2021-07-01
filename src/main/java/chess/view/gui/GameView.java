@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 /**
@@ -240,6 +241,24 @@ public class GameView extends BorderPane {
             gui.guiController.undoMoveFromHistory(history.getChildren().indexOf(move));
         });
         numMove++;
+    }
+
+    /**
+     *
+     */
+    public void changeMoveHistoryColor(int index, int color) {
+        while (index < history.getChildren().size()) {
+            try {
+                Label historyMove = (Label) GameView.history.getChildren().get(index * 2 - color);
+                historyMove.setTextFill(Color.web("#A9A9A9"));
+                historyMove.setOnMouseClicked(e -> {
+                    gui.guiController.redidMoveFromHistory(history.getChildren().indexOf(historyMove));
+                });
+            } catch (Exception e) {
+                break;
+            }
+            index++;
+        }
     }
 
     /**

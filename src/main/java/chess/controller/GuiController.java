@@ -8,6 +8,11 @@ import chess.view.gui.Gui;
 import chess.view.gui.PromotionPopUp;
 import chess.view.gui.TileView;
 
+import javafx.scene.control.Label;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +38,6 @@ public class GuiController extends Controller {
      */
     private Gui guiView;
     /**
-     * The opponent
-     */
-    private Player opponent;
-    /**
-     * shows the color of the player
-     */
-    private Attributes.Color playerColor;
-    /**
      * list of the highlighted tiles
      */
     private List<TileView> highlightedTiles = new ArrayList<>();
@@ -52,6 +49,7 @@ public class GuiController extends Controller {
      * if the game is against AI or not
      */
     private boolean gameAgainstComputer = false;
+
     /**
      * allows player to reselect a piece
      */
@@ -76,54 +74,76 @@ public class GuiController extends Controller {
     }
 
     /**
-     * Whenever the user interacts with the start screen menu
+     * create a game
      */
-    public void gameModeOnAction(Attributes.GameMode gameMode, String duration) {
-        if (gameMode == Attributes.GameMode.HUMAN) {
-            gameAgainstComputer = false;
-            opponent = new HumanPlayer(Attributes.Color.BLACK);
-            playerColor = Attributes.Color.WHITE;
-            createGame();
-            guiView.createGameView();
-        } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
-            gameAgainstComputer = false;
-            opponent = new HumanPlayer(Attributes.Color.BLACK);
-            playerColor = Attributes.Color.WHITE;
-            createGame();
-            guiView.createGameView();
-            chessClock = new ChessClock(this, Long.parseLong(duration));
-            chessClock.start();
-            isClkRunning = true;
-        } else if (gameMode == Attributes.GameMode.COMPUTER_TIMER) {
-            guiView.getMainMenu().showColorChoiceWindow();
-            gameAgainstComputer = true;
-            chessClock = new ChessClock(this, Long.parseLong(duration));
-
-            isClkRunning = true;
-        } else {
-            guiView.getMainMenu().showColorChoiceWindow();
-            gameAgainstComputer = true;
+    public void createGame() {
+        game = new Game(this,
+                new Board(),
+                new HumanPlayer(playerColor),
+                opponent);
+        game.getGameFENStrings().add("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+        game.loadPlayerPieces();
+        guiView.setGame(game);
+        guiView.createGameView();
+        if (gameAgainstComputer && opponent.getColor().isWhite()) {
+            letComputerPlay();
         }
     }
 
     /**
-     * color of the player against AI
-     *
-     * @param color color of the player on action
+     * update game board and player
      */
-    public void colorChoiceOnAction(Attributes.Color color) {
-        if (color == Attributes.Color.WHITE) {
-            playerColor = Attributes.Color.WHITE;
-            opponent = new Computer(Attributes.Color.BLACK);
-        } else {
-            playerColor = Attributes.Color.BLACK;
-            opponent = new Computer(Attributes.Color.WHITE);
+    public void updateGame() {
+        game.getGameFENStrings().add(FenUtilities.loadFENFromBoard(Game.getBoard()));
+        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        game.getCurrentPlayer().setFirstClick(true);
+        game.checkGameStatus();
+        if (!game.isFINISHED() && gameAgainstComputer) {
+            letComputerPlay();
         }
-        if (isClkRunning)
-            chessClock.start();
-        guiView.getMainMenu().getColorChoice().close();
-        createGame();
-        guiView.createGameView();
+        game.notifyObservers();
+    }
+
+    /**
+     * update all the panels
+     */
+    private void updateGameView() {
+        guiView.getGameView().showHistory();
+        guiView.getGameView().showBeaten();
+        guiView.getGameView().notification();
+        if (GameView.rotate.isSelected())
+            guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
+        if (gameAgainstComputer)
+            guiView.getGameView().showHistoryComp();
+    }
+
+    /**
+     * let AI to make a move
+     */
+    private void letComputerPlay() {
+        while (true) {
+            computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
+            // Calculate from where the move is performed
+            int move_from = getMoveFromPosition(computerMove.toString());
+            // Calculate to where the move is performed
+            int move_to = getMoveToPosition(computerMove.toString());
+            if (game.isMoveAllowed(move_from, move_to)) {
+                game.getCurrentPlayer().makeMove(computerMove);
+                break;
+            }
+        }
+        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        updateGameView();
+    }
+
+    /**
+     *
+     * @param time
+     */
+    public void assignTimer(String time) {
+        chessClock = new ChessClock(this, Long.parseLong(time));
+        chessClock.start();
+        isClkRunning = true;
     }
 
     /**
@@ -192,6 +212,8 @@ public class GuiController extends Controller {
             this.allowedMoveHuman = game.getAllowedMove();
             if (wasALegalMove) {
                 game.getCurrentPlayer().makeMove(game.getAllowedMove());
+                String move = "move " + game.getAllowedMove();
+                //dos.write(move.getBytes(StandardCharsets.UTF_8));
                 Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
                 updateGame();
                 updateGameView();
@@ -231,8 +253,10 @@ public class GuiController extends Controller {
     public void addUndidHistory() {
         try {
             guiView.getGameView().history.getChildren().addAll(redidHistory);
-            getBeatenPieces().add(beatenPieces);
-            updateGameView();
+            if (allowedMoveHuman instanceof Move.CaptureMove) {
+                getBeatenPieces().add(beatenPieces);
+                guiView.getGameView().showBeaten();
+            }
         } catch (Exception e) {
             return;
         }
@@ -240,76 +264,46 @@ public class GuiController extends Controller {
 
     /**
      * undoing a move in History
-     *
      * @param index
      */
     public void undoMoveFromHistory(int index) {
         Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index - 1));
+        if(Game.getCurrentPlayer().getColor().isWhite() && index % 2 == 0) {
+            Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index-2));
+            guiView.getGameView().changeMoveHistoryColor(index, 0);
+        }
+        else if(Game.getCurrentPlayer().getColor().isBlack() && index % 2 == 1) {
+            Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(index-2));
+            guiView.getGameView().changeMoveHistoryColor(index, 1);
+        }
+        else {
+            return;
+        }
         Game.getCurrentPlayer().setHasPlayerUndidAMove(true);
         game.notifyObservers();
     }
 
     /**
-     * update game board and player
+     *
+     * @param index
      */
-    public void updateGame() {
-        game.getGameFENStrings().add(FenUtilities.loadFENFromBoard(Game.getBoard()));
-        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
-        game.getCurrentPlayer().setFirstClick(true);
-        game.checkGameStatus();
-        if (!game.isFINISHED() && gameAgainstComputer) {
-            letComputerPlay();
-        }
-        game.notifyObservers();
-    }
-
-    /**
-     * update all the panels
-     */
-    private void updateGameView() {
-        guiView.getGameView().showHistory();
-        guiView.getGameView().showBeaten();
-        guiView.getGameView().notification();
-        if (GameView.rotate.isSelected())
-            guiView.getGameView().getBoard().rotate(game.getCurrentPlayer().getColor());
-        if (gameAgainstComputer)
-            guiView.getGameView().showHistoryComp();
-    }
-
-    /**
-     * create a game
-     */
-    public void createGame() {
-        game = new Game(this,
-                new Board(),
-                new HumanPlayer(playerColor),
-                opponent);
-        game.getGameFENStrings().add("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-        game.loadPlayerPieces();
-        guiView.setGame(game);
-        if (gameAgainstComputer && opponent.getColor().isWhite()) {
-            letComputerPlay();
-        }
-    }
-
-    /**
-     * let AI to make a move
-     */
-    private void letComputerPlay() {
-        while (true) {
-            computerMove = ((Computer) game.getCurrentPlayer()).evaluate();
-            // Calculate from where the move is performed
-            int move_from = getMoveFromPosition(computerMove.toString());
-            // Calculate to where the move is performed
-            int move_to = getMoveToPosition(computerMove.toString());
-            if (game.isMoveAllowed(move_from, move_to)) {
-                game.getCurrentPlayer().makeMove(computerMove);
+    public void redidMoveFromHistory(int index) {
+        game.getGameFENStrings().subList(index, game.getGameFENStrings().size()).clear();
+        for (int i = index - 1; i<=game.getGameFENStrings().size()-1; i++) {
+            try {
+                guiView.getGameView().history.getChildren().remove(i+2);
+            } catch (Exception e) {
                 break;
             }
         }
-        game.setCurrentPlayer(game.getOpponent(game.getCurrentPlayer()));
+        Game.getBoard().setPiecesOnBoard(game.getGameFENStrings().get(
+                game.getGameFENStrings().size()-1
+        ));
+        Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
+        Game.setCurrentPlayer(Game.getOpponent(Game.getCurrentPlayer()));
+        game.checkGameStatus();
+        game.notifyObservers();
     }
-
 
     @Override
     public void processInputFromPlayer() {
@@ -322,7 +316,6 @@ public class GuiController extends Controller {
 
     /**
      * check if the Pawn can Promote.
-     *
      * @param color    of the Pawn
      * @param position of the Pawn
      * @return true, if he can promote.
@@ -401,5 +394,29 @@ public class GuiController extends Controller {
      */
     public boolean isClockRunning() {
         return isClkRunning;
+    }
+
+    /**
+     *
+     * @param opponent
+     */
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
+
+    /**
+     *
+     * @param gameAgainstComputer
+     */
+    public void setGameAgainstComputer(boolean gameAgainstComputer) {
+        this.gameAgainstComputer = gameAgainstComputer;
+    }
+
+    /**
+     *
+     * @param playerColor
+     */
+    public void setPlayerColor(Attributes.Color playerColor) {
+        this.playerColor = playerColor;
     }
 }

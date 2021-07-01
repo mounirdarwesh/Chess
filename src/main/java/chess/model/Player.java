@@ -43,6 +43,16 @@ public abstract class Player {
     protected boolean hasPlayerUndoAMove = false;
 
     /**
+     * boolean if a player redid a move
+     */
+    protected boolean hasPlayerRedidAMove = false;
+
+    /**
+     * The player's timer
+     */
+    protected int timer;
+
+    /**
      * The constructor of the class Player
      *
      * @param color the color that the player chooses to play with
@@ -246,6 +256,38 @@ public abstract class Player {
      */
     public void setHasPlayerUndidAMove(boolean hasPlayerUndidAMove) {
         this.hasPlayerUndoAMove = hasPlayerUndidAMove;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean hasPlayerRedidAMove() {
+        return hasPlayerRedidAMove;
+    }
+
+    /**
+     *
+     * @param hasPlayerRedidAMove
+     */
+    public void setHasPlayerRedidAMove(boolean hasPlayerRedidAMove) {
+        this.hasPlayerRedidAMove = hasPlayerRedidAMove;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getTimer() {
+        return timer;
+    }
+
+    /**
+     *
+     * @param timer
+     */
+    public void setTimer(int timer) {
+        this.timer = timer;
     }
 
     @Override

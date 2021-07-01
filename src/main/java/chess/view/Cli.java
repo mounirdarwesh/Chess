@@ -121,13 +121,11 @@ public class Cli implements Observer, View {
             }
             if (input.equals("undo")) {
                 controller.undoMove();
-                input = scanner.nextLine();
-                continue;
+                break;
             }
             if (input.equals("redo")) {
                 controller.redoMove();
-                input = scanner.nextLine();
-                continue;
+                break;
             }
             if (!controller.isValidInput(input)) {
                 System.out.println("!Invalid move");
@@ -140,6 +138,8 @@ public class Cli implements Observer, View {
                 continue;
             } else {
                 System.out.println("!" + input);
+                Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
+                Game.getCurrentPlayer().setHasPlayerRedidAMove(false);
             }
             FINISHED = true;
         }

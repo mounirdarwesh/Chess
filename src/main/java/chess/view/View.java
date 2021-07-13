@@ -1,16 +1,13 @@
 package chess.view;
 
-import chess.model.Game;
 
 /**
- * view interface
+ * interface view
+ * @author Gr.45
  */
 public interface View {
-
     /**
-     * this method set the game
-     *
-     * @param game game
+     * update the view
      */
-    void setGame(Game game);
+    void update();
 }

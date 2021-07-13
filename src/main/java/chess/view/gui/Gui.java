@@ -1,185 +1,274 @@
 package chess.view.gui;
 
-import chess.Attributes;
-import chess.controller.GuiController;
-import chess.model.Game;
-import chess.model.Player;
+import chess.controller.guiController.GameViewController;
+import chess.controller.guiController.StartMenuController;
 import chess.util.Observer;
 import chess.view.View;
+import chess.view.gui.gameView.GameView;
+import chess.view.gui.startMenuView.StartMenuView;
+import chess.model.game.Game;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Starting point of the JavaFX GUI
+ * @author Gr.45
  */
 public class Gui extends Application implements View, Observer {
 
     /**
-     * The controller
-     */
-    public GuiController guiController;
-    /**
-     * The game that is connected to the GUI
-     */
-    protected Game game;
-    /**
-     * The start menu of the GUI
-     */
-    protected StartMenuView mainMenu;
-    /**
-     * The game view
-     */
-    protected GameView gameView;
-    /**
-     * The stage of the GUI
+     * The primary stage of the game
      */
     protected Stage primaryStage;
+
     /**
-     * The scene
+     * The scene of the current stage
      */
     protected Scene scene;
 
     /**
+     * The game that is connected to the GUI
+     */
+    public Game game;
+
+    /**
+     * The Width of the window
+     */
+    protected static final int WIDTH = 900;
+    /**
+     * The Height of the window
+     */
+    protected static final int HEIGHT = 750;
+
+    /**
+     * start menu
+     */
+    protected StartMenuView startMenu;
+
+    /**
+     * view of the game
+     */
+    protected GameView gameView;
+
+
+
+    /**
+     * the controller of the game view
+     */
+    protected GameViewController gameViewController;
+
+
+    /**
+     * This method is called by the Application to start the GUI.
+     * @param primaryStage The initial root stage of the application.
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        // Configuring the basics of the window
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Chess (BETA)");
+        primaryStage.setMinHeight(HEIGHT);
+        primaryStage.setMinWidth(WIDTH);
+        primaryStage.centerOnScreen();
+        primaryStage.setOnCloseRequest(e -> System.exit(1));
+
+        try {
+            InputStream icon = Files.newInputStream(Paths.get("src/main/res/icon.png"));
+            Image icImg = new Image(icon);
+            icon.close();
+            primaryStage.getIcons().add(icImg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Creating the scenes
+        createAllScenes();
+
+        // Setting the start menu Scene to the window
+        primaryStage.setScene(startMenu.asScene());
+
+        // Show the window
+        primaryStage.show();
+    }
+
+    /**
+     * create all the scene of the gui
+     */
+    private void createAllScenes() {
+        startMenu = new StartMenuView(this);
+        //and create its controller
+        new StartMenuController(startMenu);
+        // Creating a Game View
+        gameView = new GameView(this);
+        // then create the game and pass it the controller
+        gameViewController = new GameViewController(gameView);
+    }
+
+    /**
+     * Creating a button for the GUI
+     * @param title, The title of the button
+     * @param vbox, The panel that holds the button
+     * @return A button
+     */
+    public Button createButton(String title, VBox vbox) {
+        Button btn = new Button(title);
+        btn.setMinSize(70,18);
+        VBox.setMargin(btn, new Insets(0, 0, 0, 0));
+        vbox.getChildren().add(btn);
+        return btn;
+    }
+
+    /**
+     * Creating a title for the GUI
+     * @param title, The title of the button
+     * @param size, The size of the text
+     * @param vbox, The panel that holds the button
+     */
+    public void createTitleText(String title, int size, VBox vbox) {
+        Text text = new Text(title);
+        text.setFont(Font.font("Arial", FontWeight.BOLD, size));
+        text.setFill(Color.WHITE);
+        vbox.getChildren().add(text);
+    }
+
+    /**
+     * Creating a ComboBox for the start menu scene
+     * @param title The title of the ComboBox
+     * @param choices The available choices
+     * @param vbox The carrying panel
+     * @return ComboBox
+     */
+    public ComboBox<String> createComboBox(String title, List<String> choices, VBox vbox) {
+        ComboBox<String> combo = new ComboBox<>();
+        combo.setPromptText(title);
+        for (String choice : choices) {
+            combo.getItems().add(choice);
+        }
+        combo.setMinSize(70,18);
+        VBox.setMargin(combo, new Insets(0, 0, 0, 0));
+        vbox.getChildren().add(combo);
+        return combo;
+    }
+
+    /**
+     * Setting the style for the panel
+     * @param panel The panel
+     */
+    public void setPanelStyle(VBox panel) {
+        panel.setMinSize(170, 300);
+        panel.setAlignment(Pos.CENTER);
+        panel.setStyle("-fx-padding: 30 10 30 10;" +
+                "-fx-spacing: 20;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: white;");
+    }
+
+    /**
      * The entry point of the GUI application.
-     *
      * @param args The command line arguments passed to the application
      */
     public static void main(String[] args) {
+
         launch(args);
     }
 
     /**
-     * This method is called by the Application to start the GUI.
-     *
-     * @param primaryStage The initial root stage of the application.
+     * getter of the primaryStage
+     * @return Stage
      */
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        this.primaryStage = primaryStage;
-
-        // Creating the controller for the GUI
-        this.guiController = new GuiController(this);
-
-        //Creating basic interface
-        ConfigureBasics(primaryStage);
-
-        //Creating the start menu
-        mainMenu = new StartMenuView(this);
-        scene = new Scene(mainMenu.asParent(), 650, 500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     /**
-     * config basics interface element
-     *
-     * @param primaryStage the main Window
+     * Set the stage to the new View instance
+     * @param previousScene the previous scene to get the stage from
      */
-    private void ConfigureBasics(Stage primaryStage) throws IOException {
-        //Disable resizability
-        primaryStage.setResizable(false);
-
-        // Setting the title of the program
-        primaryStage.setTitle("Chess");
-
-        // cancel the Timer when the Window closed
-        primaryStage.setOnCloseRequest(event -> {
-            if (guiController.isClockRunning())
-                guiController.getChessClock().cancel();
-        });
-
-        // Setting the icon for the program
-        InputStream icon = Files.newInputStream(Paths.get("src/main/res/icon.png"));
-        Image icImg = new Image(icon);
-        icon.close();
-        primaryStage.getIcons().add(icImg);
-    }
-
-    @Override
-    public void setGame(Game game) {
-        this.game = game;
-        game.addObserver(this);
-    }
-
-    @Override
-    public void update() {
-        gameView.getBoard().drawBoard();
-        primaryStage.show();
+    public void setStage(Scene previousScene) {
+        this.primaryStage = (Stage) previousScene.getWindow();
     }
 
     /**
-     * Creating a game view for the user
+     * getter of the startMenu
+     * @return StartMenuView
      */
-    public void createGameView() {
-        gameView = new GameView(this);
-        primaryStage.setScene(new Scene(gameView, 750, 600));
+    public StartMenuView getStartMenu() {
+        return startMenu;
     }
 
     /**
-     * Getter for the start screen menu
-     *
-     * @return mainMenu
+     * setter of the startMenu
+     * @param startMenu startMenu
      */
-    public StartMenuView getMainMenu() {
-        return mainMenu;
+    public void setStartMenu(StartMenuView startMenu) {
+        this.startMenu = startMenu;
     }
 
     /**
-     * Getter for the game view
      *
-     * @return gameView
+     * @return
      */
     public GameView getGameView() {
         return gameView;
     }
 
     /**
-     * Game Status
-     *
-     * @param status status of the game
-     * @param player player
+     * getter of the gameView
+     * @return GameView
      */
-    public void notifyUser(Attributes.GameStatus status, Player player) {
-        GameView.report.getChildren().clear();
-        Label notify = new Label();
-        notify.setFont(new Font(20));
-        switch (status) {
-            case ENDED_IN_WIN:
-                notify.setText(player + " has won the game!");
-                break;
-            case KING_IN_CHECK:
-                notify.setText(player + "'s king is in check.");
-                break;
-            case ENDED_IN_DRAW:
-                notify.setText("Game Ended in a draw.");
-        }
-        GameView.report.getChildren().add(notify);
+    public void setGameView(GameView gameView) {
+        this.gameView = gameView;
     }
 
     /**
-     * back to main menu option
+     * Getter for the game
+     * @return game
      */
-    public void backToMainMenu() {
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public Game getGame() {
+        return game;
     }
 
     /**
-     * shows the Countdown on the Game Field
-     *
-     * @param time the left time
+     * Setter for the game
+     * @param game The current game
      */
-    public void notifyClock(String time) {
-        Platform.runLater(() -> GameView.showClock(time));
+    public void setGame(Game game) {
+        // set the game as model
+        this.game = game;
+        game.addObserver(this);
+    }
+
+    /**
+     * getter of the gameViewController
+     * @return GameViewController
+     */
+    public GameViewController getGameViewController() {
+        return gameViewController;
+    }
+
+    @Override
+    public void update() {
+        gameView.updateState();
+        primaryStage.setScene(gameView.asScene());
+        primaryStage.centerOnScreen();
     }
 }

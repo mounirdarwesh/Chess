@@ -1,46 +1,39 @@
-package chess.view;
-
-import java.util.Locale;
-import java.util.Scanner;
+package chess.view.cli;
 
 import chess.Attributes;
 import chess.controller.CliController;
-import chess.controller.Controller;
-import chess.model.Game;
-import chess.model.Player;
+import chess.model.game.Game;
+import chess.model.player.Player;
 import chess.util.Observer;
+import chess.view.View;
+
+import java.util.Scanner;
 
 /**
- * The command line interface
+ * Starting point of the command line interface
+ * @author Gr.45
  */
-public class Cli implements Observer, View {
+public class Cli implements View, Observer {
 
     /**
      * The connected game
      */
-    protected Game game;
+    private Game game;
+
     /**
      * The CLIController
      */
-    protected CliController controller;
-    /**
-     * if Game with Timer
-     */
-    String time;
+    private CliController controller;
+
     /**
      * Scanner to get User Input
      */
-    Scanner scanner = new Scanner(System.in);
-    /**
-     * Scanner for the Timer Duration.
-     */
-    Scanner scanDuration = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    /**
-     * The constructor of the view of the CLI application.
-     */
-    public Cli() {
-        super();
+
+    @Override
+    public void update() {
+        System.out.println(game.getBoard());
     }
 
     /**
@@ -61,53 +54,6 @@ public class Cli implements Observer, View {
 
 
     /**
-     * determine the Game Mode of the Player.
-     */
-    public void gameMode() {
-        boolean finish = false;
-        String gameMode;
-        while (!finish) {
-            gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
-            if (gameMode.equals("1")) {
-                scanTime(Attributes.GameMode.HUMAN, Attributes.GameMode.HUMAN_TIMER);
-            } else if (gameMode.equals("2")) {
-                scanTime(Attributes.GameMode.COMPUTER, Attributes.GameMode.COMPUTER_TIMER);
-            } else {
-                System.out.println("Pleas enter a Valid Input!");
-                continue;
-            }
-            finish = true;
-        }
-    }
-
-    /**
-     * Game Mode Choice if with Timer or not.
-     *
-     * @param mode
-     * @param modeWithTimer
-     */
-    public void scanTime(Attributes.GameMode mode, Attributes.GameMode modeWithTimer) {
-        boolean finish = false;
-        while (!finish) {
-            System.out.println("Please Enter the Game Time(Enter 0 if you wish to play without Timer): ");
-            time = scanDuration.nextLine();
-            if (time.matches("\\d*")) {
-                if (time.equals("0")) {
-                    controller.setGameMode(mode);
-                } else if(time.matches("")) {
-                    System.out.println("Pleas enter a Valid Input!");
-                    continue;
-                }else {
-                    controller.setGameMode(modeWithTimer);
-                }
-                finish = true;
-            } else {
-                System.out.println("Please enter a Number!");
-            }
-        }
-    }
-
-    /**
      * read Input from User
      */
     public void readInputFromHuman() {
@@ -120,11 +66,11 @@ public class Cli implements Observer, View {
                 continue;
             }
             if (input.equals("undo")) {
-                controller.undoMove();
+                controller.undoMove(game.getAllListOfMoves().size()-2);
                 break;
             }
             if (input.equals("redo")) {
-                controller.redoMove();
+                controller.redoMove(2);
                 break;
             }
             if (!controller.isValidInput(input)) {
@@ -132,14 +78,15 @@ public class Cli implements Observer, View {
                 input = scanner.nextLine();
                 continue;
             }
-            if (!controller.isValidMove(input)) {
+            if(!controller.isValidMove(input)) {
                 System.out.println("!Move not allowed");
                 input = scanner.nextLine();
                 continue;
-            } else {
+            }
+             else {
                 System.out.println("!" + input);
-                Game.getCurrentPlayer().setHasPlayerUndidAMove(false);
-                Game.getCurrentPlayer().setHasPlayerRedidAMove(false);
+                game.getCurrentPlayer().setHasPlayerUndidAMove(false);
+                game.getCurrentPlayer().setHasPlayerRedidAMove(false);
             }
             FINISHED = true;
         }
@@ -147,7 +94,6 @@ public class Cli implements Observer, View {
 
     /**
      * this method reads inputs from computer
-     *
      * @param move move of a piece
      * @return boolean
      */
@@ -178,37 +124,31 @@ public class Cli implements Observer, View {
         }
     }
 
-    /**
-     * this method assigns controller
-     *
-     * @param controller controller of console
-     */
-    public void assignController(Controller controller) {
-        this.controller = (CliController) controller;
+    public void gameMode() {
     }
 
-
+    /**
+     * Getter for the game
+     * @return game
+     */
     public Game getGame() {
         return game;
     }
 
-    @Override
+    /**
+     * Setter for the game
+     * @param game The current game
+     */
     public void setGame(Game game) {
+        // set the game as model
         this.game = game;
         game.addObserver(this);
     }
 
-    @Override
-    public void update() {
-        System.out.println(game.getBoard());
-    }
-
     /**
-     * Getter time Duration
-     *
-     * @return Duration
+     * Setting the controller
      */
-    public String getTime() {
-        return time;
+    public void setController(CliController controller) {
+        this.controller = controller;
     }
 }

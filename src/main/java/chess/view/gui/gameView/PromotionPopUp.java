@@ -1,4 +1,4 @@
-package chess.view.gui;
+package chess.view.gui.gameView;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,19 +12,20 @@ import javafx.stage.Stage;
  * class for popup question which piece to promote to
  */
 public class PromotionPopUp {
+
     /**
      * Promotion char
      */
-    public static char promote = 'q';
+    private char promote = ' ';
     /**
      * the PopUp window
      */
-    static Stage promotion;
+    private Stage promotion;
 
     /**
      * configure the PopUP with the Figures.
      */
-    public static void displayPopUp() {
+    public void displayPopUp() {
         promotion = new Stage();
         promotion.setTitle("Select the Promoted Piece");
         promotion.initModality(Modality.APPLICATION_MODAL);
@@ -39,10 +40,22 @@ public class PromotionPopUp {
         bishop.setFont(new Font(40));
         rook.setFont(new Font(40));
         knight.setFont(new Font(40));
-        rook.setOnMouseClicked(event -> setPromoteChar('r'));
-        knight.setOnMouseClicked(event -> setPromoteChar('n'));
-        queen.setOnMouseClicked(event -> setPromoteChar('q'));
-        bishop.setOnMouseClicked(event -> setPromoteChar('b'));
+        rook.setOnMouseClicked(event -> {
+            promote = 'r';
+            promotion.close();
+        });
+        knight.setOnMouseClicked(event -> {
+            promote = 'k';
+            promotion.close();
+        });
+        queen.setOnMouseClicked(event -> {
+            promote = 'q';
+            promotion.close();
+        });
+        bishop.setOnMouseClicked(event -> {
+            promote = 'b';
+            promotion.close();
+        });
 
         HBox promotedPieces = new HBox();
         promotedPieces.setSpacing(10);
@@ -54,13 +67,12 @@ public class PromotionPopUp {
     }
 
     /**
-     * set the right char to Promote
-     *
-     * @param promoted the desired char
+     * Getter the Promote char
+     * @return char promote
      */
-    public static void setPromoteChar(char promoted) {
-        promote = promoted;
-        promotion.close();
+    public char getPromote() {
+        return this.promote;
     }
 
 }
+

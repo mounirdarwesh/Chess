@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.Attributes;
+import chess.controller.CliController;
+import chess.view.cli.Cli;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CliTest {
     Cli cli = new Cli();
+    CliController controller = new CliController(cli,true,false);
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -40,5 +44,44 @@ public class CliTest {
                         "*****************************************************\n" +
                         "*****************************************************",
                 outputStreamCaptor.toString().trim());
+    }
+
+    /**
+     * read Input from the Computer check
+     */
+    @Test
+    public void readInputFromComputer(){
+        assertTrue(cli.readInputFromComputer("a2-a4"));
+        assertTrue(cli.readInputFromComputer("a2-a0"));
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void notifyUserWIN(){
+        cli.notifyUser(Attributes.GameStatus.ENDED_IN_WIN,
+                cli.getGame().getWhitePlayer());
+        assertEquals("White Player has won the game!",outputStreamCaptor.toString().trim());
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void notifyUserCHECK(){
+        cli.notifyUser(Attributes.GameStatus.KING_IN_CHECK,
+                cli.getGame().getWhitePlayer());
+        assertEquals("White Player's king is in check.",outputStreamCaptor.toString().trim());
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void notifyUserDRAW(){
+        cli.notifyUser(Attributes.GameStatus.ENDED_IN_DRAW,
+                cli.getGame().getWhitePlayer());
+        assertEquals("Game Ended in a draw.",outputStreamCaptor.toString().trim());
     }
 }

@@ -183,6 +183,7 @@
                         <exclude>chess/model/game/GuiGame.*</exclude>
                         <exclude>chess/model/game/LANGame.*</exclude>
                         <exclude>chess/Main.class</exclude>
+                        <exclude>chess/view/cli/Cli.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>

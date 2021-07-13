@@ -147,7 +147,7 @@ public class FenUtilities {
      * @return String
      * @param game game
      */
-    private static String loadCastleInformation(Game game) {
+    public static String loadCastleInformation(Game game) {
         StringBuilder castleInfo = new StringBuilder();
 
         if (game.getWhitePlayer().isKingSideCastleAllowed()) {

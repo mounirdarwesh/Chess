@@ -20,4 +20,5 @@ public class FenUtilitiesTest {
         assertEquals("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
                 , FenUtilities.loadFENFromBoard(board));
     }
+
 }

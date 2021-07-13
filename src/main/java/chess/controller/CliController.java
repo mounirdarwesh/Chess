@@ -55,7 +55,7 @@ public class CliController extends Controller {
             // Showing the welcome screen
             cliView.showWelcomeScreen();
             // Getting the game mode
-            cliView.gameMode();
+            cliView.gameMode(finished);
         }
 
         createGame();

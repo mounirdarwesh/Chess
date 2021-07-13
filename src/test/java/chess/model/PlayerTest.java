@@ -6,6 +6,7 @@ import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
 import chess.model.pieces.Rook;
 import chess.controller.CliController;
+import chess.pgn.FenUtilities;
 import chess.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
 
     Cli view = new Cli();
-    CliController cli = new CliController(view, true, true);
+    CliController cli = new CliController(view, true, false);
     private static final String EMPTY_FEN = "8/8/8/8/8/8/8/8";
 
 
@@ -66,5 +67,49 @@ public class PlayerTest {
         //System.out.println(game.getBoard());
         assertTrue(cli.getGame().isCurrentPlayersKingInCheck());
 
+    }
+
+    /**
+     * check if king side Castle is Allowed
+     */
+    @Test
+    public void isKingSideCastleAllowed() {
+        assertFalse(cli.getGame().getCurrentPlayer().isKingSideCastleAllowed());
+    }
+
+    /**
+     * check if Queen side Castle is Allowed
+     */
+    @Test
+    public void isQueenSideCastleAllowed() {
+        System.out.println(FenUtilities.loadCastleInformation(cli.getGame()));
+        assertFalse(cli.getGame().getCurrentPlayer().isQueenSideCastleAllowed());
+    }
+
+    /**
+     * check get the left Time
+     */
+    @Test
+    public void getTimeLeft() {
+        cli.getGame().getCurrentPlayer().setTimeLeft(10);
+        assertEquals(10,cli.getGame().getCurrentPlayer().getTimeLeft());
+    }
+
+    /**
+     * check is the Player undid a move
+     */
+    @Test
+    public void hasPlayerUndidAMove() {
+        cli.getGame().getCurrentPlayer().setHasPlayerUndidAMove(false);
+        assertFalse(cli.getGame().getCurrentPlayer().hasPlayerUndidAMove());
+    }
+
+    /**
+     * check is the Player redid a move
+     */
+    @Test
+    public void hasPlayerRedidAMove() {
+        cli.getGame().getCurrentPlayer().setHasPlayerRedidAMove(true);
+        assertTrue(cli.getGame().getCurrentPlayer().hasPlayerRedidAMove());
     }
 }

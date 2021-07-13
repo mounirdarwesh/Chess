@@ -133,11 +133,12 @@ public class Cli implements View, Observer {
 
     /**
      * Show the game mode
+     * @param finished if the loop finished
      */
-    public void gameMode() {
+    public void gameMode(boolean finished) {
         boolean finish = false;
         String gameMode;
-        while (!finish) {
+        while (!finished) {
             gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
             if (gameMode.equals("1")) {
                 controller.setGameSettings(4, "0");
@@ -149,7 +150,7 @@ public class Cli implements View, Observer {
                 System.out.println("Pleas enter a Valid Input!");
                 continue;
             }
-            finish = true;
+            finished = true;
         }
 
     }

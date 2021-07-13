@@ -72,7 +72,7 @@ public class CliGame extends Game {
             }
         }
         // Close the program when the game ends
-        System.exit(1);
+        //System.exit(1);
     }
 
     @Override

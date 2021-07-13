@@ -85,14 +85,16 @@ public abstract class Controller {
      * @param index the index
      */
     public void undoMove(int index) {
-        if(game.getAllListOfMoves().size() < 2) return;
+        if(game.getAllListOfMoves().isEmpty()) return;
+        if(!undidMoves.isEmpty()) undidMoves.clear();
         undidMoves.addAll(game.getAllListOfMoves().subList(
                 index, game.getAllListOfMoves().size()
         ));
         for (Move toUndoMove : undidMoves) {
             toUndoMove.undo();
-            game.getAllListOfMoves().remove(undidMoves);
+            game.getAllListOfMoves().remove(toUndoMove);
         }
+        game.setCurrentPlayer(game.getOpponent());
         game.notifyObservers();
     }
 
@@ -128,6 +130,7 @@ public abstract class Controller {
             game.getAllListOfMoves().add(undidMove);
         }
         undidMoves.subList(0, index).clear();
+        game.setCurrentPlayer(game.getOpponent());
         game.notifyObservers();
     }
 

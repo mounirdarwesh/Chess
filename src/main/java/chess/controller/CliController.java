@@ -28,6 +28,11 @@ public class CliController extends Controller {
     private Move move;
 
     /**
+     * the status of the game for the tests
+     */
+    private boolean finished;
+
+    /**
      * Pattern to verify the syntax of the User Input
      */
     protected static final Pattern VALID_INPUT = Pattern.compile(
@@ -41,6 +46,11 @@ public class CliController extends Controller {
      */
     public CliController(Cli cliView, boolean finished, boolean simpleGame) {
         this.cliView = cliView;
+        this.finished = finished;
+
+        //Connecting the controller to the view
+        cliView.setController(this);
+
         if (!simpleGame) {
             // Showing the welcome screen
             cliView.showWelcomeScreen();
@@ -48,10 +58,13 @@ public class CliController extends Controller {
             cliView.gameMode();
         }
 
+        createGame();
+    }
 
-        //Connecting the controller to the view
-        cliView.setController(this);
-
+    /**
+     *
+     */
+    private void createGame() {
         // Creating a new Game
         game = new CliGame(this);
         game.setFINISHED(finished);

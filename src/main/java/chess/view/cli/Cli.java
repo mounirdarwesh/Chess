@@ -7,6 +7,7 @@ import chess.model.player.Player;
 import chess.util.Observer;
 import chess.view.View;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -65,12 +66,18 @@ public class Cli implements View, Observer {
                 input = scanner.nextLine();
                 continue;
             }
+            if (input.equals("time")) {
+                System.out.println(controller.convertTime(
+                        game.getCurrentPlayer().getTimeLeft()));
+                input = scanner.nextLine();
+                continue;
+            }
             if (input.equals("undo")) {
-                controller.undoMove(game.getAllListOfMoves().size()-2);
+                controller.undoMove(game.getAllListOfMoves().size()-1);
                 break;
             }
             if (input.equals("redo")) {
-                controller.redoMove(2);
+                controller.redoMove(1);
                 break;
             }
             if (!controller.isValidInput(input)) {
@@ -125,10 +132,53 @@ public class Cli implements View, Observer {
     }
 
     /**
-     *
+     * Show the game mode
      */
     public void gameMode() {
+        boolean finish = false;
+        String gameMode;
+        while (!finish) {
+            gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
+            if (gameMode.equals("1")) {
+                controller.setGameSettings(4, "0");
+                scanTime();
+            } else if (gameMode.equals("2")) {
+                controller.setGameSettings(4, "1");
+                scanTime();
+            } else {
+                System.out.println("Pleas enter a Valid Input!");
+                continue;
+            }
+            finish = true;
+        }
+
     }
+
+    /**
+     * Game Mode Choice if with Timer or not.
+     */
+    public void scanTime() {
+        boolean finish = false;
+        while (!finish) {
+            System.out.println("Please Enter the Game Time (Enter 0 if you wish to play without Timer): ");
+            System.out.println("With inputting the keyword 'time' you can see how much time you have.");
+            String time = scanner.nextLine();
+            if (time.matches("\\d*")) {
+                if (time.equals("0")) {
+                    controller.setGameSettings(2, "0");
+                } else if(time.matches("")) {
+                    System.out.println("Pleas enter a Valid Input!");
+                    continue;
+                }else {
+                    controller.setGameSettings(2, time);
+                }
+                finish = true;
+            } else {
+                System.out.println("Please enter a Number!");
+            }
+        }
+    }
+
 
     /**
      * Getter for the game

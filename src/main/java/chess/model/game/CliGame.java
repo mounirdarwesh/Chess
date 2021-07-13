@@ -1,6 +1,9 @@
 package chess.model.game;
 
 import chess.controller.CliController;
+import chess.controller.Move;
+import chess.model.player.AI;
+import chess.util.BoardMapper;
 
 /**
  * class of the console basierte game
@@ -28,11 +31,18 @@ public class CliGame extends Game {
         notifyObservers();
         currentPlayer = whitePlayer;
 
+        if(chessClock != null) {
+            chessClock.start();
+        }
+
         while (!FINISHED) {
             // Process the input from the player
             cliController.processInputFromPlayer();
 
             if (allowedMove != null) {
+
+                //Add the allowed move to the list of allowed moves
+                allListOfMoves.add(allowedMove);
 
                 // Make the move
                 currentPlayer.makeMove(allowedMove);
@@ -49,8 +59,20 @@ public class CliGame extends Game {
                 // And then notify the observer
                 notifyObservers();
             }
+            if(cliController.getGameSettings()[4].equals("1")
+                    && currentPlayer instanceof AI) {
+                Move evaluatedMove = ((AI) currentPlayer).evaluate();
+                int from = BoardMapper.mapChessNotationToPosition(
+                        evaluatedMove.toString().substring(0,2)
+                );
+                int to = BoardMapper.mapChessNotationToPosition(
+                        evaluatedMove.toString().substring(3,5)
+                );
+                processMoveFromPlayer(board.getPiece(from), to);
+            }
         }
-
+        // Close the program when the game ends
+        System.exit(1);
     }
 
     @Override

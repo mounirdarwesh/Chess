@@ -1,4 +1,4 @@
-package chess.view.gui.gameView;
+package chess.view.gui.gameview;
 
 import chess.model.game.Game;
 import chess.model.pieces.Piece;

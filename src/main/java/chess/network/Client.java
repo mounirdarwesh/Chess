@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * Client side of a Network
+ * @author Gr.45
+ */
 public class Client extends Network {
 
     /**

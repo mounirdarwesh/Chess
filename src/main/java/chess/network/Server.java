@@ -52,6 +52,7 @@ public class Server extends Network {
     /**
      * close the Connection
      */
+    @Override
     public void closeConnection() {
         super.closeConnection();
         try {

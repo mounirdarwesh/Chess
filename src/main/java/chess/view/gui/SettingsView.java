@@ -61,7 +61,7 @@ public class SettingsView {
     private Button confirmSettings;
 
     /**
-     * button to back to the gameView
+     * button to back to the gameview
      */
     private Button backToGameView;
 
@@ -158,7 +158,7 @@ public class SettingsView {
     }
 
     /**
-     * button to back to the gameView
+     * button to back to the gameview
      * @return Button
      */
     public Button getBackToGameViewButton() {

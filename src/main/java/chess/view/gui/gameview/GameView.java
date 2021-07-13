@@ -1,4 +1,4 @@
-package chess.view.gui.gameView;
+package chess.view.gui.gameview;
 
 import chess.view.gui.Gui;
 import javafx.geometry.Insets;
@@ -21,14 +21,6 @@ import javafx.scene.paint.Stop;
  * @author Gr.45
  */
 public class GameView {
-    /**
-     * Width of the game view
-     */
-    private static final int GAME_VIEW_WIDTH = 1200;
-    /**
-     * Height of the game view
-     */
-    private static final int GAME_VIEW_HEIGHT = 750;
     /**
      * The root of the scene
      */

@@ -1,11 +1,9 @@
-package chess.controller.guiController;
+package chess.controller.guicontroller;
 
 import chess.Attributes;
 import chess.controller.Controller;
 import chess.model.player.Player;
 import chess.view.gui.Gui;
-import chess.view.gui.gameView.GameView;
-import chess.view.gui.gameView.NotificationView;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -40,6 +38,7 @@ public class GuiController extends Controller implements EventHandler {
      * @param index the index of the specified setting
      * @param str the new setting to replace
      */
+    @Override
     public void setGameSettings(int index, String str) {
         gameSettings[index] = str;
     }

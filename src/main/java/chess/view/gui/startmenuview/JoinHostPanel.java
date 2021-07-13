@@ -1,4 +1,4 @@
-package chess.view.gui.startMenuView;
+package chess.view.gui.startmenuview;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

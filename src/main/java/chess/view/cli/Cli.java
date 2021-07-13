@@ -124,6 +124,9 @@ public class Cli implements View, Observer {
         }
     }
 
+    /**
+     *
+     */
     public void gameMode() {
     }
 

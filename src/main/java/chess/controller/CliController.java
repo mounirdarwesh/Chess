@@ -144,6 +144,7 @@ public class CliController extends Controller {
      * @param status The status of the game
      * @param player The player
      */
+    @Override
     public void notifyView(Attributes.GameStatus status, Player player) {
         cliView.notifyUser(status, player);
     }

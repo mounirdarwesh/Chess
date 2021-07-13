@@ -1,4 +1,4 @@
-package chess.view.gui.gameView;
+package chess.view.gui.gameview;
 
 import chess.model.game.Game;
 import chess.model.player.AI;
@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

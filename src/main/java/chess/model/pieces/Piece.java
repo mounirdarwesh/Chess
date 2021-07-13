@@ -5,6 +5,10 @@ import chess.controller.Move;
 import chess.model.Board;
 import java.util.List;
 
+/**
+ * Class to represent a Piece
+ * @author Gr. 45
+ */
 public abstract class Piece {
 
     /**

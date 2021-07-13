@@ -1,4 +1,4 @@
-package chess.view.gui.startMenuView;
+package chess.view.gui.startmenuview;
 
 import chess.view.gui.Gui;
 import javafx.concurrent.Task;

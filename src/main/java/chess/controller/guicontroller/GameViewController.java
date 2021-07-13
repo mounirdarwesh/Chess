@@ -1,4 +1,4 @@
-package chess.controller.guiController;
+package chess.controller.guicontroller;
 
 import chess.Attributes;
 import chess.controller.Move;
@@ -6,12 +6,11 @@ import chess.model.pieces.Pawn;
 import chess.model.pieces.Piece;
 import chess.model.player.Player;
 import chess.view.gui.SettingsView;
-import chess.view.gui.gameView.BoardView;
-import chess.view.gui.gameView.GameView;
-import chess.view.gui.startMenuView.StartMenuView;
+import chess.view.gui.gameview.BoardView;
+import chess.view.gui.gameview.GameView;
+import chess.view.gui.startmenuview.StartMenuView;
 import javafx.event.Event;
 import javafx.event.EventTarget;
-import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import java.util.List;
 
 /**
  * class of the game view controller of Gui
+ *
  * @author Gr.45
  */
 public class GameViewController extends GuiController {
@@ -41,6 +41,7 @@ public class GameViewController extends GuiController {
 
     /**
      * Controller of view of the game
+     *
      * @param gameView view of the game
      */
     public GameViewController(GameView gameView) {
@@ -70,44 +71,44 @@ public class GameViewController extends GuiController {
 
     /**
      * handle event of the game such as undo, redo
+     *
      * @param event handle click of options
      */
     @Override
     public void handle(Event event) {
         System.out.println(Arrays.toString(gameSettings));
-        if(gameView.getReturnToStartMenu().equals(event.getSource())) {
+        if (gameView.getReturnToStartMenu().equals(event.getSource())) {
             // Create a new Instance of the start menu view
             StartMenuView startMenuView = new StartMenuView(gameView.getParent());
             // And assign back its controller
             new StartMenuController(startMenuView);
             setScene(gameView.asScene(), startMenuView.asScene());
-        }
-        else if(gameView.getGameMenuSettings().equals(event.getSource())){
+        } else if (gameView.getGameMenuSettings().equals(event.getSource())) {
             SettingsView settingsView = new SettingsView(gameView.getParent());
             setScene(gameView.asScene(), settingsView.asScene());
             assignSettingsActionHandler(settingsView);
-        }
-        else if(gameView.getHistoryView().getUndo().equals(event.getSource())) {
-            if(gameSettings[1].equals("1")) {
+        } else if (gameView.getHistoryView().getUndo().equals(event.getSource())) {
+            if (gameSettings[1].equals("1")) {
                 undoMove(game.getAllListOfMoves().size() - 2);
                 game.getCurrentPlayer().setHasPlayerUndidAMove(true);
+            } else {
+                return;
             }
-            else return;
-        }
-        else if(gameView.getHistoryView().getRedo().equals(event.getSource())) {
-            if(gameSettings[1].equals("1")) {
+        } else if (gameView.getHistoryView().getRedo().equals(event.getSource())) {
+            if (gameSettings[1].equals("1")) {
                 redoMove(2);
                 game.getCurrentPlayer().setHasPlayerRedidAMove(true);
+            } else {
+                return;
             }
-            else return;
-        }
-        else {
+        } else {
             assignActionHandlerToClickOnTile(event);
         }
     }
 
     /**
      * handels action on setting such as enable highlights
+     *
      * @param settingsView setting of the game
      */
     private void assignSettingsActionHandler(SettingsView settingsView) {
@@ -148,6 +149,7 @@ public class GameViewController extends GuiController {
     /**
      * This method will be invoked as soon as the player
      * clicks on a tile
+     *
      * @param event tile click
      */
     private void assignActionHandlerToClickOnTile(Event event) {
@@ -161,7 +163,7 @@ public class GameViewController extends GuiController {
             game.processMoveFromPlayer(pieceToMove, tile.getID());
             pieceToMove = null;
         }
-        if(!gameView.getBoardView().getHighlightedTiles().isEmpty()) {
+        if (!gameView.getBoardView().getHighlightedTiles().isEmpty()) {
             deHighlightAllLegalTiles(gameView.getBoardView().getHighlightedTiles());
         }
         // Check Exceptions
@@ -171,7 +173,7 @@ public class GameViewController extends GuiController {
                 || game.isFINISHED()) {
             return;
         }
-        if(gameSettings[8].equals("1")
+        if (gameSettings[8].equals("1")
                 && allTilesHighlighted.isEmpty()
                 && !clickedOnEnemyPiece(clickedPiece)
                 && clickedPiece != null) {
@@ -184,6 +186,7 @@ public class GameViewController extends GuiController {
 
     /**
      * check if the Pawn in Position where he can Promote
+     *
      * @param possiblePawnPromoted the Pawn to Promote
      */
     private void checkForPromotion(Piece possiblePawnPromoted) {
@@ -192,7 +195,7 @@ public class GameViewController extends GuiController {
                 && possiblePawnPromoted.isOnSeventhRow();
         boolean blackPawnAndOnSecondColumn = possiblePawnPromoted.getColor().isBlack()
                 && possiblePawnPromoted.inOnSecondRow();
-        if(possiblePawnPromoted instanceof Pawn
+        if (possiblePawnPromoted instanceof Pawn
                 && (whitePawnAndOnSeventhColumn || blackPawnAndOnSecondColumn)) {
             gameView.showGameViewPopUp();
             char promotedChar = gameView.getPromotionPopUp().getPromote();
@@ -203,6 +206,7 @@ public class GameViewController extends GuiController {
     /**
      * Checks if the player clicked on an empty tile with no
      * selected piece to move to that tile
+     *
      * @param target the target that contains the information
      * @return true, if the player just clicks on an empty tile without
      * the intention to move a piece, false otherwise
@@ -215,6 +219,7 @@ public class GameViewController extends GuiController {
     /**
      * Checks if the setting if not allowing reelecting a piece
      * is enabled and the player already selected a piece
+     *
      * @return
      */
     private boolean reselectAClickedPieceIsNotAllowed() {
@@ -224,6 +229,7 @@ public class GameViewController extends GuiController {
     /**
      * Checks if the player has clicked on a piece and clicked again
      * to capture an enemy piece
+     *
      * @param potentialEnemyPiece The clicked piece that might be an enemy
      * @return true if the player clicked on an enemy piece to capture
      * it and has already clicked before on his own piece
@@ -237,6 +243,7 @@ public class GameViewController extends GuiController {
     /**
      * Checks if the player clicked on empty tile and has already clicked
      * before on his own piece to move to that empty tile
+     *
      * @param target the target that holds the information
      * @return true if a player has made a correct click
      */
@@ -247,6 +254,7 @@ public class GameViewController extends GuiController {
 
     /**
      * Checks if the player clicked on an enemy piece
+     *
      * @param clickedPiece the piece clicked
      * @return true if the player clicked on an enemy piece
      */
@@ -257,7 +265,6 @@ public class GameViewController extends GuiController {
     }
 
     /**
-     *
      * @param highlightedTiles
      */
     private void deHighlightAllLegalTiles(List<BoardView.Tile> highlightedTiles) {
@@ -269,6 +276,7 @@ public class GameViewController extends GuiController {
 
     /**
      * Highlight all the tiles that the player can move to
+     *
      * @param clickedPiece the clicked piece on the board
      */
     private void highlightAllLegalTiles(Piece clickedPiece) {
@@ -282,6 +290,7 @@ public class GameViewController extends GuiController {
 
     /**
      * getter of the GameView
+     *
      * @return GameView
      */
     public GameView getGameView() {
@@ -290,6 +299,7 @@ public class GameViewController extends GuiController {
 
     /**
      * Notify the Game View over the last changes
+     *
      * @param status the new status
      * @param player which player has done the new changes
      */

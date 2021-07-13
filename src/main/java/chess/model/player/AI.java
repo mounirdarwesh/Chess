@@ -4,7 +4,6 @@ import chess.Attributes.Color;
 import chess.controller.Move;
 import chess.model.game.Game;
 import chess.model.pieces.Piece;
-import chess.model.player.Player;
 
 import java.util.List;
 

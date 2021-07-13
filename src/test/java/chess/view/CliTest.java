@@ -52,7 +52,6 @@ public class CliTest {
     @Test
     public void readInputFromComputer(){
         assertTrue(cli.readInputFromComputer("a2-a4"));
-        assertTrue(cli.readInputFromComputer("a2-a0"));
     }
 
     /**

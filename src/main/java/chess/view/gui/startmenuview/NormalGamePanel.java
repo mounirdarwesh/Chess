@@ -1,4 +1,4 @@
-package chess.view.gui.startMenuView;
+package chess.view.gui.startmenuview;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -32,7 +32,7 @@ public class NormalGamePanel {
 
     /**
      * The constructor for the normal game Panel
-     * @param startMenuView startMenuView
+     * @param startMenuView startmenuview
      */
     public NormalGamePanel(StartMenuView startMenuView) {
         this.startMenuView = startMenuView;

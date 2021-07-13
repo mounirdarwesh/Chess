@@ -1,11 +1,11 @@
 package chess.view.gui;
 
-import chess.controller.guiController.GameViewController;
-import chess.controller.guiController.StartMenuController;
+import chess.controller.guicontroller.GameViewController;
+import chess.controller.guicontroller.StartMenuController;
 import chess.util.Observer;
 import chess.view.View;
-import chess.view.gui.gameView.GameView;
-import chess.view.gui.startMenuView.StartMenuView;
+import chess.view.gui.gameview.GameView;
+import chess.view.gui.startmenuview.StartMenuView;
 import chess.model.game.Game;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -232,7 +232,7 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     * setter of the gameView
+     * setter of the gameview
      * @param gameView the Game View
      */
     public void setGameView(GameView gameView) {

@@ -9,6 +9,7 @@ import chess.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,8 +26,8 @@ public class MoveTest {
     Board board = new Board();
     Game game = new CliGame(cli);
 
-    ArrayList<Move> expected48 = new ArrayList<>();
-    ArrayList<Move> expected55 = new ArrayList<>();
+    List<Move> expected48 = new ArrayList<>();
+    List<Move> expected55 = new ArrayList<>();
     Piece pawnW48 = new Pawn(48, Attributes.Color.WHITE, board);
     Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
     Piece pawnW53 = new Pawn(53, Attributes.Color.WHITE, board);

@@ -1,10 +1,9 @@
-package chess.view.gui.gameView;
+package chess.view.gui.gameview;
 
 
-import chess.controller.guiController.GameViewController;
+import chess.controller.guicontroller.GameViewController;
 import chess.model.game.Game;
 import chess.model.pieces.Piece;
-import chess.pgn.FenUtilities;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

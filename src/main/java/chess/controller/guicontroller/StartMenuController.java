@@ -1,4 +1,4 @@
-package chess.controller.guiController;
+package chess.controller.guicontroller;
 
 import chess.Attributes;
 import chess.controller.LANGameController;
@@ -6,15 +6,13 @@ import chess.controller.MoveController;
 import chess.model.game.Game;
 import chess.model.game.GuiGame;
 import chess.model.player.Player;
-import chess.view.gui.gameView.GameView;
-import chess.view.gui.startMenuView.*;
+import chess.view.gui.startmenuview.*;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**

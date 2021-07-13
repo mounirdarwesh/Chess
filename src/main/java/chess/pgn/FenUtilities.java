@@ -29,7 +29,7 @@ public class FenUtilities {
      * This is to load the board from a FEN string
      *
      * @param fen the FEN string
-     * @param board the Board 
+     * @param board the Board
      * @return board  the board
      */
     public static List<Piece> loadBoardFromFEN(String fen, Board board) {

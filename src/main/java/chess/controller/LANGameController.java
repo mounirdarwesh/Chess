@@ -5,7 +5,7 @@ import chess.model.game.LANGame;
 import chess.model.player.Player;
 import chess.network.Client;
 import chess.network.Server;
-import chess.view.gui.gameView.GameView;
+import chess.view.gui.gameview.GameView;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -187,7 +187,7 @@ public class LANGameController extends Controller {
 
     /**
      * Getter for Game View
-     * @return gameView
+     * @return gameview
      */
     public GameView getGameView() {
         return gameView;

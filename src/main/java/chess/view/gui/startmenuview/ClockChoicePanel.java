@@ -1,9 +1,12 @@
-package chess.view.gui.startMenuView;
+package chess.view.gui.startmenuview;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * Panel to choice Panel
+ */
 public class ClockChoicePanel {
 
     /**

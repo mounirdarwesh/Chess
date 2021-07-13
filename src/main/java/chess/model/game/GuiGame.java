@@ -1,12 +1,9 @@
 package chess.model.game;
 
 import chess.controller.Move;
-import chess.controller.guiController.GameViewController;
-import chess.controller.guiController.GuiController;
+import chess.controller.guicontroller.GameViewController;
 import chess.model.player.AI;
-import chess.pgn.FenUtilities;
 import chess.util.BoardMapper;
-import chess.view.gui.gameView.GameView;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 

@@ -7,6 +7,10 @@ import javafx.application.Platform;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Chess Clock
+ * @author Gr.45
+ */
 public class ChessClock {
 
     /**

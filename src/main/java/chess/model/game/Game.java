@@ -13,7 +13,6 @@ import chess.util.Observable;
 import javafx.concurrent.Task;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

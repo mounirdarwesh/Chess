@@ -4,9 +4,7 @@ import chess.Attributes;
 import chess.model.game.Game;
 import chess.model.pieces.Piece;
 import chess.model.player.Player;
-import chess.pgn.FenUtilities;
 import chess.view.View;
-import javafx.application.Platform;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -184,6 +182,11 @@ public abstract class Controller {
         this.game = game;
     }
 
+    /**
+     * Notify the Player over the Status of the Game
+     * @param kingInCheck status of the game
+     * @param currentPlayer the Current Player
+     */
     public abstract void notifyView(Attributes.GameStatus kingInCheck, Player currentPlayer);
 
 }

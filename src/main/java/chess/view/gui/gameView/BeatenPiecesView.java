@@ -36,6 +36,7 @@ public class BeatenPiecesView {
 
     /**
      * show the beaten pieces
+     * @param game the current game
      */
     public BeatenPiecesView(Game game) {
         this.game = game;

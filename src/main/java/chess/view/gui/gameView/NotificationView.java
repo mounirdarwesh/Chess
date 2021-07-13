@@ -53,6 +53,7 @@ public class NotificationView {
 
     /**
      * constructor of the class
+     * @param game the current game
      */
     public NotificationView(Game game) {
         this.game = game;

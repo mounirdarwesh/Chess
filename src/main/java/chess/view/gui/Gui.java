@@ -224,16 +224,15 @@ public class Gui extends Application implements View, Observer {
     }
 
     /**
-     *
-     * @return
+     * getter for the game view
+     * @return the game view
      */
     public GameView getGameView() {
         return gameView;
     }
 
     /**
-     * getter of the gameView
-     * @return GameView
+     * setter of the gameView
      */
     public void setGameView(GameView gameView) {
         this.gameView = gameView;

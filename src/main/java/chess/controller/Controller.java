@@ -63,13 +63,6 @@ public abstract class Controller {
     }
 
     /**
-     * Filter the position from this format: e.g. a2 ==> 8
-     */
-    public static int filterPositionFromChessFormat(char c, int rank) {
-        return (Character.getNumericValue(c) - 10) + (rank - 1) * 8;
-    }
-
-    /**
      * Returning the beaten pieces of the player
      * @return beaten pieces of the player
      */
@@ -91,6 +84,7 @@ public abstract class Controller {
 
     /**
      * Undo a Move
+     * @param index the index
      */
     public void undoMove(int index) {
         if(game.getAllListOfMoves().size() < 2) return;
@@ -126,6 +120,7 @@ public abstract class Controller {
 
     /**
      * redo a Move
+     * @param index  the index of the move
      */
     public void redoMove(int index) {
         if(undidMoves.isEmpty()) return;
@@ -160,7 +155,6 @@ public abstract class Controller {
      * A method to get the specified game Setting
      * @param index the index of the specified setting
      * @param str the new setting to replace
-     * @return the specified setting
      */
     public void setGameSettings(int index, String str) {
         gameSettings[index] = str;

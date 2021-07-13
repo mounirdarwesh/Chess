@@ -408,7 +408,7 @@ public abstract class Game extends Observable {
 
     /**
      * getter of all list of moves
-     * @return List<Move>
+     * @return  the list of all moves
      */
     public List<Move> getAllListOfMoves() {
         return allListOfMoves;
@@ -428,14 +428,6 @@ public abstract class Game extends Observable {
      */
     public void setFINISHED(boolean FINISHED){
         this.FINISHED = FINISHED;
-    }
-
-    /**
-     * Getter for the Chess Clock
-     * @return
-     */
-    public ChessClock getChessClock() {
-        return chessClock;
     }
 
     /**

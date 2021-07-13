@@ -60,6 +60,10 @@ public class LANGameController extends Controller {
      */
     private GameView gameView;
 
+    /**
+     * controller of the class
+     * @param gameView the game view
+     */
     public LANGameController(GameView gameView) {
         this.gameView = gameView;
     }
@@ -207,7 +211,7 @@ public class LANGameController extends Controller {
 
     /**
      * Getter if a move redid
-     * @return
+     * @return id a lan player redo
      */
     public boolean hasLanRedo() {
         return lanRedo;
@@ -215,7 +219,7 @@ public class LANGameController extends Controller {
 
     /**
      * Setter for Redo
-     * @param lanRedo
+     * @param lanRedo the lan player redo
      */
     public void setLanRedo(boolean lanRedo) {
         this.lanRedo = lanRedo;

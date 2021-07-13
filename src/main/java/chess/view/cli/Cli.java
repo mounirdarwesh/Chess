@@ -147,6 +147,7 @@ public class Cli implements View, Observer {
 
     /**
      * Setting the controller
+     * @param controller controller
      */
     public void setController(CliController controller) {
         this.controller = controller;

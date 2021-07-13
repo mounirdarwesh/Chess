@@ -6,6 +6,7 @@ import chess.model.pieces.Piece;
 import chess.model.player.AI;
 import chess.model.player.HumanPlayer;
 import chess.model.player.Player;
+import chess.util.BoardMapper;
 import chess.view.cli.Cli;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +37,7 @@ public class CliController extends Controller {
      * The constructor expects a view to construct itself.
      * @param cliView The view that is connected to this controller
      * @param finished boolean if the game is finished
+     * @param simpleGame if a normal game against two players
      */
     public CliController(Cli cliView, boolean finished, boolean simpleGame) {
         this.cliView = cliView;
@@ -109,14 +111,12 @@ public class CliController extends Controller {
         String[] inputMove = input.split("-");
 
         // Calculate from where the move is performed
-        int move_from = filterPositionFromChessFormat(inputMove[0].charAt(0),
-                Integer.parseInt(String.valueOf(inputMove[0].charAt(1))));
+        int move_from = BoardMapper.mapChessNotationToPosition(inputMove[0]);
         //Get the piece on that position
         Piece piece = game.getBoard().getPiece(move_from);
         if(piece == null) return false;
         // Calculate to where the move is performed
-        int move_to = filterPositionFromChessFormat(inputMove[1].charAt(0),
-                Integer.parseInt(String.valueOf(inputMove[1].charAt(1))));
+        int move_to = BoardMapper.mapChessNotationToPosition(inputMove[1]);
 
         if(piece.getColor() != game.getCurrentPlayer().getColor()) {
             return false;

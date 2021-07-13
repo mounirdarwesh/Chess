@@ -178,7 +178,7 @@
                         <!-- Ignore GUI classes for coverage -->
                         <exclude>chess/view/gui/**/*</exclude>
                         <exclude>chess/network/**/*</exclude>
-                        <exclude>chess/controller/guiController/**/*</exclude>
+                        <exclude>chess/controller/guicontroller/**/*</exclude>
                         <exclude>chess/controller/LANGameController.class</exclude>
                         <exclude>chess/model/game/GuiGame.*</exclude>
                         <exclude>chess/model/game/LANGame.*</exclude>

@@ -1,9 +1,11 @@
 package chess.pgn;
 
 import java.util.*;
-
 import chess.Attributes.Color;
+import chess.util.BoardMapper;
 import chess.model.*;
+import chess.model.game.Game;
+import chess.model.pieces.*;
 
 /**
  * @author Ahmad Mohammad
@@ -116,48 +118,47 @@ public class FenUtilities {
     }
 
     /**
-     * @param board
-     * @return
+     * @param game the current game
+     * @return A FEN representation of the current game
      */
-    public static String createFENFromGame(Board board) {
-        return loadFENFromBoard(board) + " " +
-                loadPlayerText() + " " +
-                loadCastleInformation() + " " +
-                loadEnPassantInformation() + " ";
+    public static String createFENFromGame(Game game) {
+        return loadFENFromBoard(game.getBoard()) + " " +
+                loadPlayerText(game) + " " +
+                loadCastleInformation(game) + " " +
+                loadEnPassantInformation(game);
     }
 
     /**
-     * @return
+     * load EnPassant information
+     * @return String
+     * @param game game
      */
-    private static String loadEnPassantInformation() {
-        Piece enPassantPawn = Game.getEnPassantPawn();
-        if (enPassantPawn != null) {
-            for (Map.Entry<String, Integer> entry : MapBoard.mapper.entrySet()) {
-                if (entry.getValue().equals(enPassantPawn.getPosition() +
-                        8 * -enPassantPawn.getColor().getDirection())) {
-                    return entry.getKey();
-                }
-            }
+    private static String loadEnPassantInformation(Game game) {
+        Piece enPassantPawn = game.getEnPassantPawn();
+        if(enPassantPawn != null) {
+            return BoardMapper.mapPositionToChessNotation(enPassantPawn.getPosition());
         }
         return "-";
     }
 
     /**
-     * @return
+     * load the castling information
+     * @return String
+     * @param game game
      */
-    private static String loadCastleInformation() {
+    private static String loadCastleInformation(Game game) {
         StringBuilder castleInfo = new StringBuilder();
 
-        if (Game.getWhitePlayer().isKingSideCastleAllowed()) {
+        if (game.getWhitePlayer().isKingSideCastleAllowed()) {
             castleInfo.append("K");
         }
-        if (Game.getWhitePlayer().isQueenSideCastleAllowed()) {
+        if (game.getWhitePlayer().isQueenSideCastleAllowed()) {
             castleInfo.append("Q");
         }
-        if (Game.getBlackPlayer().isKingSideCastleAllowed()) {
+        if (game.getBlackPlayer().isKingSideCastleAllowed()) {
             castleInfo.append("k");
         }
-        if (Game.getBlackPlayer().isQueenSideCastleAllowed()) {
+        if (game.getBlackPlayer().isQueenSideCastleAllowed()) {
             castleInfo.append("q");
         }
 
@@ -165,10 +166,12 @@ public class FenUtilities {
     }
 
     /**
-     * @return
+     * load text of player
+     * @return String
+     * @param game game
      */
-    private static String loadPlayerText() {
-        return Game.getCurrentPlayer().toString().substring(0, 1).toLowerCase();
+    private static String loadPlayerText(Game game) {
+        return game.getCurrentPlayer().toString().substring(0, 1).toLowerCase();
     }
 
     /**

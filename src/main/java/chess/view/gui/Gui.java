@@ -233,6 +233,7 @@ public class Gui extends Application implements View, Observer {
 
     /**
      * setter of the gameView
+     * @param gameView the Game View
      */
     public void setGameView(GameView gameView) {
         this.gameView = gameView;

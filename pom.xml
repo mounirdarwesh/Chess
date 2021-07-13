@@ -176,8 +176,12 @@
                 <configuration>
                     <excludes>
                         <!-- Ignore GUI classes for coverage -->
-                        <exclude>chess/cli/**/*</exclude>
-                        <exclude>chess/gui/**/*</exclude>
+                        <exclude>chess/view/gui/**/*</exclude>
+                        <exclude>chess/network/**/*</exclude>
+                        <exclude>chess/controller/guiController/**/*</exclude>
+                        <exclude>chess/controller/LANGameController.class</exclude>
+                        <exclude>chess/model/game/GuiGame.*</exclude>
+                        <exclude>chess/model/game/LANGame.*</exclude>
                         <exclude>chess/Main.class</exclude>
                     </excludes>
                 </configuration>

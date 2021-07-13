@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.pieces.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -70,8 +71,8 @@ public class BishopTest {
         expected.add(m12);
         Move m13 = new Move.NormalMove(board, bishopMiddleW, 63);
         expected.add(m13);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishopMiddleW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishopMiddleW,bishopMiddleW.getPosition());
         bishopMiddleW.calculateLegalMoves();
         assertEquals(expected.toString(), bishopMiddleW.getAllLegalMoves().toString());
     }
@@ -110,8 +111,8 @@ public class BishopTest {
         expected.add(m12);
         Move m13 = new Move.NormalMove(board, bishopMiddleB, 63);
         expected.add(m13);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishopMiddleB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishopMiddleB,bishopMiddleB.getPosition());
         bishopMiddleB.calculateLegalMoves();
         assertEquals(expected.toString(), bishopMiddleB.getAllLegalMoves().toString());
     }
@@ -138,8 +139,8 @@ public class BishopTest {
         expected.add(m6);
         Move m7 = new Move.NormalMove(board, bishopEdgeW, 63);
         expected.add(m7);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishopEdgeW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishopEdgeW,bishopEdgeW.getPosition());
         bishopEdgeW.calculateLegalMoves();
         assertEquals(expected.toString(), bishopEdgeW.getAllLegalMoves().toString());
     }
@@ -166,8 +167,8 @@ public class BishopTest {
         expected.add(m6);
         Move m7 = new Move.NormalMove(board, bishopEdgeB, 0);
         expected.add(m7);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishopEdgeB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishopEdgeB,bishopEdgeB.getPosition());
         bishopEdgeB.calculateLegalMoves();
         assertEquals(expected.toString(), bishopEdgeB.getAllLegalMoves().toString());
     }
@@ -184,11 +185,11 @@ public class BishopTest {
         Piece pawn = new Pawn(45, Attributes.Color.WHITE, board);
         Move m1 = new Move.NormalMove(board, bishopBlockByTeammateW, 61);
         expected.add(m1);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rook);
-        board.setPiece(knight);
-        board.setPiece(pawn);
-        board.setPiece(bishopBlockByTeammateW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rook,rook.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(bishopBlockByTeammateW, bishopBlockByTeammateW.getPosition());
         bishopBlockByTeammateW.calculateLegalMoves();
         assertEquals(expected.toString(), bishopBlockByTeammateW.getAllLegalMoves().toString());
     }
@@ -205,11 +206,11 @@ public class BishopTest {
         Piece pawn = new Pawn(45, Attributes.Color.BLACK, board);
         Move m1 = new Move.NormalMove(board, bishopBlockByTeammateB, 61);
         expected.add(m1);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rook);
-        board.setPiece(knight);
-        board.setPiece(pawn);
-        board.setPiece(bishopBlockByTeammateB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(bishopBlockByTeammateB, bishopBlockByTeammateB.getPosition());
         bishopBlockByTeammateB.calculateLegalMoves();
         assertEquals(expected.toString(), bishopBlockByTeammateB.getAllLegalMoves().toString());
     }
@@ -233,10 +234,10 @@ public class BishopTest {
         expected.add(m4);
         Move m5 = new Move.NormalMove(board, bishopCaptureEnemyW, 23);
         expected.add(m5);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rook);
-        board.setPiece(knight);
-        board.setPiece(bishopCaptureEnemyW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(bishopCaptureEnemyW, bishopCaptureEnemyW.getPosition());
         bishopCaptureEnemyW.calculateLegalMoves();
         assertEquals(expected.toString(), bishopCaptureEnemyW.getAllLegalMoves().toString());
     }
@@ -260,10 +261,10 @@ public class BishopTest {
         expected.add(m4);
         Move m5 = new Move.NormalMove(board, bishopCaptureEnemyB, 23);
         expected.add(m5);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rook);
-        board.setPiece(knight);
-        board.setPiece(bishopCaptureEnemyB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(bishopCaptureEnemyB, bishopCaptureEnemyB.getPosition());
         bishopCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), bishopCaptureEnemyB.getAllLegalMoves().toString());
     }

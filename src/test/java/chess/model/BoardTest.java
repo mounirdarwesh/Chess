@@ -1,6 +1,8 @@
 package chess.model;
 
 import chess.Attributes;
+import chess.model.pieces.Piece;
+import chess.model.pieces.Queen;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +37,7 @@ public class BoardTest {
      */
     @Test
     public void getPiece() {
-        board.setPiece(queen);
+        board.setPiece(queen, queen.getPosition());
         assertEquals(queen, board.getPiece(18));
     }
 
@@ -44,7 +46,7 @@ public class BoardTest {
      */
     @Test
     public void setPiece() {
-        board.setPiece(queen);
+        board.setPiece(queen, queen.getPosition());
         assertEquals("8 r n b q k b n r\n" +
                 "7 p p p p p p p p\n" +
                 "6                \n" +

@@ -1,23 +1,33 @@
-package chess.model;
+package chess.model.player;
 
 import chess.Attributes.Color;
 import chess.controller.Move;
+import chess.model.game.Game;
+import chess.model.pieces.Piece;
+import chess.model.player.Player;
 
 import java.util.List;
 
 
 /**
- * @author GR. 45
+ * class of the AI
+ * @author Gr.45
  */
-public class Computer extends Player {
+public class AI extends Player {
+
+    /**
+     * the connected game
+     */
+    private Game game;
 
     /**
      * The constructor of the computer class
      *
      * @param color the color that the computer is left with
      */
-    public Computer(Color color) {
+    public AI(Color color, Game game) {
         super(color);
+        this.game = game;
     }
 
     @Override
@@ -35,8 +45,8 @@ public class Computer extends Player {
         int bestValue = 0;
         Move optimalMove = null;
         for (Move move : this.calculatePlayerMoves()) {
-            Piece piece = Game.getBoard().getPiece(move.getDestination());
-            if (!Game.makeTempMoveAndCheck(move)) {
+            Piece piece = game.getBoard().getPiece(move.getDestination());
+            if (!game.makeTempMoveAndCheck(move)) {
                 noMoves = true;
                 continue;
             }
@@ -55,9 +65,8 @@ public class Computer extends Player {
             optimalMove = compMoves.get((int) (Math.random() * compMoves.size()));
         }
         if (optimalMove instanceof Move.PromotionMove) {
-            Game.setCharToPromote('q');
+            game.setCharToPromote('q');
         }
         return optimalMove;
     }
-
 }

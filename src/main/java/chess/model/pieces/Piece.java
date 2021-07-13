@@ -1,25 +1,16 @@
-package chess.model;
+package chess.model.pieces;
 
+import chess.Attributes;
+import chess.controller.Move;
+import chess.model.Board;
 import java.util.List;
 
-import chess.Attributes.Color;
-import chess.controller.Move;
-
-/**
- * @author Gruppe 45
- * The Piece class
- */
 public abstract class Piece {
 
     /**
-     * The value of the Piece
+     * The value of the piece
      */
-    private final int value;
-
-    /**
-     * The Name of the Piece
-     */
-    private final String name;
+    protected final int value;
 
     /**
      * The position of the piece on the board
@@ -29,7 +20,12 @@ public abstract class Piece {
     /**
      * The color of the piece
      */
-    protected Color color;
+    protected Attributes.Color color;
+
+    /**
+     * The Name of the Piece
+     */
+    protected String name = "";
 
     /**
      * The Board of the game
@@ -48,23 +44,15 @@ public abstract class Piece {
 
     /**
      * The constructor of the Piece Class
-     *
-     * @param name     the Name of the Piece
      * @param position The position of the piece
      * @param color    The type of the piece
      * @param board    The board
      */
-    Piece(String name, int value, int position, Color color, Board board) {
-        this.name = name;
+    public Piece(int value, int position, Attributes.Color color, Board board) {
         this.value = value;
         this.position = position;
         this.color = color;
         this.board = board;
-    }
-
-    @Override
-    public String toString() {
-        return this.color.isWhite() ? this.name : this.name.toLowerCase();
     }
 
     /**
@@ -95,7 +83,7 @@ public abstract class Piece {
      *
      * @return the type
      */
-    public Color getColor() {
+    public Attributes.Color getColor() {
         return color;
     }
 
@@ -104,8 +92,7 @@ public abstract class Piece {
      *
      * @return the isFirstMove
      */
-    public boolean isFirstMoved() {
-
+    public boolean isFirstMoveOnBoard() {
         return isFirstMove;
     }
 
@@ -154,12 +141,27 @@ public abstract class Piece {
     }
 
     /**
+     *
+     * @return
+     */
+    public boolean isOnSeventhRow() {
+        return position >= 48 && position <= 55;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean inOnSecondRow() {
+        return position >= 8 && position <= 15;
+    }
+    /**
      * check if the Piece is in the first Column.
      *
      * @param position to check
      * @return true, is in the first Column, otherwise not.
      */
-    public static boolean isInFirstColumn(int position) {
+    public boolean isInFirstColumn(int position) {
         return position % 8 == 0;
     }
 
@@ -169,7 +171,7 @@ public abstract class Piece {
      * @param position to check
      * @return true, is in the last Column, otherwise not.
      */
-    public static boolean isInLastColumn(int position) {
+    public boolean isInLastColumn(int position) {
         return position % 8 == 7;
     }
 
@@ -179,7 +181,7 @@ public abstract class Piece {
      * @param position to check
      * @return true, is in the Second Column, otherwise not.
      */
-    public static boolean isInSecondColumn(int position) {
+    public boolean isInSecondColumn(int position) {
         return position % 8 == 1;
     }
 
@@ -189,14 +191,9 @@ public abstract class Piece {
      * @param position to check
      * @return true, is in the Seventh Column, otherwise not.
      */
-    public static boolean isInSeventhColumn(int position) {
+    public boolean isInSeventhColumn(int position) {
         return position % 8 == 6;
     }
-
-    /**
-     * Getter of the symbol of the piece
-     */
-    public abstract String getSymbol();
 
     /**
      * Getter of the value of the piece
@@ -204,5 +201,15 @@ public abstract class Piece {
     public int getValue() {
         return this.color.isWhite() ? this.value : -1 * this.value;
     }
+
+    @Override
+    public String toString() {
+        return this.color.isWhite() ? this.name : this.name.toLowerCase();
+    }
+
+    /**
+     * Getter of the symbol of the piece
+     */
+    public abstract String getSymbol();
 
 }

@@ -1,9 +1,10 @@
-package chess.model;
+package chess.model.pieces;
 
 import java.util.*;
 
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.Board;
 
 /**
  * @author Gruppe 45
@@ -23,7 +24,8 @@ public class Knight extends Piece {
      * @param board    on which he stand
      */
     public Knight(int position, Attributes.Color color, Board board) {
-        super("N", 350, position, color, board);
+        super(350, position, color, board);
+        this.name = "N";
     }
 
     @Override
@@ -53,14 +55,9 @@ public class Knight extends Piece {
      */
     @Override
     public String getSymbol() {
-        String symbol;
-        if (color == Attributes.Color.BLACK) {
-            symbol = "♞";
-        } else {
-            symbol = "♘";
-        }
-        return symbol;
+        return color.isWhite() ? "♘" : "♞";
     }
 }
+
 
 

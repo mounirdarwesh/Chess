@@ -1,10 +1,9 @@
-package chess.model;
+package chess.model.pieces;
 
 import java.util.ArrayList;
-
-import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
+import chess.model.Board;
 
 /**
  * @author TBD
@@ -17,6 +16,16 @@ public class Pawn extends Piece {
     private static final int[] MOVE_OFFSET = {8, 16, 7, 9};
 
     /**
+     * if the pawn moved two spaces then En Passant is possible
+     */
+    public static boolean canMakeEnPassant = false;
+
+    /**
+     * if En Passant was preformed
+     */
+    public static boolean hasMadeEnPassant = false;
+
+    /**
      * The constructor of the Pawn Class
      *
      * @param position The position of the Pawn
@@ -24,7 +33,8 @@ public class Pawn extends Piece {
      * @param board    The board
      */
     public Pawn(int position, Color color, Board board) {
-        super("P", 100, position, color, board);
+        super(100, position, color, board);
+        this.name = "P";
     }
 
 
@@ -83,7 +93,7 @@ public class Pawn extends Piece {
 
             // Check if the pawn can promote itself
             if (canPromote()) {
-                allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
+                allLegalMoves.add(new Move.PromotionMove(board, this, destination));
             }
 
             // If not, then add a normal move
@@ -91,7 +101,6 @@ public class Pawn extends Piece {
                 allLegalMoves.add(new Move.NormalMove(board, this, destination));
             }
         }
-
         // If there is a piece on that destination then don't do anything
     }
 
@@ -126,19 +135,19 @@ public class Pawn extends Piece {
      *
      * @param pieceAtDest The piece at that destination
      * @param destination The destination of the move
-     */
+    */
     private void leftUpStep(Piece pieceAtDest, int destination) {
 
         // The pawn should not be on one of the sides depending on it's color
         if (leftUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        if (leftEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
+        if (leftEnPassant() && pieceAtDest == null && canMakeEnPassant) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
         } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it
             if (canPromote()) {
-                allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
+                allLegalMoves.add(new Move.PromotionMove(board, this, destination));
             } // else just capture the enemy piece
             else {
                 allLegalMoves.add(new Move.CaptureMove(board, this, destination));
@@ -146,7 +155,8 @@ public class Pawn extends Piece {
         }
     }
 
-    /**
+
+   /**
      * If the player chooses to move the pawn to capture
      *
      * @param pieceAtDest The piece at that destination
@@ -158,18 +168,19 @@ public class Pawn extends Piece {
         if (rightUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        if (rightEnPassant() && pieceAtDest == null && Game.getCurrentPlayer().isAllowEnPassant()) {
+        if (rightEnPassant() && pieceAtDest == null && canMakeEnPassant) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
         } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it
             if (canPromote()) {
-                allLegalMoves.add(new Move.PromotionMove(board, this, destination, Game.charToPromote));
+                allLegalMoves.add(new Move.PromotionMove(board, this, destination));
             } // else just capture the enemy piece
             else {
                 allLegalMoves.add(new Move.CaptureMove(board, this, destination));
             }
         }
     }
+
 
     /**
      * check if the pawn can promote
@@ -233,17 +244,11 @@ public class Pawn extends Piece {
 
     /**
      * GUI Symbol
-     *
      * @return the Symbol of the Piece
      */
     @Override
     public String getSymbol() {
-        String symbol;
-        if (color == Attributes.Color.BLACK) {
-            symbol = "♟";
-        } else {
-            symbol = "♙";
-        }
-        return symbol;
+        return color.isWhite() ? "♙" : "♟";
     }
 }
+

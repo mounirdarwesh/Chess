@@ -1,9 +1,8 @@
-package chess.model;
+package chess.model.pieces;
 
-import chess.Attributes;
 import chess.Attributes.Color;
 import chess.controller.Move;
-
+import chess.model.Board;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +23,8 @@ public class Queen extends Piece {
      * @param board    The board
      */
     public Queen(int position, Color color, Board board) {
-        super("Q", 1000, position, color, board);
+        super(1000, position, color, board);
+        this.name = "Q";
     }
 
     @Override
@@ -61,18 +61,11 @@ public class Queen extends Piece {
 
     /**
      * GUI Symbol
-     *
      * @return the Symbol of the Piece
      */
     @Override
     public String getSymbol() {
-        String symbol;
-        if (color == Attributes.Color.BLACK) {
-            symbol = "♛";
-        } else {
-            symbol = "♕";
-        }
-        return symbol;
+        return color.isWhite() ? "♕" : "♛";
     }
 }
 

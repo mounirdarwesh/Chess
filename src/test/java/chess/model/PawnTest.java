@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.pieces.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -49,9 +50,9 @@ public class PawnTest {
         Move m2 = new Move.DoublePawnMove(board, pawnStartPosition, 28);
         expected.add(m2);
 
-        pawnStartPosition.isFirstMove = true;
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawnStartPosition);
+        pawnStartPosition.setFirstMove(true);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(pawnStartPosition, pawnStartPosition.getPosition());
         pawnStartPosition.calculateLegalMoves();
         assertEquals(expected.toString(), pawnStartPosition.getAllLegalMoves().toString());
     }
@@ -68,8 +69,8 @@ public class PawnTest {
         expected.add(m1);
         Move m2 = new Move.DoublePawnMove(board, pawnStartPosition, 36);
         expected.add(m2);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawnStartPosition);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(pawnStartPosition, pawnStartPosition.getPosition());
         pawnStartPosition.calculateLegalMoves();
         assertEquals(expected.toString(), pawnStartPosition.getAllLegalMoves().toString());
     }
@@ -84,9 +85,9 @@ public class PawnTest {
         Piece pawnMiddle = new Pawn(28, Attributes.Color.WHITE, board);
         Move m1 = new Move.NormalMove(board, pawnMiddle, 36);
         expected.add(m1);
-        pawnMiddle.isFirstMove = false;
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawnMiddle);
+        pawnMiddle.setFirstMove(false);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(pawnMiddle, pawnMiddle.getPosition());
         pawnMiddle.calculateLegalMoves();
         assertEquals(expected.toString(), pawnMiddle.getAllLegalMoves().toString());
     }
@@ -101,9 +102,9 @@ public class PawnTest {
         Piece pawnMiddle = new Pawn(34, Attributes.Color.BLACK, board);
         Move m1 = new Move.NormalMove(board, pawnMiddle, 26);
         expected.add(m1);
-        pawnMiddle.isFirstMove = false;
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawnMiddle);
+        pawnMiddle.setFirstMove(false);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(pawnMiddle, pawnMiddle.getPosition());
         pawnMiddle.calculateLegalMoves();
         assertEquals(expected.toString(), pawnMiddle.getAllLegalMoves().toString());
     }
@@ -121,10 +122,10 @@ public class PawnTest {
         Move m1 = new Move.CaptureMove(board, pawnBlockByTeammate, 35);
         expected.add(m1);
 
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishop);
-        board.setPiece(rook);
-        board.setPiece(pawnBlockByTeammate);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(pawnBlockByTeammate, pawnBlockByTeammate.getPosition());
         pawnBlockByTeammate.calculateLegalMoves();
         assertEquals(expected.toString(), pawnBlockByTeammate.getAllLegalMoves().toString());
     }
@@ -140,10 +141,10 @@ public class PawnTest {
         Piece rook = new Rook(31, Attributes.Color.WHITE, board);
         Move m1 = new Move.CaptureMove(board, pawnBlockByTeammate, 31);
         expected.add(m1);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishop);
-        board.setPiece(rook);
-        board.setPiece(pawnBlockByTeammate);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(pawnBlockByTeammate, pawnBlockByTeammate.getPosition());
         pawnBlockByTeammate.calculateLegalMoves();
         assertEquals(expected.toString(), pawnBlockByTeammate.getAllLegalMoves().toString());
     }
@@ -164,11 +165,11 @@ public class PawnTest {
         Move m2 = new Move.CaptureMove(board, pawnCaptureEnemy, 44);
         expected.add(m2);
 
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(knight);
-        board.setPiece(bishop);
-        board.setPiece(rook);
-        board.setPiece(pawnCaptureEnemy);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(pawnCaptureEnemy, pawnCaptureEnemy.getPosition());
         pawnCaptureEnemy.calculateLegalMoves();
         assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
     }
@@ -189,11 +190,11 @@ public class PawnTest {
         Move m2 = new Move.CaptureMove(board, pawnCaptureEnemy, 18);
         expected.add(m2);
 
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(knight);
-        board.setPiece(bishop);
-        board.setPiece(rook);
-        board.setPiece(pawnCaptureEnemy);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(rook, rook.getPosition());
+        board.setPiece(pawnCaptureEnemy, pawnCaptureEnemy.getPosition());
         pawnCaptureEnemy.calculateLegalMoves();
         assertEquals(expected.toString(), pawnCaptureEnemy.getAllLegalMoves().toString());
     }

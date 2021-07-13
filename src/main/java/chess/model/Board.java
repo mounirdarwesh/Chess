@@ -1,11 +1,11 @@
 package chess.model;
 
-import java.util.*;
-
+import chess.model.pieces.Piece;
 import chess.pgn.FenUtilities;
+import java.util.List;
 
 /**
- * @author Ahmad Mohammad
+ * @author Gr.45
  * The Board class
  */
 public class Board {
@@ -14,11 +14,11 @@ public class Board {
      * The start FEN of the board
      */
     private static final String START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+
     /**
      * The pieces on the board
      */
     private List<Piece> piecesOnBoard;
-
 
     /**
      * The constructor of the board class
@@ -30,39 +30,45 @@ public class Board {
 
     /**
      * Getter of the piece on the board
-     *
-     * @param index the index of the searched piece
+     * @param position the index of the searched piece
      */
-    public Piece getPiece(int index) {
-        return this.piecesOnBoard.get(index);
+    public Piece getPiece(int position) {
+        return this.piecesOnBoard.get(position);
     }
 
     /**
      * Setter of the board of the game
-     *
      * @param piece the board to set
      */
-    public void setPiece(Piece piece) {
-        this.piecesOnBoard.set(piece.getPosition(), piece);
-    }
-
-
-    /**
-     * Getter for all the pieces on the board
-     *
-     * @return the pieces on the board
-     */
-    public List<Piece> getPiecesOnBoard() {
-        return this.piecesOnBoard;
+    public void setPiece(Piece piece, int position) {
+        if (piece != null) {
+            piece.setPosition(position);
+        }
+        this.piecesOnBoard.set(position, piece);
     }
 
     /**
      * setter for the board
-     *
      * @param piecesOnBoard FEN String, contains the Pieces.
      */
-    public void setPiecesOnBoard(String piecesOnBoard) {
-        this.piecesOnBoard = FenUtilities.loadBoardFromFEN(piecesOnBoard, this);
+    public void setPiecesOnBoard(List<Piece> piecesOnBoard) {
+        this.piecesOnBoard = piecesOnBoard;
+    }
+
+    /**
+     * Setting the board as the FEN String
+     * @param fen
+     */
+    public void setBoardFromFEN(String fen) {
+        this.piecesOnBoard = FenUtilities.loadBoardFromFEN(fen, this);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<Piece> getPiecesOnBoard() {
+        return this.piecesOnBoard;
     }
 
     @Override

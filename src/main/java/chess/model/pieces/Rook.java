@@ -1,32 +1,31 @@
-package chess.model;
+package chess.model.pieces;
 
 import java.util.*;
-
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.Board;
 
 /**
- * @author Gruppe 45
+ * @author TBD
  */
-public class Bishop extends Piece {
+public class Rook extends Piece {
 
     /**
-     * all possible Bishop move offset
+     * all possible Rook move offset
      */
-    private static final int[] MOVE_OFFSET = {-9, -7, 7, 9};
-
+    private static final int[] MOVE_OFFSET = {-8, -1, 1, 8};
 
     /**
-     * constructor of the Bishop
+     * constructor of the Rook
      *
      * @param position his Position
      * @param color    his Color
      * @param board    on which he stand
      */
-    public Bishop(int position, Attributes.Color color, Board board) {
-        super("B", 350, position, color, board);
+    public Rook(int position, Attributes.Color color, Board board) {
+        super(525, position, color, board);
+        this.name = "R";
     }
-
 
     @Override
     public void calculateLegalMoves() {
@@ -34,9 +33,9 @@ public class Bishop extends Piece {
         for (int i : MOVE_OFFSET) {
             int destination = this.position;
             while (isPositionInBounds(destination)) {
-                boolean firstCol = isInFirstColumn(destination) && (i == -9 || i == 7);
-                boolean lastCol = isInLastColumn(destination) && (i == 9 || i == -7);
-                if (firstCol || lastCol) {
+                boolean firstCol = isInFirstColumn(destination) && i == -1;
+                boolean secondCol = isInLastColumn(destination) && i == 1;
+                if (firstCol || secondCol) {
                     break;
                 }
                 destination += i;
@@ -56,17 +55,11 @@ public class Bishop extends Piece {
 
     /**
      * GUI Symbol
-     *
      * @return the Symbol of the Piece
      */
     @Override
     public String getSymbol() {
-        String symbol;
-        if (color == Attributes.Color.BLACK) {
-            symbol = "♝";
-        } else {
-            symbol = "♗";
-        }
-        return symbol;
+        return color.isWhite() ? "♖" : "♜";
     }
 }
+

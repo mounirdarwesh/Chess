@@ -2,6 +2,7 @@ package chess.model;
 
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.pieces.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -72,8 +73,8 @@ public class RookTest {
         expected.add(m13);
         Move m14 = new Move.NormalMove(board, rookMiddleW, 59);
         expected.add(m14);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookMiddleW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookMiddleW, rookMiddleW.getPosition());
         rookMiddleW.calculateLegalMoves();
         assertEquals(expected.toString(), rookMiddleW.getAllLegalMoves().toString());
     }
@@ -114,8 +115,8 @@ public class RookTest {
         expected.add(m13);
         Move m14 = new Move.NormalMove(board, rookMiddleB, 59);
         expected.add(m14);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookMiddleB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookMiddleB, rookMiddleB.getPosition());
         rookMiddleB.calculateLegalMoves();
         assertEquals(expected.toString(), rookMiddleB.getAllLegalMoves().toString());
     }
@@ -156,8 +157,8 @@ public class RookTest {
         expected.add(m13);
         Move m14 = new Move.NormalMove(board, rookEdgeW, 56);
         expected.add(m14);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookEdgeW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookEdgeW, rookEdgeW.getPosition());
         rookEdgeW.calculateLegalMoves();
         assertEquals(expected.toString(), rookEdgeW.getAllLegalMoves().toString());
     }
@@ -198,8 +199,8 @@ public class RookTest {
         expected.add(m13);
         Move m14 = new Move.NormalMove(board, rookEdgeB, 56);
         expected.add(m14);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookEdgeB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookEdgeB, rookEdgeB.getPosition());
         rookEdgeB.calculateLegalMoves();
         assertEquals(expected.toString(), rookEdgeB.getAllLegalMoves().toString());
     }
@@ -219,12 +220,12 @@ public class RookTest {
         expected.add(m1);
         Move m2 = new Move.NormalMove(board, rookBlockByTeammateW, 52);
         expected.add(m2);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookBlockByTeammateW);
-        board.setPiece(knight);
-        board.setPiece(pawn);
-        board.setPiece(bishop);
-        board.setPiece(queen);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookBlockByTeammateW, rookBlockByTeammateW.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(queen, queen.getPosition());
         rookBlockByTeammateW.calculateLegalMoves();
         assertEquals(expected.toString(), rookBlockByTeammateW.getAllLegalMoves().toString());
     }
@@ -244,12 +245,12 @@ public class RookTest {
         expected.add(m1);
         Move m2 = new Move.NormalMove(board, rookBlockByTeammateB, 52);
         expected.add(m2);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(rookBlockByTeammateB);
-        board.setPiece(knight);
-        board.setPiece(pawn);
-        board.setPiece(bishop);
-        board.setPiece(queen);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(rookBlockByTeammateB, rookBlockByTeammateB.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(queen, queen.getPosition());
         rookBlockByTeammateB.calculateLegalMoves();
         assertEquals(expected.toString(), rookBlockByTeammateB.getAllLegalMoves().toString());
     }
@@ -274,11 +275,11 @@ public class RookTest {
         expected.add(m4);
         Move m5 = new Move.NormalMove(board, rookCaptureEnemyW, 57);
         expected.add(m5);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishop);
-        board.setPiece(pawn);
-        board.setPiece(knight);
-        board.setPiece(rookCaptureEnemyW);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(rookCaptureEnemyW, rookCaptureEnemyW.getPosition());
         rookCaptureEnemyW.calculateLegalMoves();
         assertEquals(expected.toString(), rookCaptureEnemyW.getAllLegalMoves().toString());
     }
@@ -303,11 +304,11 @@ public class RookTest {
         expected.add(m4);
         Move m5 = new Move.NormalMove(board, rookCaptureEnemyB, 57);
         expected.add(m5);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishop);
-        board.setPiece(pawn);
-        board.setPiece(knight);
-        board.setPiece(rookCaptureEnemyB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(rookCaptureEnemyB, rookCaptureEnemyB.getPosition());
         rookCaptureEnemyB.calculateLegalMoves();
         assertEquals(expected.toString(), rookCaptureEnemyB.getAllLegalMoves().toString());
     }

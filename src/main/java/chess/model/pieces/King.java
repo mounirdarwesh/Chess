@@ -1,9 +1,9 @@
-package chess.model;
+package chess.model.pieces;
 
 import java.util.*;
-
 import chess.Attributes;
 import chess.controller.Move;
+import chess.model.Board;
 
 /**
  * @author Gruppe 45
@@ -15,10 +15,13 @@ public class King extends Piece {
      */
     private static final int[] MOVE_OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
+
     /**
      * Boolean to check if the king can preform a queen side castle
      */
     private boolean queenSideCastle;
+
+
 
     /**
      * Boolean to check if the king can preform a king side castle
@@ -33,7 +36,8 @@ public class King extends Piece {
      * @param board    on which he stand
      */
     public King(int position, Attributes.Color color, Board board) {
-        super("K", 10000, position, color, board);
+        super(10000, position, color, board);
+        this.name = "K";
     }
 
 
@@ -114,18 +118,28 @@ public class King extends Piece {
     }
 
     /**
+     *
+     * @param kingSideCastle
+     */
+    public void setKingSideCastle(boolean kingSideCastle) {
+        this.kingSideCastle = kingSideCastle;
+    }
+
+    /**
+     *
+     * @param queenSideCastle
+     */
+    public void setQueenSideCastle(boolean queenSideCastle) {
+        this.queenSideCastle = queenSideCastle;
+    }
+
+    /**
      * GUI Symbol
      *
      * @return the Symbol of the Piece
      */
     @Override
     public String getSymbol() {
-        String symbol;
-        if (color == Attributes.Color.BLACK) {
-            symbol = "♚";
-        } else {
-            symbol = "♔";
-        }
-        return symbol;
+        return color.isWhite() ? "♔" : "♚";
     }
 }

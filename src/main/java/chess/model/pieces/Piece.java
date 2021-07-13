@@ -44,6 +44,7 @@ public abstract class Piece {
 
     /**
      * The constructor of the Piece Class
+     * @param value of the Piece
      * @param position The position of the piece
      * @param color    The type of the piece
      * @param board    The board
@@ -113,6 +114,8 @@ public abstract class Piece {
     /**
      * A method to return true if the new or
      * the current position is on the board
+     * @param position of Piece
+     * @return true, if in Bounds
      */
     public boolean isPositionInBounds(int position) {
         return position >= 0 && position <= 63;
@@ -141,16 +144,16 @@ public abstract class Piece {
     }
 
     /**
-     *
-     * @return
+     * check if the Piece in the seventh Row
+     * @return true, if check if the Piece in the seventh Row
      */
     public boolean isOnSeventhRow() {
         return position >= 48 && position <= 55;
     }
 
     /**
-     *
-     * @return
+     *  check if the Piece in the second Row
+     * @return true, check if the Piece in the second Row
      */
     public boolean inOnSecondRow() {
         return position >= 8 && position <= 15;
@@ -197,6 +200,7 @@ public abstract class Piece {
 
     /**
      * Getter of the value of the piece
+     * @return value of the Piece
      */
     public int getValue() {
         return this.color.isWhite() ? this.value : -1 * this.value;
@@ -209,6 +213,7 @@ public abstract class Piece {
 
     /**
      * Getter of the symbol of the piece
+     * @return the Symbol of the Piece
      */
     public abstract String getSymbol();
 

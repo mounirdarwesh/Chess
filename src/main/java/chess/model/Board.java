@@ -31,6 +31,7 @@ public class Board {
     /**
      * Getter of the piece on the board
      * @param position the index of the searched piece
+     * @return get specific piece form Board
      */
     public Piece getPiece(int position) {
         return this.piecesOnBoard.get(position);
@@ -39,6 +40,7 @@ public class Board {
     /**
      * Setter of the board of the game
      * @param piece the board to set
+     * @param position of piece
      */
     public void setPiece(Piece piece, int position) {
         if (piece != null) {
@@ -57,15 +59,15 @@ public class Board {
 
     /**
      * Setting the board as the FEN String
-     * @param fen
+     * @param fen the fen notation ot set
      */
     public void setBoardFromFEN(String fen) {
         this.piecesOnBoard = FenUtilities.loadBoardFromFEN(fen, this);
     }
 
     /**
-     *
-     * @return
+     * getter for all Pieces on Board
+     * @return pieces on the Board
      */
     public List<Piece> getPiecesOnBoard() {
         return this.piecesOnBoard;

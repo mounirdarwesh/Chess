@@ -39,7 +39,6 @@ public class GuiController extends Controller implements EventHandler {
      * A method to get the specified game Setting
      * @param index the index of the specified setting
      * @param str the new setting to replace
-     * @return the specified setting
      */
     public void setGameSettings(int index, String str) {
         gameSettings[index] = str;
@@ -50,6 +49,8 @@ public class GuiController extends Controller implements EventHandler {
 
     /**
      * Setting the scene to the window
+     * @param oldScene the old scene
+     * @param newScene the new scene
      */
     public void setScene(Scene oldScene, Scene newScene) {
         Stage stage = (Stage) oldScene.getWindow();

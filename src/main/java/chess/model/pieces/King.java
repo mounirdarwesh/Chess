@@ -104,30 +104,32 @@ public class King extends Piece {
     }
 
     /**
-     * @return
+     * check if King done King side Castle
+     * @return true, if already done
      */
     public boolean isKingSideCastle() {
         return kingSideCastle;
     }
 
     /**
-     * @return
+     * check if King done Queen side Castle
+     * @return true, if already done
      */
     public boolean isQueenSideCastle() {
         return queenSideCastle;
     }
 
     /**
-     *
-     * @param kingSideCastle
+     * set King side Castle
+     * @param kingSideCastle kingSideCastle
      */
     public void setKingSideCastle(boolean kingSideCastle) {
         this.kingSideCastle = kingSideCastle;
     }
 
     /**
-     *
-     * @param queenSideCastle
+     * set Queen side Castle
+     * @param queenSideCastle queenSideCastle
      */
     public void setQueenSideCastle(boolean queenSideCastle) {
         this.queenSideCastle = queenSideCastle;

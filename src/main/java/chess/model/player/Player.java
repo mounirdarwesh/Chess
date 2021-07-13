@@ -54,14 +54,14 @@ public abstract class Player {
     }
 
     /**
-     *
-     * @param move
+     * tell the Player to make a Move
+     * @param move the Move has to be done
      */
     public abstract void makeMove(Move move);
 
     /**
-     *
-     * @return
+     * calculate the Player all legal Moves
+     * @return list of all legal move
      */
     public List<Move> calculatePlayerMoves() {
         List<Move> legalMoves = new ArrayList<>();

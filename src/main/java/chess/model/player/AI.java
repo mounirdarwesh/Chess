@@ -22,7 +22,7 @@ public class AI extends Player {
 
     /**
      * The constructor of the computer class
-     *
+     * @param game that plays on
      * @param color the color that the computer is left with
      */
     public AI(Color color, Game game) {

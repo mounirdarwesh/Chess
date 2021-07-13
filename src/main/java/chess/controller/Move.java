@@ -1,13 +1,15 @@
 package chess.controller;
 
-import chess.model.*;
 
-import java.util.Map;
+import chess.model.Board;
+import chess.model.pieces.*;
+import chess.util.BoardMapper;
 
 /**
+ * move class
  * @author Gr.45
  */
-public abstract class Move {
+public abstract class Move extends MoveController{
 
     /**
      * The board on which the move is performed
@@ -63,24 +65,10 @@ public abstract class Move {
         return this.destination;
     }
 
-    /**
-     * Getting the string from the position
-     *
-     * @return entry.getKey()
-     */
-    public <K, V> K getKey(Map<K, V> map, V value) {
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
-        String from = getKey(MapBoard.mapper, source);
-        String to = getKey(MapBoard.mapper, destination);
+        String from = BoardMapper.mapPositionToChessNotation(source);
+        String to = BoardMapper.mapPositionToChessNotation(destination);
         return from + "-" + to;
     }
 
@@ -131,21 +119,20 @@ public abstract class Move {
             //Delete the piece on the old position
             fromPiece = piece;
             board.getPiecesOnBoard().set(piece.getPosition(), null);
-            // Set it's new destination
-            piece.setPosition(destination);
+
             // And update it in the list of pieces on the board
-            board.setPiece(piece);
+            board.setPiece(piece, destination);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.isFirstMoved();
+            wasFirstMove = piece.isFirstMoveOnBoard();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = Game.getCurrentPlayer().isAllowEnPassant();
-            Game.getCurrentPlayer().setAllowEnPassant(false);
+            wasEnPassant = game.getEnPassantPawn() == null;
+            Pawn.canMakeEnPassant = false;
 
         }
 
@@ -154,10 +141,9 @@ public abstract class Move {
             // Resitting the preformed move
             board.getPiecesOnBoard().set(destination, null);
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
-            fromPiece.setPosition(fromPiecePosition);
-            board.setPiece(fromPiece);
+            board.setPiece(fromPiece, fromPiecePosition);
             fromPiece.setFirstMove(wasFirstMove);
-            Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
+            Pawn.canMakeEnPassant = wasEnPassant;
         }
 
     }
@@ -238,12 +224,11 @@ public abstract class Move {
             fromKingPiecePosition = piece.getPosition();
             //Delete the King on the old position
             fromKingPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
-            // Set King's new destination
-            piece.setPosition(destination);
-            // And update it in the list of pieces on the board
-            board.setPiece(piece);
 
-            wasKingFirstMove = piece.isFirstMoved();
+            // And update it in the list of pieces on the board
+            board.setPiece(piece, destination);
+
+            wasKingFirstMove = piece.isFirstMoveOnBoard();
             if (wasKingFirstMove) {
                 piece.setFirstMove(false);
             }
@@ -252,21 +237,20 @@ public abstract class Move {
             fromRookPiecePosition = pieceRook.getPosition();
             //Delete the Rook on the old position
             fromRookPiece = board.getPiecesOnBoard().set(pieceRook.getPosition(), null);
-            // Set Rook's new destination
-            pieceRook.setPosition(destinationRook);
+
             // And update it in the list of pieces on the board
-            board.setPiece(pieceRook);
+            board.setPiece(pieceRook, destinationRook);
 
             // Set the first move to false, because this is it's first move
-            wasRookFirstMove = pieceRook.isFirstMoved();
+            wasRookFirstMove = pieceRook.isFirstMoveOnBoard();
             if (wasRookFirstMove) {
                 pieceRook.setFirstMove(false);
             }
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = Game.getCurrentPlayer().isAllowEnPassant();
-            Game.getCurrentPlayer().setAllowEnPassant(false);
+            wasEnPassant = game.getEnPassantPawn() == null;
+            Pawn.canMakeEnPassant = false;
         }
 
         @Override
@@ -274,18 +258,16 @@ public abstract class Move {
             //Resetting the preformed move for the King
             board.getPiecesOnBoard().set(destination, null);
             board.getPiecesOnBoard().set(fromKingPiecePosition, fromKingPiece);
-            fromKingPiece.setPosition(fromKingPiecePosition);
-            board.setPiece(fromKingPiece);
+            board.setPiece(fromKingPiece, fromKingPiecePosition);
             fromKingPiece.setFirstMove(wasKingFirstMove);
 
             //Resetting the preformed move for the Rook
             board.getPiecesOnBoard().set(destinationRook, null);
             board.getPiecesOnBoard().set(fromRookPiecePosition, fromRookPiece);
-            fromRookPiece.setPosition(fromRookPiecePosition);
-            board.setPiece(fromRookPiece);
+            board.setPiece(fromRookPiece, fromRookPiecePosition);
             fromRookPiece.setFirstMove(wasRookFirstMove);
 
-            Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
+            Pawn.canMakeEnPassant = wasEnPassant;
         }
 
     }
@@ -332,7 +314,7 @@ public abstract class Move {
         public void execute() {
 
             //Set the game EnPassant piece
-            Game.setEnPassantPawn(piece);
+            game.setEnPassantPawn(piece);
 
             //Saving the previous position of the piece
             fromPiecePosition = piece.getPosition();
@@ -340,20 +322,18 @@ public abstract class Move {
             //Delete the piece on the old position
             fromPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
 
-            // Set it's new destination
-            piece.setPosition(destination);
             // And update it in the list of pieces on the board
-            board.setPiece(piece);
+            board.setPiece(piece, destination);
 
             // Set the first move to false, because this is it's first move
-            wasFirstMove = piece.isFirstMoved();
+            wasFirstMove = piece.isFirstMoveOnBoard();
             if (wasFirstMove) {
                 piece.setFirstMove(false);
             }
 
             // Allow the enemy to preform an En Passant
-            wasEnPassant = Game.getCurrentPlayer().isAllowEnPassant();
-            Game.getOpponent(Game.getCurrentPlayer()).setAllowEnPassant(true);
+            wasEnPassant = game.getEnPassantPawn() == null;
+            Pawn.canMakeEnPassant = true;
         }
 
         @Override
@@ -362,9 +342,9 @@ public abstract class Move {
             board.getPiecesOnBoard().set(destination, null);
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
             fromPiece.setPosition(fromPiecePosition);
-            board.setPiece(fromPiece);
+            board.setPiece(fromPiece, fromPiecePosition);
             fromPiece.setFirstMove(wasFirstMove);
-            Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
+            Pawn.canMakeEnPassant = wasEnPassant;
         }
     }
 
@@ -421,7 +401,7 @@ public abstract class Move {
             fromPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
 
             // if his first time, should not be anymore.
-            wasFirstMove = piece.isFirstMoved();
+            wasFirstMove = piece.isFirstMoveOnBoard();
             if (wasFirstMove)
                 piece.setFirstMove(false);
 
@@ -429,31 +409,27 @@ public abstract class Move {
             captured = board.getPiecesOnBoard().set(destination, null);
 
             // And add it to player's beaten list
-            Game.addToBeaten(captured);
+            game.addToBeaten(captured);
 
-            // Update the piece's position
-            piece.setPosition(destination);
             // Update the board of pieces
-            board.setPiece(piece);
+            board.setPiece(piece, destination);
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = Game.getCurrentPlayer().isAllowEnPassant();
-            Game.getCurrentPlayer().setAllowEnPassant(false);
+            wasEnPassant = game.getEnPassantPawn() == null;
+            Pawn.canMakeEnPassant = false;
         }
 
         @Override
         public void undo() {
             // Resitting the preformed move
             board.getPiecesOnBoard().set(destination, captured);
-            captured.setPosition(destination);
-            board.setPiece(captured);
+            board.setPiece(captured, destination);
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
-            fromPiece.setPosition(fromPiecePosition);
-            board.setPiece(fromPiece);
-            Game.removeFromBeaten(captured);
+            board.setPiece(fromPiece, fromPiecePosition);
+            game.removeFromBeaten(captured);
             fromPiece.setFirstMove(wasFirstMove);
-            Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
+            Pawn.canMakeEnPassant = wasEnPassant;
         }
     }
 
@@ -516,17 +492,15 @@ public abstract class Move {
             pawnCaptured = board.getPiecesOnBoard().set(pawnCapturedEnPassant, null);
 
             // And add it to player's beaten list
-            Game.addToBeaten(pawnCaptured);
+            game.addToBeaten(pawnCaptured);
 
-            // Update the piece's position
-            piece.setPosition(destination);
             // Update the board of pieces
-            board.setPiece(piece);
+            board.setPiece(piece, destination);
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = Game.getCurrentPlayer().isAllowEnPassant();
-            Game.getCurrentPlayer().setAllowEnPassant(false);
+            wasEnPassant = game.getEnPassantPawn() == null;
+            Pawn.canMakeEnPassant = false;
         }
 
         @Override
@@ -534,13 +508,11 @@ public abstract class Move {
             // Resitting the preformed move
             board.getPiecesOnBoard().set(destination, null);
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
-            fromPiece.setPosition(fromPiecePosition);
-            board.setPiece(fromPiece);
+            board.setPiece(fromPiece, fromPiecePosition);
             board.getPiecesOnBoard().set(pawnCapturedEnPassant, pawnCaptured);
-            pawnCaptured.setPosition(pawnCapturedEnPassant);
-            board.setPiece(pawnCaptured);
-            Game.removeFromBeaten(pawnCaptured);
-            Game.getCurrentPlayer().setAllowEnPassant(wasEnPassant);
+            board.setPiece(pawnCaptured, pawnCapturedEnPassant);
+            game.removeFromBeaten(pawnCaptured);
+            Pawn.canMakeEnPassant = wasEnPassant;
         }
 
     }
@@ -551,11 +523,6 @@ public abstract class Move {
      * @author Gr.45
      */
     public static class PromotionMove extends Move {
-
-        /**
-         * The piece to promote to
-         */
-        private char promoted;
 
         /**
          * Temporary variable for the moved piece
@@ -583,11 +550,9 @@ public abstract class Move {
          * @param board       The board on which the move is executed
          * @param piece       The piece that performs the move
          * @param destination The desired location of the new position
-         * @param promoted    The representation of the piece to promote
          */
-        public PromotionMove(Board board, Piece piece, int destination, char promoted) {
+        public PromotionMove(Board board, Piece piece, int destination) {
             super(board, piece, destination);
-            this.promoted = promoted;
         }
 
         @Override
@@ -602,14 +567,14 @@ public abstract class Move {
             // Check if the pawn captured a piece to promote
             if (captured != null) {
                 // Then add it to beaten figures
-                Game.addToBeaten(board.getPiecesOnBoard().get(destination));
+                game.addToBeaten(board.getPiecesOnBoard().get(destination));
             }
 
             // Remove the piece from the board
             fromPiece = board.getPiecesOnBoard().set(piece.getPosition(), null);
 
             // Switch through the possible promotion
-            switch (Character.toLowerCase(promoted)) {
+            switch (Character.toLowerCase(game.getCharToPromote())) {
                 case 'q':
                 case ' ':
                     promoteQueen();
@@ -632,7 +597,7 @@ public abstract class Move {
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            Game.getCurrentPlayer().setAllowEnPassant(false);
+            Pawn.canMakeEnPassant = false;
         }
 
         /**
@@ -642,14 +607,14 @@ public abstract class Move {
             // Create a new  Queen
             promotedPiece = new Queen(destination, piece.getColor(), board);
             // add it to the list of pieces on the board
-            board.setPiece(promotedPiece);
+            board.setPiece(promotedPiece, destination);
             // Add update the available pieces for the current player
-            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            game.getCurrentPlayer().getPlayerPieces().remove(piece);
             // remove the Promoted Piece from Beaten.
-            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+            for (Piece piece : game.getCurrentPlayer().getBeaten()) {
                 if (piece instanceof Queen && this.piece.getColor() == piece.getColor()) {
-                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    game.getCurrentPlayer().getBeaten().remove(piece);
                     break;
                 }
             }
@@ -662,14 +627,14 @@ public abstract class Move {
             // Create a new  Rook
             promotedPiece = new Rook(destination, piece.getColor(), board);
             // And add it to the list of pieces on the board
-            board.setPiece(promotedPiece);
+            board.setPiece(promotedPiece, destination);
             // Add update the available pieces for the current player
-            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            game.getCurrentPlayer().getPlayerPieces().remove(piece);
             // remove the Promoted Piece from Beaten.
-            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+            for (Piece piece : game.getCurrentPlayer().getBeaten()) {
                 if (piece instanceof Rook && this.piece.getColor() == piece.getColor()) {
-                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    game.getCurrentPlayer().getBeaten().remove(piece);
                     break;
                 }
             }
@@ -682,14 +647,14 @@ public abstract class Move {
             // Create a new  Knight
             promotedPiece = new Knight(destination, piece.getColor(), board);
             // And add it to the list of pieces on the board
-            board.setPiece(promotedPiece);
+            board.setPiece(promotedPiece, destination);
             // Add update the available pieces for the current player
-            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            game.getCurrentPlayer().getPlayerPieces().remove(piece);
             // remove the Promoted Piece from Beaten.
-            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+            for (Piece piece : game.getCurrentPlayer().getBeaten()) {
                 if (piece instanceof Knight && this.piece.getColor() == piece.getColor()) {
-                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    game.getCurrentPlayer().getBeaten().remove(piece);
                     break;
                 }
             }
@@ -702,14 +667,14 @@ public abstract class Move {
             // Create a new Bishop
             promotedPiece = new Bishop(destination, piece.getColor(), board);
             // And add it to the list of pieces on the board
-            board.setPiece(promotedPiece);
+            board.setPiece(promotedPiece, destination);
             // Add update the available pieces for the current player
-            Game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
-            Game.getCurrentPlayer().getPlayerPieces().remove(piece);
+            game.getCurrentPlayer().getPlayerPieces().add(promotedPiece);
+            game.getCurrentPlayer().getPlayerPieces().remove(piece);
             // remove the Promoted Piece from Beaten.
-            for (Piece piece : Game.getCurrentPlayer().getBeaten()) {
+            for (Piece piece : game.getCurrentPlayer().getBeaten()) {
                 if (piece instanceof Bishop && this.piece.getColor() == piece.getColor()) {
-                    Game.getCurrentPlayer().getBeaten().remove(piece);
+                    game.getCurrentPlayer().getBeaten().remove(piece);
                     break;
                 }
             }
@@ -718,14 +683,13 @@ public abstract class Move {
         @Override
         public void undo() {
             if (captured != null) {
-                Game.removeFromBeaten(captured);
+                game.removeFromBeaten(captured);
             }
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
-            fromPiece.setPosition(fromPiecePosition);
-            board.setPiece(fromPiece);
+            board.setPiece(fromPiece, fromPiecePosition);
             board.getPiecesOnBoard().set(destination, captured);
-            Game.getCurrentPlayer().removeFromPlayersPieces(promotedPiece);
-            Game.getCurrentPlayer().addToPlayersPieces(fromPiece);
+            game.getCurrentPlayer().removeFromPlayersPieces(promotedPiece);
+            game.getCurrentPlayer().addToPlayersPieces(fromPiece);
         }
     }
 

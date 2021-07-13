@@ -1,11 +1,15 @@
 package chess.controller;
 
-import chess.view.Cli;
+
+import chess.Attributes;
 import chess.model.*;
+import chess.model.pieces.*;
+import chess.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,21 +35,21 @@ public class CliControllerTest {
 
     }
 
-    /**
+   /* *//**
      * Test a move from position(source position)
-     */
+     *//*
     @Test
     public void getMoveFromPosition() {
         assertEquals(8, cli.getMoveFromPosition("a2-a3"));
     }
 
-    /**
+    *//**
      * Test a move to position(destination position)
-     */
+     *//*
     @Test
     public void getMoveToPosition() {
         assertEquals(16, cli.getMoveToPosition("a2-a3"));
-    }
+    }*/
 
     /**
      * Test if a move is valid
@@ -64,18 +68,23 @@ public class CliControllerTest {
      * get captured Pieces test
      */
     @Test
-    public void getBeatenPieces() {
+    public void getBeatenPiecesBlack() {
         List<Piece> expected = new ArrayList<>();
-/*      Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
-        Piece queen = new Queen(27, Attributes.Color.BLACK, board);
-        Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
-        Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
-        Piece bishopB = new Bishop(62, Attributes.Color.BLACK, board);
+        Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
+        cli.getBeatenPieces().add(0,pawn);
         expected.add(pawn);
-        expected.add(queen);
-        expected.add(rookB);
-        expected.add(knightB);
-        expected.add(bishopB);*/
+        assertEquals(expected.toString(), cli.getBeatenPieces().toString());
+    }
+
+    /**
+     * get captured Pieces test
+     */
+    @Test
+    public void getBeatenPiecesWhite() {
+        List<Piece> expected = new ArrayList<>();
+        Piece pawn = new Pawn(50, Attributes.Color.WHITE, board);
+        cli.getBeatenPieces().add(0,pawn);
+        expected.add(pawn);
         assertEquals(expected.toString(), cli.getBeatenPieces().toString());
     }
 }

@@ -1,8 +1,11 @@
 package chess.controller;
 
 import chess.Attributes;
-import chess.view.Cli;
 import chess.model.*;
+import chess.model.game.CliGame;
+import chess.model.game.Game;
+import chess.model.pieces.*;
+import chess.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,58 +23,72 @@ public class MoveTest {
     Cli view = new Cli();
     CliController cli = new CliController(view, true, true);
     Board board = new Board();
-    Player player = new HumanPlayer(Attributes.Color.BLACK);
-    Player player2 = new HumanPlayer(Attributes.Color.WHITE);
-    Game game = new Game(cli, board, player, player2);
+    Game game = new CliGame(cli);
 
+    ArrayList<Move> expected48 = new ArrayList<>();
+    ArrayList<Move> expected55 = new ArrayList<>();
+    Piece pawnW48 = new Pawn(48, Attributes.Color.WHITE, board);
+    Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
+    Piece pawnW53 = new Pawn(53, Attributes.Color.WHITE, board);
+    Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
+    Piece bishopB = new Bishop(62, Attributes.Color.BLACK, board);
     /**
      * Test the promotion of a pawn
      */
     @Test
     public void PromotionMove() {
-        ArrayList<Move> expected48 = new ArrayList<>();
-        ArrayList<Move> expected55 = new ArrayList<>();
-        Piece pawnW48 = new Pawn(48, Attributes.Color.WHITE, board);
-        Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
-        Piece pawnW53 = new Pawn(53, Attributes.Color.WHITE, board);
-        Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
-        Piece bishopB = new Bishop(62, Attributes.Color.BLACK, board);
         int fromPosition = pawnW48.getPosition();
         assertEquals(48, fromPosition);
-        Move m1 = new Move.PromotionMove(board, pawnW48, 56, 'Q');
+        // 'Q'
+        Move m1 = new Move.PromotionMove(board, pawnW48, 56);
         expected48.add(m1);
-        Move m2 = new Move.PromotionMove(board, pawnW48, 57, 'N');
+        //'N'
+        Move m2 = new Move.PromotionMove(board, pawnW48, 57);
         expected48.add(m2);
-        Move m3 = new Move.PromotionMove(board, pawnW53, 61, ' ');
+        //' '
+        Move m3 = new Move.PromotionMove(board, pawnW53, 61);
         expected55.add(m3);
-        Move m4 = new Move.PromotionMove(board, pawnW53, 60, 'R');
+        //'R'
+        Move m4 = new Move.PromotionMove(board, pawnW53, 60);
         expected55.add(m4);
-        Move m5 = new Move.PromotionMove(board, pawnW53, 62, 'B');
+        //'B'
+        Move m5 = new Move.PromotionMove(board, pawnW53, 62);
+
         expected55.add(m5);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(pawnW48);
-        board.setPiece(pawnW53);
-        board.setPiece(rookB);
-        board.setPiece(bishopB);
-        board.setPiece(knightB);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(pawnW48, pawnW48.getPosition());
+        board.setPiece(pawnW53, pawnW53.getPosition());
+        board.setPiece(rookB, rookB.getPosition());
+        board.setPiece(bishopB, bishopB.getPosition());
+        board.setPiece(knightB, knightB.getPosition());
 
         pawnW48.calculateLegalMoves();
         pawnW53.calculateLegalMoves();
-        Game.getCurrentPlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
-        Game.getCurrentPlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
-        Game.getCurrentPlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
-        Game.getCurrentPlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
+        game.setCurrentPlayer(game.getWhitePlayer());
+        game.getCurrentPlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
 
-        player.makeMove(m1);
-        player.makeMove(m2);
-        player.makeMove(m3);
-        player.makeMove(m4);
-        player.makeMove(m5);
+        // if a Promoted Figure was beaten the remove, they must removed
+        cli.getGame().getWhitePlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
 
-
+        cli.getGame().setCharToPromote('Q');
+        game.getWhitePlayer().makeMove(m1);
+        cli.getGame().setCharToPromote('N');
+        game.getWhitePlayer().makeMove(m2);
+        cli.getGame().setCharToPromote(' ');
+        game.getWhitePlayer().makeMove(m3);
+        cli.getGame().setCharToPromote('R');
+        game.getWhitePlayer().makeMove(m4);
+        cli.getGame().setCharToPromote('B');
+        game.getWhitePlayer().makeMove(m5);
+        m5.undo();
         assertEquals(expected48.toString(), pawnW48.getAllLegalMoves().toString());
         assertEquals(expected55.toString(), pawnW53.getAllLegalMoves().toString());
-
     }
 
     /**
@@ -101,18 +118,18 @@ public class MoveTest {
 
         kingW4.setFirstMove(true);
         rookW7.setFirstMove(true);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingW4);
-        board.setPiece(rookW7);
-        board.setPiece(bishopW12);
-        board.setPiece(pawnW11);
-        board.setPiece(pawnW13);
-        board.setPiece(pawnW14);
-        board.setPiece(pawnW15);
-        board.setPiece(queenW3);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(kingW4, kingW4.getPosition());
+        board.setPiece(rookW7, rookW7.getPosition());
+        board.setPiece(bishopW12, bishopW12.getPosition());
+        board.setPiece(pawnW11, pawnW11.getPosition());
+        board.setPiece(pawnW13, pawnW13.getPosition());
+        board.setPiece(pawnW14, pawnW14.getPosition());
+        board.setPiece(pawnW15, pawnW15.getPosition());
+        board.setPiece(queenW3, queenW3.getPosition());
         kingW4.calculateLegalMoves();
         rookW7.calculateLegalMoves();
-        player.makeMove(mk2);
+        game.getWhitePlayer().makeMove(mk2);
 
         assertEquals(expectedK.toString(), kingW4.getAllLegalMoves().toString());
         assertEquals(expectedR.toString(), rookW7.getAllLegalMoves().toString());
@@ -150,19 +167,19 @@ public class MoveTest {
 
         kingW4.setFirstMove(true);
         rookW0.setFirstMove(true);
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(kingW4);
-        board.setPiece(rookW0);
-        board.setPiece(bishopW11);
-        board.setPiece(pawnW8);
-        board.setPiece(pawnW13);
-        board.setPiece(pawnW12);
-        board.setPiece(pawnW10);
-        board.setPiece(pawnW9);
-        board.setPiece(queenW5);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(kingW4, kingW4.getPosition());
+        board.setPiece(rookW0, rookW0.getPosition());
+        board.setPiece(bishopW11, bishopW11.getPosition());
+        board.setPiece(pawnW8, pawnW8.getPosition());
+        board.setPiece(pawnW13, pawnW13.getPosition());
+        board.setPiece(pawnW12, pawnW12.getPosition());
+        board.setPiece(pawnW10, pawnW10.getPosition());
+        board.setPiece(pawnW9, pawnW9.getPosition());
+        board.setPiece(queenW5, queenW5.getPosition());
         kingW4.calculateLegalMoves();
         rookW0.calculateLegalMoves();
-        player.makeMove(mk2);
+        game.getWhitePlayer().makeMove(mk2);
 
         assertEquals(expectedK.toString(), kingW4.getAllLegalMoves().toString());
         assertEquals(expectedR.toString(), rookW0.getAllLegalMoves().toString());
@@ -175,30 +192,31 @@ public class MoveTest {
     @Test
     public void EnPassantMove() {
 
-        board.setPiecesOnBoard(EMPTY_FEN);
+        board.setBoardFromFEN(EMPTY_FEN);
         ArrayList<Move> expected = new ArrayList<>();
         Piece pawnPassant = new Pawn(35, Attributes.Color.WHITE, board);
         pawnPassant.setFirstMove(false);
-        board.setPiece(pawnPassant);
-        player2.addToPlayersPieces(pawnPassant);
+        board.setPiece(pawnPassant, pawnPassant.getPosition());
+        game.getBlackPlayer().addToPlayersPieces(pawnPassant);
 
         Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
-        board.setPiece(pawn);
-        player.addToPlayersPieces(pawn);
+        board.setPiece(pawn, pawn.getPosition());
+        game.getWhitePlayer().addToPlayersPieces(pawn);
 
         pawn.setFirstMove(true);
         Move m0 = new Move.DoublePawnMove(board, pawn, 34);
-        player.makeMove(m0);
+        game.getWhitePlayer().makeMove(m0);
 
         Move m1 = new Move.NormalMove(board, pawnPassant, 43);
         expected.add(m1);
         Move m2 = new Move.EnPassantMove(board, pawnPassant, 42, 34);
         expected.add(m2);
 
-        player2.setAllowEnPassant(true);
+        //game.getBlackPlayer().setAllowEnPassant(true);
+        game.setEnPassantPawn(pawnPassant);
         pawnPassant.calculateLegalMoves();
         assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
-        player.makeMove(m2);
+        game.getWhitePlayer().makeMove(m2);
         m2.undo();
     }
 
@@ -223,14 +241,15 @@ public class MoveTest {
         Move m4 = new Move.CaptureMove(board, rookW, 43);
         expected.add(m4);
 
-        board.setPiecesOnBoard(EMPTY_FEN);
-        board.setPiece(bishop);
-        board.setPiece(pawn);
-        board.setPiece(knight);
-        board.setPiece(rookW);
-        board.setPiece(queen);
+        board.setBoardFromFEN(EMPTY_FEN);
+        board.setPiece(bishop, bishop.getPosition());
+        board.setPiece(pawn, pawn.getPosition());
+        board.setPiece(knight, knight.getPosition());
+        board.setPiece(rookW, rookW.getPosition());
+        board.setPiece(queen, queen.getPosition());
         rookW.calculateLegalMoves();
-        player.makeMove(m1);
+        game.getWhitePlayer().makeMove(m1);
+        m1.undo();
         assertEquals(expected.toString(), rookW.getAllLegalMoves().toString());
     }
 

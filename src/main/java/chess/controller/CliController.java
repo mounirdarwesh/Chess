@@ -1,18 +1,25 @@
 package chess.controller;
 
-import java.util.regex.Matcher;
-
 import chess.Attributes;
-import chess.Attributes.Color;
-import chess.model.*;
-import chess.view.Cli;
+import chess.model.game.CliGame;
+import chess.model.pieces.Piece;
+import chess.model.player.AI;
+import chess.model.player.HumanPlayer;
+import chess.model.player.Player;
+import chess.view.cli.Cli;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * The Controller class for the Command Line Interface
- *
+ * controller of cli class
  * @author Gr.45
  */
 public class CliController extends Controller {
+
+    /**
+     * view of the cli controller
+     */
+    private Cli cliView;
 
     /**
      * The move to be performed on the piece
@@ -20,128 +27,41 @@ public class CliController extends Controller {
     private Move move;
 
     /**
-     *
+     * Pattern to verify the syntax of the User Input
      */
-    private Cli view;
-
-    /**
-     * Chess Clock of Cli
-     */
-    ChessClock chessClock;
-    /**
-     * check if the Timer Running
-     */
-    boolean isClockRunning = false;
+    protected static final Pattern VALID_INPUT = Pattern.compile(
+            "([a-h][1-8])([-])([a-h][1-8])([QRNBqrnb]?)", Pattern.CASE_INSENSITIVE);
 
     /**
      * The constructor expects a view to construct itself.
-     *
-     * @param view     The view that is connected to this controller
-     * @param FINISHED game status for the sake of TEST
+     * @param cliView The view that is connected to this controller
+     * @param finished boolean if the game is finished
      */
-    public CliController(Cli view, boolean FINISHED, boolean simpleGame) {
-        super(view);
-        this.view = view;
-        // Assigning the controller
-        view.assignController(this);
-
+    public CliController(Cli cliView, boolean finished, boolean simpleGame) {
+        this.cliView = cliView;
         if (!simpleGame) {
             // Showing the welcome screen
-            view.showWelcomeScreen();
+            cliView.showWelcomeScreen();
             // Getting the game mode
-            view.gameMode();
-
+            cliView.gameMode();
         }
 
-        // Start screen for the CLI
-        startScreen(FINISHED);
-    }
 
-    /**
-     * This will be called when someone interacts with the Command Line Interface
-     *
-     * @param FINISHED game status
-     */
-    private void startScreen(boolean FINISHED) {
-        Player opponent;
-        // Create a new game
-        if (gameMode == Attributes.GameMode.COMPUTER) {
-            opponent = new Computer(Color.BLACK);
-        } else if (gameMode == Attributes.GameMode.COMPUTER_TIMER) {
-            opponent = new Computer(Color.BLACK);
-            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
-            chessClock.start();
-            isClockRunning = true;
-        } else if (gameMode == Attributes.GameMode.HUMAN_TIMER) {
-            opponent = new HumanPlayer(Color.BLACK);
-            chessClock = new ChessClock(this, Long.parseLong(view.getTime()));
-            chessClock.start();
-            isClockRunning = true;
-        } else {
-            opponent = new HumanPlayer(Color.BLACK);
-        }
-        game = new Game(this,
-                new Board(),
-                new HumanPlayer(Color.WHITE),
-                opponent);
+        //Connecting the controller to the view
+        cliView.setController(this);
 
-        // Set the game to the CLI view
-        view.setGame(game);
-
-        // set initial status of the game
-        game.setFINISHED(FINISHED);
-
-        // Start the game
+        // Creating a new Game
+        game = new CliGame(this);
+        game.setFINISHED(finished);
+        cliView.setGame(game);
+        new MoveController().setGame(game);
         game.run();
-
-    }
-
-
-    /**
-     * The controller process the input from the player
-     */
-    @Override
-    public void processInputFromPlayer() {
-
-        // The current player of the game
-        Player currentPlayer = game.getCurrentPlayer();
-
-        // Read the input from the view
-        if (currentPlayer instanceof HumanPlayer) {
-            view.readInputFromHuman();
-        }
-
-        if(currentPlayer.hasPlayerUndidAMove()
-                || currentPlayer.hasPlayerRedidAMove()) return;
-
-        if (currentPlayer instanceof HumanPlayer) {
-            currentPlayer.makeMove(move);
-            // Print the left Time after each Move.
-            if (isClockRunning)
-                System.out.println(chessClock.getLeftTime(currentPlayer.getColor()));
-        } else if (currentPlayer instanceof Computer) {
-            Move computerMove;
-            do {
-                computerMove = ((Computer) currentPlayer).evaluate();
-            } while (!view.readInputFromComputer(computerMove.toString()));
-            currentPlayer.makeMove(computerMove);
-        }
-    }
-
-    /**
-     * @param status The status of the game
-     * @param player The player
-     */
-    @Override
-    public void notifyView(Attributes.GameStatus status, Player player) {
-        view.notifyUser(status, player);
     }
 
 
     /**
      * Here where the controller checks if the user inputed
      * a syntactically valid input
-     *
      * @param input The input form the player
      * @return true, if the input is syntactically correct, false otherwise
      */
@@ -151,36 +71,65 @@ public class CliController extends Controller {
     }
 
     /**
+     * Process the User Inputs and handle the player Type
+     */
+    public void processInputFromPlayer() {
+
+        // The current player of the game
+        Player currentPlayer = game.getCurrentPlayer();
+
+        // Read the input from the view
+        if (currentPlayer instanceof HumanPlayer) {
+            cliView.readInputFromHuman();
+            return;
+        }
+
+        if(currentPlayer.hasPlayerUndidAMove()
+                || currentPlayer.hasPlayerRedidAMove()) return;
+
+        if (currentPlayer instanceof AI) {
+            Move computerMove;
+            do {
+                computerMove = ((AI) currentPlayer).evaluate();
+            } while (!cliView.readInputFromComputer(computerMove.toString()));
+            currentPlayer.makeMove(computerMove);
+        }
+    }
+
+    /**
      * Check if the input from the player is a valid move
      *
      * @param input The input from the player
      * @return true if the input is a valid move, false otherwise
      */
     public boolean isValidMove(String input) {
-
         // If the player adds an extra character for pawn promotion
         checkForPromotedChar(input);
 
+        String[] inputMove = input.split("-");
+
         // Calculate from where the move is performed
-        int move_from = getMoveFromPosition(input);
+        int move_from = filterPositionFromChessFormat(inputMove[0].charAt(0),
+                Integer.parseInt(String.valueOf(inputMove[0].charAt(1))));
+        //Get the piece on that position
+        Piece piece = game.getBoard().getPiece(move_from);
+        if(piece == null) return false;
         // Calculate to where the move is performed
-        int move_to = getMoveToPosition(input);
+        int move_to = filterPositionFromChessFormat(inputMove[1].charAt(0),
+                Integer.parseInt(String.valueOf(inputMove[1].charAt(1))));
 
-
-        // Check if the game allows the move from the current player
-        if (!game.isMoveAllowed(move_from, move_to)) {
+        if(piece.getColor() != game.getCurrentPlayer().getColor()) {
             return false;
         }
-
-        this.move = game.getAllowedMove();
+        // Check if the game allows the move from the current player
+        game.processMoveFromPlayer(piece, move_to);
 
         // If the game verifies the move than notify the player
-        return true;
+        return game.getAllowedMove() != null;
     }
 
     /**
      * Checking if the player inputs an extra character to promote the pawn
-     *
      * @param input User Input
      */
     private void checkForPromotedChar(String input) {
@@ -188,22 +137,14 @@ public class CliController extends Controller {
             game.setCharToPromote(input.charAt(5));
         } catch (IndexOutOfBoundsException e) {
             game.setCharToPromote(' ');
-            return;
         }
     }
 
-
     /**
-     * Setter for the game mode
-     *
-     * @param gameMode Mode of the game (Human,Human with timer, AI, AI with Timer)
+     * @param status The status of the game
+     * @param player The player
      */
-    public void setGameMode(Attributes.GameMode gameMode) {
-        this.gameMode = gameMode;
-    }
-
-    @Override
-    public void showTime(String time) {
-        System.out.println(time);
+    public void notifyView(Attributes.GameStatus status, Player player) {
+        cliView.notifyUser(status, player);
     }
 }

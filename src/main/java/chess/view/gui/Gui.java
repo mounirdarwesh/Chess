@@ -269,6 +269,5 @@ public class Gui extends Application implements View, Observer {
     public void update() {
         gameView.updateState();
         primaryStage.setScene(gameView.asScene());
-        primaryStage.centerOnScreen();
     }
 }

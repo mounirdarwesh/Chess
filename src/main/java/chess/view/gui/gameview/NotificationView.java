@@ -49,7 +49,7 @@ public class NotificationView {
     /**
      * Container for the Timer
      */
-    HBox timeRemainingContainer = new HBox();
+    private HBox timeRemainingContainer = new HBox();
 
     /**
      * constructor of the class
@@ -92,7 +92,7 @@ public class NotificationView {
     }
 
     /**
-     * shoe the Remaining Time
+     * show the Remaining Time
      */
     public void showTimeRemaining() {
         HBox.setMargin(timeRemainingContainer, new Insets(0, 0, 0, 20));

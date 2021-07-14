@@ -1,6 +1,8 @@
 package chess.view.gui.gameview;
 
 import chess.model.game.Game;
+import chess.model.game.GuiGame;
+import chess.model.game.LANGame;
 import chess.model.player.AI;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -95,15 +97,15 @@ public class HistoryView {
         if (game.getAllowedMove() == null) return;
         historyMoves.add(game.getAllowedMove().toString());
         if(game.getOpponent() instanceof AI) {
-            Label aiHistory = new Label("AI: " + game.getAllowedMove().toString());
-            aiHistory.setFont(new Font(20));
+            Label aiHistory = new Label("AI:  " + game.getAllowedMove().toString());
+            aiHistory.setFont(new Font(17));
             aiHistory.setTextFill(Color.BLACK);
             historyViewContainer.getChildren().add(aiHistory);
             return;
         }
-        Label history = new Label(game.getOpponent() + " " + game.getAllowedMove().toString());
+        Label history = new Label(game.getAllowedMove().toString());
         historyViewContainer.getChildren().add(history);
-        history.setFont(new Font(20));
+        history.setFont(new Font(17));
         history.setTextFill(Color.BLACK);
         history.setOnMouseClicked(event -> {
             if(game.getController().getGameSettings()[1].contains("0")) return;

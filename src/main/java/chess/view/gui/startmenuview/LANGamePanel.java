@@ -12,7 +12,7 @@ public class LANGamePanel {
     /**
      * The Panel
      */
-    private VBox lanGamePanel;
+    private VBox lanGamePanelContainer;
 
     /**
      * The Host button, so the user can host a LAN game
@@ -30,12 +30,12 @@ public class LANGamePanel {
      * @param startMenuView view of the start Menu
      */
     public LANGamePanel(StartMenuView startMenuView) {
-        lanGamePanel = new VBox();
-        startMenuView.getParent().setPanelStyle(lanGamePanel);
+        lanGamePanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(lanGamePanelContainer);
 
         // Creating the buttons
-        host = startMenuView.getParent().createButton("Host Game", lanGamePanel);
-        join = startMenuView.getParent().createButton("Join Game", lanGamePanel);
+        host = startMenuView.getParent().createButton("Host Game", lanGamePanelContainer);
+        join = startMenuView.getParent().createButton("Join Game", lanGamePanelContainer);
     }
 
     /**
@@ -59,6 +59,6 @@ public class LANGamePanel {
      * @return  VBox
      */
     public VBox asPanel() {
-        return lanGamePanel;
+        return lanGamePanelContainer;
     }
 }

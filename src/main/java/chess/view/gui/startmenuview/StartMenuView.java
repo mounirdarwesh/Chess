@@ -10,12 +10,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Start Menu Scene of the GUI
@@ -98,25 +95,20 @@ public class StartMenuView {
      * Adding a background Image to the Scene
      */
     private void addBackgroundImage() {
-        try {
-            InputStream background = Files.newInputStream(Paths.get("src/main/res/background.jpg"));
-            Image bgImg = new Image(background);
-            root.setBackground(new Background(new BackgroundImage(bgImg,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.CENTER,
-                    new BackgroundSize(1.0, 1.0,
-                            true, true, false, false)
-            )));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Image bgImg = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/background.jpg")));
+        root.setBackground(new Background(new BackgroundImage(bgImg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(1.0, 1.0,
+                        true, true, false, false)
+        )));
     }
 
     /**
      * Creating a showing a message while someone tries to join the LAN server
      */
-    private void showWaitForResponseMessage() {
+    public void showWaitForResponseMessage() {
         gameModePanel.getChildren().clear();
         ProgressIndicator progress = new ProgressIndicator();
         parent.createTitleText("Waiting for someone to join the Server", 20, gameModePanel);

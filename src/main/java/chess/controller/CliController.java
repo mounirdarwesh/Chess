@@ -23,11 +23,6 @@ public class CliController extends Controller {
     private Cli cliView;
 
     /**
-     * The move to be performed on the piece
-     */
-    private Move move;
-
-    /**
      * the status of the game for the tests
      */
     private boolean finished;

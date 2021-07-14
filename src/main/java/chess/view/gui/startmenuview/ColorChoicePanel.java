@@ -9,14 +9,9 @@ import javafx.scene.layout.VBox;
 public class ColorChoicePanel {
 
     /**
-     * The parent
-     */
-    private StartMenuView startMenuView;
-
-    /**
      * The panel
      */
-    private VBox colorChoicePanel;
+    private VBox colorChoicePanelContainer;
 
     /**
      * The White pieces button
@@ -33,14 +28,13 @@ public class ColorChoicePanel {
      * @param startMenuView view of the start menu
      */
     public ColorChoicePanel(StartMenuView startMenuView) {
-        this.startMenuView = startMenuView;
-        colorChoicePanel = new VBox();
-        startMenuView.getParent().setPanelStyle(colorChoicePanel);
+        colorChoicePanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(colorChoicePanelContainer);
 
-        startMenuView.getParent().createTitleText("Choose The Color of Your Pieces", 20, colorChoicePanel);
+        startMenuView.getParent().createTitleText("Choose The Color of Your Pieces", 20, colorChoicePanelContainer);
 
-        whiteButton = startMenuView.getParent().createButton("White", colorChoicePanel);
-        blackButton = startMenuView.getParent().createButton("Black", colorChoicePanel);
+        whiteButton = startMenuView.getParent().createButton("White", colorChoicePanelContainer);
+        blackButton = startMenuView.getParent().createButton("Black", colorChoicePanelContainer);
     }
 
     /**
@@ -64,7 +58,7 @@ public class ColorChoicePanel {
      * @return VBox
      */
     public VBox asPanel() {
-        return colorChoicePanel;
+        return colorChoicePanelContainer;
     }
 
 }

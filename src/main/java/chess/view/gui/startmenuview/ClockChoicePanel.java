@@ -1,7 +1,7 @@
 package chess.view.gui.startmenuview;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /**
@@ -10,20 +10,19 @@ import javafx.scene.layout.VBox;
 public class ClockChoicePanel {
 
     /**
-     * The parent
-     */
-    private StartMenuView startMenuView;
-
-
-    /**
      * The panel
      */
-    private VBox clockChoicePanel;
+    private VBox clockChoicePanelContainer;
 
     /**
-     * timer option
+     * White timer option
      */
-    private ChoiceBox<String> timerOptions;
+    private TextField whiteTimerOptions;
+
+    /**
+     * Black timer option
+     */
+    private TextField blackTimerOptions;
 
     /**
      *start game button
@@ -35,26 +34,37 @@ public class ClockChoicePanel {
      * @param startMenuView view of the start menu
      */
     public ClockChoicePanel(StartMenuView startMenuView) {
-        this.startMenuView = startMenuView;
-        clockChoicePanel = new VBox();
-        startMenuView.getParent().setPanelStyle(clockChoicePanel);
+        clockChoicePanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(clockChoicePanelContainer);
 
-        startMenuView.getParent().createTitleText("Choose A Clock Time", 20, clockChoicePanel);
+        startMenuView.getParent().createTitleText("Choose A Clock Time", 20, clockChoicePanelContainer);
 
-        timerOptions = new ChoiceBox<>();
-        timerOptions.getItems().addAll("None", "1","2","3","4","5","10","15","20","30","40","50","60");
-        clockChoicePanel.getChildren().add(timerOptions);
+        whiteTimerOptions = new TextField();
+        whiteTimerOptions.setPromptText("White Player Time in sec");
+        clockChoicePanelContainer.getChildren().add(whiteTimerOptions);
 
-        startGameButton = startMenuView.getParent().createButton("Start Game", clockChoicePanel);
-        startGameButton.setDisable(true);
+
+        blackTimerOptions = new TextField();
+        blackTimerOptions.setPromptText("Black Player Time in sec");
+        clockChoicePanelContainer.getChildren().add(blackTimerOptions);
+
+        startGameButton = startMenuView.getParent().createButton("Start Game", clockChoicePanelContainer);
     }
 
     /**
      * getter of the timerOption
      * @return ChoiceBox
      */
-    public ChoiceBox<String> getTimerOptions() {
-        return timerOptions;
+    public TextField getWhiteTimerOptions() {
+        return whiteTimerOptions;
+    }
+
+    /**
+     * getter of the timerOption
+     * @return ChoiceBox
+     */
+    public TextField getBlackTimerOptions() {
+        return blackTimerOptions;
     }
 
     /**
@@ -70,6 +80,6 @@ public class ClockChoicePanel {
      * @return VBox
      */
     public VBox asPanel() {
-        return clockChoicePanel;
+        return clockChoicePanelContainer;
     }
 }

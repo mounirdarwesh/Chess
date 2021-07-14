@@ -11,24 +11,14 @@ import javafx.scene.layout.VBox;
 public class JoinHostPanel {
 
     /**
-     * The parent
-     */
-    private StartMenuView startMenuView;
-
-    /**
      * panel of the join host
      */
-    private VBox joinHostPanel;
+    private VBox joinHostPanelContainer;
 
     /**
      * text field for the ip address
      */
     private TextField ip;
-
-    /**
-     * text field for the port number
-     */
-    private TextField port;
 
     /**
      * join game button
@@ -40,15 +30,13 @@ public class JoinHostPanel {
      * @param startMenuView view of the start menu
      */
     public JoinHostPanel(StartMenuView startMenuView) {
-        this.startMenuView = startMenuView;
-        joinHostPanel = new VBox();
-        startMenuView.getParent().setPanelStyle(joinHostPanel);
+        joinHostPanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(joinHostPanelContainer);
 
-        startMenuView.getParent().createTitleText("Enter LAN Settings", 20, joinHostPanel);
+        startMenuView.getParent().createTitleText("Enter LAN Settings", 20, joinHostPanelContainer);
 
-        ip = startMenuView.createTextField("IP Address", joinHostPanel);
-        port = startMenuView.createTextField("Port", joinHostPanel);
-        joinGame = startMenuView.getParent().createButton("Join Game", joinHostPanel);
+        ip = startMenuView.createTextField("IP Address", joinHostPanelContainer);
+        joinGame = startMenuView.getParent().createButton("Join Game", joinHostPanelContainer);
         joinGame.setDisable(true);
 
     }
@@ -59,14 +47,6 @@ public class JoinHostPanel {
      */
     public Button getJoinGameButton() {
         return joinGame;
-    }
-
-    /**
-     * getter of the portNrField
-     * @return TextField
-     */
-    public TextField getPortNrField() {
-        return port;
     }
 
     /**
@@ -82,6 +62,6 @@ public class JoinHostPanel {
      * @return VBox
      */
     public VBox asPanel() {
-        return joinHostPanel;
+        return joinHostPanelContainer;
     }
 }

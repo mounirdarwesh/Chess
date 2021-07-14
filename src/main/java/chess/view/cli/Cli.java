@@ -90,7 +90,7 @@ public class Cli implements View, Observer {
                 input = scanner.nextLine();
                 continue;
             }
-             else {
+            else {
                 System.out.println("!" + input);
                 game.getCurrentPlayer().setHasPlayerUndidAMove(false);
                 game.getCurrentPlayer().setHasPlayerRedidAMove(false);
@@ -140,42 +140,70 @@ public class Cli implements View, Observer {
      * @param finished if the loop finished
      */
     public void gameMode(boolean finished) {
-        boolean finish = false;
+        boolean gameModeFinish = finished;
         String gameMode;
-        while (!finished) {
+        while (!gameModeFinish) {
             gameMode = scanner.nextLine().toLowerCase(Locale.ROOT);
             if (gameMode.equals("1")) {
                 controller.setGameSettings(4, "0");
-                scanTime();
+                System.out.println("Please Enter the Game Time (Enter 0 if you wish to play without Timer): ");
+                System.out.println("With inputting the keyword 'time' you can see how much time you have.");
+                scanWhiteTime();
+                scanBlackTime();
             } else if (gameMode.equals("2")) {
                 controller.setGameSettings(4, "1");
-                scanTime();
+                System.out.println("Please Enter the Game Time (Enter 0 if you wish to play without Timer): ");
+                System.out.println("With inputting the keyword 'time' you can see how much time you have.");
+                scanWhiteTime();
             } else {
                 System.out.println("Pleas enter a Valid Input!");
                 continue;
             }
-            finished = true;
+            gameModeFinish = true;
         }
 
     }
 
     /**
-     * Game Mode Choice if with Timer or not.
+     * scanning the time for the black player.
      */
-    public void scanTime() {
+    private void scanBlackTime() {
         boolean finish = false;
         while (!finish) {
-            System.out.println("Please Enter the Game Time (Enter 0 if you wish to play without Timer): ");
-            System.out.println("With inputting the keyword 'time' you can see how much time you have.");
-            String time = scanner.nextLine();
-            if (time.matches("\\d*")) {
-                if (time.equals("0")) {
-                    controller.setGameSettings(2, "0");
-                } else if(time.matches("")) {
+            System.out.println("Black Player Time: ");
+            String blackTime = scanner.nextLine();
+            if (blackTime.matches("\\d*")) {
+                if (blackTime.equals("0")) {
+                    controller.setGameSettings(9, "0");
+                } else if(blackTime.matches("")) {
                     System.out.println("Pleas enter a Valid Input!");
                     continue;
                 }else {
-                    controller.setGameSettings(2, time);
+                    controller.setGameSettings(9, blackTime);
+                }
+                finish = true;
+            } else {
+                System.out.println("Please enter a Number!");
+            }
+        }
+    }
+
+    /**
+     * scanning the time for the white player.
+     */
+    public void scanWhiteTime() {
+        boolean finish = false;
+        while (!finish) {
+            System.out.println("White Player Time: ");
+            String whiteTime = scanner.nextLine();
+            if (whiteTime.matches("\\d*")) {
+                if (whiteTime.equals("0")) {
+                    controller.setGameSettings(2, "0");
+                } else if(whiteTime.matches("")) {
+                    System.out.println("Pleas enter a Valid Input!");
+                    continue;
+                }else {
+                    controller.setGameSettings(2, whiteTime);
                 }
                 finish = true;
             } else {

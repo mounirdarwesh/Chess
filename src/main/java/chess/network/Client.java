@@ -14,19 +14,14 @@ public class Client extends Network {
      * name of the host
      */
     private String hostName;
-    /**
-     * port number
-     */
-    private int portNr;
+
 
     /**
      * client of the network game
      * @param host host of the game
-     * @param port port number
      */
-    public Client(String host, int port) {
+    public Client(String host) {
         hostName = host;
-        portNr = port;
     }
 
     @Override
@@ -45,7 +40,7 @@ public class Client extends Network {
      */
     private void connectToServer() {
         try {
-            socket = new Socket(InetAddress.getByName(hostName), portNr);
+            socket = new Socket(InetAddress.getByName(hostName), 28513);
         } catch (IOException e) {
             e.printStackTrace();
         }

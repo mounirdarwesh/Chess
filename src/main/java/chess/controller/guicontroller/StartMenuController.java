@@ -116,14 +116,22 @@ public class StartMenuController extends GuiController {
      * @param clockChoicePanel clock choice panel
      */
     private void assignActionHandlerToClockChoicePanel(ClockChoicePanel clockChoicePanel) {
-        clockChoicePanel.getTimerOptions().setOnAction(e -> {
-            // Set the game settings
-            String time = clockChoicePanel.getTimerOptions().getValue().equals("None") ?
-                    "0" : clockChoicePanel.getTimerOptions().getValue();
-            startMenuView.getParent().getGameViewController().
-                setGameSettings(2, time);
-                clockChoicePanel.getStartGameButton().setDisable(false);
+        String regex = "[0-9]+";
+        clockChoicePanel.getWhiteTimerOptions().setOnKeyTyped(e -> {
+            String wD = clockChoicePanel.getWhiteTimerOptions().getText();
+            if (wD.matches(regex)) {
+                startMenuView.getParent().getGameViewController()
+                        .setGameSettings(2, wD);
+            }
         });
+        clockChoicePanel.getBlackTimerOptions().setOnKeyTyped(e -> {
+            String bD = clockChoicePanel.getBlackTimerOptions().getText();
+            if (bD.matches(regex)) {
+                startMenuView.getParent().getGameViewController().
+                        setGameSettings(9, bD);
+            }
+        });
+
         clockChoicePanel.getStartGameButton().setOnAction(e -> {
             Game game = new GuiGame(startMenuView.getParent().getGameViewController());
             startMenuView.getParent().getGameViewController().setGame(game);
@@ -182,20 +190,15 @@ public class StartMenuController extends GuiController {
      */
     private void assignActionHandlerToJoinHostPanel(JoinHostPanel joinHostPanel) {
         AtomicReference<String> ip = new AtomicReference<>("");
-        AtomicReference<String> port = new AtomicReference<>("");;
         joinHostPanel.getIpNrField().setOnKeyTyped(e -> {
             ip.set(joinHostPanel.getIpNrField().getText());
-            joinHostPanel.getJoinGameButton().setDisable(false);
-        });
-        joinHostPanel.getPortNrField().setOnKeyTyped(e -> {
-            port.set(joinHostPanel.getPortNrField().getText());
             joinHostPanel.getJoinGameButton().setDisable(false);
         });
         joinHostPanel.getJoinGameButton().setOnAction(e -> {
             LANGameController lanGameController = new LANGameController(startMenuView
                     .getParent().getGameView());
             lanGameController.setGameSettings(3, "1");
-            lanGameController.joinLANGame(ip, port);
+            lanGameController.joinLANGame(ip);
             startMenuView.getParent().getGameViewController().setGame(lanGameController.getGame());
             startMenuView.getParent().setGame(lanGameController.getGame());
             //Create the move controller
@@ -234,21 +237,7 @@ public class StartMenuController extends GuiController {
             }
         });
         hostSettingsPanel.getEnableTimeButton().setOnAction(e -> {
-            TextField duration = new TextField();
-            if (hostSettingsPanel.getEnableTimeButton().getValue().equals("Yes")) {
-                duration.setPromptText("Time in minutes");
-                duration.setMinSize(50, 18);
-                VBox.setMargin(duration, new Insets(0, 0, 0, 0));
-                hostSettingsPanel.asPanel().getChildren().add(4, duration);
-                assignActionHandlerToDurationField(lanGameController, duration,
-                        hostSettingsPanel.getStartLANGameButton());
-            } else {
-                hostSettingsPanel.asPanel().getChildren().remove(duration);
-                lanGameController.setGameSettings(2, "0");
-            }
-            if (hostHasInputAllSetting(hostSettingsPanel)) {
-                hostSettingsPanel.getStartLANGameButton().setDisable(false);
-            }
+            createDurationFields(hostSettingsPanel, lanGameController);
         });
         hostSettingsPanel.getStartLANGameButton().setOnAction(e -> {
             lanGameController.setGameSettings(3, "1");
@@ -266,17 +255,55 @@ public class StartMenuController extends GuiController {
     }
 
     /**
+     * Creating the duration fields
+     * @param hostSettingsPanel the host panel
+     * @param lanGameController the lan game controller
+     */
+    private void createDurationFields(HostSettingsPanel hostSettingsPanel, LANGameController lanGameController) {
+        TextField whiteDuration = new TextField();
+        TextField BlackDuration = new TextField();
+        if (hostSettingsPanel.getEnableTimeButton().getValue().equals("Yes")) {
+            whiteDuration.setPromptText("White Player Time in sec");
+            BlackDuration.setPromptText("Black Player Time in sec");
+            whiteDuration.setMinSize(50, 18);
+            BlackDuration.setMinSize(50, 18);
+            VBox.setMargin(whiteDuration, new Insets(0, 0, 0, 0));
+            VBox.setMargin(BlackDuration, new Insets(0, 0, 0, 0));
+            hostSettingsPanel.asPanel().getChildren().add(4, whiteDuration);
+            hostSettingsPanel.asPanel().getChildren().add(5, BlackDuration);
+            assignActionHandlerToDurationField(lanGameController, whiteDuration,
+                    BlackDuration, hostSettingsPanel.getStartLANGameButton());
+        } else if(hostSettingsPanel.getEnableTimeButton().getValue().equals("No")){
+            hostSettingsPanel.asPanel().getChildren().remove(whiteDuration);
+            hostSettingsPanel.asPanel().getChildren().remove(BlackDuration);
+            lanGameController.setGameSettings(2, "0");
+            lanGameController.setGameSettings(9, "0");
+        }
+        if (hostHasInputAllSetting(hostSettingsPanel)) {
+            hostSettingsPanel.getStartLANGameButton().setDisable(false);
+        }
+    }
+    /**
      * assign action handler to duration field
      * @param lanGameController controller of the LANGame
-     * @param duration duration
+     * @param whiteDuration the white duration
+     * @param blackDuration the black duration
      * @param startLANGameButton Button start LANGame
      */
-    private void assignActionHandlerToDurationField(LANGameController lanGameController, TextField duration, Button startLANGameButton) {
-        duration.setOnKeyTyped(e -> {
-            String d = duration.getText();
-            if (d.matches("[0-9]+")) {
+    private void assignActionHandlerToDurationField(LANGameController lanGameController, TextField whiteDuration,
+                                                    TextField blackDuration, Button startLANGameButton) {
+        whiteDuration.setOnKeyTyped(e -> {
+            String wD = whiteDuration.getText();
+            if (wD.matches("[0-9]+")) {
                 startLANGameButton.setDisable(false);
-                lanGameController.setGameSettings(2, d);
+                lanGameController.setGameSettings(2, wD);
+            }
+        });
+        blackDuration.setOnKeyTyped(e -> {
+            String bD = blackDuration.getText();
+            if (bD.matches("[0-9]+")) {
+                startLANGameButton.setDisable(false);
+                lanGameController.setGameSettings(9, bD);
             }
         });
     }

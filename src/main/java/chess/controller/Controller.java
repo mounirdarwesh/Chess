@@ -44,8 +44,9 @@ public abstract class Controller {
      * 7.Str Reselection of piece
      * 8.Str Notification
      * 9.Str Highlighting
+     * 10.Str the time for the black player
      */
-    protected String[] gameSettings = {"1","1","0","0","0","0","1","1","1"};
+    protected String[] gameSettings = {"1","1","0","0","0","0","1","1","1","0"};
 
     /**
      * A List of the Undid moves
@@ -57,7 +58,7 @@ public abstract class Controller {
      * @return the settings of the game
      */
     public String[] getGameSettings() {
-        return gameSettings;
+        return gameSettings.clone();
     }
 
     /**
@@ -85,7 +86,7 @@ public abstract class Controller {
      * @param index the index
      */
     public void undoMove(int index) {
-        if(game.getAllListOfMoves().isEmpty()) return;
+        if(game.getAllListOfMoves().isEmpty() || game.isFINISHED()) return;
         if(!undidMoves.isEmpty()) undidMoves.clear();
         undidMoves.addAll(game.getAllListOfMoves().subList(
                 index, game.getAllListOfMoves().size()
@@ -99,31 +100,11 @@ public abstract class Controller {
     }
 
     /**
-     * remove the beaten piece of the board
-     * @param piece piece of the game
-     */
-    protected void removeBeatenPiece(Piece piece) {
-        if(piece.getColor().isWhite()) {
-            deletedBeatenPieces.add(
-                    game.getWhitePlayer().getBeaten().remove(
-                            game.getBlackPlayer().getBeaten().size()-1
-                    )
-            );
-        } else {
-            deletedBeatenPieces.add(
-                    game.getBlackPlayer().getBeaten().remove(
-                            game.getBlackPlayer().getBeaten().size()-1
-                    )
-            );
-        }
-    }
-
-    /**
      * redo a Move
      * @param index  the index of the move
      */
     public void redoMove(int index) {
-        if(undidMoves.isEmpty()) return;
+        if(undidMoves.isEmpty() || game.isFINISHED()) return;
         for(int i = 0; i<index; i++) {
             Move undidMove = undidMoves.get(i);
             undidMove.execute();
@@ -132,24 +113,6 @@ public abstract class Controller {
         undidMoves.subList(0, index).clear();
         game.setCurrentPlayer(game.getOpponent());
         game.notifyObservers();
-    }
-
-    /**
-     * re-add beaten Pieces in case of redo
-     */
-    protected void reAddBeatenPiece() {
-        if(deletedBeatenPieces.isEmpty()) return;
-        for (Piece deletedBeaten : deletedBeatenPieces) {
-            if(deletedBeaten.getColor().isWhite()
-                    && !game.getWhitePlayer().getBeaten().contains(deletedBeaten)) {
-                game.getWhitePlayer().getBeaten().add(deletedBeaten);
-            }
-            if(deletedBeaten.getColor().isBlack()
-                    && !game.getBlackPlayer().getBeaten().contains(deletedBeaten)) {
-                game.getBlackPlayer().getBeaten().add(deletedBeaten);
-            }
-        }
-        deletedBeatenPieces.clear();
     }
 
     /**

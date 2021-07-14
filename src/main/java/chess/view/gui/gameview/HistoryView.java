@@ -1,7 +1,7 @@
 package chess.view.gui.gameview;
 
+import chess.controller.LANGameController;
 import chess.model.game.Game;
-import chess.model.game.GuiGame;
 import chess.model.game.LANGame;
 import chess.model.player.AI;
 import javafx.geometry.Pos;
@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -50,6 +49,11 @@ public class HistoryView {
      * box of the historyView
      */
     private VBox historyViewContainer;
+
+    /**
+     * The undid labels
+     */
+    private List<Label> undidLabeled;
 
 
     /**
@@ -97,12 +101,13 @@ public class HistoryView {
         if (game.getAllowedMove() == null) return;
         historyMoves.add(game.getAllowedMove().toString());
         if(game.getOpponent() instanceof AI) {
-            Label aiHistory = new Label("AI:  " + game.getAllowedMove().toString());
-            aiHistory.setFont(new Font(17));
-            aiHistory.setTextFill(Color.BLACK);
-            historyViewContainer.getChildren().add(aiHistory);
+            addHistoryForAI();
             return;
         }
+        addHistoryForPlayer();
+    }
+
+    private void addHistoryForPlayer() {
         Label history = new Label(game.getAllowedMove().toString());
         historyViewContainer.getChildren().add(history);
         history.setFont(new Font(17));
@@ -111,40 +116,82 @@ public class HistoryView {
             if(game.getController().getGameSettings()[1].contains("0")) return;
             int indexOfHistoryMove = historyViewContainer.getChildren()
                     .indexOf(history);
-            game.getController().undoMove(indexOfHistoryMove);
+            if(game instanceof LANGame) {
+                ((LANGameController) game.getController()).undoMove(indexOfHistoryMove);
+            } else {
+                game.getController().undoMove(indexOfHistoryMove);
+            }
             game.getCurrentPlayer().setHasPlayerUndidAMove(true);
             grayOutUndidHistoryMoves(indexOfHistoryMove);
         });
 
     }
 
+    private void addHistoryForAI() {
+        Label aiHistory = new Label("AI:  " + game.getAllowedMove().toString());
+        aiHistory.setFont(new Font(17));
+        aiHistory.setTextFill(Color.BLACK);
+        historyViewContainer.getChildren().add(aiHistory);
+    }
+
     /**
      * gray out the undid Move in the History
      */
-    private void grayOutUndidHistoryMoves(int index) {
-        ArrayList<Label> undidLabeled = new ArrayList<>();
+    private void grayOutUndidHistoryMoves(int undidMoveIndex) {
+        undidLabeled = new ArrayList<>();
+        int index = undidMoveIndex;
         int color = index % 2 == 0 ? 0 : 1;
         while (index < historyViewContainer.getChildren().size()) {
             try {
-                Label historyMove = (Label) historyViewContainer.getChildren().get(index * 2 - color);
+                Label historyMove = (Label) historyViewContainer.getChildren().get(index * 2 + color);
                 historyMove.setTextFill(Color.web("#A9A9A9"));
                 undidLabeled.add(historyMove);
-                historyMove.setOnMouseClicked(e -> {
-                    int indexOfToRedo = historyViewContainer.getChildren()
-                            .indexOf(historyMove)+1;
-                    game.getController().redoMove(indexOfToRedo);
-                    game.getCurrentPlayer().setHasPlayerRedidAMove(true);
-                    historyViewContainer.getChildren().remove(indexOfToRedo,
-                            historyViewContainer.getChildren().size());
-                    for (Label label : undidLabeled) {
-                        label.setTextFill(Color.BLACK);
-                    }
-                });
+                assignActionHandlersToRedidHistory(historyMove, undidLabeled);
             } catch (Exception e) {
                 break;
             }
             index++;
         }
+    }
+
+    /**
+     * Graying out one undid move (The last one)
+     */
+    public void grayOutOneUndidMove() {
+        undidLabeled = new ArrayList<>();
+        Label lastHistoryMove = (Label) historyViewContainer.getChildren().get(
+                historyViewContainer.getChildren().size()-1
+        );
+        lastHistoryMove.setTextFill(Color.web("#A9A9A9"));
+        undidLabeled.add(lastHistoryMove);
+        assignActionHandlersToRedidHistory(lastHistoryMove, undidLabeled);
+
+    }
+
+    /**
+     * assigning action handlers to the undid labels
+     * @param historyMove the undid label
+     * @param undidLabeled list of all undid labels
+     */
+    private void assignActionHandlersToRedidHistory(Label historyMove, List<Label> undidLabeled) {
+        historyMove.setOnMouseClicked(e -> {
+            int indexOfToRedo = historyViewContainer.getChildren()
+                    .indexOf(historyMove)+1;
+
+            if(game instanceof LANGame) {
+                ((LANGameController) game.getController()).redoMove(indexOfToRedo);
+            }
+            else {
+                game.getController().redoMove(indexOfToRedo);
+            }
+            game.getCurrentPlayer().setHasPlayerRedidAMove(true);
+            historyViewContainer.getChildren().remove(indexOfToRedo,
+                    historyViewContainer.getChildren().size());
+            for (Label label : undidLabeled) {
+                label.setTextFill(Color.BLACK);
+            }
+            undidLabeled.clear();
+        });
     }
 
     /**
@@ -169,5 +216,13 @@ public class HistoryView {
      */
     public Button getRedo() {
         return redo;
+    }
+
+    /**
+     * Getter for the container
+     * @return the vbox container
+     */
+    public VBox getHistoryUndoRedoView() {
+        return historyUndoRedoView;
     }
 }

@@ -10,14 +10,9 @@ import javafx.scene.layout.VBox;
 public class NormalGamePanel {
 
     /**
-     * The parent
-     */
-    private StartMenuView startMenuView;
-
-    /**
      * The Panel
      */
-    private VBox normalGamePanel;
+    private VBox normalGamePanelContainer;
 
     /**
      * A button to let the user choose a human player as an opponent
@@ -35,16 +30,15 @@ public class NormalGamePanel {
      * @param startMenuView startmenuview
      */
     public NormalGamePanel(StartMenuView startMenuView) {
-        this.startMenuView = startMenuView;
-        normalGamePanel = new VBox();
-        startMenuView.getParent().setPanelStyle(normalGamePanel);
+        normalGamePanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(normalGamePanelContainer);
 
         // Creating the message of the panel
-        startMenuView.getParent().createTitleText("Choose Your Opponent", 20, normalGamePanel);
+        startMenuView.getParent().createTitleText("Choose Your Opponent", 20, normalGamePanelContainer);
 
         // Creating the buttons of the panel
-        humanButton = startMenuView.getParent().createButton("Human", normalGamePanel);
-        aiButton = startMenuView.getParent().createButton("AI", normalGamePanel);
+        humanButton = startMenuView.getParent().createButton("Human", normalGamePanelContainer);
+        aiButton = startMenuView.getParent().createButton("AI", normalGamePanelContainer);
     }
 
     /**
@@ -68,6 +62,6 @@ public class NormalGamePanel {
      * @return VBox
      */
     public VBox asPanel() {
-        return normalGamePanel;
+        return normalGamePanelContainer;
     }
 }

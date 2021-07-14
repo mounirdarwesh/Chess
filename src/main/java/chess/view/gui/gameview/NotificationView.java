@@ -19,7 +19,7 @@ public class NotificationView {
     /**
      * box to view the notifications
      */
-    private HBox notificationView;
+    private HBox notificationViewContainer;
 
     /**
      * the connected game
@@ -57,16 +57,16 @@ public class NotificationView {
      */
     public NotificationView(Game game) {
         this.game = game;
-        notificationView = new HBox();
-        notificationView.setAlignment(Pos.CENTER);
-        notificationView.setMinHeight(50);
+        notificationViewContainer = new HBox();
+        notificationViewContainer.setAlignment(Pos.CENTER);
+        notificationViewContainer.setMinHeight(50);
     }
 
     /**
      * show the Notification on the View
      */
     public void showNotification(){
-        if(!notificationView.getChildren().isEmpty()) notificationView.getChildren().clear();
+        if(!notificationViewContainer.getChildren().isEmpty()) notificationViewContainer.getChildren().clear();
         if(game.getController().getGameSettings()[7].equals("0")) return;
         String player = game instanceof GuiGame ?
                 game.getCurrentPlayer().toString()
@@ -89,7 +89,7 @@ public class NotificationView {
             notification.setText(playerTimerOut);
             playerTimerOut = null;
         }
-        notificationView.getChildren().add(notification);
+        notificationViewContainer.getChildren().add(notification);
     }
 
     /**
@@ -100,18 +100,20 @@ public class NotificationView {
         if(!timeRemainingContainer.getChildren().isEmpty()) {
             timeRemainingContainer.getChildren().clear();
         }
-        if(notificationView.getChildren().contains(timeRemainingContainer)) {
-            notificationView.getChildren().remove(timeRemainingContainer);
+        if(notificationViewContainer.getChildren().contains(timeRemainingContainer)) {
+            notificationViewContainer.getChildren().remove(timeRemainingContainer);
         }
         timeRemainingContainer.setAlignment(Pos.CENTER);
         Label duration = new Label();
         duration.setFont(new Font(30));
+        Player player = game instanceof LANGame ?
+                ((LANGame) game).getCurrentLANPlayer() : game.getCurrentPlayer();
         String timeLeft = game.getController().convertTime(
-                game.getCurrentPlayer().getTimeLeft()
+                player.getTimeLeft()
         );
         duration.setText(timeLeft);
         timeRemainingContainer.getChildren().add(duration);
-        notificationView.getChildren().add(timeRemainingContainer);
+        notificationViewContainer.getChildren().add(timeRemainingContainer);
     }
 
     /**
@@ -119,7 +121,7 @@ public class NotificationView {
      * @return HBox
      */
     public HBox asNode() {
-        return notificationView;
+        return notificationViewContainer;
     }
 
     /**

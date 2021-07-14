@@ -26,12 +26,12 @@ public abstract class Player {
     /**
      * boolean that if a player undo a move
      */
-    protected boolean hasPlayerUndoAMove = false;
+    protected boolean playerUndoAMove = false;
 
     /**
      * boolean if a player redid a move
      */
-    protected boolean hasPlayerRedidAMove = false;
+    protected boolean playerRedidAMove = false;
 
     /**
      * beaten pieces
@@ -159,16 +159,16 @@ public abstract class Player {
      * @return boolean
      */
     public boolean hasPlayerUndidAMove() {
-        return hasPlayerUndoAMove;
+        return playerUndoAMove;
     }
 
     /**
      * setter for hasPlayerUndidAMove
      *
-     * @param hasPlayerUndidAMove hasPlayerUndidAMove
+     * @param playerUndoAMove hasPlayerUndidAMove
      */
-    public void setHasPlayerUndidAMove(boolean hasPlayerUndidAMove) {
-        this.hasPlayerUndoAMove = hasPlayerUndidAMove;
+    public void setHasPlayerUndidAMove(boolean playerUndoAMove) {
+        this.playerUndoAMove = playerUndoAMove;
     }
 
     /**
@@ -176,15 +176,15 @@ public abstract class Player {
      * @return boolean
      */
     public boolean hasPlayerRedidAMove() {
-        return hasPlayerRedidAMove;
+        return playerRedidAMove;
     }
 
     /**
      * setter of the hasPlayerRedidAMove
-     * @param hasPlayerRedidAMove boolean hasPlayerRedidAMove
+     * @param playerRedidAMove boolean hasPlayerRedidAMove
      */
-    public void setHasPlayerRedidAMove(boolean hasPlayerRedidAMove) {
-        this.hasPlayerRedidAMove = hasPlayerRedidAMove;
+    public void setHasPlayerRedidAMove(boolean playerRedidAMove) {
+        this.playerRedidAMove = playerRedidAMove;
     }
 
     /**

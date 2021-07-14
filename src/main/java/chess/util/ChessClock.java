@@ -4,6 +4,7 @@ import chess.Attributes;
 import chess.model.game.Game;
 import chess.model.game.GuiGame;
 import chess.model.game.LANGame;
+import chess.model.player.Player;
 import javafx.application.Platform;
 
 import java.util.Timer;
@@ -42,16 +43,30 @@ public class ChessClock {
         public void run() {
             long playerRemainingTime = game.getCurrentPlayer().getTimeLeft();
             if(playerRemainingTime != 0) {
-                game.getCurrentPlayer().setTimeLeft(
-                        playerRemainingTime - 1000
-                );
+                if(game instanceof LANGame) {
+                    ((LANGame) game).getCurrentLANPlayer().setTimeLeft(
+                            playerRemainingTime - 1000
+                    );
+                }else {
+                    game.getCurrentPlayer().setTimeLeft(
+                            playerRemainingTime - 1000
+                    );
+                }
                 game.updateClock();
             }
             else {
                 timer.cancel();
-                game.getController().notifyView(Attributes.GameStatus.TIME_OUT, game.getCurrentPlayer());
-                if(game instanceof LANGame || game instanceof GuiGame) {
+                Player player = game instanceof LANGame ? ((LANGame) game).getCurrentLANPlayer()
+                        : game.getCurrentPlayer();
+                game.getController().notifyView(Attributes.GameStatus.TIME_OUT, player);
+                if(game instanceof LANGame) {
                     Platform.runLater(() -> {
+                        game.notifyObservers();
+                    });
+                }
+                else if(game instanceof GuiGame) {
+                    Platform.runLater(() -> {
+                        game.setFINISHED(true);
                         game.notifyObservers();
                         game.getGameTask().cancel();
                     });

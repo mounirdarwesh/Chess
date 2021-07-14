@@ -2,9 +2,11 @@ package chess.controller;
 
 import chess.Attributes;
 import chess.model.game.LANGame;
+import chess.model.pieces.Piece;
 import chess.model.player.Player;
 import chess.network.Client;
 import chess.network.Server;
+import chess.util.BoardMapper;
 import chess.view.gui.gameview.GameView;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -61,6 +63,11 @@ public class LANGameController extends Controller {
     private GameView gameView;
 
     /**
+     * The player that undid a move
+     */
+    private Player undidMovePlayer;
+
+    /**
      * controller of the class
      * @param gameView the game view
      */
@@ -84,10 +91,9 @@ public class LANGameController extends Controller {
     /**
      * join a LAN game
      * @param ip ip address
-     * @param port port number
      */
-    public void joinLANGame(AtomicReference<String> ip, AtomicReference<String> port) {
-        client = new Client(ip.toString(), Integer.parseInt(port.toString()));
+    public void joinLANGame(AtomicReference<String> ip) {
+        client = new Client(ip.toString());
         client.connectController(this);
         client.run();
         game = new LANGame(this);
@@ -97,7 +103,10 @@ public class LANGameController extends Controller {
      * initiate host settings
      */
     private void initHostSettings() {
-        lanSettings += gameSettings[0] + " " + gameSettings[1] + " " + "0" + " " + gameSettings[2];
+        lanSettings += gameSettings[0] + " "
+                + gameSettings[1] + " "
+                + gameSettings[2] + " "
+                + gameSettings[9];
     }
 
     /**
@@ -128,6 +137,100 @@ public class LANGameController extends Controller {
         }
     }
 
+    /**
+     * Undo a Move
+     * @param index the index
+     */
+    @Override
+    public void undoMove(int index) {
+        if(gameSettings[1].equals("0")) {
+            game.getCurrentPlayer().setHasPlayerUndidAMove(false);
+            return;
+        }
+        // if there is no moves to undo, do nothing
+        if(game.getAllListOfMoves().isEmpty()) return;
+
+        //Clear the list of undid moves
+        if(!undidMoves.isEmpty()) undidMoves.clear();
+
+        //Add the moves that should be undone to the list of
+        //undid moves
+        undidMoves.addAll(game.getAllListOfMoves().subList(
+                index, game.getAllListOfMoves().size()
+        ));
+
+        // And undo each move in that list
+        for (Move toUndoMove : undidMoves) {
+            toUndoMove.undo();
+            game.getAllListOfMoves().remove(toUndoMove);
+        }
+        lanUndoIndex = undidMoves.size()-1 > 1 ? index : 1;
+
+        // Finding out who made the undo
+        int undidPiecePosition = BoardMapper.mapChessNotationToPosition(
+                undidMoves.get(undidMoves.size()-1)
+                .toString().substring(0, 2));
+        Piece undidPiece = game.getBoard().getPiece(undidPiecePosition);
+
+        undidMovePlayer = game.getCurrentPlayer().getColor() == undidPiece.getColor() ?
+                            game.getCurrentPlayer() : game.getOpponent();
+
+    }
+
+    /**
+     * redo a Move
+     * @param index  the index of the move
+     */
+    @Override
+    public void redoMove(int index) {
+        if(gameSettings[1].equals("0")) {
+            game.getCurrentPlayer().setHasPlayerRedidAMove(false);
+            return;
+        }
+        if(undidMoves.isEmpty()) return;
+        for(int i = 0; i<index; i++) {
+            Move undidMove = undidMoves.get(i);
+            undidMove.execute();
+            game.getAllListOfMoves().add(undidMove);
+        }
+        undidMoves.subList(0, index).clear();
+        lanRedoIndex = index;
+        game.getCurrentPlayer().setHasPlayerRedidAMove(true);
+
+    }
+
+    /**
+     * Undo a Move
+     * @param index the index
+     */
+    public void undoLANMove(int index) {
+        int lanIndex = index == 1 ?
+                game.getAllListOfMoves().size()-1 : index;
+        // if there is no moves to undo, do nothing
+        if (game.getAllListOfMoves().isEmpty()) return;
+
+        //Clear the list of undid moves
+        if (!undidMoves.isEmpty()) undidMoves.clear();
+
+        //Add the moves that should be undone to the list of
+        //undid moves
+        undidMoves.addAll(game.getAllListOfMoves().subList(
+                lanIndex, game.getAllListOfMoves().size()
+        ));
+        // And undo each move in that list
+        for (Move toUndoMove : undidMoves) {
+            toUndoMove.undo();
+            game.getAllListOfMoves().remove(toUndoMove);
+        }
+        // Finding out who made the undo
+        int undidPiecePosition = BoardMapper.mapChessNotationToPosition(
+                undidMoves.get(undidMoves.size()-1)
+                        .toString().substring(0, 2));
+        Piece undidPiece = game.getBoard().getPiece(undidPiecePosition);
+
+        undidMovePlayer = game.getCurrentPlayer().getColor() == undidPiece.getColor() ?
+                game.getCurrentPlayer() : game.getOpponent();
+    }
 
     /**
      * getter of the Lan settings
@@ -223,6 +326,22 @@ public class LANGameController extends Controller {
      */
     public void setLanRedo(boolean lanRedo) {
         this.lanRedo = lanRedo;
+    }
+
+    /**
+     * Getter for the player that undid a move
+     * @return the player that undid a move
+     */
+    public Player getUndidMovePlayer() {
+        return undidMovePlayer;
+    }
+
+    /**
+     * Setter for the player that undid a move
+     * @param undidMovePlayer the player that undid a move
+     */
+    public void setUndidMovePlayer(Player undidMovePlayer) {
+        this.undidMovePlayer = undidMovePlayer;
     }
 
     @Override

@@ -4,7 +4,6 @@ import chess.controller.LANGameController;
 import chess.model.player.Player;
 import chess.util.MoveMapper;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 
 /**
  * class of the LAN game
@@ -22,6 +21,15 @@ public class LANGame extends Game {
      */
     private Player currentLANPlayer;
 
+    /**
+     * Runnable of the updater
+     */
+    private Runnable updater;
+
+    /**
+     *
+     */
+    private Thread lanGameThread;
 
 
     /**
@@ -42,27 +50,53 @@ public class LANGame extends Game {
         if(chessClock != null) {
             chessClock.start();
         }
-        gameTask = new Task() {
-            @Override
-            protected Void call() throws Exception {
-                while (!FINISHED) {
+
+        lanGameThread = new Thread(() -> {
+            updater = () -> {
+                notifyObservers();
+                allowedMove = null;
+            };
+            while (!FINISHED) {
+                try {
                     Thread.sleep(50);
                     if (currentPlayer != currentLANPlayer) {
                         lanGameController.receiveData();
                         playerReceivingMove();
-                        playerReceivingUndoMove();
-                        playerReceivingRedoMove();
-                    }
-                    else {
+                    } else {
                         playerSendingMove();
-                        playerSendingUndoMove();
-                        playerSendingRedoMove();
                     }
+                    sendingUndoMoves();
+                    receivingUndoMoves();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                return null;
             }
-        };
-        new Thread(gameTask).start();
+        });
+        // don't let thread prevent JVM shutdown
+        lanGameThread.setDaemon(true);
+        lanGameThread.start();
+    }
+
+    private void receivingUndoMoves() {
+        if(lanGameController.hasLanUndo()) {
+            lanGameController.undoLANMove(lanGameController.getLanUndoIndex());
+            lanGameController.setLanUndo(false);
+            // Switch the turns
+            currentLANPlayer = lanGameController.getUndidMovePlayer();
+            lanGameController.setUndidMovePlayer(null);
+            Platform.runLater(updater);
+        }
+    }
+
+    private void sendingUndoMoves() {
+        if(lanGameController.getUndidMovePlayer() != null) {
+            lanGameController.sendData("undo" + (
+                    (lanGameController.getLanUndoIndex() != 1) ?
+                    " " + lanGameController.getLanUndoIndex() : ""));
+            currentLANPlayer = lanGameController.getUndidMovePlayer();
+            lanGameController.setUndidMovePlayer(null);
+            Platform.runLater(updater);
+        }
     }
 
     /**
@@ -80,37 +114,8 @@ public class LANGame extends Game {
             currentLANPlayer = currentPlayer;
             // Check the status of the game
             checkGameStatus();
-            Platform.runLater(() -> {
-                notifyObservers();
-                allowedMove = null;
-            });
-        }
-    }
-
-    /**
-     *  Receive a Undo from the other Participant
-     */
-    private void playerReceivingUndoMove() {
-        if(lanGameController.hasLanUndo()) {
-            lanGameController.undoMove(allListOfMoves.size()-2);
-            lanGameController.setLanUndo(false);
-            Platform.runLater(() -> {
-                notifyObservers();
-            });
-        }
-
-    }
-
-    /**
-     *  Receive a Redo from the other Participant
-     */
-    private void playerReceivingRedoMove() {
-        if(lanGameController.hasLanRedo()) {
-            lanGameController.redoMove(2);
-            lanGameController.setLanRedo(false);
-            Platform.runLater(() -> {
-                notifyObservers();
-            });
+            // Update the game
+            Platform.runLater(updater);
         }
     }
 
@@ -127,39 +132,11 @@ public class LANGame extends Game {
             currentLANPlayer = getOpponent();
             // Check the status of the game
             checkGameStatus();
-            Platform.runLater(() -> {
-                notifyObservers();
-                // Reset the allowed move
-                allowedMove = null;
-            });
+            // Update the game
+            Platform.runLater(updater);
         }
     }
 
-    /**
-     *  send a Undo from the other Participant
-     */
-    private void playerSendingUndoMove() {
-        if(currentPlayer.hasPlayerUndidAMove()) {
-            lanGameController.sendData("undo");
-            currentPlayer.setHasPlayerUndidAMove(false);
-            Platform.runLater(() -> {
-                notifyObservers();
-            });
-        }
-    }
-
-    /**
-     *  Send a Redo from the other Participant
-     */
-    private void playerSendingRedoMove() {
-        if(currentPlayer.hasPlayerRedidAMove()) {
-            lanGameController.sendData("redo");
-            currentPlayer.setHasPlayerRedidAMove(false);
-            Platform.runLater(() -> {
-                notifyObservers();
-            });
-        }
-    }
     @Override
     public void updateClock() {
         Platform.runLater( () -> {
@@ -174,4 +151,5 @@ public class LANGame extends Game {
     public Player getCurrentLANPlayer() {
         return currentLANPlayer;
     }
+
 }

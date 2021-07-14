@@ -13,14 +13,9 @@ import java.util.List;
 public class HostSettingsPanel {
 
     /**
-     * The parent
-     */
-    private StartMenuView startMenuView;
-
-    /**
      * host settings panel box
      */
-    private VBox hostSettingsPanel;
+    private VBox hostSettingsPanelContainer;
 
     /**
      * combo box for color
@@ -47,19 +42,18 @@ public class HostSettingsPanel {
      * @param startMenuView view of the start menu
      */
     public HostSettingsPanel(StartMenuView startMenuView) {
-        this.startMenuView = startMenuView;
-        hostSettingsPanel = new VBox();
-        startMenuView.getParent().setPanelStyle(hostSettingsPanel);
+        hostSettingsPanelContainer = new VBox();
+        startMenuView.getParent().setPanelStyle(hostSettingsPanelContainer);
 
-        startMenuView.getParent().createTitleText("Choose Game Settings", 20, hostSettingsPanel);
+        startMenuView.getParent().createTitleText("Choose Game Settings", 20, hostSettingsPanelContainer);
 
         color = startMenuView.getParent().createComboBox("Pieces' Color",
-                List.of("White", "Black"), hostSettingsPanel);
+                List.of("White", "Black"), hostSettingsPanelContainer);
         redo = startMenuView.getParent().createComboBox("Enable Redo",
-                List.of("Yes", "No"), hostSettingsPanel);
+                List.of("Yes", "No"), hostSettingsPanelContainer);
         time = startMenuView.getParent().createComboBox("Enable Time",
-                List.of("Yes", "No"), hostSettingsPanel);
-        start = startMenuView.getParent().createButton("Start Game", hostSettingsPanel);
+                List.of("Yes", "No"), hostSettingsPanelContainer);
+        start = startMenuView.getParent().createButton("Start Game", hostSettingsPanelContainer);
         start.setDisable(true);
     }
 
@@ -100,6 +94,6 @@ public class HostSettingsPanel {
      * @return VBox
      */
     public VBox asPanel() {
-        return hostSettingsPanel;
+        return hostSettingsPanelContainer;
     }
 }

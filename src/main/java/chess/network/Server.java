@@ -11,7 +11,7 @@ public class Server extends Network {
     /**
      * server socket
      */
-    private ServerSocket server;
+    private ServerSocket serverSocket;
 
     /**
      * listener for the port number
@@ -30,7 +30,7 @@ public class Server extends Network {
     @Override
     public void run() {
         try {
-            server = new ServerSocket(listenPortNr, 1);
+            serverSocket = new ServerSocket(listenPortNr, 1);
             try {
                 waitForConnection();
                 getStreams();
@@ -46,7 +46,7 @@ public class Server extends Network {
      * wait for a connection
      */
     private void waitForConnection() throws IOException {
-        socket = server.accept();
+        socket = serverSocket.accept();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Server extends Network {
     public void closeConnection() {
         super.closeConnection();
         try {
-            server.close();
+            serverSocket.close();
         } catch (IOException ignored) {}
     }
 }

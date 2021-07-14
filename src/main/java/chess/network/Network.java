@@ -78,7 +78,7 @@ public abstract class Network {
             handleRequests(requests);
         } catch (IOException e) {
             e.printStackTrace();
-                }
+        }
     }
 
     /**
@@ -96,12 +96,14 @@ public abstract class Network {
             case "undo":
                 if(requests.length == 1) {
                     lanGameController.setLanUndo(true);
+                    lanGameController.setLanUndoIndex(1);
                 } else {
                     lanGameController.setLanUndoIndex(Integer.parseInt(requests[1]));
                 }
             case "redo":
                 if(requests.length == 1) {
                     lanGameController.setLanRedo(true);
+                    lanGameController.setLanUndoIndex(1);
                 } else {
                     lanGameController.setLanRedoIndex(Integer.parseInt(requests[1]));
                 }
@@ -118,6 +120,7 @@ public abstract class Network {
         }
         lanGameController.setGameSettings(1, requests[2]);
         lanGameController.setGameSettings(2, requests[3]);
+        lanGameController.setGameSettings(9, requests[4]);
     }
 
     /**

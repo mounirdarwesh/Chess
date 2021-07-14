@@ -20,11 +20,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Starting point of the JavaFX GUI
@@ -89,14 +86,8 @@ public class Gui extends Application implements View, Observer {
         primaryStage.centerOnScreen();
         primaryStage.setOnCloseRequest(e -> System.exit(1));
 
-        try {
-            InputStream icon = Files.newInputStream(Paths.get("src/main/res/icon.png"));
-            Image icImg = new Image(icon);
-            icon.close();
-            primaryStage.getIcons().add(icImg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Image icImg = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("/icon.png")));
+        primaryStage.getIcons().add(icImg);
 
         //Creating the scenes
         createAllScenes();

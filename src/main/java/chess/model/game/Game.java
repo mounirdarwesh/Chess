@@ -130,9 +130,10 @@ public abstract class Game extends Observable {
         }
 
         if(chessClock != null) {
-            long duration = Long.parseLong(controller.getGameSettings()[2]);
-            whitePlayer.setTimeLeft(duration * 60000);
-            blackPlayer.setTimeLeft(duration * 60000);
+            long whiteDuration = Long.parseLong(controller.getGameSettings()[2]);
+            long blackDuration = Long.parseLong(controller.getGameSettings()[9]);
+            whitePlayer.setTimeLeft(whiteDuration * 1000);
+            blackPlayer.setTimeLeft(blackDuration * 1000);
         }
 
         // Load the player pieces
@@ -303,11 +304,6 @@ public abstract class Game extends Observable {
         // If no legal move is found, then check if the king is in check
         return !isCurrentPlayersKingInCheck();
     }
-
-    private boolean hasGameEnded() {
-        return hasGameEndedInWin() || hasGameEndedInDraw();
-    }
-
 
     /**
      * Getter for the Controller

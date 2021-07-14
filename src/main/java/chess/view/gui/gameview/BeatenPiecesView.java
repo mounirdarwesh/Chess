@@ -26,12 +26,12 @@ public class BeatenPiecesView {
     /**
      * box that shows the beaten pieces of the player white
      */
-    private HBox whiteBeatenView;
+    private VBox whiteBeatenView;
 
     /**
      * box that shows the beaten pieces of the player black
      */
-    private HBox blackBeatenView;
+    private VBox blackBeatenView;
 
 
     /**
@@ -43,8 +43,8 @@ public class BeatenPiecesView {
         beatenPiecesViewContainer = new VBox();
         beatenPiecesViewContainer.setMaxWidth(300);
         beatenPiecesViewContainer.setMinWidth(300);
-        whiteBeatenView = new HBox();
-        blackBeatenView = new HBox();
+        whiteBeatenView = new VBox();
+        blackBeatenView = new VBox();
         ScrollPane whiteScrollPane = new ScrollPane();
         whiteScrollPane.setMinHeight(320);
         whiteScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

@@ -128,8 +128,10 @@ public class Cli implements View, Observer {
                 break;
             case ENDED_IN_DRAW:
                 System.out.println("Game Ended in a draw.");
+                break;
             case TIME_OUT:
                 System.out.println(player + " has ran out of time and lost the game!!");
+                break;
         }
     }
 

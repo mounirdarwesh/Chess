@@ -180,10 +180,9 @@
                         <exclude>chess/network/**/*</exclude>
                         <exclude>chess/controller/guicontroller/**/*</exclude>
                         <exclude>chess/controller/LANGameController.class</exclude>
-                        <exclude>chess/model/game/GuiGame.*</exclude>
-                        <exclude>chess/model/game/LANGame.*</exclude>
+                        <exclude>chess/model/game/**/*</exclude>
                         <exclude>chess/Main.class</exclude>
-                        <exclude>chess/view/cli/Cli.class</exclude>
+                        <exclude>chess/view/cli/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

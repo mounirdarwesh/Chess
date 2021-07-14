@@ -26,18 +26,37 @@ public class MoveTest {
     Board board = new Board();
     Game game = new CliGame(cli);
 
-    List<Move> expected48 = new ArrayList<>();
-    List<Move> expected55 = new ArrayList<>();
+
     Piece pawnW48 = new Pawn(48, Attributes.Color.WHITE, board);
     Piece rookB = new Rook(57, Attributes.Color.BLACK, board);
     Piece pawnW53 = new Pawn(53, Attributes.Color.WHITE, board);
     Piece knightB = new Knight(60, Attributes.Color.BLACK, board);
     Piece bishopB = new Bishop(62, Attributes.Color.BLACK, board);
+
+    /**
+     * add Pieces to Beaten
+     */
+    public void addPieces(){
+        game.setCurrentPlayer(game.getWhitePlayer());
+        game.getCurrentPlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
+        game.getCurrentPlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
+
+        // if a Promoted Figure was beaten the remove, they must removed
+        cli.getGame().getWhitePlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
+        cli.getGame().getWhitePlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
+    }
+
     /**
      * Test the promotion of a pawn
      */
     @Test
     public void PromotionMove() {
+        List<Move> expected48 = new ArrayList<>();
+        List<Move> expected55 = new ArrayList<>();
         int fromPosition = pawnW48.getPosition();
         assertEquals(48, fromPosition);
         // 'Q'
@@ -65,17 +84,7 @@ public class MoveTest {
 
         pawnW48.calculateLegalMoves();
         pawnW53.calculateLegalMoves();
-        game.setCurrentPlayer(game.getWhitePlayer());
-        game.getCurrentPlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
-        game.getCurrentPlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
-        game.getCurrentPlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
-        game.getCurrentPlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
-
-        // if a Promoted Figure was beaten the remove, they must removed
-        cli.getGame().getWhitePlayer().getBeaten().add(new Bishop(6, Attributes.Color.WHITE, board));
-        cli.getGame().getWhitePlayer().getBeaten().add(new Queen(3, Attributes.Color.WHITE, board));
-        cli.getGame().getWhitePlayer().getBeaten().add(new Rook(4, Attributes.Color.WHITE, board));
-        cli.getGame().getWhitePlayer().getBeaten().add(new Knight(5, Attributes.Color.WHITE, board));
+        addPieces();
 
         cli.getGame().setCharToPromote('Q');
         game.getWhitePlayer().makeMove(m1);

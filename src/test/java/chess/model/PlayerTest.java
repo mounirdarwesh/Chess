@@ -6,7 +6,6 @@ import chess.model.pieces.Piece;
 import chess.model.pieces.Queen;
 import chess.model.pieces.Rook;
 import chess.controller.CliController;
-import chess.pgn.FenUtilities;
 import chess.view.cli.Cli;
 import org.junit.jupiter.api.Test;
 
@@ -82,7 +81,6 @@ public class PlayerTest {
      */
     @Test
     public void isQueenSideCastleAllowed() {
-        System.out.println(FenUtilities.loadCastleInformation(cli.getGame()));
         assertFalse(cli.getGame().getCurrentPlayer().isQueenSideCastleAllowed());
     }
 

@@ -134,7 +134,7 @@ public class FenUtilities {
      * @return String
      * @param game game
      */
-    private static String loadEnPassantInformation(Game game) {
+    public static String loadEnPassantInformation(Game game) {
         Piece enPassantPawn = game.getEnPassantPawn();
         if(enPassantPawn != null) {
             return BoardMapper.mapPositionToChessNotation(enPassantPawn.getPosition());

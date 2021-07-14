@@ -1,6 +1,6 @@
 # Schach
 
-Dieses Programm ist ein Schachspiel. Dieses Spiel basiert auf Konsole und GUI.
+Dieses Programm ist ein Schachspiel, die in GUI und ClI Interface Modus zur Auswahl steht.
 
 Für die Architektur wird das MVC-Modell verwendet.
 
@@ -9,6 +9,8 @@ Sowohl in "Cli als auch in Gui" hat es die Möglichkeit, gegen Mensch oder KI zu
 In GUI kann man dieses Spiel über zwei Computer in einem LAN durchführen.
 
 Als Zusatzfeatures stehen Schachuhr und Rückgängig zur Verfügung.
+
+# Chess
 
 This program is a game of chess. This game is based on console and GUI.
 

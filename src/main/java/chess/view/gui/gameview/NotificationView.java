@@ -67,6 +67,7 @@ public class NotificationView {
      */
     public void showNotification(){
         if(!notificationView.getChildren().isEmpty()) notificationView.getChildren().clear();
+        if(game.getController().getGameSettings()[7].equals("0")) return;
         String player = game instanceof GuiGame ?
                 game.getCurrentPlayer().toString()
                 : ((LANGame) game).getCurrentLANPlayer().toString();

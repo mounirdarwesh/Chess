@@ -1,6 +1,7 @@
 package chess.view.gui.gameview;
 
 
+import chess.Attributes;
 import chess.controller.guicontroller.GameViewController;
 import chess.model.game.Game;
 import chess.model.pieces.Piece;
@@ -117,7 +118,31 @@ public class BoardView {
             }
             index++;
         }
+        if(game.getController().getGameSettings()[5].equals("1")) {
+            rotate(game.getCurrentPlayer().getColor());
+        }
     }
+
+    /**
+     * this method rotate the board
+     * @param color color of pieces
+     */
+    public void rotate(Attributes.Color color) {
+        if (color == Attributes.Color.BLACK) {
+            root.setScaleY(-1);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++) {
+                tiles.get(i).setRotate(180);
+                tiles.get(i).setScaleX(-1);
+            }
+        } else {
+            root.setScaleY(1);
+            for (int i = 0; i < Attributes.BOARD_SIZE; i++) {
+                tiles.get(i).setRotate(0);
+                tiles.get(i).setScaleX(1);
+            }
+        }
+    }
+
 
 
 

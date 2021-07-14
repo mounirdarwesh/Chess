@@ -31,7 +31,7 @@ public class CliGame extends Game {
         notifyObservers();
         currentPlayer = whitePlayer;
 
-        if(chessClock != null) {
+        if (chessClock != null) {
             chessClock.start();
         }
 
@@ -59,20 +59,18 @@ public class CliGame extends Game {
                 // And then notify the observer
                 notifyObservers();
             }
-            if(cliController.getGameSettings()[4].equals("1")
+            if (cliController.getGameSettings()[4].equals("1")
                     && currentPlayer instanceof AI) {
                 Move evaluatedMove = ((AI) currentPlayer).evaluate();
                 int from = BoardMapper.mapChessNotationToPosition(
-                        evaluatedMove.toString().substring(0,2)
+                        evaluatedMove.toString().substring(0, 2)
                 );
                 int to = BoardMapper.mapChessNotationToPosition(
-                        evaluatedMove.toString().substring(3,5)
+                        evaluatedMove.toString().substring(3, 5)
                 );
                 processMoveFromPlayer(board.getPiece(from), to);
             }
         }
-        // Close the program when the game ends
-        //System.exit(1);
     }
 
     @Override

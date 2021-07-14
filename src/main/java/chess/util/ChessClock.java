@@ -2,6 +2,8 @@ package chess.util;
 
 import chess.Attributes;
 import chess.model.game.Game;
+import chess.model.game.GuiGame;
+import chess.model.game.LANGame;
 import javafx.application.Platform;
 
 import java.util.Timer;
@@ -46,13 +48,18 @@ public class ChessClock {
                 game.updateClock();
             }
             else {
-                game.setFINISHED(true);
                 timer.cancel();
                 game.getController().notifyView(Attributes.GameStatus.TIME_OUT, game.getCurrentPlayer());
-                Platform.runLater(() -> {
-                    game.notifyObservers();
-                    game.getGameTask().cancel();
-                });
+                if(game instanceof LANGame || game instanceof GuiGame) {
+                    Platform.runLater(() -> {
+                        game.notifyObservers();
+                        game.getGameTask().cancel();
+                    });
+                } else {
+                    game.setFINISHED(true);
+                    // close the program when the game ends
+                    System.exit(1);
+                }
             }
         }
     };

@@ -20,9 +20,11 @@ public class MoveMapper {
     public static Move map(String moveString, Game game) {
         Move mappedMove = null;
         String[] coordinates = moveString.split("-");
-
+        try {
+            game.setCharToPromote(coordinates[1].charAt(2));
+        }catch (Exception ignored) {}
         int from = BoardMapper.mapChessNotationToPosition(coordinates[0]);
-        int to = BoardMapper.mapChessNotationToPosition(coordinates[1]);
+        int to = BoardMapper.mapChessNotationToPosition(coordinates[1].substring(0,2));
         Piece toMovePiece = game.getBoard().getPiece(from);
         toMovePiece.calculateLegalMoves();
 

@@ -1,6 +1,7 @@
 package chess.model.game;
 
 import chess.controller.LANGameController;
+import chess.controller.Move;
 import chess.model.player.Player;
 import chess.util.MoveMapper;
 import javafx.application.Platform;
@@ -125,7 +126,12 @@ public class LANGame extends Game {
     private void playerSendingMove() {
         if (allowedMove != null) {
             currentPlayer.makeMove(allowedMove);
-            lanGameController.sendData("move " + allowedMove.toString());
+            if (allowedMove instanceof Move.PromotionMove) {
+                lanGameController.sendData("move "
+                        + allowedMove.toString() + charToPromote);
+            }else {
+                lanGameController.sendData("move " + allowedMove.toString());
+            }
             // Save the move
             allListOfMoves.add(allowedMove);
             // Switch the turns

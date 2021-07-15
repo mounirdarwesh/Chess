@@ -13,11 +13,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * the class of viewing the board
+ *
  * @author Gr.45
  */
 public class BoardView {
@@ -66,9 +68,14 @@ public class BoardView {
      * game
      */
     private Game game;
+    /**
+     * Counter to Files
+     */
+    int fileCounter = 0;
 
     /**
      * view of the board
+     *
      * @param game game
      */
     public BoardView(Game game) {
@@ -83,21 +90,24 @@ public class BoardView {
      * draw the board
      */
     public void drawBoard() {
+
         int id = 0;
-        for(int rank = 7; rank >= 0; rank--) {
-            for(int file = 0; file < 8; file++) {
+        for (int rank = 7; rank >= 0; rank--) {
+            for (int file = 0; file < 8; file++) {
                 piece = game.getBoard().getPiece(id);
                 tile = new Tile(id);
                 rect = new Rectangle(rank, file, WIDTH, HEIGHT);
                 rect.setFill(colorTile(rank, file));
-                if(piece != null) {
+
+                if (piece != null) {
                     putPieceOnTile(rect, piece.getSymbol(), tile);
-                }
-                else {
+                } else {
                     putPieceOnTile(rect, "", tile);
                 }
+
                 tiles.add(id, tile);
                 root.add(tile, file, rank);
+                drawFileRank(id);
                 id++;
             }
         }
@@ -109,7 +119,7 @@ public class BoardView {
     public void updateBoard() {
         int index = 0;
         for (Piece piece : game.getBoard().getPiecesOnBoard()) {
-            if(piece == null) {
+            if (piece == null) {
                 tiles.get(index).getChildren().remove(1);
                 tiles.get(index).getChildren().add(1, new Label(""));
             }
@@ -118,13 +128,14 @@ public class BoardView {
             }
             index++;
         }
-        if(game.getController().getGameSettings()[5].equals("1")) {
+        if (game.getController().getGameSettings()[5].equals("1")) {
             rotate(game.getCurrentPlayer().getColor());
         }
     }
 
     /**
      * this method rotate the board
+     *
      * @param color color of pieces
      */
     public void rotate(Attributes.Color color) {
@@ -143,13 +154,44 @@ public class BoardView {
         }
     }
 
+    /**
+     * draw File and Rank on the Board
+     * @param id Tile Id
+     */
+    private void drawFileRank(int id) {
+        String[] rankOfBoard = {"1", "2", "3", "4", "5", "6", "7", "8"};
+        String[] fileOfBoard = {"a", "b", "c", "d", "e", "f", "g", "h"};
+        if (id >= 0 && id <= 7) {
+            putRankFile(fileOfBoard[id], tiles.get(id), false);
+        }
+        if (id % 8 == 0) {
+            putRankFile(rankOfBoard[fileCounter], tiles.get(id), true);
+            fileCounter++;
+        }
+    }
 
-
+    /**
+     * Put Rank and File on Tile
+     * @param symbol rand or file
+     * @param tileWithPiece the Tile
+     * @param file true, if is file
+     */
+    private void putRankFile(String symbol, StackPane tileWithPiece, boolean file) {
+        Label pieceSymbol = new Label(symbol);
+        pieceSymbol.setFont(new Font(20));
+        if (file) {
+            StackPane.setAlignment(pieceSymbol, Pos.TOP_LEFT);
+        } else {
+            StackPane.setAlignment(pieceSymbol, Pos.TOP_RIGHT);
+        }
+        tileWithPiece.getChildren().add(pieceSymbol);
+    }
 
     /**
      * put pieces on the tiles of the board
-     * @param rect rectangle
-     * @param symbol symbole of every piece
+     *
+     * @param rect          rectangle
+     * @param symbol        symbol of every piece
      * @param tileWithPiece tile with piece
      */
     private void putPieceOnTile(Rectangle rect, String symbol, StackPane tileWithPiece) {
@@ -161,8 +203,9 @@ public class BoardView {
 
     /**
      * move a piece
+     *
      * @param position position of the piece
-     * @param symbol symbole of the piece
+     * @param symbol   symbole of the piece
      */
     private void movePiece(int position, String symbol) {
         Label movedPiece = new Label(symbol);
@@ -173,6 +216,7 @@ public class BoardView {
 
     /**
      * the color of the tile
+     *
      * @param rank horizontal
      * @param file vertical
      * @return Color
@@ -185,6 +229,7 @@ public class BoardView {
 
     /**
      * root as a node GridPane
+     *
      * @return GridPane
      */
     public GridPane asNode() {
@@ -193,18 +238,21 @@ public class BoardView {
 
     /**
      * assign controller to a tile action
+     *
      * @param gameViewController gameViewController
      */
     public void assignControllerToTileAction(GameViewController gameViewController) {
         for (Tile tile : tiles) {
             try {
                 tile.setOnMouseClicked(gameViewController);
-            } catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
     }
 
     /**
      * getter of the tiles
+     *
      * @return List
      */
     public List<Tile> getTiles() {
@@ -213,6 +261,7 @@ public class BoardView {
 
     /**
      * getter of the highlightedTiles
+     *
      * @return List
      */
     public List<Tile> getHighlightedTiles() {
@@ -221,6 +270,7 @@ public class BoardView {
 
     /**
      * setter of the highlightedTiles
+     *
      * @param highlightedTiles highlightedTiles
      */
     public void setHighlightedTiles(List<Tile> highlightedTiles) {
@@ -229,6 +279,7 @@ public class BoardView {
 
     /**
      * The tile which holds the piece
+     *
      * @author Gr.45
      */
     public class Tile extends StackPane {
@@ -245,6 +296,7 @@ public class BoardView {
 
         /**
          * id for each tile
+         *
          * @param id id of a tile
          */
         public Tile(int id) {
@@ -256,7 +308,7 @@ public class BoardView {
          */
         public void highlight() {
             for (Node node : getChildren()) {
-                if(node instanceof Rectangle) {
+                if (node instanceof Rectangle) {
                     original = ((Rectangle) node).getFill();
                     ((Rectangle) node).setFill(Color.web("#E1F668"));
                 }
@@ -268,7 +320,7 @@ public class BoardView {
          */
         public void deHighlight() {
             for (Node node : getChildren()) {
-                if(node instanceof Rectangle) {
+                if (node instanceof Rectangle) {
                     ((Rectangle) node).setFill(original);
                 }
             }
@@ -276,6 +328,7 @@ public class BoardView {
 
         /**
          * getter of the id
+         *
          * @return id for the tile
          */
         public int getID() {

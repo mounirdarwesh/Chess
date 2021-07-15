@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class ChessClock {
 
     /**
-     * the Connected Controller
+     * the Connected Game
      */
     private Game game;
 

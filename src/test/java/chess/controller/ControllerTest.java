@@ -27,10 +27,9 @@ public class ControllerTest {
     }
 
     /**
-     * test Undo Move to Initial status
+     * init the Moves.
      */
-    @Test
-    public void undoMove() {
+    public void init(){
         Move move1 = new Move.NormalMove(cli.getGame().getBoard(),
                 cli.getGame().getBoard().getPiece(8), 24);
         cli.getGame().getAllListOfMoves().add(0, move1);
@@ -39,6 +38,15 @@ public class ControllerTest {
                 cli.getGame().getBoard().getPiece(55), 39);
         cli.getGame().getAllListOfMoves().add(1, move2);
         cli.getGame().getBlackPlayer().makeMove(move2);
+    }
+
+    /**
+     * test Undo Move to Initial status
+     */
+    @Test
+    public void undoMove() {
+        init();
+        cli.getGame().setFINISHED(false);
         cli.getGame().getController().undoMove(0);
         assertEquals("8 r n b q k b n r\n" +
                 "7 p p p p p p p p\n" +
@@ -48,7 +56,7 @@ public class ControllerTest {
                 "3                \n" +
                 "2 P P P P P P P P\n" +
                 "1 R N B Q K B N R\n" +
-                "  a b c d e f g h", outputStreamCaptor.toString().trim());
+                "  a b c d e f g h", cli.getGame().getBoard().toString());
     }
 
     /**
@@ -64,14 +72,7 @@ public class ControllerTest {
      */
     @Test
     public void redoMove() {
-        Move move1 = new Move.NormalMove(cli.getGame().getBoard(),
-                cli.getGame().getBoard().getPiece(8), 24);
-        cli.getGame().getAllListOfMoves().add(0, move1);
-        cli.getGame().getWhitePlayer().makeMove(move1);
-        Move move2 = new Move.NormalMove(cli.getGame().getBoard(),
-                cli.getGame().getBoard().getPiece(55), 39);
-        cli.getGame().getAllListOfMoves().add(1, move2);
-        cli.getGame().getBlackPlayer().makeMove(move2);
+        init();
         cli.getGame().getController().undoMove(1);
         cli.getGame().getController().redoMove(1);
         assertEquals("8 r n b q k b n r\n" +

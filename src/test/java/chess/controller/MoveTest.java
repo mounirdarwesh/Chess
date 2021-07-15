@@ -201,32 +201,33 @@ public class MoveTest {
      */
     @Test
     public void EnPassantMove() {
-
-        board.setBoardFromFEN(EMPTY_FEN);
+        cli.getGame().getBoard().setBoardFromFEN(EMPTY_FEN);
         ArrayList<Move> expected = new ArrayList<>();
-        Piece pawnPassant = new Pawn(35, Attributes.Color.WHITE, board);
+        Piece pawnPassant = new Pawn(35, Attributes.Color.WHITE, cli.getGame().getBoard());
         pawnPassant.setFirstMove(false);
-        board.setPiece(pawnPassant, pawnPassant.getPosition());
-        game.getBlackPlayer().addToPlayersPieces(pawnPassant);
+        cli.getGame().getBoard().setPiece(pawnPassant, pawnPassant.getPosition());
+        cli.getGame().getBlackPlayer().addToPlayersPieces(pawnPassant);
 
-        Piece pawn = new Pawn(50, Attributes.Color.BLACK, board);
-        board.setPiece(pawn, pawn.getPosition());
-        game.getWhitePlayer().addToPlayersPieces(pawn);
+        Piece pawn = new Pawn(50, Attributes.Color.BLACK, cli.getGame().getBoard());
+        cli.getGame().getBoard().setPiece(pawn, pawn.getPosition());
+        cli.getGame().getWhitePlayer().addToPlayersPieces(pawn);
 
         pawn.setFirstMove(true);
-        Move m0 = new Move.DoublePawnMove(board, pawn, 34);
-        game.getWhitePlayer().makeMove(m0);
+        Move m0 = new Move.DoublePawnMove(cli.getGame().getBoard(), pawn, 34);
+        cli.getGame().getWhitePlayer().makeMove(m0);
 
-        Move m1 = new Move.NormalMove(board, pawnPassant, 43);
+        Move m1 = new Move.NormalMove(cli.getGame().getBoard(), pawnPassant, 43);
         expected.add(m1);
-        Move m2 = new Move.EnPassantMove(board, pawnPassant, 42, 34);
+        Move m2 = new Move.EnPassantMove(cli.getGame().getBoard(), pawnPassant, 42, 34);
         expected.add(m2);
 
+        cli.getGame().setCurrentPlayer(cli.getGame().getBlackPlayer());
         //game.getBlackPlayer().setAllowEnPassant(true);
-        game.setEnPassantPawn(pawnPassant);
+        cli.getGame().setEnPassantPawn(pawnPassant);
+        cli.getGame().getWhitePlayer().setEnPassantPieceToCapture(pawn);
         pawnPassant.calculateLegalMoves();
         assertEquals(expected.toString(), pawnPassant.getAllLegalMoves().toString());
-        game.getWhitePlayer().makeMove(m2);
+        cli.getGame().getWhitePlayer().makeMove(m2);
         m2.undo();
     }
 

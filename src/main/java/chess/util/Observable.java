@@ -23,22 +23,6 @@ public class Observable {
     }
 
     /**
-     * Delete an observer
-     *
-     * @param obs observer
-     */
-    public void removeObserver(Observer obs) {
-        observers.remove(obs);
-    }
-
-    /**
-     * Clear the list of observers
-     */
-    public void clearObservers() {
-        observers.clear();
-    }
-
-    /**
      * Notify the observer that something changed
      */
     public void notifyObservers() {

@@ -183,6 +183,7 @@
                         <exclude>chess/model/game/**/*</exclude>
                         <exclude>chess/Main.class</exclude>
                         <exclude>chess/view/cli/**/*</exclude>
+                        <exclude>chess/util/ChessClock.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -16,16 +16,6 @@ public class Pawn extends Piece {
     private static final int[] MOVE_OFFSET = {8, 16, 7, 9};
 
     /**
-     * if the pawn moved two spaces then En Passant is possible
-     */
-    public static boolean canMakeEnPassant = false;
-
-    /**
-     * if En Passant was preformed
-     */
-    public static boolean hasMadeEnPassant = false;
-
-    /**
      * The constructor of the Pawn Class
      *
      * @param position The position of the Pawn
@@ -142,7 +132,8 @@ public class Pawn extends Piece {
         if (leftUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        if (leftEnPassant() && pieceAtDest == null && canMakeEnPassant) {
+        if (leftEnPassant() && pieceAtDest == null
+                && board.getGame().getCurrentPlayer().getEnPassantPieceToCapture() != null) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position - color.getDirection()));
         } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it
@@ -168,7 +159,8 @@ public class Pawn extends Piece {
         if (rightUpColumnException()) return;
 
         // If there is an enemy piece on the destination, then capture it
-        if (rightEnPassant() && pieceAtDest == null && canMakeEnPassant) {
+        if (rightEnPassant() && pieceAtDest == null
+                && board.getGame().getCurrentPlayer().getEnPassantPieceToCapture() != null) {
             allLegalMoves.add(new Move.EnPassantMove(board, this, destination, position + color.getDirection()));
         } else if (pieceAtDest != null && pieceAtDest.color != this.color) {
             // If the pawn can capture and promote itself then let it do it

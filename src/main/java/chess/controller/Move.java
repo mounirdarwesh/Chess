@@ -31,6 +31,11 @@ public abstract class Move extends MoveController{
      */
     protected int source;
 
+    /**
+     * The enemy's EnPassant
+     */
+    protected Piece enemyEnPassantPiece;
+
 
     /**
      * The constructor for the move class
@@ -95,11 +100,6 @@ public abstract class Move extends MoveController{
         private boolean wasFirstMove;
 
         /**
-         * Temporary variable for the status of the En passant
-         */
-        private boolean wasEnPassant;
-
-        /**
          * A constructor for the Normal Move class
          *
          * @param board       The board on which the move is executed
@@ -131,8 +131,8 @@ public abstract class Move extends MoveController{
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = game.getEnPassantPawn() == null;
-            Pawn.canMakeEnPassant = false;
+            enemyEnPassantPiece = game.getCurrentPlayer().getEnPassantPieceToCapture();
+            game.getCurrentPlayer().setEnPassantPieceToCapture(null);
 
         }
 
@@ -143,7 +143,7 @@ public abstract class Move extends MoveController{
             board.getPiecesOnBoard().set(fromPiecePosition, fromPiece);
             board.setPiece(fromPiece, fromPiecePosition);
             fromPiece.setFirstMove(wasFirstMove);
-            Pawn.canMakeEnPassant = wasEnPassant;
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
 
     }
@@ -193,10 +193,6 @@ public abstract class Move extends MoveController{
          */
         private Piece pieceRook;
 
-        /**
-         * Temporary variable for the status of the En passant
-         */
-        private boolean wasEnPassant;
 
         /**
          * A constructor for the Castling Move class
@@ -249,8 +245,8 @@ public abstract class Move extends MoveController{
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = game.getEnPassantPawn() == null;
-            Pawn.canMakeEnPassant = false;
+            enemyEnPassantPiece = game.getCurrentPlayer().getEnPassantPieceToCapture();
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
 
         @Override
@@ -267,7 +263,7 @@ public abstract class Move extends MoveController{
             board.setPiece(fromRookPiece, fromRookPiecePosition);
             fromRookPiece.setFirstMove(wasRookFirstMove);
 
-            Pawn.canMakeEnPassant = wasEnPassant;
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
 
     }
@@ -293,11 +289,6 @@ public abstract class Move extends MoveController{
          * Temporary variable for the status of the piece first move
          */
         private boolean wasFirstMove;
-
-        /**
-         * Temporary variable for the status of the En passant
-         */
-        private boolean wasEnPassant;
 
         /**
          * A constructor for the Double Pawn Move class
@@ -332,8 +323,7 @@ public abstract class Move extends MoveController{
             }
 
             // Allow the enemy to preform an En Passant
-            wasEnPassant = game.getEnPassantPawn() == null;
-            Pawn.canMakeEnPassant = true;
+            game.getOpponent().setEnPassantPieceToCapture(piece);
         }
 
         @Override
@@ -344,7 +334,7 @@ public abstract class Move extends MoveController{
             fromPiece.setPosition(fromPiecePosition);
             board.setPiece(fromPiece, fromPiecePosition);
             fromPiece.setFirstMove(wasFirstMove);
-            Pawn.canMakeEnPassant = wasEnPassant;
+            game.getOpponent().setEnPassantPieceToCapture(null);
         }
     }
 
@@ -371,10 +361,6 @@ public abstract class Move extends MoveController{
          */
         private Piece captured;
 
-        /**
-         * Temporary variable for the status of the En passant
-         */
-        private boolean wasEnPassant;
         /**
          * store if the Piece to first time move.
          */
@@ -416,8 +402,8 @@ public abstract class Move extends MoveController{
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            wasEnPassant = game.getEnPassantPawn() == null;
-            Pawn.canMakeEnPassant = false;
+            enemyEnPassantPiece = game.getCurrentPlayer().getEnPassantPieceToCapture();
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
 
         @Override
@@ -429,7 +415,7 @@ public abstract class Move extends MoveController{
             board.setPiece(fromPiece, fromPiecePosition);
             game.removeFromBeaten(captured);
             fromPiece.setFirstMove(wasFirstMove);
-            Pawn.canMakeEnPassant = wasEnPassant;
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
     }
 
@@ -459,12 +445,6 @@ public abstract class Move extends MoveController{
          * The captured pawn
          */
         private Piece pawnCaptured;
-
-        /**
-         * Temporary variable for the status of the En passant
-         */
-        private boolean wasEnPassant;
-
 
         /**
          * A constructor for the En Passant Move class
@@ -497,10 +477,8 @@ public abstract class Move extends MoveController{
             // Update the board of pieces
             board.setPiece(piece, destination);
 
-            // If the player didn't preform an En Passant then he lost the
-            // chance to do so
-            wasEnPassant = game.getEnPassantPawn() == null;
-            Pawn.canMakeEnPassant = false;
+            enemyEnPassantPiece = game.getCurrentPlayer().getEnPassantPieceToCapture();
+            game.getCurrentPlayer().setEnPassantPieceToCapture(null);
         }
 
         @Override
@@ -512,7 +490,7 @@ public abstract class Move extends MoveController{
             board.getPiecesOnBoard().set(pawnCapturedEnPassant, pawnCaptured);
             board.setPiece(pawnCaptured, pawnCapturedEnPassant);
             game.removeFromBeaten(pawnCaptured);
-            Pawn.canMakeEnPassant = wasEnPassant;
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
 
     }
@@ -597,7 +575,8 @@ public abstract class Move extends MoveController{
 
             // If the player didn't preform an En Passant then he lost the
             // chance to do so
-            Pawn.canMakeEnPassant = false;
+            enemyEnPassantPiece = game.getCurrentPlayer().getEnPassantPieceToCapture();
+            game.getCurrentPlayer().setEnPassantPieceToCapture(null);
         }
 
         /**
@@ -690,6 +669,7 @@ public abstract class Move extends MoveController{
             board.getPiecesOnBoard().set(destination, captured);
             game.getCurrentPlayer().removeFromPlayersPieces(promotedPiece);
             game.getCurrentPlayer().addToPlayersPieces(fromPiece);
+            game.getCurrentPlayer().setEnPassantPieceToCapture(enemyEnPassantPiece);
         }
     }
 

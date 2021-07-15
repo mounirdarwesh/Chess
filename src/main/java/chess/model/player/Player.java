@@ -43,6 +43,10 @@ public abstract class Player {
      */
     protected long timeLeft;
 
+    /**
+     * Player's enPassant piece
+     */
+    protected Piece enPassantPieceToCapture = null;
 
     /**
      * The constructor of the class Player
@@ -201,5 +205,21 @@ public abstract class Player {
      */
     public void setTimeLeft(long timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    /**
+     * Getter for the EnPassant piece
+     * @return the EnPassant piece
+     */
+    public Piece getEnPassantPieceToCapture() {
+        return enPassantPieceToCapture;
+    }
+
+    /**
+     * Setter for the EnPassant piece
+     * @param enPassantPieceToCapture the EnPassant piece
+     */
+    public void setEnPassantPieceToCapture(Piece enPassantPieceToCapture) {
+        this.enPassantPieceToCapture = enPassantPieceToCapture;
     }
 }

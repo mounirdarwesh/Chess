@@ -1,5 +1,6 @@
 package chess.model;
 
+import chess.model.game.Game;
 import chess.model.pieces.Piece;
 import chess.pgn.FenUtilities;
 import java.util.List;
@@ -19,6 +20,11 @@ public class Board {
      * The pieces on the board
      */
     private List<Piece> piecesOnBoard;
+
+    /**
+     * The game that being played on the board
+     */
+    private Game game;
 
     /**
      * The constructor of the board class
@@ -92,5 +98,21 @@ public class Board {
         }
         board_.append("  a b c d e f g h");
         return board_.toString();
+    }
+
+    /**
+     * Getter for the game
+     * @return the game
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * Setter for the game
+     * @param game the game
+     */
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

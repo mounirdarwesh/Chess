@@ -89,6 +89,7 @@ public abstract class Game extends Observable {
     public Game(Controller controller) {
         this.controller = controller;
         this.board = new Board();
+        board.setGame(this);
 
 
         // Check if the player enabled time

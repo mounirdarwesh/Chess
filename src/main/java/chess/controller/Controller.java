@@ -95,6 +95,7 @@ public abstract class Controller {
             toUndoMove.undo();
             game.getAllListOfMoves().remove(toUndoMove);
         }
+        game.getCurrentPlayer().setHasPlayerUndidAMove(true);
         game.setCurrentPlayer(game.getOpponent());
         game.notifyObservers();
     }
@@ -111,6 +112,7 @@ public abstract class Controller {
             game.getAllListOfMoves().add(undidMove);
         }
         undidMoves.subList(0, index).clear();
+        game.getCurrentPlayer().setHasPlayerRedidAMove(true);
         game.setCurrentPlayer(game.getOpponent());
         game.notifyObservers();
     }

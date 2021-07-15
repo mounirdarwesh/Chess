@@ -143,10 +143,6 @@ public class LANGameController extends Controller {
      */
     @Override
     public void undoMove(int index) {
-        if(gameSettings[1].equals("0")) {
-            game.getCurrentPlayer().setHasPlayerUndidAMove(false);
-            return;
-        }
         // if there is no moves to undo, do nothing
         if(game.getAllListOfMoves().isEmpty()) return;
 
@@ -164,7 +160,10 @@ public class LANGameController extends Controller {
             toUndoMove.undo();
             game.getAllListOfMoves().remove(toUndoMove);
         }
+        System.out.println(index);
+        System.out.println(undidMoves.size());
         lanUndoIndex = undidMoves.size()-1 > 1 ? index : 1;
+        System.out.println(lanUndoIndex);
 
         // Finding out who made the undo
         int undidPiecePosition = BoardMapper.mapChessNotationToPosition(
@@ -183,10 +182,6 @@ public class LANGameController extends Controller {
      */
     @Override
     public void redoMove(int index) {
-        if(gameSettings[1].equals("0")) {
-            game.getCurrentPlayer().setHasPlayerRedidAMove(false);
-            return;
-        }
         if(undidMoves.isEmpty()) return;
         for(int i = 0; i<index; i++) {
             Move undidMove = undidMoves.get(i);

@@ -63,6 +63,7 @@ public class HistoryView {
     public HistoryView(Game game) {
         this.game = game;
         historyUndoRedoView = new VBox();
+        historyUndoRedoView.setAlignment(Pos.CENTER);
         historyUndoRedoView.setMinWidth(300);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setMinHeight(574);
@@ -74,9 +75,13 @@ public class HistoryView {
         historyViewContainer.setAlignment(Pos.CENTER);
         scrollPane.setContent(historyViewContainer);
 
+        // History Label
+        Label historyLabel = new Label("History");
+        historyLabel.setFont(new Font(17));
+        historyViewContainer.getChildren().add(historyLabel);
+
         // A container for the undo redo buttons
         HBox redoUndoContainer = new HBox();
-        redoUndoContainer.setAlignment(Pos.BOTTOM_CENTER);
 
         undo = new Button("Undo");
         redo = new Button("Redo");

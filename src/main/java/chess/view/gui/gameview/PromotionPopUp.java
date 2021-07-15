@@ -45,7 +45,7 @@ public class PromotionPopUp {
             promotion.close();
         });
         knight.setOnMouseClicked(event -> {
-            promote = 'k';
+            promote = 'n';
             promotion.close();
         });
         queen.setOnMouseClicked(event -> {

@@ -177,14 +177,14 @@ public class BoardView {
      * @param file true, if is file
      */
     private void putRankFile(String symbol, StackPane tileWithPiece, boolean file) {
-        Label pieceSymbol = new Label(symbol);
-        pieceSymbol.setFont(new Font(20));
+        Label rankFileSymbol = new Label(symbol);
+        rankFileSymbol.setFont(new Font(20));
         if (file) {
-            StackPane.setAlignment(pieceSymbol, Pos.TOP_LEFT);
+            StackPane.setAlignment(rankFileSymbol, Pos.TOP_LEFT);
         } else {
-            StackPane.setAlignment(pieceSymbol, Pos.TOP_RIGHT);
+            StackPane.setAlignment(rankFileSymbol, Pos.TOP_RIGHT);
         }
-        tileWithPiece.getChildren().add(pieceSymbol);
+        tileWithPiece.getChildren().add(rankFileSymbol);
     }
 
     /**
